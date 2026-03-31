@@ -1,7 +1,7 @@
 export const SITE_NAME = "MazGallery"
 export const SITE_URL = "https://maz.gallery"
 export const SITE_DESCRIPTION =
-  "Mazen Abugharbieh -- Data & Analytics Professional, Photographer, Collector. Based in San Diego."
+  "Mazen Abugharbieh. Data analyst, photographer, and startup co-founder based in San Diego."
 export const EMAIL = "mazen@figment-analytics.com"
 
 export const SOCIAL = {
@@ -18,16 +18,16 @@ export const NAV_LINKS = [
 ] as const
 
 export const SERVICES = [
-  "Data Visualization & Analytics",
-  "Strategic Storytelling Workshops",
-  "Data-Driven Decision Making",
-  "Personalized Analytics Consultation",
+  "Dashboard Design & Data Visualization",
+  "Data Storytelling Workshops",
+  "Analytics Strategy & Consulting",
+  "BI Program Development",
 ] as const
 
 export const PRESS = [
   {
     name: "SD Voyager",
-    logo: "/images/press/SDVoyager_Square.png",
+    logo: "/images/press/SDVoyager.png",
     url: "https://sdvoyager.com/interview/rising-stars-meet-mazen-abugharbieh-of-san-diego/",
   },
   {
@@ -37,7 +37,7 @@ export const PRESS = [
   },
   {
     name: "UC San Diego",
-    logo: "/images/press/UCSD.jpeg",
+    logo: "/images/press/UCSD.png",
     url: "https://today.ucsd.edu/story/surfs-up-in-san-diego-thanks-to-alumni-led-startup",
   },
 ] as const
@@ -47,18 +47,18 @@ export const PROJECTS = [
     title: "Figment Analytics",
     description: "Data analytics & BI consulting for growing businesses.",
     url: "https://figment-analytics.com",
-    image: "/images/projects/figment.jpg",
+    image: "/images/projects/cover.png",
   },
   {
     title: "SurfUp",
     description: "Automated surfboard rentals with SurfPod stations.",
     url: "https://surfupapp.com",
-    image: "/images/projects/surfup.jpg",
+    image: "/images/projects/Dashboard-Image.png",
   },
   {
     title: "Runes & Reagents",
     description: "An alchemy-themed card game.",
     url: "https://runesandreagents.netlify.app",
-    image: "/images/projects/runes.jpg",
+    image: "/images/projects/1.png",
   },
 ] as const

@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { NAV_LINKS } from "@/lib/constants"
+import { Magnetic } from "@/components/shared/magnetic"
+import { ScrambleWrapper } from "@/components/shared/text-scramble"
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
@@ -36,22 +38,29 @@ export function Navbar() {
 
         <div className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`text-sm font-medium transition-colors ${
-                solid ? "text-charcoal/70 hover:text-navy" : "text-charcoal/70 hover:text-navy"
-              }`}
-            >
-              {link.label}
-            </Link>
+            <Magnetic key={link.href} strength={0.25}>
+              <ScrambleWrapper text={link.label}>
+                {(display) => (
+                  <Link
+                    href={link.href}
+                    className={`inline-block text-sm font-medium font-mono transition-colors ${
+                      solid ? "text-charcoal/70 hover:text-navy" : "text-charcoal/70 hover:text-navy"
+                    }`}
+                  >
+                    {display}
+                  </Link>
+                )}
+              </ScrambleWrapper>
+            </Magnetic>
           ))}
-          <Link
-            href="/booking"
-            className="rounded-full bg-navy px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-navy/90"
-          >
-            Book Me
-          </Link>
+          <Magnetic strength={0.2}>
+            <Link
+              href="/booking"
+              className="rounded-full bg-navy px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-navy/90"
+            >
+              Book Me
+            </Link>
+          </Magnetic>
         </div>
 
         <button

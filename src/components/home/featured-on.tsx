@@ -1,18 +1,20 @@
 import { PRESS } from "@/lib/constants"
+import { PhotoDevelop } from "@/components/shared/reveals/photo-develop"
 import { FadeIn } from "@/components/shared/fade-in"
 
 export function FeaturedOn() {
   return (
-    <section className="bg-cream py-20 sm:py-24">
+    <section id="featured" className="bg-cream py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6">
         <FadeIn>
           <h2 className="text-center text-3xl font-bold text-navy sm:text-4xl">
             As Featured On
           </h2>
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-12">
-            {PRESS.map((outlet) => (
+        </FadeIn>
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-12">
+          {PRESS.map((outlet, i) => (
+            <PhotoDevelop key={outlet.name} delay={i * 200}>
               <a
-                key={outlet.name}
                 href={outlet.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -25,9 +27,9 @@ export function FeaturedOn() {
                   className="h-16 w-auto object-contain sm:h-20"
                 />
               </a>
-            ))}
-          </div>
-        </FadeIn>
+            </PhotoDevelop>
+          ))}
+        </div>
       </div>
     </section>
   )

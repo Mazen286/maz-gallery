@@ -47,16 +47,188 @@ body {
   outline-offset: 2px;
 }
 
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Keyframes: Marquee ─── */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-25%); }
 }
 
+/* ─── Keyframes: Aurora ─── */
+@keyframes aurora-drift-1 {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+  33%  { transform: translate(80px, -60px) rotate(120deg) scale(1.1); }
+  66%  { transform: translate(-40px, 40px) rotate(240deg) scale(0.9); }
+  100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+}
+@keyframes aurora-drift-2 {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+  33%  { transform: translate(-60px, 80px) rotate(-120deg) scale(1.15); }
+  66%  { transform: translate(50px, -30px) rotate(-240deg) scale(0.85); }
+  100% { transform: translate(0, 0) rotate(-360deg) scale(1); }
+}
+@keyframes aurora-drift-3 {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+  33%  { transform: translate(40px, 60px) rotate(90deg) scale(1.2); }
+  66%  { transform: translate(-70px, -50px) rotate(200deg) scale(0.9); }
+  100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+}
+
+/* ─── Keyframes: Film grain ─── */
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  25%  { transform: translate(-1px, 1px); }
+  50%  { transform: translate(1px, -1px); }
+  75%  { transform: translate(-1px, -1px); }
+}
+
+/* ─── Keyframes: Hero patterns ─── */
+@keyframes pattern-cycle-1 {
+  0%, 30%  { opacity: 1; }
+  33%, 97% { opacity: 0; }
+  100%     { opacity: 1; }
+}
+@keyframes pattern-cycle-2 {
+  0%, 30%  { opacity: 0; }
+  33%, 63% { opacity: 1; }
+  66%, 100%{ opacity: 0; }
+}
+@keyframes pattern-cycle-3 {
+  0%, 63%  { opacity: 0; }
+  66%, 97% { opacity: 1; }
+  100%     { opacity: 0; }
+}
+
+/* ─── Keyframes: Pulse dot ─── */
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50%      { transform: scale(1.8); opacity: 0.3; }
+}
+
+/* ─── Keyframes: Float bob ─── */
+@keyframes float-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* ─── Keyframes: Typing dots ─── */
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30%           { transform: translateY(-4px); opacity: 1; }
+}
+
+/* ─── Keyframes: Lightbox ─── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes imageFloatIn {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Keyframes: Museum cat ─── */
+@keyframes tailSway {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(12deg); }
+  75% { transform: rotate(-8deg); }
+}
+@keyframes earTwitch {
+  0%, 90%, 100% { transform: rotate(0deg); }
+  93% { transform: rotate(-8deg); }
+  96% { transform: rotate(3deg); }
+}
+
+/* ─── Keyframes: Star twinkle ─── */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ─── Keyframes: Cursor word trail ─── */
+@keyframes wordFade {
+  0% { opacity: 0.4; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-30px) scale(0.8); }
+}
+
+/* ─── Keyframes: Envelope ─── */
+@keyframes envelopeSeal {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(180deg); }
+}
+@keyframes envelopeFlyAway {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateY(-20px) scale(1.05); opacity: 1; }
+  100% { transform: translateY(-200px) scale(0.3); opacity: 0; }
+}
+
+/* ─── Keyframes: Page turn ─── */
+@keyframes pageTurnOut {
+  0% { transform: perspective(1200px) rotateY(0deg); opacity: 1; }
+  100% { transform: perspective(1200px) rotateY(-90deg); opacity: 0; }
+}
+@keyframes pageTurnIn {
+  0% { transform: perspective(1200px) rotateY(90deg); opacity: 0; }
+  100% { transform: perspective(1200px) rotateY(0deg); opacity: 1; }
+}
+
+/* ─── Utility classes ─── */
 @layer utilities {
   .animate-marquee {
     animation: marquee 20s linear infinite;
   }
   .animate-marquee:hover {
     animation-play-state: paused;
+  }
+  .animate-aurora-1 {
+    animation: aurora-drift-1 25s ease-in-out infinite;
+  }
+  .animate-aurora-2 {
+    animation: aurora-drift-2 30s ease-in-out infinite;
+  }
+  .animate-aurora-3 {
+    animation: aurora-drift-3 35s ease-in-out infinite;
+  }
+  .animate-grain {
+    animation: grain-shift 0.15s steps(4) infinite;
+  }
+  .animate-pattern-1 {
+    animation: pattern-cycle-1 12s ease-in-out infinite;
+  }
+  .animate-pattern-2 {
+    animation: pattern-cycle-2 12s ease-in-out infinite;
+  }
+  .animate-pattern-3 {
+    animation: pattern-cycle-3 12s ease-in-out infinite;
+  }
+  .animate-pulse-dot {
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  .animate-float-bob {
+    animation: float-bob 4s ease-in-out infinite;
+  }
+  .animate-typing-dot {
+    animation: typing-dot 1.4s ease-in-out infinite;
+  }
+  .cursor-none-custom {
+    cursor: none;
   }
 }

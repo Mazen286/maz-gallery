@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { BookingForm } from "@/components/booking/booking-form"
+import { ConversationalForm } from "@/components/booking/conversational-form"
 
 export const metadata: Metadata = {
   title: "Book a Consultation",
@@ -10,22 +10,30 @@ export const metadata: Metadata = {
 export default function BookingPage() {
   return (
     <>
-      <section className="bg-charcoal pb-12 pt-32 sm:pt-40">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <h1 className="text-5xl font-bold text-white sm:text-6xl">
-            Let&apos;s Talk
+      <section className="bg-white pb-0 pt-32 sm:pt-40">
+        <div className="mx-auto max-w-7xl px-6">
+          <h1 className="text-[8rem] font-bold leading-[0.9] tracking-tight text-navy sm:text-[12rem]">
+            LET&apos;S TALK
           </h1>
-          <p className="mt-4 text-lg text-white/70">
-            Connect with me for a complimentary consultation. In a world driven
-            by data, the ability to understand and communicate your story
-            through data is invaluable.
-          </p>
         </div>
       </section>
 
-      <section className="bg-charcoal py-16 sm:py-24">
-        <div className="mx-auto max-w-xl px-6">
-          <BookingForm />
+      <section className="bg-white py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <hr className="mb-16 border-t-2 border-navy" />
+          <div className="grid gap-12 lg:grid-cols-2">
+            <div>
+              <p className="text-2xl leading-relaxed text-charcoal sm:text-3xl">
+                Got a dataset nobody understands? A team that needs to think
+                differently about their numbers? Or just a question about
+                what&apos;s possible with your data? Let&apos;s talk. First
+                conversation is always free.
+              </p>
+            </div>
+            <div>
+              <ConversationalForm />
+            </div>
+          </div>
         </div>
       </section>
     </>

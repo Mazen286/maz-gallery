@@ -10,7 +10,7 @@ export function Footer() {
           <div>
             <p className="text-lg font-bold text-white">MazGallery</p>
             <p className="mt-3 text-sm leading-relaxed">
-              Data & Analytics Professional. Photographer. Collector. Based in San Diego.
+              Data analyst, photographer, and startup co-founder. Based in San Diego.
             </p>
             <div className="mt-4 flex gap-4">
               <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/50 hover:text-teal">

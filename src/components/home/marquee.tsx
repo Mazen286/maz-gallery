@@ -1,7 +1,19 @@
+"use client"
+
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
+
 export function Marquee() {
+  const { ref, isVisible, progress } = useScrollReveal({ once: false, threshold: 0.1 })
+
+  // Speed up marquee as it enters the viewport center
+  const speed = isVisible ? Math.max(8, 20 - progress * 12) : 20
+
   return (
-    <section className="overflow-hidden bg-cream py-12">
-      <div className="animate-marquee flex whitespace-nowrap">
+    <section ref={ref} id="marquee" className="overflow-hidden bg-cream py-12 sm:py-16">
+      <div
+        className="animate-marquee flex whitespace-nowrap"
+        style={{ animationDuration: `${speed}s` }}
+      >
         {Array.from({ length: 8 }).map((_, i) => (
           <span
             key={i}

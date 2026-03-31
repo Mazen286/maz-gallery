@@ -1,13 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
+import { DiagonalWipe } from "@/components/shared/reveals/diagonal-wipe"
 import { FadeIn } from "@/components/shared/fade-in"
 
 export function Story() {
   return (
-    <section className="bg-charcoal py-24 sm:py-32">
+    <section id="story" className="bg-charcoal py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          <FadeIn>
+          <DiagonalWipe>
             <div className="overflow-hidden rounded-2xl">
               <Image
                 src="/images/story.jpg"
@@ -17,13 +18,13 @@ export function Story() {
                 className="h-auto w-full object-cover"
               />
             </div>
-          </FadeIn>
-          <FadeIn delay={200}>
+          </DiagonalWipe>
+          <FadeIn delay={300}>
             <div>
               <h3 className="text-2xl font-bold leading-relaxed text-white sm:text-3xl">
-                From a young age, I was fascinated by the power of
-                storytelling. Today, I channel that passion through data and
-                photography.
+                A spreadsheet and a camera have more in common than you think.
+                Both are tools for seeing what others miss. I use them to tell
+                stories that move people.
               </h3>
               <Link
                 href="/about"

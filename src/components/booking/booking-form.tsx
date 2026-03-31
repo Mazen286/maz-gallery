@@ -5,69 +5,113 @@ import { EMAIL } from "@/lib/constants"
 
 export function BookingForm() {
   const [submitted, setSubmitted] = useState(false)
-  const [name, setName] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [phone, setPhone] = useState("")
   const [email, setEmail] = useState("")
-  const [message, setMessage] = useState("")
+  const [contactPref, setContactPref] = useState("")
 
   if (submitted) {
     return (
-      <div className="rounded-2xl border border-teal/30 bg-teal/5 p-8 text-center">
-        <p className="text-2xl font-bold text-white">Thanks for reaching out.</p>
-        <p className="mt-2 text-white/70">I&apos;ll get back to you shortly.</p>
+      <div className="rounded-2xl border border-navy/20 bg-slate-50 p-8 text-center">
+        <p className="text-2xl font-bold text-navy">Thanks for reaching out.</p>
+        <p className="mt-2 text-charcoal/70">I&apos;ll get back to you shortly.</p>
       </div>
     )
   }
 
   return (
     <form
-      className="space-y-5"
+      className="space-y-6"
       onSubmit={(e) => {
         e.preventDefault()
-        window.location.href = `mailto:${EMAIL}?subject=Consultation Request from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0A%0AFrom: ${encodeURIComponent(name)} (${encodeURIComponent(email)})`
+        const name = `${firstName} ${lastName}`.trim()
+        window.location.href = `mailto:${EMAIL}?subject=Consultation Request from ${encodeURIComponent(name)}&body=Name: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AEmail: ${encodeURIComponent(email)}%0APreferred Contact: ${encodeURIComponent(contactPref)}`
         setSubmitted(true)
       }}
     >
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-white/80">Name</label>
+        <p className="text-sm font-medium text-navy">Name</p>
+        <div className="mt-2 grid grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="firstName" className="block text-xs text-charcoal/60">
+              First Name <span className="text-charcoal/40">(required)</span>
+            </label>
+            <input
+              id="firstName"
+              type="text"
+              required
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="mt-1 w-full border-b border-charcoal/30 bg-transparent py-2 text-navy outline-none focus:border-navy"
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName" className="block text-xs text-charcoal/60">
+              Last Name <span className="text-charcoal/40">(required)</span>
+            </label>
+            <input
+              id="lastName"
+              type="text"
+              required
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="mt-1 w-full border-b border-charcoal/30 bg-transparent py-2 text-navy outline-none focus:border-navy"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="phone" className="block text-sm font-medium text-navy">
+          Phone <span className="text-xs font-normal text-charcoal/40">(required)</span>
+        </label>
         <input
-          id="name"
-          type="text"
+          id="phone"
+          type="tel"
           required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/30 outline-none focus:border-teal"
-          placeholder="Your name"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          className="mt-2 w-full border-b border-charcoal/30 bg-transparent py-2 text-navy outline-none focus:border-navy"
         />
       </div>
+
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-white/80">Email</label>
+        <label htmlFor="email" className="block text-sm font-medium text-navy">
+          Email <span className="text-xs font-normal text-charcoal/40">(required)</span>
+        </label>
         <input
           id="email"
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/30 outline-none focus:border-teal"
-          placeholder="you@example.com"
+          className="mt-2 w-full border-b border-charcoal/30 bg-transparent py-2 text-navy outline-none focus:border-navy"
         />
       </div>
+
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-white/80">Message</label>
-        <textarea
-          id="message"
-          rows={5}
-          required
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/30 outline-none focus:border-teal"
-          placeholder="Tell me about your project or what you'd like to discuss..."
-        />
+        <label htmlFor="contactPref" className="block text-sm font-medium text-navy">
+          How do you prefer to be contacted?
+        </label>
+        <select
+          id="contactPref"
+          value={contactPref}
+          onChange={(e) => setContactPref(e.target.value)}
+          className="mt-2 w-full border-b border-charcoal/30 bg-transparent py-2 text-navy outline-none focus:border-navy"
+        >
+          <option value="">Select an option</option>
+          <option value="email">Email</option>
+          <option value="phone">Phone</option>
+          <option value="text">Text</option>
+        </select>
       </div>
+
       <button
         type="submit"
-        className="w-full rounded-full bg-teal px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-teal/90"
+        className="w-full rounded-sm border-2 border-navy bg-transparent px-8 py-3.5 text-base font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
       >
-        Get in Touch
+        Book
       </button>
     </form>
   )

@@ -13,48 +13,50 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-cream pb-20 pt-32 sm:pb-28 sm:pt-40">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <h1 className="text-5xl font-bold text-navy sm:text-6xl">About Me</h1>
+      <section className="bg-white pb-8 pt-32 sm:pt-40">
+        <div className="mx-auto max-w-7xl px-6">
+          <h1 className="text-[6rem] font-bold uppercase leading-[0.9] tracking-tight text-navy sm:text-[10rem]">
+            About Me
+          </h1>
         </div>
       </section>
 
-      <section className="bg-charcoal py-24 sm:py-32">
+      <section className="bg-white pb-12">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <FadeIn>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
-                  My Story
-                </p>
-                <p className="mt-6 text-lg leading-relaxed text-white/90">
-                  My journey merges the precision of data engineering with the
-                  clarity of data visualization. With an MBA from UC San
-                  Diego&apos;s Rady School of Management and a Structural
-                  Engineering background, I turn raw data into stories that
-                  drive decisions.
-                </p>
-                <p className="mt-4 text-lg leading-relaxed text-white/90">
-                  My work has gained recognition across various platforms, from
-                  local news features to university spotlights. Whether
-                  building BI programs for municipal governments or co-founding
-                  a tech startup, I bring an engineer&apos;s rigor and an
-                  MBA&apos;s perspective to every project.
-                </p>
-              </div>
-            </FadeIn>
-            <FadeIn delay={200}>
-              <div className="overflow-hidden rounded-2xl">
-                <Image
-                  src="/images/about-1.jpg"
-                  alt="Mazen Abugharbieh"
-                  width={600}
-                  height={400}
-                  className="h-auto w-full object-cover"
-                />
-              </div>
-            </FadeIn>
+          <div className="overflow-hidden rounded-2xl">
+            <Image
+              src="/images/about-1.jpg"
+              alt="Mazen Abugharbieh"
+              width={1400}
+              height={600}
+              className="h-auto w-full object-cover"
+              priority
+            />
           </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-24 sm:py-32">
+        <div className="mx-auto max-w-4xl px-6">
+          <FadeIn>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
+              My Story
+            </p>
+            <p className="mt-6 text-lg leading-relaxed text-charcoal">
+              I studied structural engineering because I wanted to understand
+              how things hold together. Then I got my MBA at UC San Diego and
+              realized the same question applies to businesses, decisions, and
+              stories. Data is the structure. Visualization is the architecture.
+            </p>
+            <p className="mt-4 text-lg leading-relaxed text-charcoal">
+              Along the way, I co-founded a tech startup, built BI programs
+              for city governments, and picked up a camera that I haven&apos;t
+              put down since. My work has been featured on ABC 10 News, SD
+              Voyager, and UC San Diego. But the work I&apos;m most proud of
+              is the kind that makes someone say &ldquo;I finally understand
+              the data.&rdquo;
+            </p>
+          </FadeIn>
         </div>
       </section>
 
@@ -65,8 +67,8 @@ export default function AboutPage() {
               Services
             </p>
             <p className="mt-4 text-lg text-charcoal/80">
-              My work is about clarity and impact. Ready to tell your data
-              story?
+              I help teams and businesses see their data clearly for the
+              first time. Here&apos;s how we can work together.
             </p>
             <ul className="mt-8 space-y-4">
               {SERVICES.map((service) => (

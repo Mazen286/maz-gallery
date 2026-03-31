@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import Link from "next/link"
+import { SERVICES } from "@/lib/constants"
 import { FadeIn } from "@/components/shared/fade-in"
+import { TiltCard } from "@/components/shared/tilt-card"
 
 export const metadata: Metadata = {
   title: "Dashboards",
@@ -12,30 +13,77 @@ export const metadata: Metadata = {
 const DASHBOARDS = [
   {
     title: "Tracking the Skies: FlightPulse",
-    description: "A geospatial demo tracking flights in real-time with interactive mapping and data visualization.",
-    image: "/images/dashboards/flightpulse.png",
+    description: "Real-time flight tracking with geospatial mapping. Built to show how location data becomes situational awareness.",
+    image: "/images/dashboards/Screenshot-Dashboard.png",
   },
   {
     title: "Forge Ahead: Sales & Inventory Dashboard",
-    description: "Interactive Power BI dashboard tracking revenue, orders, and inventory across retail operations.",
-    image: "/images/dashboards/forge.png",
+    description: "Revenue, orders, and inventory in one view. Built in Power BI for a retail team that needed answers, not more reports.",
+    image: "/images/dashboards/Figment-Forge-Dashboard-Image.png",
   },
 ]
 
 export default function DashboardsPage() {
   return (
     <>
-      <section className="bg-cream pb-12 pt-32 sm:pt-40">
+      <section className="bg-white pb-0 pt-32 sm:pt-40">
+        <div className="mx-auto max-w-7xl px-6">
+          <h1 className="text-[5rem] font-bold uppercase leading-[0.9] tracking-tight text-navy sm:text-[8rem]">
+            Dashboard Showcase
+          </h1>
+        </div>
+      </section>
+
+      <section className="bg-white pb-12 pt-8">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="overflow-hidden rounded-2xl">
+            <Image
+              src="/images/dashboards/storytelling-data-hero.png"
+              alt="Dashboard visualization"
+              width={1400}
+              height={600}
+              className="h-auto w-full object-cover"
+              priority
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white pb-12">
         <div className="mx-auto max-w-4xl px-6">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
-            Dashboard Showcase
+            The Work
           </p>
-          <h1 className="mt-3 text-4xl font-bold text-navy sm:text-5xl">
-            Where Data Meets Design
-          </h1>
           <p className="mt-4 text-lg text-charcoal/70">
-            Welcome to my collection of interactive dashboards, where data
-            meets design and insights come to life.
+            Dashboards that people actually use. Each one started as a messy
+            dataset and became something a team could build decisions around.
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 sm:py-24">
+        <div className="mx-auto max-w-4xl px-6">
+          <FadeIn>
+            <hr className="mb-8 border-border" />
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
+              Services
+            </p>
+            <ul className="mt-6 space-y-4">
+              {SERVICES.map((service) => (
+                <li key={service} className="border-b border-border pb-4 text-lg font-medium text-navy">
+                  {service}
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
+        </div>
+      </section>
+
+      <section className="bg-white pb-8">
+        <div className="mx-auto max-w-4xl px-6">
+          <hr className="mb-8 border-border" />
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
+            My Showcase
           </p>
         </div>
       </section>
@@ -45,20 +93,22 @@ export default function DashboardsPage() {
           <div className="grid gap-12">
             {DASHBOARDS.map((dash, i) => (
               <FadeIn key={dash.title} delay={i * 150}>
-                <div className="overflow-hidden rounded-2xl bg-charcoal/50 border border-white/10">
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    <Image
-                      src={dash.image}
-                      alt={dash.title}
-                      fill
-                      className="object-cover"
-                    />
+                <TiltCard bobDelay={i * 500}>
+                  <div className="overflow-hidden rounded-2xl bg-charcoal/50 border border-white/10">
+                    <div className="relative aspect-[16/9] overflow-hidden">
+                      <Image
+                        src={dash.image}
+                        alt={dash.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-8">
+                      <h2 className="text-2xl font-bold text-white">{dash.title}</h2>
+                      <p className="mt-2 text-white/70">{dash.description}</p>
+                    </div>
                   </div>
-                  <div className="p-8">
-                    <h2 className="text-2xl font-bold text-white">{dash.title}</h2>
-                    <p className="mt-2 text-white/70">{dash.description}</p>
-                  </div>
-                </div>
+                </TiltCard>
               </FadeIn>
             ))}
           </div>
