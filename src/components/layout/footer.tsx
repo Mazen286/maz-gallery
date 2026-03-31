@@ -28,7 +28,7 @@ export function Footer() {
               <li><Link href="/about" className="hover:text-white">About</Link></li>
               <li><Link href="/gallery" className="hover:text-white">Gallery</Link></li>
               <li><Link href="/digital-collection" className="hover:text-white">Digital Collection</Link></li>
-              <li><Link href="/dashboards" className="hover:text-white">Dashboards</Link></li>
+              <li><Link href="/projects" className="hover:text-white">Projects</Link></li>
             </ul>
           </div>
 
@@ -36,7 +36,8 @@ export function Footer() {
             <p className="font-semibold text-white">More</p>
             <ul className="mt-3 space-y-2 text-sm">
               <li><Link href="/projects" className="hover:text-white">My Projects</Link></li>
-              <li><Link href="/booking" className="hover:text-white">Book a Consultation</Link></li>
+              <li><Link href="/booking" className="hover:text-white">Get in Touch</Link></li>
+              <li><a href="https://figmentanalytics.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">Figment Analytics</a></li>
             </ul>
           </div>
 

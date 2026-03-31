@@ -166,7 +166,7 @@ export function GalleryGrid({ filterLocation }: GalleryGridProps) {
             <div
               className="pointer-events-auto max-w-lg pb-6 text-center"
               onClick={(e) => e.stopPropagation()}
-              style={{ animation: "fadeSlideUp 0.6s ease-out 0.2s both" }}
+              style={{ animation: "fadeSlideIn 0.6s ease-out 0.2s both" }}
             >
               {images[selected].location && (
                 <p className="text-[10px] uppercase tracking-[0.4em] text-teal/70">

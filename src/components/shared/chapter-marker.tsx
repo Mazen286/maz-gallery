@@ -14,7 +14,7 @@ export function ChapterMarker({ number, title, dark = false }: ChapterMarkerProp
   const textColor = dark ? "text-white/40" : "text-charcoal/40"
 
   return (
-    <div ref={ref} className="flex items-center gap-4 pb-2 pt-8">
+    <div ref={ref} className="flex items-center gap-4 pb-0 pt-6">
       <span
         className="font-mono text-xs uppercase tracking-[0.3em] text-teal transition-all duration-700"
         style={{

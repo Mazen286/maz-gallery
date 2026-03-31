@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { ConversationalForm } from "@/components/booking/conversational-form"
+import { FIGMENT_URL } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Book a Consultation",
-  description: "Connect with Mazen for a complimentary consultation on data visualization, analytics, and storytelling.",
+  title: "Get in Touch",
+  description: "Reach out to Mazen about projects, collaborations, photography, or just to say hello.",
   alternates: { canonical: "/booking" },
 }
 
@@ -24,10 +25,21 @@ export default function BookingPage() {
           <div className="grid gap-12 lg:grid-cols-2">
             <div>
               <p className="text-2xl leading-relaxed text-charcoal sm:text-3xl">
-                Got a dataset nobody understands? A team that needs to think
-                differently about their numbers? Or just a question about
-                what&apos;s possible with your data? Let&apos;s talk. First
-                conversation is always free.
+                Want to collaborate on something? Have questions about my work?
+                Or just want to say hello? I&apos;d love to hear from you.
+              </p>
+              <p className="mt-6 text-base text-charcoal/50">
+                Looking for data consulting, dashboards, or workshops?
+                Head over to{" "}
+                <a
+                  href={FIGMENT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-teal underline-offset-4 hover:underline"
+                >
+                  Figment Analytics
+                </a>
+                .
               </p>
             </div>
             <div>

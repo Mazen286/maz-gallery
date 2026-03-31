@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 
 const COLLECTION = [
   { src: "/images/collection/avatar-freeguy.png", alt: "Free Guy Avatar", width: 600, height: 600 },
-  { src: "/images/collection/metaverse-cyber-tron.png", alt: "Metaverse Cyber Tron", width: 600, height: 600 },
   { src: "/images/collection/IMG_7908.jpeg", alt: "Digital collectible showcase", width: 600, height: 800 },
   { src: "/images/collection/IMG_7895.jpeg", alt: "VeVe collectible display", width: 600, height: 800 },
   { src: "/images/collection/IMG_7903.jpeg", alt: "Digital art piece", width: 600, height: 800 },
@@ -29,15 +28,29 @@ const COLLECTION = [
 export default function DigitalCollectionPage() {
   return (
     <>
-      <section className="relative overflow-hidden bg-charcoal pb-16 pt-32 sm:pt-40">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <h1 className="text-5xl font-bold text-white sm:text-6xl">
-            Digital Collection
-          </h1>
-          <p className="mt-4 text-lg text-white/70">
-            I collect digital art the way some people collect vinyl. These are
-            the pieces I keep coming back to.
-          </p>
+      <section className="relative overflow-hidden bg-charcoal pt-24 sm:pt-28">
+        {/* Banner image */}
+        <div className="relative mx-auto max-w-7xl px-6">
+          <div className="relative overflow-hidden rounded-2xl">
+            <Image
+              src="/images/collection/metaverse-cyber-tron.png"
+              alt="Digital collection banner"
+              width={1200}
+              height={500}
+              className="h-[280px] w-full object-cover sm:h-[360px] lg:h-[420px]"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/40 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 px-8 pb-10 text-center sm:pb-12">
+              <h1 className="text-5xl font-bold text-white sm:text-6xl">
+                Digital Collection
+              </h1>
+              <p className="mt-3 text-lg text-white/70">
+                I collect digital art the way some people collect vinyl. These are
+                the pieces I keep coming back to.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -4,7 +4,7 @@ import { FadeIn } from "@/components/shared/fade-in"
 
 export function FeaturedOn() {
   return (
-    <section id="featured" className="bg-cream py-20 sm:py-24">
+    <section id="featured" className="bg-cream py-14 sm:py-18">
       <div className="mx-auto max-w-7xl px-6">
         <FadeIn>
           <h2 className="text-center text-3xl font-bold text-navy sm:text-4xl">

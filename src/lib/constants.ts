@@ -13,16 +13,10 @@ export const NAV_LINKS = [
   { label: "About", href: "/about" },
   { label: "Gallery", href: "/gallery" },
   { label: "Digital Collection", href: "/digital-collection" },
-  { label: "Dashboards", href: "/dashboards" },
   { label: "My Projects", href: "/projects" },
 ] as const
 
-export const SERVICES = [
-  "Dashboard Design & Data Visualization",
-  "Data Storytelling Workshops",
-  "Analytics Strategy & Consulting",
-  "BI Program Development",
-] as const
+export const FIGMENT_URL = "https://figmentanalytics.com"
 
 export const PRESS = [
   {

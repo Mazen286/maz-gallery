@@ -157,14 +157,14 @@ export function ExhibitionView({ images }: ExhibitionViewProps) {
       {/* Navigation arrows */}
       <button
         onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/5 p-3 text-white/40 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white sm:left-8"
+        className="fixed left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/5 p-3 text-white/40 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white sm:left-8"
         aria-label="Previous photo"
       >
         <ChevronLeft className="size-5" />
       </button>
       <button
         onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/5 p-3 text-white/40 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white sm:right-8"
+        className="fixed right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/5 p-3 text-white/40 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white sm:right-8"
         aria-label="Next photo"
       >
         <ChevronRight className="size-5" />

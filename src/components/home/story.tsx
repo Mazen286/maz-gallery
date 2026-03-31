@@ -5,7 +5,7 @@ import { FadeIn } from "@/components/shared/fade-in"
 
 export function Story() {
   return (
-    <section id="story" className="bg-charcoal py-24 sm:py-32">
+    <section id="story" className="bg-charcoal py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <DiagonalWipe>

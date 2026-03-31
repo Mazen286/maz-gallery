@@ -3,7 +3,7 @@ import { FadeIn } from "@/components/shared/fade-in"
 
 export function AboutPreview() {
   return (
-    <section id="about" className="bg-white py-24 sm:py-32">
+    <section id="about" className="bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-4xl px-6">
         <FadeIn>
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">

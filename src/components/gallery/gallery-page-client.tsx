@@ -1,35 +1,31 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import dynamic from "next/dynamic"
-import { Shuffle, Grid3x3, Eye, Gamepad2 } from "lucide-react"
+import { Shuffle, Grid3x3, Eye, Sparkles, DoorOpen, Puzzle } from "lucide-react"
 import { GALLERY } from "@/lib/gallery"
 import { GalleryIntro } from "./gallery-intro"
 import { ExhibitionView } from "./exhibition-view"
 import { GalleryGrid } from "./gallery-grid"
+import { MemorySpace } from "./memory-space"
+import { PortalRooms } from "./portal-rooms"
+import { JigsawPuzzle } from "./jigsaw-puzzle"
 
-// Dynamic import for Three.js museum (heavy, no SSR)
-const Museum3D = dynamic(
-  () => import("./museum-3d").then((m) => m.Museum3D),
-  { ssr: false, loading: () => <div className="fixed inset-0 z-40 flex items-center justify-center bg-black"><p className="text-sm text-white/40">Loading 3D Museum...</p></div> }
-)
-
-type ViewMode = "exhibition" | "grid" | "museum" | "surprise"
+type ViewMode = "exhibition" | "grid" | "memory" | "portal" | "surprise"
 
 const VIEW_OPTIONS: { mode: ViewMode; label: string; icon: typeof Eye }[] = [
   { mode: "exhibition", label: "Exhibition", icon: Eye },
   { mode: "grid", label: "Grid", icon: Grid3x3 },
-  { mode: "museum", label: "3D Museum", icon: Gamepad2 },
+  { mode: "memory", label: "Memory Space", icon: Sparkles },
+  { mode: "portal", label: "Portal", icon: DoorOpen },
 ]
 
 export function GalleryPageClient() {
   const [introComplete, setIntroComplete] = useState(false)
   const [view, setView] = useState<ViewMode>("exhibition")
   const [surpriseIndex, setSurpriseIndex] = useState<number | null>(null)
+  const [puzzleIndex, setPuzzleIndex] = useState<number | null>(null)
 
   const handleIntroComplete = useCallback(() => setIntroComplete(true), [])
-  const exitMuseum = useCallback(() => setView("exhibition"), [])
-
   const handleSurprise = () => {
     const idx = Math.floor(Math.random() * GALLERY.length)
     setSurpriseIndex(idx)
@@ -42,11 +38,6 @@ export function GalleryPageClient() {
     <>
       {/* Intro overlay */}
       {!introComplete && <GalleryIntro onComplete={handleIntroComplete} />}
-
-      {/* 3D Museum (full-screen) */}
-      {view === "museum" && (
-        <Museum3D images={GALLERY} onExit={exitMuseum} />
-      )}
 
       {/* Surprise Me overlay */}
       {view === "surprise" && surprisePhoto && (
@@ -120,6 +111,13 @@ export function GalleryPageClient() {
             <Shuffle className="size-3.5" />
             Surprise Me
           </button>
+          <button
+            onClick={() => setPuzzleIndex(Math.floor(Math.random() * GALLERY.length))}
+            className="flex items-center gap-2 rounded-full border border-teal/30 px-4 py-2 text-xs font-medium text-teal transition-all hover:bg-teal/10"
+          >
+            <Puzzle className="size-3.5" />
+            Jigsaw
+          </button>
         </div>
       </section>
 
@@ -134,6 +132,27 @@ export function GalleryPageClient() {
             <GalleryGrid />
           </div>
         </section>
+      )}
+
+      {view === "memory" && (
+        <MemorySpace images={GALLERY} />
+      )}
+
+      {view === "portal" && (
+        <PortalRooms images={GALLERY} />
+      )}
+
+      {/* Jigsaw Puzzle overlay */}
+      {puzzleIndex !== null && (
+        <JigsawPuzzle
+          image={GALLERY[puzzleIndex]}
+          onClose={() => setPuzzleIndex(null)}
+          onNewImage={() => {
+            let next: number
+            do { next = Math.floor(Math.random() * GALLERY.length) } while (next === puzzleIndex)
+            setPuzzleIndex(next)
+          }}
+        />
       )}
     </>
   )

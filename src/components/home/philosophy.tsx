@@ -1,12 +1,11 @@
 import Link from "next/link"
 import { SlideIn } from "@/components/shared/reveals/slide-in"
-import { Cascade } from "@/components/shared/reveals/cascade"
 import { FadeIn } from "@/components/shared/fade-in"
-import { SERVICES } from "@/lib/constants"
+import { FIGMENT_URL } from "@/lib/constants"
 
 export function Philosophy() {
   return (
-    <section id="philosophy" className="bg-slate-50 py-24 sm:py-32">
+    <section id="philosophy" className="bg-slate-50 py-16 sm:py-20">
       <div className="mx-auto max-w-4xl px-6">
         <SlideIn>
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
@@ -21,32 +20,41 @@ export function Philosophy() {
         </SlideIn>
 
         <FadeIn delay={200}>
-          <hr className="my-12 border-border" />
+          <hr className="my-8 border-border" />
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
-            Services
+            What I Do
           </p>
           <p className="mt-4 text-lg text-charcoal/80">
-            Whether you need a dashboard that actually gets used or a workshop
-            that changes how your team thinks about data, I can help.
+            I build things at the intersection of data and design. I co-founded
+            a startup, I take photos, and I run{" "}
+            <a
+              href={FIGMENT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-navy underline decoration-teal/40 underline-offset-4 hover:decoration-teal"
+            >
+              Figment Analytics
+            </a>
+            , a data consultancy that helps businesses make sense of their numbers.
           </p>
         </FadeIn>
 
-        <Cascade staggerMs={120} className="mt-6 space-y-4">
-          {SERVICES.map((service) => (
-            <div key={service} className="border-b border-border pb-4 text-lg font-medium text-navy">
-              {service}
-            </div>
-          ))}
-        </Cascade>
-
-        <FadeIn delay={600}>
-          <div className="mt-8">
+        <FadeIn delay={400}>
+          <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/booking"
               className="inline-block rounded-full border-2 border-navy px-8 py-3 text-sm font-semibold uppercase tracking-wider text-navy transition-colors hover:bg-navy hover:text-white"
             >
-              Book Me
+              Say Hello
             </Link>
+            <a
+              href={FIGMENT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-full border-2 border-teal/30 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-teal transition-colors hover:bg-teal/10"
+            >
+              Need Data Help?
+            </a>
           </div>
         </FadeIn>
       </div>

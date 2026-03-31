@@ -61,7 +61,7 @@ export function TypewriterQuote({ text, className = "" }: TypewriterQuoteProps) 
   }, [started, text, reduced])
 
   return (
-    <div ref={ref} className={`py-16 sm:py-24 ${className}`}>
+    <div ref={ref} className={`py-8 sm:py-12 ${className}`}>
       <div className="mx-auto max-w-3xl px-6 text-center">
         <p className="min-h-[3em] text-xl italic leading-relaxed text-charcoal/60 sm:text-2xl">
           &ldquo;{displayText}&rdquo;

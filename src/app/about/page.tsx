@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { FadeIn } from "@/components/shared/fade-in"
-import { SERVICES } from "@/lib/constants"
+import { FIGMENT_URL } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "About",
@@ -64,26 +64,37 @@ export default function AboutPage() {
         <div className="mx-auto max-w-4xl px-6">
           <FadeIn>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
-              Services
+              What I Do
             </p>
             <p className="mt-4 text-lg text-charcoal/80">
-              I help teams and businesses see their data clearly for the
-              first time. Here&apos;s how we can work together.
+              I run{" "}
+              <a
+                href={FIGMENT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-navy underline decoration-teal/40 underline-offset-4 hover:decoration-teal"
+              >
+                Figment Analytics
+              </a>
+              , a data consultancy where my team and I help businesses build
+              dashboards, run workshops, and make better decisions with their
+              data. I also build side projects, take photos, and design games.
             </p>
-            <ul className="mt-8 space-y-4">
-              {SERVICES.map((service) => (
-                <li key={service} className="border-b border-border pb-4 text-lg font-medium text-navy">
-                  {service}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/booking"
                 className="inline-block rounded-full bg-navy px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-navy/90"
               >
-                Book a Consultation
+                Say Hello
               </Link>
+              <a
+                href={FIGMENT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-full border-2 border-navy px-8 py-3 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
+              >
+                Visit Figment Analytics
+              </a>
             </div>
           </FadeIn>
         </div>

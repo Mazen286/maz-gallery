@@ -31,11 +31,6 @@ export default function HomePage() {
       </div>
       <Philosophy />
 
-      <TypewriterQuote
-        text="The best photograph is the one that makes you feel something you can't put into a spreadsheet."
-        className="bg-slate-50"
-      />
-
       <div className="bg-charcoal px-6">
         <div className="mx-auto max-w-4xl">
           <ChapterMarker number="III" title="The Storyteller" dark />

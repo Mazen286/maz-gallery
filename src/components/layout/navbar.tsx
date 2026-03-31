@@ -58,7 +58,7 @@ export function Navbar() {
               href="/booking"
               className="rounded-full bg-navy px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-navy/90"
             >
-              Book Me
+              Say Hello
             </Link>
           </Magnetic>
         </div>
@@ -90,7 +90,7 @@ export function Navbar() {
             onClick={() => setOpen(false)}
             className="mt-3 inline-block rounded-full bg-navy px-5 py-2 text-sm font-semibold text-white"
           >
-            Book Me
+            Say Hello
           </Link>
         </div>
       )}
