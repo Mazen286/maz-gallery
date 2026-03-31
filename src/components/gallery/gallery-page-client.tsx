@@ -2,11 +2,10 @@
 
 import { useState, useCallback } from "react"
 import dynamic from "next/dynamic"
-import { Shuffle, Grid3x3, Film, Eye, Gamepad2 } from "lucide-react"
+import { Shuffle, Grid3x3, Eye, Gamepad2 } from "lucide-react"
 import { GALLERY } from "@/lib/gallery"
 import { GalleryIntro } from "./gallery-intro"
 import { ExhibitionView } from "./exhibition-view"
-import { FilmStripView } from "./film-strip-view"
 import { GalleryGrid } from "./gallery-grid"
 
 // Dynamic import for Three.js museum (heavy, no SSR)
@@ -15,11 +14,10 @@ const Museum3D = dynamic(
   { ssr: false, loading: () => <div className="fixed inset-0 z-40 flex items-center justify-center bg-black"><p className="text-sm text-white/40">Loading 3D Museum...</p></div> }
 )
 
-type ViewMode = "exhibition" | "filmstrip" | "grid" | "museum" | "surprise"
+type ViewMode = "exhibition" | "grid" | "museum" | "surprise"
 
 const VIEW_OPTIONS: { mode: ViewMode; label: string; icon: typeof Eye }[] = [
   { mode: "exhibition", label: "Exhibition", icon: Eye },
-  { mode: "filmstrip", label: "Film Strip", icon: Film },
   { mode: "grid", label: "Grid", icon: Grid3x3 },
   { mode: "museum", label: "3D Museum", icon: Gamepad2 },
 ]
@@ -128,10 +126,6 @@ export function GalleryPageClient() {
       {/* Views */}
       {view === "exhibition" && (
         <ExhibitionView images={GALLERY} />
-      )}
-
-      {view === "filmstrip" && (
-        <FilmStripView images={GALLERY} />
       )}
 
       {view === "grid" && (

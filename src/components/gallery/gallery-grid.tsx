@@ -144,37 +144,47 @@ export function GalleryGrid({ filterLocation }: GalleryGridProps) {
             <ChevronRight className="size-6" />
           </button>
 
-          {/* Image with 3D float-in effect */}
+          {/* Image + story panel */}
           <div
-            className="relative z-10"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              animation: "imageFloatIn 0.5s cubic-bezier(0.33, 1, 0.68, 1) forwards",
-            }}
+            className="pointer-events-none relative z-10 mx-auto flex max-h-[92vh] max-w-3xl flex-col items-center gap-4 overflow-y-auto px-6 py-4"
           >
-            <Image
-              src={images[selected].src}
-              alt={images[selected].alt}
-              width={images[selected].width}
-              height={images[selected].height}
-              className="max-h-[85vh] w-auto rounded-lg object-contain shadow-2xl"
-              priority
-            />
-          </div>
+            <div
+              className="pointer-events-auto flex-shrink-0"
+              onClick={(e) => e.stopPropagation()}
+              style={{ animation: "imageFloatIn 0.5s cubic-bezier(0.33, 1, 0.68, 1) forwards" }}
+            >
+              <Image
+                src={images[selected].src}
+                alt={images[selected].alt}
+                width={images[selected].width}
+                height={images[selected].height}
+                className="max-h-[50vh] max-w-[90vw] w-auto rounded-lg object-contain shadow-2xl"
+                priority
+              />
+            </div>
 
-          {/* Caption */}
-          <div
-            className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-center"
-            style={{ animation: "fadeSlideUp 0.6s ease-out 0.2s both" }}
-          >
-            {images[selected].location && (
-              <p className="text-sm font-medium text-white/70">
-                {images[selected].location}
+            <div
+              className="pointer-events-auto max-w-lg pb-6 text-center"
+              onClick={(e) => e.stopPropagation()}
+              style={{ animation: "fadeSlideUp 0.6s ease-out 0.2s both" }}
+            >
+              {images[selected].location && (
+                <p className="text-[10px] uppercase tracking-[0.4em] text-teal/70">
+                  {images[selected].location}
+                </p>
+              )}
+              <h3 className="mt-1.5 text-lg font-bold text-white">
+                {images[selected].alt}
+              </h3>
+              {images[selected].story && (
+                <p className="mt-3 text-sm leading-relaxed text-white/45 italic">
+                  {images[selected].story}
+                </p>
+              )}
+              <p className="mt-3 font-mono text-[9px] text-white/20">
+                {selected + 1} / {images.length} &middot; arrow keys to navigate
               </p>
-            )}
-            <p className="mt-1 text-xs text-white/30">
-              {selected + 1} / {images.length} &middot; Use arrow keys to navigate
-            </p>
+            </div>
           </div>
         </div>
       )}

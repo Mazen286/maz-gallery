@@ -10,8 +10,8 @@ import type { GalleryImage } from "@/lib/gallery"
 const SPACING = 6
 const HALL_W = 14
 const HALL_H = 4.5
-const LOAD_DIST = 16
-const UNLOAD_DIST = 24
+const LOAD_DIST = 28
+const UNLOAD_DIST = 40
 
 // Shared mobile input state (written by touch UI, read by Player)
 const mobileInput = { forward: 0, strafe: 0, yawDelta: 0 }
@@ -88,7 +88,7 @@ function Player() {
     // Smooth acceleration
     const targetVel = new THREE.Vector3(s, 0, -f)
     if (targetVel.length() > 0.1) {
-      targetVel.normalize().applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw.current).multiplyScalar(4.5)
+      targetVel.normalize().applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw.current).multiplyScalar(2.5)
     }
     velocity.current.lerp(targetVel, 0.12)
     camera.position.addScaledVector(velocity.current, dt)
@@ -161,6 +161,86 @@ function Painting({ image, pos, onSelect }: { image: GalleryImage; pos: Painting
   )
 }
 
+// ─── Procedural wall texture (fake bump via color variation) ───
+function useWallTexture(color: string, width = 128, height = 128) {
+  return useMemo(() => {
+    const canvas = document.createElement("canvas")
+    canvas.width = width
+    canvas.height = height
+    const ctx = canvas.getContext("2d")!
+
+    // Base color
+    ctx.fillStyle = color
+    ctx.fillRect(0, 0, width, height)
+
+    // Subtle brick/panel pattern
+    ctx.strokeStyle = "rgba(255,255,255,0.03)"
+    ctx.lineWidth = 1
+    for (let y = 0; y < height; y += 16) {
+      ctx.beginPath()
+      ctx.moveTo(0, y)
+      ctx.lineTo(width, y)
+      ctx.stroke()
+      const offset = (Math.floor(y / 16) % 2) * 32
+      for (let x = offset; x < width; x += 64) {
+        ctx.beginPath()
+        ctx.moveTo(x, y)
+        ctx.lineTo(x, y + 16)
+        ctx.stroke()
+      }
+    }
+
+    // Noise grain for texture feel
+    for (let i = 0; i < 800; i++) {
+      const x = Math.random() * width
+      const y = Math.random() * height
+      const brightness = Math.random() > 0.5 ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.03)"
+      ctx.fillStyle = brightness
+      ctx.fillRect(x, y, 1, 1)
+    }
+
+    const tex = new THREE.CanvasTexture(canvas)
+    tex.wrapS = THREE.RepeatWrapping
+    tex.wrapT = THREE.RepeatWrapping
+    return tex
+  }, [color, width, height])
+}
+
+function useFloorTexture(color: string, width = 128, height = 128) {
+  return useMemo(() => {
+    const canvas = document.createElement("canvas")
+    canvas.width = width
+    canvas.height = height
+    const ctx = canvas.getContext("2d")!
+
+    ctx.fillStyle = color
+    ctx.fillRect(0, 0, width, height)
+
+    // Wood plank lines
+    ctx.strokeStyle = "rgba(255,255,255,0.025)"
+    ctx.lineWidth = 1
+    for (let x = 0; x < width; x += 24) {
+      ctx.beginPath()
+      ctx.moveTo(x + Math.random() * 2, 0)
+      ctx.lineTo(x + Math.random() * 2, height)
+      ctx.stroke()
+    }
+
+    // Grain
+    for (let i = 0; i < 600; i++) {
+      const x = Math.random() * width
+      const y = Math.random() * height
+      ctx.fillStyle = Math.random() > 0.5 ? "rgba(255,255,255,0.015)" : "rgba(0,0,0,0.02)"
+      ctx.fillRect(x, y, Math.random() * 3, 1)
+    }
+
+    const tex = new THREE.CanvasTexture(canvas)
+    tex.wrapS = THREE.RepeatWrapping
+    tex.wrapT = THREE.RepeatWrapping
+    return tex
+  }, [color, width, height])
+}
+
 // ─── Infinite loop teleport ───
 function InfiniteLoop({ endZ }: { endZ: number }) {
   const { camera } = useThree()
@@ -172,14 +252,18 @@ function InfiniteLoop({ endZ }: { endZ: number }) {
 }
 
 // ─── GLB Model artifact on pedestal ───
+// Jar/pot focused artifacts - scale will need tuning per model
 const ARTIFACT_MODELS = [
-  { url: "/models/bastet.glb", scale: 0.25, y: 0.95 },
-  { url: "/models/anubis.glb", scale: 0.2, y: 0.95 },
-  { url: "/models/ra.glb", scale: 0.2, y: 0.95 },
-  { url: "/models/jar.glb", scale: 0.18, y: 0.95 },
-  { url: "/models/gem.glb", scale: 0.3, y: 1.0 },
-  { url: "/models/obelisk.glb", scale: 0.1, y: 0.95 },
-  { url: "/models/monolith.glb", scale: 0.15, y: 0.95 },
+  { url: "/models/jar.glb", scale: 0.2, y: 0.95 },
+  { url: "/models/jar2.glb", scale: 0.2, y: 0.95 },
+  { url: "/models/bastet.glb", scale: 0.2, y: 0.95 },
+  { url: "/models/jar.glb", scale: 0.15, y: 0.95 },
+  { url: "/models/gem.glb", scale: 0.25, y: 1.0 },
+  { url: "/models/jar2.glb", scale: 0.18, y: 0.95 },
+  { url: "/models/anubis.glb", scale: 0.18, y: 0.95 },
+  { url: "/models/coins.glb", scale: 0.2, y: 0.95 },
+  { url: "/models/ra.glb", scale: 0.18, y: 0.95 },
+  { url: "/models/jar.glb", scale: 0.22, y: 0.95 },
 ]
 
 function ArtifactModel({ url, scale, yOffset }: { url: string; scale: number; yOffset: number }) {
@@ -209,66 +293,80 @@ function Pedestal({ position, artifactIndex }: { position: [number, number, numb
   )
 }
 
-// ─── Fox companion (real GLB model) ───
-function FoxCompanion() {
-  const { scene, animations } = useGLTF("/models/fox.glb")
+// ─── Museum Cat (simple geometry, correct size) ───
+function MuseumCat() {
   const ref = useRef<THREE.Group>(null)
-  const mixer = useRef<THREE.AnimationMixer | null>(null)
   const t = useRef(0)
   const target = useRef(new THREE.Vector3(0, 0, -3))
   const facing = useRef(0)
   const timer = useRef(3)
   const { camera } = useThree()
 
-  useEffect(() => {
-    if (animations.length > 0 && ref.current) {
-      mixer.current = new THREE.AnimationMixer(ref.current)
-      // Play the walk/run animation if available
-      const clip = animations.find(a => a.name.toLowerCase().includes("run")) || animations[0]
-      if (clip) {
-        const action = mixer.current.clipAction(clip)
-        action.play()
-      }
-    }
-    return () => { mixer.current?.stopAllAction() }
-  }, [animations])
-
   useFrame((_, dt) => {
     if (!ref.current) return
-    mixer.current?.update(dt)
     t.current += dt
     timer.current -= dt
 
-    const fox = ref.current.position
+    const cat = ref.current.position
     const cam = camera.position
 
     if (timer.current <= 0) {
       target.current.set(
-        cam.x + (Math.random() - 0.5) * 5,
+        cam.x + (Math.random() - 0.5) * 4,
         0,
-        cam.z - 4 - Math.random() * 6
+        cam.z - 3 - Math.random() * 5
       )
-      target.current.x = THREE.MathUtils.clamp(target.current.x, -5, 5)
       timer.current = 2 + Math.random() * 4
     }
 
-    const dx = target.current.x - fox.x
-    const dz = target.current.z - fox.z
+    const dx = target.current.x - cat.x
+    const dz = target.current.z - cat.z
     const dist = Math.sqrt(dx * dx + dz * dz)
-    if (dist > 0.5) {
-      fox.x += (dx / dist) * 1.5 * dt
-      fox.z += (dz / dist) * 1.5 * dt
+    if (dist > 0.3) {
+      cat.x += (dx / dist) * 1.2 * dt
+      cat.z += (dz / dist) * 1.2 * dt
       facing.current = THREE.MathUtils.lerp(facing.current, Math.atan2(dx, dz), 0.06)
     }
 
     ref.current.rotation.y = facing.current
+    cat.y = Math.sin(t.current * 4) * 0.005
   })
 
-  const cloned = useMemo(() => scene.clone(), [scene])
-
   return (
-    <group ref={ref} position={[1, 0, -3]}>
-      <primitive object={cloned} scale={0.012} />
+    <group ref={ref} position={[0.5, 0, -2]}>
+      {/* Body */}
+      <mesh position={[0, 0.14, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <capsuleGeometry args={[0.06, 0.18, 4, 6]} />
+        <meshBasicMaterial color="#111" />
+      </mesh>
+      {/* Head */}
+      <mesh position={[0, 0.2, -0.15]}>
+        <sphereGeometry args={[0.07, 6, 6]} />
+        <meshBasicMaterial color="#111" />
+      </mesh>
+      {/* Ears */}
+      <mesh position={[-0.04, 0.27, -0.14]} rotation={[0, 0, -0.3]}>
+        <coneGeometry args={[0.025, 0.04, 3]} />
+        <meshBasicMaterial color="#111" />
+      </mesh>
+      <mesh position={[0.04, 0.27, -0.14]} rotation={[0, 0, 0.3]}>
+        <coneGeometry args={[0.025, 0.04, 3]} />
+        <meshBasicMaterial color="#111" />
+      </mesh>
+      {/* Teal eyes */}
+      <mesh position={[-0.025, 0.22, -0.21]}>
+        <sphereGeometry args={[0.012, 4, 4]} />
+        <meshBasicMaterial color="#78c8d6" />
+      </mesh>
+      <mesh position={[0.025, 0.22, -0.21]}>
+        <sphereGeometry args={[0.012, 4, 4]} />
+        <meshBasicMaterial color="#78c8d6" />
+      </mesh>
+      {/* Tail */}
+      <mesh position={[0, 0.18, 0.14]} rotation={[0.7 + Math.sin(t.current * 2) * 0.2, 0, 0]}>
+        <capsuleGeometry args={[0.012, 0.16, 3, 4]} />
+        <meshBasicMaterial color="#111" />
+      </mesh>
     </group>
   )
 }
@@ -318,7 +416,7 @@ function Sky({ spread }: { spread: number }) {
   )
 }
 
-// ─── Museum layout: corridors, intersections, and upper floor ───
+// ─── Simple straight infinite hallway ───
 interface PaintingPos {
   x: number
   y: number
@@ -326,163 +424,84 @@ interface PaintingPos {
   rotY: number
 }
 
-// A corridor segment: floor + 2 walls
-interface Corridor {
-  cx: number; cz: number; cy: number  // center
-  length: number; width: number
-  rotY: number // 0 = along Z axis, PI/2 = along X axis
-  color: string
-}
-
 function useMuseumLayout(imageCount: number) {
   return useMemo(() => {
     const positions: PaintingPos[] = []
-    const corridors: Corridor[] = []
     const half = SPACING / 2
     const hw = HALL_W / 2
 
-    // Split images into sections
-    const mainCount = Math.min(24, imageCount)
-    const leftCount = Math.min(12, Math.max(0, imageCount - 24))
-    const rightCount = Math.max(0, imageCount - 36)
-
-    let z = -3
-
-    // ═══ MAIN HALL ═══
-    for (let i = 0; i < mainCount; i++) {
+    for (let i = 0; i < imageCount; i++) {
       const side = i % 2 === 0 ? -1 : 1
-      positions.push({ x: side * (hw - 0.06), y: 0, z, rotY: -side * Math.PI / 2 })
-      z -= half
-    }
-    const mainEnd = z
-    const mainLen = Math.abs(mainEnd) + 8
-    corridors.push({ cx: 0, cz: mainEnd / 2, cy: 0, length: mainLen, width: HALL_W, rotY: 0, color: "#2a2535" })
-
-    // ═══ LEFT WING (at 1/3 point) ═══
-    const leftWingZ = -3 - Math.floor(mainCount / 3) * half
-    let lx = -hw - 3
-    for (let i = 0; i < leftCount; i++) {
-      const side = i % 2 === 0 ? -1 : 1
-      positions.push({ x: lx, y: 0, z: leftWingZ + side * (hw - 0.06), rotY: side * Math.PI / 2 + Math.PI / 2 })
-      lx -= half
-    }
-    if (leftCount > 0) {
-      const leftLen = leftCount * half + 6
-      corridors.push({ cx: -hw - leftLen / 2, cz: leftWingZ, cy: 0, length: leftLen, width: HALL_W, rotY: Math.PI / 2, color: "#252038" })
+      positions.push({
+        x: side * (hw - 0.06),
+        y: 0,
+        z: -3 - i * half,
+        rotY: -side * Math.PI / 2,
+      })
     }
 
-    // ═══ RIGHT WING (at 2/3 point) ═══
-    const rightWingZ = -3 - Math.floor(mainCount * 2 / 3) * half
-    let rx = hw + 3
-    for (let i = 0; i < rightCount; i++) {
-      const side = i % 2 === 0 ? -1 : 1
-      positions.push({ x: rx, y: 0, z: rightWingZ + side * (hw - 0.06), rotY: -side * Math.PI / 2 + Math.PI / 2 })
-      rx += half
-    }
-    if (rightCount > 0) {
-      const rightLen = rightCount * half + 6
-      corridors.push({ cx: hw + rightLen / 2, cz: rightWingZ, cy: 0, length: rightLen, width: HALL_W, rotY: Math.PI / 2, color: "#252038" })
-    }
+    const endZ = -3 - (imageCount - 1) * half - 4
+    const hallLen = Math.abs(endZ) + 8
 
-    return { positions, corridors, mainEnd }
+    return { positions, hallLen, endZ }
   }, [imageCount])
 }
 
 // ─── Scene ───
 
 function Scene({ images, onSelectImage }: { images: GalleryImage[]; onSelectImage: (i: number) => void }) {
-  const { positions, corridors, mainEnd } = useMuseumLayout(images.length)
+  const { positions, hallLen, endZ } = useMuseumLayout(images.length)
+  const wallTex = useWallTexture("#222040")
+  const floorTex = useFloorTexture("#2a2535")
+  const hw = HALL_W / 2
 
   return (
     <>
       <ambientLight intensity={3} />
       <fog attach="fog" args={["#080818", 20, 55]} />
 
-      {/* Infinite loop: teleport back to start when past the end */}
-      <InfiniteLoop endZ={mainEnd - 5} />
+      {/* Infinite loop */}
+      <InfiniteLoop endZ={endZ} />
 
-      {/* ═══ CORRIDORS (floor + walls for each) ═══ */}
-      {corridors.map((c, ci) => {
-        const isHorizontal = Math.abs(c.rotY) > 0.1
-        return (
-          <group key={`cor${ci}`}>
-            {/* Floor */}
-            <mesh
-              rotation={[-Math.PI / 2, isHorizontal ? Math.PI / 2 : 0, 0]}
-              position={[c.cx, c.cy + 0.001, c.cz]}
-            >
-              <planeGeometry args={[c.width, c.length]} />
-              <meshBasicMaterial color={c.color} />
-            </mesh>
-            {/* Carpet */}
-            <mesh
-              rotation={[-Math.PI / 2, isHorizontal ? Math.PI / 2 : 0, 0]}
-              position={[c.cx, c.cy + 0.004, c.cz]}
-            >
-              <planeGeometry args={[1.6, c.length]} />
-              <meshBasicMaterial color="#352540" />
-            </mesh>
-            {/* Ceiling */}
-            <mesh
-              rotation={[Math.PI / 2, isHorizontal ? Math.PI / 2 : 0, 0]}
-              position={[c.cx, c.cy + HALL_H, c.cz]}
-            >
-              <planeGeometry args={[c.width, c.length]} />
-              <meshBasicMaterial color="#0c0a1a" />
-            </mesh>
-            {/* Walls */}
-            {isHorizontal ? (
-              <>
-                <mesh position={[c.cx, c.cy + HALL_H / 2, c.cz - c.width / 2]}>
-                  <planeGeometry args={[c.length, HALL_H]} />
-                  <meshBasicMaterial color="#222040" />
-                </mesh>
-                <mesh position={[c.cx, c.cy + HALL_H / 2, c.cz + c.width / 2]} rotation={[0, Math.PI, 0]}>
-                  <planeGeometry args={[c.length, HALL_H]} />
-                  <meshBasicMaterial color="#222040" />
-                </mesh>
-              </>
-            ) : (
-              <>
-                <mesh rotation={[0, Math.PI / 2, 0]} position={[-c.width / 2 + c.cx, c.cy + HALL_H / 2, c.cz]}>
-                  <planeGeometry args={[c.length, HALL_H]} />
-                  <meshBasicMaterial color="#222040" />
-                </mesh>
-                <mesh rotation={[0, -Math.PI / 2, 0]} position={[c.width / 2 + c.cx, c.cy + HALL_H / 2, c.cz]}>
-                  <planeGeometry args={[c.length, HALL_H]} />
-                  <meshBasicMaterial color="#222040" />
-                </mesh>
-              </>
-            )}
-          </group>
-        )
-      })}
+      {/* ═══ SINGLE STRAIGHT HALLWAY ═══ */}
+      {/* Floor */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, endZ / 2]}>
+        <planeGeometry args={[HALL_W, hallLen]} />
+        <meshBasicMaterial map={floorTex} />
+      </mesh>
+      {/* Carpet runner */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.004, endZ / 2]}>
+        <planeGeometry args={[1.6, hallLen]} />
+        <meshBasicMaterial color="#352540" />
+      </mesh>
+      {/* Ceiling */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, HALL_H, endZ / 2]}>
+        <planeGeometry args={[HALL_W, hallLen]} />
+        <meshBasicMaterial color="#0a081a" />
+      </mesh>
+      {/* Left wall */}
+      <mesh rotation={[0, Math.PI / 2, 0]} position={[-hw, HALL_H / 2, endZ / 2]}>
+        <planeGeometry args={[hallLen, HALL_H]} />
+        <meshBasicMaterial map={wallTex} />
+      </mesh>
+      {/* Right wall */}
+      <mesh rotation={[0, -Math.PI / 2, 0]} position={[hw, HALL_H / 2, endZ / 2]}>
+        <planeGeometry args={[hallLen, HALL_H]} />
+        <meshBasicMaterial map={wallTex} />
+      </mesh>
 
-      {/* ═══ TEAL GLOW STRIPS along corridor floors ═══ */}
-      {corridors.map((c, ci) => {
-        const isH = Math.abs(c.rotY) > 0.1
-        return (
-          <group key={`glow${ci}`}>
-            <mesh
-              rotation={[-Math.PI / 2, isH ? Math.PI / 2 : 0, 0]}
-              position={[c.cx + (isH ? 0 : -c.width / 2 + 0.15), c.cy + 0.006, c.cz + (isH ? -c.width / 2 + 0.15 : 0)]}
-            >
-              <planeGeometry args={[0.06, c.length]} />
-              <meshBasicMaterial color="#78c8d6" transparent opacity={0.2} />
-            </mesh>
-            <mesh
-              rotation={[-Math.PI / 2, isH ? Math.PI / 2 : 0, 0]}
-              position={[c.cx + (isH ? 0 : c.width / 2 - 0.15), c.cy + 0.006, c.cz + (isH ? c.width / 2 - 0.15 : 0)]}
-            >
-              <planeGeometry args={[0.06, c.length]} />
-              <meshBasicMaterial color="#78c8d6" transparent opacity={0.2} />
-            </mesh>
-          </group>
-        )
-      })}
+      {/* Teal glow strips */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-hw + 0.15, 0.006, endZ / 2]}>
+        <planeGeometry args={[0.06, hallLen]} />
+        <meshBasicMaterial color="#78c8d6" transparent opacity={0.2} />
+      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[hw - 0.15, 0.006, endZ / 2]}>
+        <planeGeometry args={[0.06, hallLen]} />
+        <meshBasicMaterial color="#78c8d6" transparent opacity={0.2} />
+      </mesh>
 
       {/* ═══ SKY ═══ */}
-      <Sky spread={Math.abs(mainEnd) + 20} />
+      <Sky spread={hallLen} />
 
       {/* ═══ PAINTINGS ═══ */}
       {images.map((img, i) => {
@@ -493,23 +512,32 @@ function Scene({ images, onSelectImage }: { images: GalleryImage[]; onSelectImag
         )
       })}
 
-      {/* ═══ PEDESTALS WITH GLB ARTIFACTS ═══ */}
+      {/* ═══ PEDESTALS - centered between pairs of paintings ═══ */}
       {positions.map((p, i) => {
-        if (i % 7 !== 4) return null
-        const pedSide = i % 14 < 7 ? -1 : 1
+        // Place a pedestal every 6 paintings, centered in the hallway
+        if (i % 6 !== 3) return null
+        const pedZ = p.z + SPACING / 4 // Offset slightly between paintings
+        const pedSide = (Math.floor(i / 6) % 3) - 1 // -1, 0, 1 (left, center, right)
+        const pedX = pedSide * 1.8
         return (
           <Pedestal
             key={`ped${i}`}
-            position={[pedSide * 2, p.y || 0, p.z]}
-            artifactIndex={Math.floor(i / 7)}
+            position={[pedX, 0, pedZ]}
+            artifactIndex={Math.floor(i / 6)}
           />
         )
       })}
 
-      {/* ═══ FOX COMPANION ═══ */}
-      <Suspense fallback={null}>
-        <FoxCompanion />
-      </Suspense>
+      {/* ═══ Light fixture orbs along ceiling ═══ */}
+      {Array.from({ length: Math.min(15, Math.ceil(hallLen / 10)) }).map((_, i) => (
+        <mesh key={`lf${i}`} position={[0, HALL_H - 0.15, -(i * 10)]}>
+          <sphereGeometry args={[0.07, 4, 4]} />
+          <meshBasicMaterial color="#fffae0" />
+        </mesh>
+      ))}
+
+      {/* ═══ MUSEUM CAT ═══ */}
+      <MuseumCat />
       <Player />
     </>
   )

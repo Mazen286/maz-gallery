@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
+import { usePathname } from "next/navigation"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
 
 const SECTIONS = [
@@ -16,6 +17,8 @@ export function ScrollConstellation() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(0)
   const reduced = useReducedMotion()
+  const pathname = usePathname()
+  const isHome = pathname === "/"
   const tickingRef = useRef(false)
 
   useEffect(() => {
@@ -41,7 +44,7 @@ export function ScrollConstellation() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  if (reduced) return null
+  if (reduced || !isHome) return null
 
   const dotSpacing = 48
   const totalHeight = (SECTIONS.length - 1) * dotSpacing
