@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+
+  --navy: #243048;
+  --cream: #ddddd2;
+  --charcoal: #2a2829;
+  --teal: #78c8d6;
+  --white: #ffffff;
+  --black: #000000;
+  --slate-50: #f8fafc;
+
+  --primary: var(--navy);
+  --primary-foreground: #ffffff;
+  --border: #e2e8f0;
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-navy: var(--navy);
+  --color-cream: var(--cream);
+  --color-charcoal: var(--charcoal);
+  --color-teal: var(--teal);
+  --color-slate-50: var(--slate-50);
+  --font-sans: var(--font-inter-tight);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 20s linear infinite;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
