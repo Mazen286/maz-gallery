@@ -5,9 +5,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { BLOG_POSTS, getPost, formatDate, CATEGORY_COLORS } from "@/lib/blog"
 
-export function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({ slug: post.slug }))
-}
+export const runtime = "edge"
 
 export function generateMetadata({
   params,
