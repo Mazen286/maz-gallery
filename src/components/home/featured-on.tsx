@@ -17,13 +17,13 @@ export function FeaturedOn() {
               <a
                 href={outlet.url}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="external noopener noreferrer"
                 className="transition-opacity hover:opacity-80"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={outlet.logo}
-                  alt={outlet.name}
+                  alt={`Featured in ${outlet.name}`}
                   className="h-16 w-auto object-contain sm:h-20"
                 />
               </a>

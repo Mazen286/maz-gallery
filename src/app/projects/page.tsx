@@ -4,10 +4,22 @@ import { FadeIn } from "@/components/shared/fade-in"
 import { ExternalLink } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "My Projects",
+  title: "Projects | Figment Analytics, SurfUp, and More",
   description:
     "Explore my projects: Figment Analytics, SurfUp, LA 311, FlightPulse, Figment Gaming, Runes & Reagents, and more.",
   alternates: { canonical: "/projects" },
+  openGraph: {
+    title: "Projects by Mazen Abugharbieh",
+    description: "Startups, dashboards, games, and experiments. Figment Analytics, SurfUp, LA 311 Dashboard, and more.",
+    url: "https://maz.gallery/projects",
+    images: [{ url: "/images/projects/figment-analytics.png", width: 1200, height: 675, alt: "Figment Analytics" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Projects by Mazen Abugharbieh",
+    description: "Startups, dashboards, games, and experiments.",
+    images: [{ url: "/images/projects/figment-analytics.png", alt: "Figment Analytics" }],
+  },
 }
 
 const PROJECTS = [
@@ -164,8 +176,33 @@ function ProjectCard({
 }
 
 export default function ProjectsPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://maz.gallery" },
+      { "@type": "ListItem", position: 2, name: "Projects", item: "https://maz.gallery/projects" },
+    ],
+  }
+
+  const projectsSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Projects by Mazen Abugharbieh",
+    description: "Startups, dashboards, games, and experiments.",
+    url: "https://maz.gallery/projects",
+    hasPart: PROJECTS.map((p) => ({
+      "@type": "CreativeWork",
+      name: p.title,
+      description: p.description,
+      url: p.url,
+    })),
+  }
+
   return (
     <div className="bg-slate-50">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsSchema) }} />
       {/* Hero */}
       <section className="bg-white pb-8 pt-36 sm:pt-44">
         <div className="mx-auto max-w-5xl px-6">

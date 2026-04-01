@@ -9,14 +9,15 @@ export function Footer() {
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="text-lg font-bold text-white">MazGallery</p>
-            <p className="mt-3 text-sm leading-relaxed">
-              Data analyst, photographer, and startup co-founder. Based in San Diego.
-            </p>
+            <address className="mt-3 text-sm leading-relaxed not-italic">
+              Mazen Abugharbieh<br />
+              San Diego, CA
+            </address>
             <div className="mt-4 flex gap-4">
-              <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/50 hover:text-teal">
+              <a href={SOCIAL.instagram} target="_blank" rel="me noopener noreferrer" aria-label="Instagram" className="text-white/50 hover:text-teal">
                 <Instagram className="size-5" />
               </a>
-              <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/50 hover:text-teal">
+              <a href={SOCIAL.linkedin} target="_blank" rel="me noopener noreferrer" aria-label="LinkedIn" className="text-white/50 hover:text-teal">
                 <Linkedin className="size-5" />
               </a>
             </div>
@@ -34,7 +35,7 @@ export function Footer() {
           <div>
             <p className="font-semibold text-white">More</p>
             <ul className="mt-3 space-y-2 text-sm">
-              <li><Link href="/projects" className="hover:text-white">My Projects</Link></li>
+              <li><Link href="/blog" className="hover:text-white">Blog</Link></li>
               <li><Link href="/booking" className="hover:text-white">Get in Touch</Link></li>
               <li><a href="https://figmentanalytics.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">Figment Analytics</a></li>
             </ul>
@@ -44,12 +45,12 @@ export function Footer() {
             <p className="font-semibold text-white">Connect</p>
             <ul className="mt-3 space-y-2 text-sm">
               <li>
-                <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                <a href={SOCIAL.instagram} target="_blank" rel="me noopener noreferrer" className="hover:text-white">
                   Instagram
                 </a>
               </li>
               <li>
-                <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                <a href={SOCIAL.linkedin} target="_blank" rel="me noopener noreferrer" className="hover:text-white">
                   LinkedIn
                 </a>
               </li>

@@ -95,6 +95,7 @@ export function Hero() {
           fontSize: "clamp(10rem, 28vw, 28rem)",
         }}
         dir="rtl"
+        lang="ar"
         aria-hidden="true"
       >
         مازن

@@ -14,9 +14,11 @@ interface ExhibitionViewProps {
 const STORIES: Record<string, string> = {
   "Alanya, Turkey": "The Turkish Riviera. Ancient fortress walls meet turquoise water. I spent a week here and could have stayed a month.",
   "Istanbul, Turkey": "A city that exists in two continents and a thousand timelines at once. Every alley has a story older than most countries.",
-  "Jordan": "Desert light hits different here. The silence is so complete you can hear your own heartbeat.",
-  "New York": "The city that never sleeps barely lets you blink. I shot these on foot, walking until my legs gave out.",
-  "San Diego": "Home. The place I keep coming back to, and the place that keeps surprising me.",
+  "Amman, Jordan": "Desert light hits different here. The silence is so complete you can hear your own heartbeat.",
+  "New York, NY": "The city that never sleeps barely lets you blink. I shot these on foot, walking until my legs gave out.",
+  "San Diego, CA": "Home. The place I keep coming back to, and the place that keeps surprising me.",
+  "Catalina Island, CA": "An island that feels like it belongs in another decade. Slow, sunlit, and completely itself.",
+  "Disneyland, CA": "A galaxy far, far away — or at least a few hours south on the freeway.",
   "Turkey": "Somewhere between the bazaars and the coastline, I stopped planning shots and started just seeing.",
 }
 
@@ -86,9 +88,11 @@ export function ExhibitionView({ images, startIndex = 0 }: ExhibitionViewProps) 
     const colors: Record<string, string> = {
       "Alanya, Turkey": "rgb(15,20,25)",
       "Istanbul, Turkey": "rgb(18,15,22)",
-      "Jordan": "rgb(22,18,12)",
-      "New York": "rgb(12,14,20)",
-      "San Diego": "rgb(12,18,22)",
+      "Amman, Jordan": "rgb(22,18,12)",
+      "New York, NY": "rgb(12,14,20)",
+      "San Diego, CA": "rgb(12,18,22)",
+      "Catalina Island, CA": "rgb(14,20,24)",
+      "Disneyland, CA": "rgb(12,12,18)",
       "Turkey": "rgb(16,18,20)",
     }
     setBgColor(colors[img?.location || ""] || "rgb(10,10,10)")

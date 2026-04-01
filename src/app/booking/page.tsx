@@ -3,9 +3,21 @@ import { ConversationalForm } from "@/components/booking/conversational-form"
 import { FIGMENT_URL } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Get in Touch",
+  title: "Contact Mazen Abugharbieh | Say Hello",
   description: "Reach out to Mazen about projects, collaborations, photography, or just to say hello.",
   alternates: { canonical: "/booking" },
+  openGraph: {
+    title: "Get in Touch - Mazen Abugharbieh",
+    description: "Reach out about projects, collaborations, photography, or just to say hello.",
+    url: "https://maz.gallery/booking",
+    images: [{ url: "/images/og-default.jpg", width: 1200, height: 630, alt: "Contact Mazen Abugharbieh" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Get in Touch - Mazen Abugharbieh",
+    description: "Reach out about projects, collaborations, photography, or just to say hello.",
+    images: [{ url: "/images/og-default.jpg", alt: "Contact Mazen Abugharbieh" }],
+  },
 }
 
 export default function BookingPage() {

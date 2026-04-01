@@ -5,10 +5,22 @@ import { FadeIn } from "@/components/shared/fade-in"
 import { FIGMENT_URL, PRESS } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Mazen Abugharbieh | Data Analyst & Photographer",
   description:
     "Mazen Abugharbieh merges data engineering precision with creative visual storytelling. Based in San Diego.",
   alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About Mazen Abugharbieh",
+    description: "Data analyst, photographer, and startup co-founder based in San Diego. Structural engineering background, MBA from UC San Diego.",
+    url: "https://maz.gallery/about",
+    images: [{ url: "/images/about-1.jpg", width: 1200, height: 630, alt: "Mazen Abugharbieh on stairs" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Mazen Abugharbieh",
+    description: "Data analyst, photographer, and startup co-founder based in San Diego.",
+    images: [{ url: "/images/about-1.jpg", alt: "Mazen Abugharbieh on stairs" }],
+  },
 }
 
 const JOURNEY = [
@@ -58,8 +70,38 @@ const INTERESTS = [
 ]
 
 export default function AboutPage() {
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Mazen Abugharbieh",
+    givenName: "Mazen",
+    familyName: "Abugharbieh",
+    url: "https://maz.gallery",
+    image: "https://maz.gallery/images/hero-portrait.jpg",
+    jobTitle: "Data Analyst and Photographer",
+    knowsAbout: ["Data Analysis", "Data Visualization", "Photography", "Startup Entrepreneurship", "Structural Engineering", "Business Intelligence"],
+    worksFor: { "@type": "Organization", name: "Figment Analytics", url: "https://figmentanalytics.com" },
+    alumniOf: { "@type": "CollegeOrUniversity", name: "UC San Diego" },
+    address: { "@type": "PostalAddress", addressLocality: "San Diego", addressRegion: "CA", addressCountry: "US" },
+    sameAs: ["https://www.linkedin.com/in/mazenabugharbieh/", "https://instagram.com/mazen2892"],
+  }
+
+  const profilePageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    mainEntity: personSchema,
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://maz.gallery" },
+        { "@type": "ListItem", position: 2, name: "About", item: "https://maz.gallery/about" },
+      ],
+    },
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageSchema) }} />
       {/* Hero - full bleed */}
       <section className="relative">
         <div className="relative overflow-hidden">
@@ -102,18 +144,20 @@ export default function AboutPage() {
       <section className="bg-charcoal py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <FadeIn>
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
               The Journey
-            </p>
+            </h2>
           </FadeIn>
 
           <div className="mt-10 space-y-0">
             {JOURNEY.map((item, i) => (
               <FadeIn key={item.year} delay={i * 100}>
                 <div className="grid grid-cols-[60px_1fr] gap-6 border-l border-white/10 py-8 pl-8 sm:grid-cols-[80px_1fr]">
-                  <span className="font-mono text-sm font-bold text-teal">
-                    {item.year}
-                  </span>
+                  {item.year === "Now" ? (
+                    <span className="font-mono text-sm font-bold text-teal">{item.year}</span>
+                  ) : (
+                    <time dateTime={item.year} className="font-mono text-sm font-bold text-teal">{item.year}</time>
+                  )}
                   <div>
                     <h3 className="text-xl font-bold text-white">{item.title}</h3>
                     <p className="mt-2 text-[15px] leading-relaxed text-white/50">
@@ -159,6 +203,7 @@ export default function AboutPage() {
                   width={1500}
                   height={1000}
                   className="h-64 w-full object-cover sm:h-80"
+                  loading="lazy"
                 />
               </div>
             </FadeIn>
@@ -170,6 +215,7 @@ export default function AboutPage() {
                   width={1500}
                   height={1000}
                   className="h-64 w-full object-cover sm:h-80"
+                  loading="lazy"
                 />
               </div>
             </FadeIn>
@@ -181,6 +227,7 @@ export default function AboutPage() {
                   width={1500}
                   height={1000}
                   className="h-64 w-full object-cover sm:h-80"
+                  loading="lazy"
                 />
               </div>
             </FadeIn>
@@ -192,9 +239,9 @@ export default function AboutPage() {
       <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <FadeIn>
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
               What I&apos;m Into
-            </p>
+            </h2>
             <div className="mt-6 flex flex-wrap gap-3">
               {INTERESTS.map((interest) => (
                 <span

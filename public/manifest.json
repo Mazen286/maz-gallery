@@ -1,0 +1,23 @@
+{
+  "name": "MazGallery - Mazen Abugharbieh",
+  "short_name": "MazGallery",
+  "description": "Data analyst, photographer, and startup co-founder based in San Diego.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#1a1a2e",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

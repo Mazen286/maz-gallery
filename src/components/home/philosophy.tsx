@@ -8,9 +8,9 @@ export function Philosophy() {
     <section id="philosophy" className="bg-slate-50 py-16 sm:py-20">
       <div className="mx-auto max-w-4xl px-6">
         <SlideIn>
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
             Philosophy
-          </p>
+          </h2>
           <p className="mt-6 text-xl leading-relaxed text-charcoal sm:text-2xl">
             I believe the best insights hide in plain sight. The patterns in a
             dataset, the geometry of a skyline, the rhythm of a city street.

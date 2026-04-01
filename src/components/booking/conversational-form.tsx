@@ -180,7 +180,7 @@ export function ConversationalForm() {
 
           {/* Typing indicator */}
           {isTyping && (
-            <div className="flex justify-start">
+            <div className="flex justify-start" aria-hidden="true">
               <div className="flex gap-1 rounded-2xl rounded-bl-sm bg-slate-50 px-4 py-3">
                 <span className="animate-typing-dot h-2 w-2 rounded-full bg-charcoal/30" style={{ animationDelay: "0ms" }} />
                 <span className="animate-typing-dot h-2 w-2 rounded-full bg-charcoal/30" style={{ animationDelay: "150ms" }} />
@@ -235,18 +235,23 @@ export function ConversationalForm() {
               }}
               className="flex gap-3"
             >
+              <label htmlFor={`step-${STEPS[currentStep].id}`} className="sr-only">
+                {STEPS[currentStep].question}
+              </label>
               <input
+                id={`step-${STEPS[currentStep].id}`}
                 ref={inputRef}
                 type={STEPS[currentStep].type}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Type your answer..."
                 required={STEPS[currentStep].required}
+                aria-required={STEPS[currentStep].required}
                 className="flex-1 rounded-full border border-navy/20 bg-transparent px-4 py-2.5 text-sm text-navy outline-none placeholder:text-charcoal/30 focus:border-teal"
               />
               <button
                 type="submit"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-navy text-white transition-colors hover:bg-navy/90"
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-navy text-white transition-colors hover:bg-navy/90"
                 aria-label="Send"
               >
                 <Send className="size-4" />
