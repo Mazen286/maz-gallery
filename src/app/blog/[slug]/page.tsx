@@ -4,6 +4,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { BLOG_POSTS, getPost, formatDate, CATEGORY_COLORS } from "@/lib/blog"
+import { POST_CONTENT } from "@/components/blog/posts"
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }))
@@ -123,11 +124,18 @@ export default function BlogPostPage({
             />
           </div>
 
-          {/* Article body placeholder */}
-          <div className="prose prose-lg mt-12 max-w-none text-charcoal/80">
-            <p className="text-center text-charcoal/30 italic">
-              This post is coming soon. Check back later for the full story.
-            </p>
+          {/* Article body */}
+          <div className="prose prose-lg mt-12 max-w-none text-charcoal/80 prose-headings:text-navy prose-a:text-teal">
+            {POST_CONTENT[post.slug] ? (
+              (() => {
+                const Content = POST_CONTENT[post.slug]
+                return <Content />
+              })()
+            ) : (
+              <p className="text-center text-charcoal/30 italic">
+                This post is coming soon. Check back later for the full story.
+              </p>
+            )}
           </div>
         </div>
       </article>

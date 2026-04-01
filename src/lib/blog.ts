@@ -30,6 +30,17 @@ export const CATEGORY_COLORS: Record<BlogCategory, string> = {
 // Draft posts - set published: true when ready
 export const ALL_POSTS: BlogPost[] = [
   {
+    slug: "top-10-video-games",
+    title: "My Top 10 Video Games of All Time",
+    description:
+      "Not ranked, just celebrated. These are the games that shaped how I think, gave me lifelong memories, and proved that video games are stories you're a part of.",
+    date: "2026-04-01",
+    category: "Video Games",
+    image: "/images/blog/top-10-video-games.jpg",
+    readTime: "12 min read",
+    published: true,
+  },
+  {
     slug: "alanya-turkey-travel-guide",
     title: "Alanya Stole My Heart and I Want It Back",
     description:
