@@ -78,7 +78,7 @@ export function Hero() {
           alt="Mazen Abugharbieh"
           fill
           priority
-          className="object-cover object-[center_25%]"
+          className="object-cover object-[center_15%]"
           sizes="100vw"
         />
         {/* Gradient overlays for text readability */}

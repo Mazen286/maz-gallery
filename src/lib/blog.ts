@@ -49,7 +49,6 @@ export const ALL_POSTS: BlogPost[] = [
     category: "Travel",
     image: "/images/gallery/Alanya-(9-of-20).jpg",
     readTime: "5 min read",
-    published: true,
   },
   {
     slug: "overwatch-ranked-grind",
@@ -60,7 +59,6 @@ export const ALL_POSTS: BlogPost[] = [
     category: "Video Games",
     image: "/images/gallery/NewYork-9.jpg",
     readTime: "4 min read",
-    published: true,
   },
   {
     slug: "new-york-food-spots",
@@ -71,7 +69,6 @@ export const ALL_POSTS: BlogPost[] = [
     category: "Food",
     image: "/images/gallery/IMG_5085.jpg",
     readTime: "6 min read",
-    published: true,
   },
   {
     slug: "designing-runes-and-reagents",
@@ -82,7 +79,6 @@ export const ALL_POSTS: BlogPost[] = [
     category: "Board Games",
     image: "/images/projects/runes-reagents.png",
     readTime: "7 min read",
-    published: true,
   },
   {
     slug: "building-in-public",
@@ -93,7 +89,6 @@ export const ALL_POSTS: BlogPost[] = [
     category: "Random Thoughts",
     image: "/images/gallery/Tomb.jpg",
     readTime: "3 min read",
-    published: true,
   },
   {
     slug: "istanbul-layover",
@@ -104,7 +99,6 @@ export const ALL_POSTS: BlogPost[] = [
     category: "Travel",
     image: "/images/gallery/Istanbul-1.jpg",
     readTime: "5 min read",
-    published: true,
   },
 ]
 

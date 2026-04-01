@@ -8,12 +8,13 @@ import { POST_CONTENT } from "@/components/blog/posts"
 
 export const runtime = "edge"
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
-  params: { slug: string }
-}): Metadata {
-  const post = getPost(params.slug)
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const post = getPost(slug)
   if (!post) return { title: "Post Not Found" }
   return {
     title: post.title,
@@ -39,12 +40,13 @@ export function generateMetadata({
   }
 }
 
-export default function BlogPostPage({
+export default async function BlogPostPage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
-  const post = getPost(params.slug)
+  const { slug } = await params
+  const post = getPost(slug)
   if (!post) notFound()
 
   const related = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 3)
@@ -123,7 +125,7 @@ export default function BlogPostPage({
           </div>
 
           {/* Article body */}
-          <div className="prose prose-lg mt-12 max-w-none text-charcoal/80 prose-headings:text-navy prose-a:text-teal">
+          <div className="prose prose-lg mt-12 max-w-none text-charcoal/80 prose-headings:text-navy prose-h2:mt-14 prose-h2:text-2xl prose-h2:sm:text-3xl prose-h3:mt-8 prose-h3:text-lg prose-h3:italic prose-h3:text-charcoal/50 prose-h3:font-medium prose-p:leading-relaxed prose-a:text-teal prose-hr:my-10">
             {POST_CONTENT[post.slug] ? (
               (() => {
                 const Content = POST_CONTENT[post.slug]
