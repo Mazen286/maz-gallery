@@ -1,3 +1,5 @@
+export const runtime = "edge"
+
 import { BLOG_POSTS } from "@/lib/blog"
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/constants"
 

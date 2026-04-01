@@ -110,7 +110,7 @@ export default function AboutPage() {
             alt="Mazen Abugharbieh"
             width={1400}
             height={600}
-            className="h-[340px] w-full object-cover object-[center_35%] sm:h-[420px] lg:h-[500px]"
+            className="h-[340px] w-full object-cover object-[center_45%] sm:h-[420px] lg:h-[500px]"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
