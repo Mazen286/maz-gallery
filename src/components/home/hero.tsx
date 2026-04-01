@@ -1,139 +1,143 @@
 "use client"
 
 import Image from "next/image"
-import { useRef, useCallback } from "react"
-import { useMousePosition } from "@/hooks/use-mouse-position"
+import { useRef, useCallback, useEffect, useState } from "react"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
-  const nameRef = useRef<HTMLHeadingElement>(null)
-  const arabicRef = useRef<HTMLParagraphElement>(null)
   const reduced = useReducedMotion()
+  const mousePos = useRef({ x: 0.5, y: 0.5 })
+  const raf = useRef<number>(0)
+  const [mounted, setMounted] = useState(false)
 
-  const handleMouseUpdate = useCallback(
-    (pos: { elementX: number; elementY: number; isInside: boolean }) => {
-      if (reduced) return
+  useEffect(() => setMounted(true), [])
+
+  // Smooth parallax via rAF
+  const photoRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLDivElement>(null)
+  const arabicRef = useRef<HTMLParagraphElement>(null)
+
+  const animate = useCallback(() => {
+    if (reduced) return
+    const mx = mousePos.current.x - 0.5 // -0.5 to 0.5
+    const my = mousePos.current.y - 0.5
+
+    // Photo shifts opposite to mouse (depth illusion)
+    if (photoRef.current) {
+      photoRef.current.style.transform = `translate(${-mx * 20}px, ${-my * 15}px) scale(1.05)`
+    }
+    // Text shifts with mouse (foreground layer)
+    if (textRef.current) {
+      textRef.current.style.transform = `translate(${mx * 10}px, ${my * 8}px)`
+    }
+    // Arabic ghost layer - deeper parallax
+    if (arabicRef.current) {
+      arabicRef.current.style.transform = `translate(${-mx * 35}px, ${-my * 25}px)`
+    }
+
+    raf.current = requestAnimationFrame(animate)
+  }, [reduced])
+
+  useEffect(() => {
+    if (reduced) return
+
+    const handleMouse = (e: MouseEvent) => {
       const el = sectionRef.current
       if (!el) return
-
       const rect = el.getBoundingClientRect()
-      const centerX = rect.width / 2
-      const centerY = rect.height / 2
-
-      if (!pos.isInside) {
-        if (nameRef.current) {
-          nameRef.current.style.transition = "transform 0.6s cubic-bezier(0.33, 1, 0.68, 1)"
-          nameRef.current.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)"
-          nameRef.current.style.textShadow = "none"
-        }
-        if (arabicRef.current) {
-          arabicRef.current.style.transition = "transform 0.6s cubic-bezier(0.33, 1, 0.68, 1)"
-          arabicRef.current.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translate(-50%, -50%)"
-        }
-        return
+      mousePos.current = {
+        x: (e.clientX - rect.left) / rect.width,
+        y: (e.clientY - rect.top) / rect.height,
       }
+    }
 
-      const rotateY = ((pos.elementX - centerX) / centerX) * 12
-      const rotateX = ((centerY - pos.elementY) / centerY) * 8
-      const shadowX = ((pos.elementX - centerX) / centerX) * 6
-      const shadowY = ((pos.elementY - centerY) / centerY) * 6
+    window.addEventListener("mousemove", handleMouse)
+    raf.current = requestAnimationFrame(animate)
 
-      if (nameRef.current) {
-        nameRef.current.style.transition = "none"
-        nameRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
-        nameRef.current.style.textShadow = `${shadowX}px ${shadowY}px 12px rgba(36,48,72,0.25)`
-      }
-
-      if (arabicRef.current) {
-        arabicRef.current.style.transition = "none"
-        arabicRef.current.style.transform = `perspective(1000px) rotateX(${rotateX * 0.4}deg) rotateY(${rotateY * 0.4}deg) translate(-50%, -50%)`
-      }
-    },
-    [reduced]
-  )
-
-  useMousePosition(sectionRef, handleMouseUpdate)
+    return () => {
+      window.removeEventListener("mousemove", handleMouse)
+      cancelAnimationFrame(raf.current)
+    }
+  }, [animate, reduced])
 
   return (
-    <section ref={sectionRef} id="hero" className="relative min-h-screen overflow-hidden bg-white">
-      <div className="mx-auto flex min-h-screen max-w-7xl items-center px-6 pt-16">
-        <div className="grid w-full items-center gap-12 lg:grid-cols-2">
-          <div className="relative">
-            {/* Ghost Arabic layer behind */}
-            <p
-              ref={arabicRef}
-              className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none text-[12rem] font-bold text-navy/[0.04] sm:text-[16rem]"
-              style={{ willChange: "transform" }}
-              dir="rtl"
-              aria-hidden="true"
-            >
-              مازن
-            </p>
+    <section
+      ref={sectionRef}
+      id="hero"
+      className="relative min-h-screen overflow-hidden bg-charcoal"
+    >
+      {/* Background photo layer - parallax */}
+      <div
+        ref={photoRef}
+        className="absolute inset-0 transition-transform duration-100"
+        style={{ willChange: "transform", transform: "scale(1.05)" }}
+      >
+        <Image
+          src="/images/hero-portrait.jpg"
+          alt="Mazen Abugharbieh"
+          fill
+          priority
+          className="object-cover object-[center_25%]"
+          sizes="100vw"
+        />
+        {/* Gradient overlays for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-charcoal/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 via-transparent to-transparent" />
+      </div>
 
-            {/* Main name with 3D parallax */}
-            <h1
-              ref={nameRef}
-              className="relative z-10 text-6xl font-bold leading-[0.95] text-navy sm:text-7xl lg:text-8xl"
-              style={{ willChange: "transform" }}
-            >
-              Mazen
-              <br />
-              Abugharbieh
-            </h1>
-            <p className="relative z-10 mt-2 text-4xl font-bold text-teal sm:text-5xl lg:text-6xl" dir="rtl">
-              مازن
-            </p>
-            <p className="relative z-10 mt-6 text-sm font-medium uppercase tracking-[0.25em] text-charcoal/60">
-              Data Analyst / Photographer / Startup Co-Founder / San Diego
-            </p>
-          </div>
+      {/* Arabic ghost layer - centered behind name, deepest parallax */}
+      <p
+        ref={arabicRef}
+        className="pointer-events-none absolute bottom-[8%] left-[3%] select-none font-bold leading-none text-white/[0.08]"
+        style={{
+          willChange: "transform",
+          fontSize: "clamp(10rem, 28vw, 28rem)",
+        }}
+        dir="rtl"
+        aria-hidden="true"
+      >
+        مازن
+      </p>
 
-          <div className="relative flex justify-center lg:justify-end">
-            <div className="relative">
-              {/* Morphing data-viz background patterns */}
-              <div className="absolute -inset-4 overflow-hidden rounded-2xl bg-charcoal">
-                {/* Pattern 1: Dot grid */}
-                <div
-                  className="animate-pattern-1 absolute inset-0"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle, rgba(120,200,214,0.3) 1px, transparent 1px)",
-                    backgroundSize: "20px 20px",
-                    willChange: "opacity",
-                  }}
-                />
-                {/* Pattern 2: Grid lines */}
-                <div
-                  className="animate-pattern-2 absolute inset-0"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(rgba(120,200,214,0.15) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(120,200,214,0.15) 1px, transparent 1px)
-                    `,
-                    backgroundSize: "40px 40px",
-                    willChange: "opacity",
-                  }}
-                />
-                {/* Pattern 3: Diagonal lines */}
-                <div
-                  className="animate-pattern-3 absolute inset-0"
-                  style={{
-                    backgroundImage:
-                      "repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(120,200,214,0.1) 20px, rgba(120,200,214,0.1) 21px)",
-                    willChange: "opacity",
-                  }}
-                />
-              </div>
-              <Image
-                src="/images/headshot.jpg"
-                alt="Mazen Abugharbieh"
-                width={500}
-                height={520}
-                priority
-                className="relative z-10 h-auto w-80 rounded-2xl object-cover sm:w-96"
-              />
-            </div>
+      {/* Foreground content - text layer */}
+      <div
+        ref={textRef}
+        className="relative z-10 flex min-h-screen items-end"
+        style={{ willChange: "transform" }}
+      >
+        <div className="mx-auto w-full max-w-7xl px-6 pb-16 sm:pb-24">
+          {/* Subtitle */}
+          <p
+            className="text-xs font-medium uppercase tracking-[0.4em] text-teal transition-opacity duration-700"
+            style={{ opacity: mounted ? 1 : 0 }}
+          >
+            Data &middot; Photography &middot; Startups &middot; San Diego
+          </p>
+
+          {/* Name */}
+          <h1
+            className="mt-4 font-bold leading-[0.9] text-white transition-all duration-700"
+            style={{
+              fontSize: "clamp(2.8rem, 10vw, 9rem)",
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? "translateY(0)" : "translateY(30px)",
+            }}
+          >
+            Mazen
+            <br />
+            <span className="text-white/90">Abugharbieh</span>
+          </h1>
+
+          {/* Scroll indicator */}
+          <div
+            className="mt-12 flex items-center gap-3 transition-opacity duration-700"
+            style={{ opacity: mounted ? 0.4 : 0, transitionDelay: "800ms" }}
+          >
+            <div className="h-8 w-px bg-gradient-to-b from-teal to-transparent" />
+            <p className="text-[10px] uppercase tracking-[0.3em] text-white/60">
+              Scroll to explore
+            </p>
           </div>
         </div>
       </div>

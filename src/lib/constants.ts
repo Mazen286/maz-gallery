@@ -12,8 +12,8 @@ export const SOCIAL = {
 export const NAV_LINKS = [
   { label: "About", href: "/about" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Digital Collection", href: "/digital-collection" },
   { label: "My Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
 ] as const
 
 export const FIGMENT_URL = "https://figmentanalytics.com"

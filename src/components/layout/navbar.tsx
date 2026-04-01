@@ -32,7 +32,7 @@ export function Navbar() {
       }`}
     >
       <nav aria-label="Main navigation" className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className={`text-lg font-bold tracking-tight transition-colors ${solid ? "text-navy" : "text-navy"}`}>
+        <Link href="/" className={`text-lg font-bold tracking-tight transition-colors ${solid ? "text-navy" : "text-white"}`}>
           MazGallery
         </Link>
 
@@ -44,7 +44,7 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     className={`inline-block text-sm font-medium font-mono transition-colors ${
-                      solid ? "text-charcoal/70 hover:text-navy" : "text-charcoal/70 hover:text-navy"
+                      solid ? "text-charcoal/70 hover:text-navy" : "text-white/70 hover:text-white"
                     }`}
                   >
                     {display}
@@ -56,7 +56,9 @@ export function Navbar() {
           <Magnetic strength={0.2}>
             <Link
               href="/booking"
-              className="rounded-full bg-navy px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-navy/90"
+              className={`rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
+                solid ? "bg-navy text-white hover:bg-navy/90" : "bg-white/15 text-white backdrop-blur-sm hover:bg-white/25"
+              }`}
             >
               Say Hello
             </Link>
@@ -65,7 +67,7 @@ export function Navbar() {
 
         <button
           onClick={() => setOpen(!open)}
-          className="text-navy md:hidden"
+          className={`${solid ? "text-navy" : "text-white"} md:hidden`}
           aria-label="Toggle menu"
           aria-expanded={open}
         >

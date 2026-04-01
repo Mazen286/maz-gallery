@@ -1,95 +1,79 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { Shuffle, Grid3x3, Eye, Sparkles, DoorOpen, Puzzle } from "lucide-react"
+import Image from "next/image"
+import { Shuffle, Grid3x3, Eye, Puzzle } from "lucide-react"
 import { GALLERY } from "@/lib/gallery"
 import { GalleryIntro } from "./gallery-intro"
 import { ExhibitionView } from "./exhibition-view"
 import { GalleryGrid } from "./gallery-grid"
-import { MemorySpace } from "./memory-space"
-import { PortalRooms } from "./portal-rooms"
 import { JigsawPuzzle } from "./jigsaw-puzzle"
 
-type ViewMode = "exhibition" | "grid" | "memory" | "portal" | "surprise"
+const COLLECTION = [
+  { src: "/images/collection/IMG_7908.jpeg", alt: "Digital collectible showcase", width: 600, height: 800 },
+  { src: "/images/collection/IMG_7895.jpeg", alt: "VeVe collectible display", width: 600, height: 800 },
+  { src: "/images/collection/IMG_7903.jpeg", alt: "Digital art piece", width: 600, height: 800 },
+  { src: "/images/collection/IMG_7906.jpeg", alt: "Collectible figure", width: 600, height: 800 },
+  { src: "/images/collection/IMG_7914.jpeg", alt: "VeVe showcase room", width: 600, height: 800 },
+  { src: "/images/collection/IMG_7915.jpeg", alt: "Digital art display", width: 600, height: 800 },
+  { src: "/images/collection/IMG_7519.jpeg", alt: "Collectible exhibit", width: 600, height: 800 },
+  { src: "/images/collection/IMG_1438.jpg", alt: "Digital art collection", width: 600, height: 800 },
+  { src: "/images/collection/IMG_1909.jpg", alt: "VeVe collection piece", width: 600, height: 800 },
+  { src: "/images/collection/IMG_0253.jpeg", alt: "Digital showcase", width: 600, height: 800 },
+  { src: "/images/collection/IMG_0637.jpeg", alt: "Collectible art", width: 600, height: 800 },
+  { src: "/images/collection/IMG_1007.jpeg", alt: "Digital gallery", width: 600, height: 800 },
+  { src: "/images/collection/87192.jpg", alt: "VeVe collectible", width: 600, height: 800 },
+]
+
+type ViewMode = "exhibition" | "grid"
 
 const VIEW_OPTIONS: { mode: ViewMode; label: string; icon: typeof Eye }[] = [
   { mode: "exhibition", label: "Exhibition", icon: Eye },
   { mode: "grid", label: "Grid", icon: Grid3x3 },
-  { mode: "memory", label: "Memory Space", icon: Sparkles },
-  { mode: "portal", label: "Portal", icon: DoorOpen },
 ]
 
 export function GalleryPageClient() {
   const [introComplete, setIntroComplete] = useState(false)
   const [view, setView] = useState<ViewMode>("exhibition")
-  const [surpriseIndex, setSurpriseIndex] = useState<number | null>(null)
+  const [exhibitionStart, setExhibitionStart] = useState(0)
   const [puzzleIndex, setPuzzleIndex] = useState<number | null>(null)
 
   const handleIntroComplete = useCallback(() => setIntroComplete(true), [])
   const handleSurprise = () => {
-    const idx = Math.floor(Math.random() * GALLERY.length)
-    setSurpriseIndex(idx)
-    setView("surprise")
+    setExhibitionStart(Math.floor(Math.random() * GALLERY.length))
+    setView("exhibition")
   }
-
-  const surprisePhoto = surpriseIndex !== null ? GALLERY[surpriseIndex] : null
 
   return (
     <>
       {/* Intro overlay */}
       {!introComplete && <GalleryIntro onComplete={handleIntroComplete} />}
 
-      {/* Surprise Me overlay */}
-      {view === "surprise" && surprisePhoto && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-8"
-          onClick={() => setView("exhibition")}
-        >
-          <div
-            className="max-w-4xl text-center"
-            onClick={(e) => e.stopPropagation()}
-            style={{ animation: "imageFloatIn 0.6s cubic-bezier(0.33, 1, 0.68, 1) forwards" }}
-          >
-            <img
-              src={surprisePhoto.src}
-              alt={surprisePhoto.alt}
-              className="mx-auto max-h-[70vh] w-auto rounded-lg shadow-2xl"
-            />
-            {surprisePhoto.location && (
-              <p className="mt-6 text-xs uppercase tracking-[0.3em] text-teal">
-                {surprisePhoto.location}
-              </p>
-            )}
-            <p className="mt-2 text-sm text-white/40">{surprisePhoto.alt}</p>
-            <div className="mt-8 flex justify-center gap-4">
-              <button
-                onClick={handleSurprise}
-                className="rounded-full border border-teal/30 px-6 py-2 text-sm text-teal transition-all hover:bg-teal/10"
-              >
-                Another One
-              </button>
-              <button
-                onClick={() => setView("exhibition")}
-                className="rounded-full border border-white/20 px-6 py-2 text-sm text-white/50 transition-all hover:text-white"
-              >
-                Back to Gallery
-              </button>
-            </div>
+      {/* Header with hero image - full bleed */}
+      <section className="relative">
+        <div className="relative overflow-hidden">
+          <Image
+            src="/images/gallery/NewYork-2-Edit.jpg"
+            alt="Rainy New York night"
+            width={1500}
+            height={1000}
+            className="h-[340px] w-full object-cover sm:h-[420px] lg:h-[480px]"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+          <div className="absolute inset-x-0 bottom-0 px-8 pb-10 text-center sm:pb-12">
+            <h1 className="text-5xl font-bold text-white sm:text-6xl">Gallery</h1>
+            <p className="mt-3 text-lg text-white/60">
+              Places I&apos;ve been. Moments I couldn&apos;t let go of.
+            </p>
           </div>
         </div>
-      )}
 
-      {/* Header */}
-      <section className="bg-charcoal pb-4 pt-32 sm:pt-40">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <h1 className="text-5xl font-bold text-white sm:text-6xl">Gallery</h1>
-          <p className="mt-4 text-lg text-white/50">
-            Places I&apos;ve been. Moments I couldn&apos;t let go of.
-          </p>
-        </div>
+      </section>
 
-        {/* View switcher */}
-        <div className="mx-auto mt-8 flex max-w-4xl flex-wrap items-center justify-center gap-2 px-6">
+      {/* View switcher - dark strip */}
+      <section className="bg-charcoal py-5">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-2 px-6">
           {VIEW_OPTIONS.map(({ mode, label, icon: Icon }) => (
             <button
               key={mode}
@@ -123,7 +107,7 @@ export function GalleryPageClient() {
 
       {/* Views */}
       {view === "exhibition" && (
-        <ExhibitionView images={GALLERY} />
+        <ExhibitionView key={exhibitionStart} images={GALLERY} startIndex={exhibitionStart} />
       )}
 
       {view === "grid" && (
@@ -134,13 +118,37 @@ export function GalleryPageClient() {
         </section>
       )}
 
-      {view === "memory" && (
-        <MemorySpace images={GALLERY} />
-      )}
-
-      {view === "portal" && (
-        <PortalRooms images={GALLERY} />
-      )}
+      {/* Digital Collection - collapsed by default */}
+      <section className="bg-charcoal pb-16 pt-8">
+        <div className="mx-auto max-w-7xl px-6">
+          <details className="group">
+            <summary className="flex cursor-pointer items-center justify-center gap-3 py-4 text-center list-none">
+              <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-white/25 transition-colors group-open:text-teal/60">
+                Digital Collection
+              </span>
+              <span className="text-white/20 transition-transform duration-300 group-open:rotate-180">
+                ▾
+              </span>
+            </summary>
+            <div className="pt-6">
+              <div className="columns-2 gap-4 sm:columns-3 lg:columns-4">
+                {COLLECTION.map((item) => (
+                  <div key={item.src} className="mb-4 break-inside-avoid overflow-hidden rounded-lg">
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      width={item.width}
+                      height={item.height}
+                      className="h-auto w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
 
       {/* Jigsaw Puzzle overlay */}
       {puzzleIndex !== null && (

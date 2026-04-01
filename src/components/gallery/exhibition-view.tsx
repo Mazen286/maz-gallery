@@ -7,6 +7,7 @@ import type { GalleryImage } from "@/lib/gallery"
 
 interface ExhibitionViewProps {
   images: GalleryImage[]
+  startIndex?: number
 }
 
 // Map locations to story snippets
@@ -26,8 +27,8 @@ function getStory(img?: { story?: string; location?: string }): string {
   return ""
 }
 
-export function ExhibitionView({ images }: ExhibitionViewProps) {
-  const [current, setCurrent] = useState(0)
+export function ExhibitionView({ images, startIndex = 0 }: ExhibitionViewProps) {
+  const [current, setCurrent] = useState(startIndex)
   const [transitioning, setTransitioning] = useState(false)
   const [bgColor, setBgColor] = useState("rgb(10,10,10)")
   const containerRef = useRef<HTMLDivElement>(null)

@@ -11,10 +11,10 @@ export function Story() {
           <DiagonalWipe>
             <div className="overflow-hidden rounded-2xl">
               <Image
-                src="/images/story.jpg"
-                alt="Mazen photographing"
+                src="/images/about-2.jpg"
+                alt="Mazen Abugharbieh"
                 width={700}
-                height={500}
+                height={1050}
                 className="h-auto w-full object-cover"
               />
             </div>

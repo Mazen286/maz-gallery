@@ -49,7 +49,7 @@ export default function HomePage() {
 
       {/* Hidden scroll message */}
       <div className="bg-charcoal py-4 text-center">
-        <p className="text-[10px] tracking-widest text-white/10">
+        <p className="text-[10px] tracking-widest text-white/40">
           You scrolled all the way down? You must really like data.
         </p>
       </div>

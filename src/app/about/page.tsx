@@ -2,88 +2,265 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { FadeIn } from "@/components/shared/fade-in"
-import { FIGMENT_URL } from "@/lib/constants"
+import { FIGMENT_URL, PRESS } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Mazen Abugharbieh merges data engineering precision with creative visual storytelling. Based in San Diego.",
+  description:
+    "Mazen Abugharbieh merges data engineering precision with creative visual storytelling. Based in San Diego.",
   alternates: { canonical: "/about" },
 }
+
+const JOURNEY = [
+  {
+    year: "2015",
+    title: "Structural Engineering",
+    text: "Started with a degree in structural engineering. Learned how things hold together under pressure, how to read the forces behind what you see. That foundation shaped everything that came after.",
+  },
+  {
+    year: "2019",
+    title: "MBA at UC San Diego",
+    text: "Got my MBA at UCSD. Realized the same principles that hold up a building hold up a business. Data is the structure. Strategy is the design.",
+  },
+  {
+    year: "2020",
+    title: "Co-Founded SurfUp",
+    text: "Built automated surfboard rental stations across San Diego. Hardware, software, operations. Featured on ABC 10 News, CBS 8, and the San Diego Union-Tribune.",
+  },
+  {
+    year: "2021",
+    title: "Started Figment Analytics",
+    text: "Launched a data consultancy with a team of three. Dashboards, workshops, BI programs. Helping businesses see their numbers clearly for the first time.",
+  },
+  {
+    year: "Now",
+    title: "Building & Creating",
+    text: "Running the consultancy, designing games, taking photos, collecting digital art, and always looking for the next thing to build.",
+  },
+]
+
+const STATS = [
+  { number: "7+", label: "Projects shipped" },
+  { number: "10+", label: "Locations photographed" },
+  { number: "3", label: "Media features" },
+  { number: "57", label: "Gallery photos" },
+]
+
+const INTERESTS = [
+  "Photography",
+  "Game Design",
+  "Data Visualization",
+  "Travel",
+  "Digital Collectibles",
+  "Startups",
+  "Overwatch",
+  "Card Games",
+]
 
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-white pb-8 pt-32 sm:pt-40">
-        <div className="mx-auto max-w-7xl px-6">
-          <h1 className="text-[6rem] font-bold uppercase leading-[0.9] tracking-tight text-navy sm:text-[10rem]">
-            About Me
-          </h1>
-        </div>
-      </section>
-
-      <section className="bg-white pb-12">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="overflow-hidden rounded-2xl">
-            <Image
-              src="/images/about-1.jpg"
-              alt="Mazen Abugharbieh"
-              width={1400}
-              height={600}
-              className="h-auto w-full object-cover"
-              priority
-            />
+      {/* Hero - full bleed */}
+      <section className="relative">
+        <div className="relative overflow-hidden">
+          <Image
+            src="/images/about-1.jpg"
+            alt="Mazen Abugharbieh"
+            width={1400}
+            height={600}
+            className="h-[340px] w-full object-cover object-[center_35%] sm:h-[420px] lg:h-[500px]"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
+          <div className="absolute inset-x-0 bottom-0 px-8 pb-10 sm:pb-14">
+            <div className="mx-auto max-w-7xl">
+              <h1
+                className="font-bold uppercase leading-[0.9] tracking-tight text-white"
+                style={{ fontSize: "clamp(4rem, 12vw, 10rem)" }}
+              >
+                About Me
+              </h1>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-white py-24 sm:py-32">
+      {/* Opening statement */}
+      <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <FadeIn>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
-              My Story
-            </p>
-            <p className="mt-6 text-lg leading-relaxed text-charcoal">
-              I studied structural engineering because I wanted to understand
-              how things hold together. Then I got my MBA at UC San Diego and
-              realized the same question applies to businesses, decisions, and
-              stories. Data is the structure. Visualization is the architecture.
-            </p>
-            <p className="mt-4 text-lg leading-relaxed text-charcoal">
-              Along the way, I co-founded a tech startup, built BI programs
-              for city governments, and picked up a camera that I haven&apos;t
-              put down since. My work has been featured on ABC 10 News, SD
-              Voyager, and UC San Diego. But the work I&apos;m most proud of
-              is the kind that makes someone say &ldquo;I finally understand
-              the data.&rdquo;
+            <p className="text-2xl leading-relaxed text-charcoal sm:text-3xl lg:text-4xl">
+              I build things that help people see clearly. Whether that&apos;s a
+              dashboard, a photograph, or a product, the goal is the same: take
+              something complex and make it feel simple.
             </p>
           </FadeIn>
         </div>
       </section>
 
-      <section className="bg-white py-24 sm:py-32">
+      {/* Journey timeline */}
+      <section className="bg-charcoal py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <FadeIn>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
-              What I Do
+            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
+              The Journey
             </p>
-            <p className="mt-4 text-lg text-charcoal/80">
+          </FadeIn>
+
+          <div className="mt-10 space-y-0">
+            {JOURNEY.map((item, i) => (
+              <FadeIn key={item.year} delay={i * 100}>
+                <div className="grid grid-cols-[60px_1fr] gap-6 border-l border-white/10 py-8 pl-8 sm:grid-cols-[80px_1fr]">
+                  <span className="font-mono text-sm font-bold text-teal">
+                    {item.year}
+                  </span>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                    <p className="mt-2 text-[15px] leading-relaxed text-white/50">
+                      {item.text}
+                    </p>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats strip */}
+      <section className="border-y border-white/10 bg-charcoal py-12">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+            {STATS.map((stat, i) => (
+              <FadeIn key={stat.label} delay={i * 80}>
+                <div className="text-center">
+                  <p className="text-4xl font-bold text-teal sm:text-5xl">
+                    {stat.number}
+                  </p>
+                  <p className="mt-2 text-xs uppercase tracking-[0.2em] text-white/40">
+                    {stat.label}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Photo break - 3 standout images */}
+      <section className="bg-charcoal py-12">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid gap-4 sm:grid-cols-3">
+            <FadeIn delay={0}>
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/images/gallery/Istanbul-1.jpg"
+                  alt="Light inside the Hagia Sophia"
+                  width={1500}
+                  height={1000}
+                  className="h-64 w-full object-cover sm:h-80"
+                />
+              </div>
+            </FadeIn>
+            <FadeIn delay={100}>
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/images/gallery/Jordan-3.jpg"
+                  alt="The Abdoun Bridge at night"
+                  width={1500}
+                  height={1000}
+                  className="h-64 w-full object-cover sm:h-80"
+                />
+              </div>
+            </FadeIn>
+            <FadeIn delay={200}>
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/images/gallery/IMG_3901.jpg"
+                  alt="Autumn in Central Park"
+                  width={1500}
+                  height={1000}
+                  className="h-64 w-full object-cover sm:h-80"
+                />
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* What I'm Into */}
+      <section className="bg-white py-16 sm:py-24">
+        <div className="mx-auto max-w-4xl px-6">
+          <FadeIn>
+            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
+              What I&apos;m Into
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {INTERESTS.map((interest) => (
+                <span
+                  key={interest}
+                  className="rounded-full border border-navy/15 px-5 py-2 text-sm font-medium text-navy/70"
+                >
+                  {interest}
+                </span>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Featured on */}
+      <section className="bg-slate-50 py-14">
+        <div className="mx-auto max-w-5xl px-6">
+          <FadeIn>
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.4em] text-charcoal/40">
+              Featured On
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-12">
+              {PRESS.map((outlet) => (
+                <a
+                  key={outlet.name}
+                  href={outlet.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity hover:opacity-70"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={outlet.logo}
+                    alt={outlet.name}
+                    className="h-14 w-auto object-contain sm:h-16"
+                  />
+                </a>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-white py-16 sm:py-24">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <FadeIn>
+            <p className="text-2xl font-bold text-navy sm:text-3xl">
+              Want to work together?
+            </p>
+            <p className="mt-3 text-charcoal/50">
               I run{" "}
               <a
                 href={FIGMENT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-navy underline decoration-teal/40 underline-offset-4 hover:decoration-teal"
+                className="font-medium text-teal underline-offset-4 hover:underline"
               >
                 Figment Analytics
-              </a>
-              , a data consultancy where my team and I help businesses build
-              dashboards, run workshops, and make better decisions with their
-              data. I also build side projects, take photos, and design games.
+              </a>{" "}
+              for data work. For everything else, just say hello.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
                 href="/booking"
-                className="inline-block rounded-full bg-navy px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-navy/90"
+                className="rounded-full bg-navy px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-navy/90"
               >
                 Say Hello
               </Link>
@@ -91,7 +268,7 @@ export default function AboutPage() {
                 href={FIGMENT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block rounded-full border-2 border-navy px-8 py-3 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
+                className="rounded-full border-2 border-navy px-8 py-3 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
               >
                 Visit Figment Analytics
               </a>
