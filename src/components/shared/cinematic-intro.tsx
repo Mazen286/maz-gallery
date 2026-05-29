@@ -1,16 +1,19 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
 
 export function CinematicIntro() {
   const [phase, setPhase] = useState<"black" | "lightleak" | "reveal" | "done">("black")
   const [skip, setSkip] = useState(false)
   const reduced = useReducedMotion()
+  const pathname = usePathname()
+  const onCafeMaz = pathname?.startsWith("/cafe-maz") ?? false
 
   useEffect(() => {
-    // Only play once per session
-    if (sessionStorage.getItem("intro-seen") || reduced) {
+    // Skip intro on cafe-maz pages (separate brand) and once-per-session everywhere
+    if (onCafeMaz || sessionStorage.getItem("intro-seen") || reduced) {
       setPhase("done")
       return
     }
@@ -27,7 +30,7 @@ export function CinematicIntro() {
       clearTimeout(t2)
       clearTimeout(t3)
     }
-  }, [reduced])
+  }, [reduced, onCafeMaz])
 
   useEffect(() => {
     if (skip) {
@@ -36,7 +39,7 @@ export function CinematicIntro() {
     }
   }, [skip])
 
-  if (phase === "done") return null
+  if (phase === "done" || onCafeMaz) return null
 
   return (
     <div

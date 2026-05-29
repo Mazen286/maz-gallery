@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Cinzel, Cormorant_Garamond, Aref_Ruqaa, JetBrains_Mono } from "next/font/google"
+import { Cinzel, Cormorant_Garamond, Amiri, JetBrains_Mono } from "next/font/google"
 import "./cafe-maz.css"
 
 const cinzel = Cinzel({
@@ -15,10 +15,11 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 })
 
-const arefRuqaa = Aref_Ruqaa({
-  variable: "--font-aref-ruqaa",
+const amiri = Amiri({
+  variable: "--font-amiri",
   subsets: ["arabic"],
   weight: ["400", "700"],
+  style: ["normal", "italic"],
 })
 
 const jetbrains = JetBrains_Mono({
@@ -28,18 +29,27 @@ const jetbrains = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Café Maz",
+  title: { absolute: "Café Maz" },
   description: "A one-table café — open whenever you're over.",
   robots: { index: false, follow: false, nocache: true },
   alternates: { canonical: undefined },
-  openGraph: { images: [] },
-  twitter: { card: "summary" },
+  openGraph: {
+    type: "website",
+    title: "Café Maz",
+    description: "A one-table café — open whenever you're over.",
+    siteName: "Café Maz",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Café Maz",
+    description: "A one-table café — open whenever you're over.",
+  },
 }
 
 export default function CafeMazLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`cafe-maz ${cinzel.variable} ${cormorant.variable} ${arefRuqaa.variable} ${jetbrains.variable}`}
+      className={`cafe-maz ${cinzel.variable} ${cormorant.variable} ${amiri.variable} ${jetbrains.variable}`}
     >
       {children}
     </div>

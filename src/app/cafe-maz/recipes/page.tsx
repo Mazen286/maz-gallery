@@ -506,6 +506,12 @@ export default function RecipesPage() {
                     <div key={r.name} className={styles.ratio}>
                       <div className={styles.pct}>{r.pct}</div>
                       <div className={styles.ratioName}>{r.name}</div>
+                      {r.shelf && (
+                        <div className={styles.shelfRef}>
+                          <span className={styles.shelfBrand}>{r.shelf.brand} · {r.shelf.line}</span>
+                          <span className={styles.shelfFlavor}>{r.shelf.flavor}</span>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

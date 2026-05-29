@@ -506,6 +506,29 @@
   margin-top: 8px;
   text-transform: uppercase;
 }
+.shelfRef {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dotted var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.shelfBrand {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass);
+  opacity: 0.85;
+}
+.shelfFlavor {
+  font-family: var(--f-head);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cream-bright);
+  line-height: 1.2;
+}
 
 /* MILK MATRIX */
 .matrix {

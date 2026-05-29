@@ -21,7 +21,7 @@
   --f-display-weight: 600;
   --f-head: var(--font-cormorant), serif;
   --f-body: var(--font-cormorant), serif;
-  --f-arabic: var(--font-aref-ruqaa), serif;
+  --f-arabic: var(--font-amiri), serif;
   --f-mono: var(--font-jetbrains-mono), monospace;
 
   background: var(--coffee);

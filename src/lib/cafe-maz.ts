@@ -61,15 +61,25 @@ export const DRINK_SECTIONS: DrinkSection[] = [
   },
 ]
 
+export type HookahShelfRef = { brand: string; line: string; flavor: string }
+
+export type HookahRatio = {
+  pct: string
+  name: string
+  shelf?: HookahShelfRef
+}
+
 export type HookahCombo = {
   num: string
   name: string
   ar: string
   mix: string
   desc: string
-  ratios?: { pct: string; name: string }[]
+  ratios?: HookahRatio[]
   note?: string
 }
+
+const ULTRA_NOVA: HookahShelfRef = { brand: "Darkside", line: "Standard", flavor: "Ultranova / Super Nova" }
 
 export const HOOKAH_COMBOS: HookahCombo[] = [
   {
@@ -79,9 +89,9 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     mix: "Cold Mint · Pine · Basil",
     desc: "Cold mint backbone, sharp pine, soft basil finish. The house pour.",
     ratios: [
-      { pct: "50%", name: "Cold Mint" },
-      { pct: "30%", name: "Pine" },
-      { pct: "20%", name: "Basil" },
+      { pct: "50%", name: "Cold Mint", shelf: ULTRA_NOVA },
+      { pct: "30%", name: "Pine", shelf: { brand: "Darkside", line: "Standard", flavor: "Needls" } },
+      { pct: "20%", name: "Basil", shelf: { brand: "Darkside", line: "Standard", flavor: "Basil Blast" } },
     ],
     note: "house pour",
   },
@@ -92,9 +102,9 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     mix: "Cold Mint · Banana · Milky",
     desc: "Cool mint, ripe banana, condensed-milk finish. Late by the sea at Yaffa.",
     ratios: [
-      { pct: "40%", name: "Cold Mint" },
-      { pct: "35%", name: "Banana" },
-      { pct: "25%", name: "Milky" },
+      { pct: "40%", name: "Cold Mint", shelf: ULTRA_NOVA },
+      { pct: "35%", name: "Banana", shelf: { brand: "Darkside", line: "Experience", flavor: "Bana-Nscr" } },
+      { pct: "25%", name: "Milky", shelf: { brand: "Darkside", line: "Standard", flavor: "Killer Milk" } },
     ],
     note: "late night",
   },
@@ -105,9 +115,9 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     mix: "Cold Mint · Masala Chai · Honey",
     desc: "Cardamom chai and honey on a stone balcony — afternoon over the old city.",
     ratios: [
-      { pct: "40%", name: "Cold Mint" },
-      { pct: "30%", name: "Masala Chai" },
-      { pct: "30%", name: "Honey" },
+      { pct: "40%", name: "Cold Mint", shelf: ULTRA_NOVA },
+      { pct: "30%", name: "Masala Chai", shelf: { brand: "MustHave", line: "125g", flavor: "Masala Tea" } },
+      { pct: "30%", name: "Honey", shelf: { brand: "Darkside", line: "Standard", flavor: "Honey Dust" } },
     ],
     note: "afternoon",
   },
@@ -115,12 +125,12 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     num: "Nº 04",
     name: "Pomegranate Hour",
     ar: "ساعة الرمان",
-    mix: "Cold Mint · Pomegranate · Rose",
-    desc: "Tart, floral, sundown-colored. Sip it slow.",
+    mix: "Cold Mint · Sea Buckthorn · Violet",
+    desc: "Tart, floral, sundown-colored. Sip it slow. (Sea buckthorn stands in for pomegranate; violet for rose.)",
     ratios: [
-      { pct: "40%", name: "Cold Mint" },
-      { pct: "35%", name: "Pomegranate" },
-      { pct: "25%", name: "Rose" },
+      { pct: "40%", name: "Cold Mint", shelf: ULTRA_NOVA },
+      { pct: "35%", name: "Sea Buckthorn", shelf: { brand: "MustHave", line: "125g", flavor: "Sea Buckthorn Tea" } },
+      { pct: "25%", name: "Violet", shelf: { brand: "MustHave", line: "125g", flavor: "Violet" } },
     ],
     note: "intimate",
   },
@@ -131,9 +141,9 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     mix: "Cold Mint · Pistachio · Honey",
     desc: "Crackling syrup over pistachio cream in the old Nablus souk.",
     ratios: [
-      { pct: "45%", name: "Cold Mint" },
-      { pct: "35%", name: "Pistachio" },
-      { pct: "20%", name: "Honey" },
+      { pct: "45%", name: "Cold Mint", shelf: ULTRA_NOVA },
+      { pct: "35%", name: "Pistachio", shelf: { brand: "MustHave", line: "125g", flavor: "Pistachio" } },
+      { pct: "20%", name: "Honey", shelf: { brand: "Darkside", line: "Standard", flavor: "Honey Dust" } },
     ],
     note: "sweet",
   },
@@ -144,9 +154,9 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     mix: "Cold Mint · Milky · Pistachio",
     desc: "Hot sahlab made cool — pistachio dust, milk steam, cinnamon glow.",
     ratios: [
-      { pct: "40%", name: "Cold Mint" },
-      { pct: "35%", name: "Milky" },
-      { pct: "25%", name: "Pistachio" },
+      { pct: "40%", name: "Cold Mint", shelf: ULTRA_NOVA },
+      { pct: "35%", name: "Milky", shelf: { brand: "MustHave", line: "125g", flavor: "Milky Rice" } },
+      { pct: "25%", name: "Pistachio", shelf: { brand: "MustHave", line: "125g", flavor: "Pistachio" } },
     ],
     note: "late night",
   },
