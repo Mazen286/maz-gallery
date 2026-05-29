@@ -215,7 +215,7 @@
 .foot {
   margin-top: 32px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: baseline;
   font-family: var(--f-mono);
   font-size: 10px;

@@ -74,7 +74,6 @@ export default function CafeMazIndexPage() {
       </div>
 
       <div className={styles.foot}>
-        <span>v0.3 · candlelit edition</span>
         <span>made at the kitchen counter</span>
       </div>
     </main>

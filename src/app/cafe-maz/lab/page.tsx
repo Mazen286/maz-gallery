@@ -476,7 +476,7 @@ export default function FlavorLabPage() {
       </section>
 
       <footer className={styles.footer}>
-        <span>Café Maz · Flavor Lab · v0.2</span>
+        <span>Café Maz · Flavor Lab</span>
         <Link href="/cafe-maz">↳ index</Link>
       </footer>
     </main>

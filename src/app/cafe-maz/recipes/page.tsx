@@ -241,7 +241,7 @@ export default function RecipesPage() {
     <>
       <div className={styles.privateTape}>
         <span>※</span> PRIVATE · for Maz only{" "}
-        <span className={styles.tapeAr} lang="ar">— لماز فقط —</span> v0.2 · kitchen-counter edition{" "}
+        <span className={styles.tapeAr} lang="ar">— لماز فقط —</span>{" "}
         <span>※</span>
       </div>
 
@@ -552,7 +552,7 @@ export default function RecipesPage() {
         </section>
 
         <div className={styles.colophon}>
-          Café Maz · The Barista Book · v0.2 · candlelit edition
+          Café Maz · The Barista Book
           <br />
           <Link href="/cafe-maz" className={styles.colLink}>
             ← back to index
