@@ -531,10 +531,15 @@
 }
 
 /* MILK MATRIX */
+.matrixWrap {
+  margin-top: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .matrix {
   width: 100%;
+  min-width: 560px;
   border-collapse: collapse;
-  margin-top: 12px;
 }
 .matrix th,
 .matrix td {

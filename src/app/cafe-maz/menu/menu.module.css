@@ -420,6 +420,11 @@
   border-color: var(--brass);
 }
 
+/* Mobile-only explanatory note (hidden by default) */
+.mobileNote {
+  display: none;
+}
+
 /* NOTES */
 .notes {
   max-width: 760px;
@@ -504,16 +509,52 @@
   }
 }
 @media (max-width: 600px) {
-  .card {
-    width: 100%;
-    max-width: 380px;
-    height: auto;
-    aspect-ratio: 5.5/8.5;
+  /* Hide the desktop card preview on phones — the 5.5x8.5 ratio
+     renders content too small to read. Lead with the print action. */
+  .spread {
+    display: none;
   }
-  .inner {
-    padding: 24px 22px 18px;
+  .root {
+    padding: 32px 20px 60px;
   }
-  .cWordmark {
-    font-size: 28px;
+  .meta {
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    text-align: center;
+  }
+  .specs span {
+    margin-left: 0;
+    margin-right: 12px;
+  }
+  .lead {
+    margin-bottom: 24px;
+  }
+  .leadH1 {
+    font-size: 30px;
+  }
+  .leadAr {
+    font-size: 20px;
+  }
+  .leadTag {
+    font-size: 13px;
+  }
+  .actions {
+    margin-top: 12px;
+  }
+  .btn {
+    padding: 14px 24px;
+    font-size: 11px;
+  }
+  .mobileNote {
+    display: block;
+    text-align: center;
+    font-family: var(--f-head);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--cream-faint);
+    line-height: 1.5;
+    margin: 24px auto 0;
+    max-width: 320px;
   }
 }

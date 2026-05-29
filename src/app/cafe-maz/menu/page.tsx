@@ -27,6 +27,11 @@ export default function PrintMenuPage() {
         </p>
       </div>
 
+      <p className={styles.mobileNote}>
+        Card preview is hidden on phones. Tap below to print or save as PDF, or open
+        on desktop to see the layout.
+      </p>
+
       <div className={styles.spread}>
         <div className={styles.pageWrap}>
           <div className={styles.card}>

@@ -321,6 +321,7 @@ export default function RecipesPage() {
             Steam rule of thumb: hand-on-pitcher until it&apos;s{" "}
             <b className={styles.bAccent}>too hot to hold for 3 seconds</b> (~60–65°C). Stop there.
           </p>
+          <div className={styles.matrixWrap}>
           <table className={styles.matrix}>
             <thead>
               <tr>
@@ -365,6 +366,7 @@ export default function RecipesPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </section>
 
         {/* CH 04 — Tea & Slow Coffees */}
@@ -383,6 +385,7 @@ export default function RecipesPage() {
             <RecipeCard key={r.rid} r={r} />
           ))}
           <p className={styles.smallHead}>— Quick Steeps —</p>
+          <div className={styles.matrixWrap}>
           <table className={styles.matrix}>
             <thead>
               <tr>
@@ -421,6 +424,7 @@ export default function RecipesPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </section>
 
         {/* CH 05 — Pistachio Latte */}
