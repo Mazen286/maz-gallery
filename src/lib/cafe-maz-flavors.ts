@@ -22,7 +22,7 @@ export type Flavor = {
 export const PROFILE_FAMILIES: { label: string; profiles: string[] }[] = [
   { label: "Base · Mint", profiles: ["Cold Mint", "Bright Mint", "Spearmint", "Menthol", "Eucalyptus"] },
   { label: "Berry", profiles: ["Strawberry", "Raspberry", "Blueberry", "Blackberry", "Blackcurrant", "Cranberry", "Gooseberry", "Pomegranate", "Mixed Berry"] },
-  { label: "Tropical", profiles: ["Mango", "Pineapple", "Passion Fruit", "Coconut", "Lychee", "Banana", "Guava", "Marula", "Feijoa"] },
+  { label: "Tropical", profiles: ["Mango", "Pineapple", "Passion Fruit", "Coconut", "Lychee", "Banana", "Guava", "Kiwi", "Papaya", "Marula", "Feijoa"] },
   { label: "Stone & Crisp", profiles: ["Peach", "Apricot", "Plum", "Cherry", "Apple", "Pear", "Quince", "Grape", "Watermelon", "Cantaloupe", "Melon"] },
   { label: "Citrus", profiles: ["Lemon", "Lime", "Orange", "Mandarin", "Grapefruit", "Sea Buckthorn"] },
   { label: "Herbal · Floral", profiles: ["Basil", "Pine", "Tarragon", "Cucumber", "Rose", "Violet", "Hibiscus", "Lavender", "Cardamom"] },
@@ -30,51 +30,84 @@ export const PROFILE_FAMILIES: { label: string; profiles: string[] }[] = [
   { label: "Tea & Beverage", profiles: ["Earl Grey", "Black Tea", "Red Tea", "Masala Tea", "Milk Oolong", "Cinnamon", "Anise", "Coffee", "Chai", "Mojito", "Whisky", "Rum", "Mulled Wine", "Cigar", "Cola", "Cream Soda"] },
 ]
 
-// Darkside — organized by line. Lines roughly:
-//   Core: workhorse, full strength, classic flavors
-//   Medium: balanced strength
-//   Soft: gentle, sweeter, lighter
-//   Rare: specialty / unusual profiles
-//   Experience: premium, smoother
+// Darkside.
 //
-// Some line assignments may need correcting — edit freely.
+// "Standard" = the 200g standard range. The retailer dropdown lists these
+// as a single dropdown without distinguishing Core/Medium/Soft/Rare lines,
+// so we group them here as "Standard". Line subdivisions exist on the
+// brand side but aren't broken out by 5StarHookah / HookahJohn at retail.
+//
+// "Experience" = the Xperience burley-based line (verified separately).
+//
+// Sources: hookahjohn.com Darkside 200g variant dropdown (58 standard),
+// 5starhookah.com + thehookahlab.com Xperience pages (13).
+const DS = (name: string, profiles: string[], note?: string): Flavor => ({
+  brand: "Darkside",
+  line: "Standard",
+  name,
+  profiles,
+  note,
+})
+
 export const DARKSIDE: Flavor[] = [
-  // Core
-  { brand: "Darkside", line: "Core", name: "Code Pasha", profiles: ["Cardamom", "Sweet"], note: "Cardamom-forward, slow burn." },
-  { brand: "Darkside", line: "Core", name: "Code Duke", profiles: ["Vanilla", "Milky"], note: "Vanilla cream, dessert." },
-  { brand: "Darkside", line: "Core", name: "Spaceberry", profiles: ["Raspberry", "Blueberry", "Mixed Berry"], note: "Mixed-berry sorbet." },
-  { brand: "Darkside", line: "Core", name: "Cuba Cigar", profiles: ["Cigar", "Sweet"], note: "Sweet tobacco, cigar room." },
-  { brand: "Darkside", line: "Core", name: "Cherry Hookah", profiles: ["Cherry"], note: "Dark cherry, almost cola." },
-  { brand: "Darkside", line: "Core", name: "Frosty Vibe", profiles: ["Cold Mint", "Menthol"], note: "Strong cooling, polar." },
-  { brand: "Darkside", line: "Core", name: "Bonberry", profiles: ["Mixed Berry"], note: "Berry jam, candy-sweet." },
-  { brand: "Darkside", line: "Core", name: "Code Storm", profiles: ["Cold Mint", "Menthol"], note: "Intense ice mint." },
-  { brand: "Darkside", line: "Core", name: "Watermelon", profiles: ["Watermelon"], note: "Watermelon candy." },
-
-  // Medium
-  { brand: "Darkside", line: "Medium", name: "Ultra Nova", profiles: ["Cold Mint", "Menthol"], note: "Your house cold-mint base — anchor of nearly every bowl." },
-  { brand: "Darkside", line: "Medium", name: "Supernova", profiles: ["Bright Mint", "Cold Mint"], note: "Brighter, less icy than Ultra Nova." },
-  { brand: "Darkside", line: "Medium", name: "Hard Nova", profiles: ["Cold Mint", "Menthol"], note: "Heaviest cool of the Nova line." },
-  { brand: "Darkside", line: "Medium", name: "Needls", profiles: ["Pine"], note: "Sharp pine needle, almost juniper." },
-  { brand: "Darkside", line: "Medium", name: "Pink Mist", profiles: ["Strawberry", "Cold Mint"], note: "Strawberry candy + cool finish." },
-  { brand: "Darkside", line: "Medium", name: "Berry Battle", profiles: ["Mixed Berry"], note: "Layered berries, tart." },
-  { brand: "Darkside", line: "Medium", name: "Tropic Loops", profiles: ["Mango", "Passion Fruit", "Pineapple"], note: "Tropical mix, breakfast-cereal vibe." },
-  { brand: "Darkside", line: "Medium", name: "Black Mamba", profiles: ["Blackberry", "Cold Mint"], note: "Blackberry over cool mint." },
-  { brand: "Darkside", line: "Medium", name: "Sun Coil", profiles: ["Orange", "Lemon"], note: "Sun-warmed citrus." },
-
-  // Soft
-  { brand: "Darkside", line: "Soft", name: "Strawberry Banana", profiles: ["Strawberry", "Banana"], note: "Smoothie. Crowd-pleaser." },
-  { brand: "Darkside", line: "Soft", name: "Killer Milk", profiles: ["Milky", "Vanilla", "Sweet"], note: "Sweet milk, almost condensed-milk." },
-  { brand: "Darkside", line: "Soft", name: "Sweetlone", profiles: ["Sweet", "Honey"], note: "Honey-floral sweetness." },
-  { brand: "Darkside", line: "Soft", name: "Sandy Wave", profiles: ["Peach", "Coconut"], note: "Beach drink — peach + coconut." },
-  { brand: "Darkside", line: "Soft", name: "Honey Berry", profiles: ["Honey", "Mixed Berry"], note: "Honeyed berries." },
-  { brand: "Darkside", line: "Soft", name: "Sweet Mint", profiles: ["Spearmint", "Sweet"], note: "Soft mint, no chill." },
-
-  // Rare
-  { brand: "Darkside", line: "Rare", name: "Basil Blast", profiles: ["Basil"], note: "Fresh basil leaf. Goes great with cool mint base." },
-  { brand: "Darkside", line: "Rare", name: "Mojito Skinny", profiles: ["Lime", "Cold Mint", "Mojito"], note: "Mojito in a bowl." },
-  { brand: "Darkside", line: "Rare", name: "Whisky Boom", profiles: ["Whisky"], note: "Aromatic whisky, no smoke." },
-  { brand: "Darkside", line: "Rare", name: "Cherry Symphony", profiles: ["Cherry", "Rose"], note: "Cherry blossom — floral cherry." },
-  { brand: "Darkside", line: "Rare", name: "Saint Mango", profiles: ["Mango"], note: "Ripe mango, pulpy." },
+  DS("Admiral Acabar", ["Mixed Berry", "Sweet", "Milky"], "Sweet oatmeal with berries."),
+  DS("Bananapapa", ["Banana", "Papaya"], "Ripe banana with mellow papaya."),
+  DS("Barvy Orange", ["Orange"], "Bright orange juice."),
+  DS("Basil Blast", ["Basil"], "Fresh green basil. Mixes great with cold mint."),
+  DS("Bergamonstr", ["Earl Grey", "Black Tea"], "Bergamot black tea — Earl Grey in a bowl."),
+  DS("Bloody Orange", ["Orange"], "Blood orange, sharper than regular."),
+  DS("Blueberry Blast", ["Blueberry"], "Pure blueberry."),
+  DS("Bounty Hunter", ["Coconut", "Chocolate"], "Coconut base with dark chocolate notes."),
+  DS("Brazil Breeze", ["Mango", "Pineapple"], "Tropical breeze."),
+  DS("Cherry Rocks", ["Cherry", "Sweet"], "Intense cherry candy with sour aftertaste."),
+  DS("Cream Soda", ["Cream Soda", "Vanilla", "Sweet"], "Classic vanilla cream soda."),
+  DS("Crystal Grape", ["Grape"], "Crisp white grape."),
+  DS("Cyber Kiwi", ["Kiwi", "Sweet"], "Sweet ripe kiwi smoothie with tang."),
+  DS("Dark Ice Cream", ["Chocolate", "Vanilla", "Milky"], "Chocolate-chip ice cream."),
+  DS("Dark Melon", ["Melon", "Watermelon"], "Mixed melon."),
+  DS("DarkSide Mint", ["Spearmint", "Cold Mint"], "Intense peppermint."),
+  DS("Darkside Cola", ["Cola", "Caramel"], "Cola with caramel and a lemon wedge."),
+  DS("Deep Blue Sea", ["Blueberry", "Mixed Berry"], "Blue raspberry / berry."),
+  DS("Desert Eagle", ["Mixed Berry", "Sweet"], "Cactus fruit, sweet with a tart finish."),
+  DS("Dark Peach 2.0", ["Peach"], "Ripe peach, juicy."),
+  DS("Falling Star", ["Mango", "Passion Fruit"], "Mango + passion fruit cocktail."),
+  DS("Fruitality", ["Mixed Berry", "Sweet"], "Mixed fruit candy."),
+  DS("Generis Raspberry", ["Raspberry"], "Sweet delicate raspberry."),
+  DS("Glitch IceTea", ["Peach", "Black Tea"], "Refreshing peach iced tea."),
+  DS("Goosebumps", ["Gooseberry"], "Tart gooseberry."),
+  DS("Grape Core", ["Grape"], "Concentrated grape."),
+  DS("Green Mist", ["Cold Mint", "Eucalyptus"], "Cool herbal mint mist."),
+  DS("Guava Rebel", ["Guava"], "Tropical guava."),
+  DS("Honey Dust", ["Honey", "Sweet"], "Honeyed sweetness. The honey base."),
+  DS("Ice Greeny", ["Cold Mint", "Menthol"], "Icy green mint."),
+  DS("Kalee Grapefruit", ["Grapefruit"], "Sharp pink grapefruit."),
+  DS("Killer Milk", ["Milky", "Vanilla", "Sweet"], "Sweet milk, almost condensed."),
+  DS("Lemonblast", ["Lemon"], "Bright lemon."),
+  DS("Mango Lassi 2.0", ["Mango", "Cardamom", "Milky"], "Mango lassi — mango + cardamom + cream. The closest pure cardamom on the Darkside shelf."),
+  DS("MJ 2.0", ["Mixed Berry", "Sweet"], "Fruit candy blend (the MJ remake)."),
+  DS("Needls", ["Pine"], "Sharp pine needle, almost juniper."),
+  DS("Nordberry", ["Mixed Berry"], "Northern berry blend."),
+  DS("Passion", ["Passion Fruit"], "Pure passion fruit."),
+  DS("Pear", ["Pear"], "Tender sweet pear."),
+  DS("Pineapple Pulse", ["Pineapple"], "Bright ripe pineapple."),
+  DS("Polar Cream", ["Cold Mint", "Milky"], "Icy cream — cool + creamy."),
+  DS("Pomelow", ["Grapefruit", "Lemon"], "Pomelo citrus."),
+  DS("Red Alert", ["Mixed Berry", "Cherry"], "Red berry punch."),
+  DS("Red Jam", ["Mixed Berry", "Sweet"], "Berry jam."),
+  DS("Red Tea", ["Red Tea", "Hibiscus", "Mixed Berry"], "Hibiscus tea with berries."),
+  DS("Retro Apple", ["Apple"], "Crisp red apple."),
+  DS("Space Jam", ["Mixed Berry", "Raspberry"], "Mixed-berry sorbet."),
+  DS("Space Lychee", ["Lychee"], "Sweet floral lychee."),
+  DS("StarLime", ["Lime"], "Bright lime."),
+  DS("Supermint", ["Spearmint", "Cold Mint"], "Classic mint, balanced."),
+  DS("Sweet Comet", ["Cranberry", "Sweet"], "Tangy cranberry."),
+  DS("TOP GUM", ["Sweet"], "Bubblegum candy."),
+  DS("Torpedo", ["Watermelon", "Melon"], "Watermelon + melon."),
+  DS("Ultranova / Super Nova", ["Cold Mint", "Menthol"], "Your house cold-mint base — anchor of nearly every bowl."),
+  DS("Virgin Peach", ["Peach"], "Pure juicy peach."),
+  DS("Waffle Shuffle", ["Honey", "Vanilla", "Sweet"], "Waffle + maple syrup."),
+  DS("Wild Forest", ["Strawberry"], "Strong strawberry — the standout."),
+  DS("Wildberry", ["Raspberry", "Blackberry", "Blueberry", "Mixed Berry"], "Forest-berry trio."),
 
   // Experience (Xperience) — Virginia & Burley blend, urban/racing/gaming naming.
   // Verified against 5starhookah and thehookahlab catalogs.
