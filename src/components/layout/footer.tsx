@@ -1,8 +1,14 @@
+"use client"
+
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Instagram, Linkedin } from "lucide-react"
 import { SOCIAL } from "@/lib/constants"
 
 export function Footer() {
+  const pathname = usePathname()
+  if (pathname?.startsWith("/cafe-maz")) return null
+
   return (
     <footer className="bg-charcoal text-white/70">
       <div className="mx-auto max-w-7xl px-6 py-16">

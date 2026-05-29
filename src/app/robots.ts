@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: "/cafe-maz",
     },
     sitemap: "https://maz.gallery/sitemap.xml",
   }

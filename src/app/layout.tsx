@@ -2,15 +2,7 @@ import type { Metadata } from "next"
 import { Inter_Tight } from "next/font/google"
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
-import { AuroraBackground } from "@/components/shared/aurora-background"
-import { FilmGrain } from "@/components/shared/film-grain"
-import { CustomCursor } from "@/components/shared/custom-cursor"
-import { ParticleField } from "@/components/shared/particle-field"
-import { TimeTint } from "@/components/shared/time-tint"
-// ScrollColorBackground removed - opaque section backgrounds are more reliable
-import { ScrollConstellation } from "@/components/shared/scroll-constellation"
-import { CinematicIntro } from "@/components/shared/cinematic-intro"
-import { CursorWords } from "@/components/shared/cursor-words"
+import { GalleryChrome } from "@/components/layout/gallery-chrome"
 import { PageTransition } from "@/components/shared/page-transition"
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, NAV_LINKS } from "@/lib/constants"
 import "./globals.css"
@@ -104,14 +96,7 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <CinematicIntro />
-        <AuroraBackground />
-        <ParticleField />
-        <CursorWords />
-        <FilmGrain />
-        <TimeTint />
-        <CustomCursor />
-        <ScrollConstellation />
+        <GalleryChrome />
         <Navbar />
         <main id="main-content" className="flex-1">
           <PageTransition>

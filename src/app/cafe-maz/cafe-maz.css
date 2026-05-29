@@ -1,0 +1,68 @@
+/* Café Maz — candlelit lounge design system */
+
+.cafe-maz {
+  --coffee: #14100b;
+  --coffee-soft: #1d1812;
+  --coffee-mid: #251e16;
+  --coffee-edge: #100c08;
+  --oxblood: #4a1418;
+  --oxblood-rich: #5c1a22;
+  --cream: #efe3c7;
+  --cream-bright: #f5ecd3;
+  --cream-dim: #c5b89a;
+  --cream-faint: #8b7d62;
+  --brass: #c9a667;
+  --brass-bright: #e0bd7c;
+  --brass-deep: #a07f3e;
+  --rule: rgba(201, 166, 103, 0.20);
+  --rule-strong: rgba(201, 166, 103, 0.40);
+
+  --f-display: var(--font-cinzel), serif;
+  --f-display-weight: 600;
+  --f-head: var(--font-cormorant), serif;
+  --f-body: var(--font-cormorant), serif;
+  --f-arabic: var(--font-aref-ruqaa), serif;
+  --f-mono: var(--font-jetbrains-mono), monospace;
+
+  background: var(--coffee);
+  color: var(--cream);
+  font-family: var(--f-body);
+  min-height: 100vh;
+  position: relative;
+}
+
+.cafe-maz *,
+.cafe-maz *::before,
+.cafe-maz *::after {
+  box-sizing: border-box;
+}
+
+.cafe-maz::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(224, 189, 124, 0.10), transparent 65%),
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(74, 20, 24, 0.30), transparent 65%);
+}
+
+.cafe-maz::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0 2px,
+    rgba(255, 240, 200, 0.012) 2px 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* hide global gallery background bleed-through */
+body:has(.cafe-maz) {
+  background: var(--coffee, #14100b);
+}

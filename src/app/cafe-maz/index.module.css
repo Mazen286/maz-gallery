@@ -1,0 +1,240 @@
+/* The index card sits in the center of the page */
+:global(.cafe-maz):has(.card) {
+  display: grid;
+  place-items: center;
+  padding: 48px 24px;
+  overflow-x: hidden;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1000px;
+  background: linear-gradient(180deg, var(--coffee-soft), var(--coffee));
+  border: 1px solid var(--rule);
+  padding: 72px 88px 64px;
+}
+
+/* Gold corner brackets */
+.corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--brass);
+}
+.tl {
+  top: 10px;
+  left: 10px;
+  border-right: none;
+  border-bottom: none;
+}
+.tr {
+  top: 10px;
+  right: 10px;
+  border-left: none;
+  border-bottom: none;
+}
+.bl {
+  bottom: 10px;
+  left: 10px;
+  border-right: none;
+  border-top: none;
+}
+.br {
+  bottom: 10px;
+  right: 10px;
+  border-left: none;
+  border-top: none;
+}
+
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+.wordmark {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(56px, 9vw, 104px);
+  letter-spacing: 0.08em;
+  margin: 0;
+  line-height: 0.95;
+  color: var(--cream-bright);
+  text-align: center;
+  text-transform: uppercase;
+}
+.acc {
+  color: var(--brass-bright);
+}
+
+.ar {
+  font-family: var(--f-arabic);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 44px);
+  color: var(--brass);
+  text-align: center;
+  margin: 18px 0 0;
+}
+
+.tag {
+  font-family: var(--f-head);
+  font-style: italic;
+  font-size: clamp(16px, 1.8vw, 20px);
+  color: var(--cream-dim);
+  text-align: center;
+  margin: 20px 0 0;
+  line-height: 1.5;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 32px auto 36px;
+  color: var(--brass);
+  max-width: 360px;
+}
+.ornLine {
+  flex: 1;
+  height: 1px;
+  background: var(--brass);
+  opacity: 0.55;
+}
+.ornStar {
+  font-size: 14px;
+}
+
+.intro {
+  font-family: var(--f-head);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--cream-dim);
+  max-width: 60ch;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.tile {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: var(--cream);
+  background: var(--coffee-mid);
+  border: 1px solid var(--rule);
+  padding: 32px 28px 56px;
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+.tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(224, 189, 124, 0.08), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.tile:hover {
+  border-color: var(--brass);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px -20px rgba(201, 166, 103, 0.4);
+}
+.tile:hover::before {
+  opacity: 1;
+}
+.tile > * {
+  position: relative;
+}
+
+.tileNum {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--brass);
+  margin-bottom: 18px;
+  display: block;
+  text-transform: uppercase;
+}
+.tileH3 {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0 0 4px;
+  line-height: 1.1;
+  color: var(--cream-bright);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tileAr {
+  font-family: var(--f-arabic);
+  font-size: 16px;
+  color: var(--brass);
+  margin: 0 0 0 10px;
+  letter-spacing: 0;
+  text-transform: none;
+  display: inline;
+}
+.tileMeta {
+  font-family: var(--f-head);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--cream-dim);
+  margin: 14px 0 0;
+}
+
+.arrow {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  font-family: var(--f-mono);
+  font-size: 14px;
+  color: var(--brass);
+  opacity: 0;
+  transition: all 0.25s ease;
+}
+.tile:hover .arrow {
+  opacity: 1;
+  right: 18px;
+  color: var(--brass-bright);
+}
+
+.foot {
+  margin-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brass);
+  opacity: 0.8;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .card {
+    padding: 48px 28px 40px;
+  }
+}

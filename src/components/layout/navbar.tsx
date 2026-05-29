@@ -14,6 +14,7 @@ export function Navbar() {
   const [mounted, setMounted] = useState(false)
   const pathname = usePathname()
   const isHome = pathname === "/"
+  const hideChrome = pathname?.startsWith("/cafe-maz") ?? false
 
   useEffect(() => {
     setMounted(true)
@@ -24,6 +25,8 @@ export function Navbar() {
   }, [])
 
   const solid = !mounted || scrolled || open || !isHome
+
+  if (hideChrome) return null
 
   return (
     <header

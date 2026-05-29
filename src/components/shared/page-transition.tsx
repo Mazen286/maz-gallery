@@ -39,7 +39,7 @@ export function PageTransition({ children }: PageTransitionProps) {
     }
   }, [pathname, children, reduced])
 
-  if (reduced) return <>{children}</>
+  if (reduced || pathname?.startsWith("/cafe-maz")) return <>{children}</>
 
   return (
     <div className="relative">
