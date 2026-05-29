@@ -13,7 +13,6 @@ export default function CafeMazPage() {
           <a href="#menu">Menu</a>
           <a href="#hookah">Hookah</a>
           <a href="#visit">Visit</a>
-          <a href="/cafe-maz">Index</a>
         </div>
       </nav>
 

@@ -661,8 +661,27 @@
   :global(.cafe-maz):has(.book) {
     padding: 16px 8px;
   }
+  .privateTape {
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    padding: 10px 12px;
+  }
+  .privateTape span {
+    margin: 0 6px;
+  }
+  .tapeAr {
+    margin: 0 4px;
+    font-size: 12px;
+  }
   .cover {
     padding: 56px 24px 40px;
+  }
+  /* Decorative brass hairlines collide with the eyebrow and pill on
+     mobile because cover padding shrinks below their offsets. Hide
+     them since they are purely ornamental. */
+  .cover::before,
+  .cover::after {
+    display: none;
   }
   .coverH1 {
     font-size: 44px;

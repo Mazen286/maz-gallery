@@ -108,7 +108,7 @@ export default async function Image() {
             letterSpacing: "0.32em",
             color: "#c9a667",
             textTransform: "uppercase",
-            marginBottom: 36,
+            marginBottom: 64,
             display: "flex",
           }}
         >
