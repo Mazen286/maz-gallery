@@ -9,18 +9,20 @@ async function run() {
   const browser = await chromium.launch()
   const context = await browser.newContext({ ...devices["iPhone 13"] })
 
-  for (const route of [
-    { name: "recipes-cover-fixed", path: "/cafe-maz/recipes" },
-    { name: "cafe-nav-fixed", path: "/cafe-maz/cafe" },
-  ]) {
-    const p = await context.newPage()
-    await p.goto(`http://localhost:2892${route.path}`, { waitUntil: "networkidle", timeout: 30000 })
-    await p.waitForTimeout(1200)
-    await p.screenshot({ path: path.join(outDir, `${route.name}.png`), fullPage: false })
-    console.log(`✓ ${route.name}`)
-    await p.close()
-  }
+  const p = await context.newPage()
+  await p.goto(`http://localhost:2892/cafe-maz/recipes`, { waitUntil: "load", timeout: 30000 })
+  await p.waitForLoadState("networkidle")
+  await p.waitForTimeout(2500)
 
+  // Element-relative screenshot of the first hookah combo card
+  const card = await p.locator('h3:has-text("Al-Quds Asr")').first()
+  await card.scrollIntoViewIfNeeded()
+  await p.waitForTimeout(500)
+  const cardWrapper = card.locator("..")
+  await cardWrapper.screenshot({ path: path.join(outDir, "recipes-combo-alquds.png") })
+  console.log("done")
+
+  await p.close()
   await browser.close()
 }
 
