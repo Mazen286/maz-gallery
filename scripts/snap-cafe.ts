@@ -1,4 +1,4 @@
-import { chromium, devices } from "playwright"
+import { chromium } from "playwright"
 import path from "path"
 import fs from "fs"
 
@@ -7,28 +7,16 @@ async function run() {
   fs.mkdirSync(outDir, { recursive: true })
 
   const browser = await chromium.launch()
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
 
-  // Desktop — plates in cafe menu
-  const desktop = await browser.newContext({ viewport: { width: 1440, height: 900 } })
-  let p = await desktop.newPage()
+  const p = await ctx.newPage()
   await p.goto(`http://localhost:2892/cafe-maz/cafe`, { waitUntil: "networkidle" })
-  await p.waitForTimeout(1000)
-  await p.locator(':text("Plates")').first().scrollIntoViewIfNeeded()
-  await p.waitForTimeout(400)
-  await p.screenshot({ path: path.join(outDir, "cafe-plates.png"), fullPage: false })
-  console.log("✓ cafe-plates")
-  await p.close()
+  await p.waitForTimeout(2500)
+  await p.locator(':text("Now playing")').first().scrollIntoViewIfNeeded()
+  await p.waitForTimeout(1500)
+  await p.screenshot({ path: path.join(outDir, "cafe-spotify-real.png"), fullPage: false })
 
-  // Lab house bowls with copy button
-  p = await desktop.newPage()
-  await p.goto(`http://localhost:2892/cafe-maz/lab`, { waitUntil: "networkidle" })
-  await p.waitForTimeout(1000)
-  await p.locator('h2:has-text("House Bowls")').first().scrollIntoViewIfNeeded()
-  await p.waitForTimeout(400)
-  await p.screenshot({ path: path.join(outDir, "lab-house-bowls-copy.png"), fullPage: false })
-  console.log("✓ lab-house-bowls-copy")
   await p.close()
-
   await browser.close()
 }
 

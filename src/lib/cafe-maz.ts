@@ -181,6 +181,14 @@ export const OFF_MENU = {
 // Edit this line before guests arrive (or leave on shuffle).
 export const TONIGHT_MUSIC = "tarab on shuffle"
 
+// Spotify playlist for the Tonight section. Paste any open.spotify.com
+// playlist URL here — the cafe page extracts the ID and renders an
+// embed widget. Set to null to hide the player.
+export const SPOTIFY_PLAYLIST: { name: string; url: string } | null = {
+  name: "Tarab on Shuffle",
+  url: "https://open.spotify.com/playlist/0AT4VdqjlzcSk7NzYBQ0PG",
+}
+
 // Snacks usually around — edit when stock changes.
 export const PLATES = {
   lat: "Plates",

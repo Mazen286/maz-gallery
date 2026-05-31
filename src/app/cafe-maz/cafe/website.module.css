@@ -474,6 +474,29 @@
   line-height: 1.5;
 }
 
+/* SPOTIFY EMBED — small compact player below the Visit grid */
+.spotifyWrap {
+  max-width: 420px;
+  margin: 48px auto 0;
+  text-align: center;
+}
+.spotifyLabel {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 14px;
+  opacity: 0.85;
+}
+.spotifyFrame {
+  border: 0;
+  border-radius: 12px;
+  display: block;
+  width: 100%;
+  opacity: 0.95;
+}
+
 /* FOOTER */
 .foot {
   padding: 44px 56px;
