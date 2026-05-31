@@ -1,4 +1,4 @@
-import { DRINK_SECTIONS, HOOKAH_COMBOS, HOOKAH_INTRO, TAGLINE } from "@/lib/cafe-maz"
+import { DRINK_SECTIONS, HOOKAH_COMBOS, HOOKAH_INTRO, OFF_MENU, TAGLINE, TONIGHT_MUSIC } from "@/lib/cafe-maz"
 import styles from "./website.module.css"
 
 export default function CafeMazPage() {
@@ -92,12 +92,21 @@ export default function CafeMazPage() {
               <div className={styles.comboDesc}>{c.desc}</div>
             </div>
           ))}
+          <div className={`${styles.combo} ${styles.comboOffMenu}`}>
+            <span className={`${styles.comboCorner} ${styles.tl}`} />
+            <span className={`${styles.comboCorner} ${styles.tr}`} />
+            <span className={`${styles.comboCorner} ${styles.bl}`} />
+            <span className={`${styles.comboCorner} ${styles.br}`} />
+            <div className={styles.comboNum}>{OFF_MENU.num}</div>
+            <h3 className={styles.comboH3}>{OFF_MENU.name}</h3>
+            <div className={styles.comboAr} lang="ar">{OFF_MENU.ar}</div>
+            <div className={styles.comboMix}>{OFF_MENU.mix}</div>
+            <div className={styles.comboDesc}>{OFF_MENU.desc}</div>
+          </div>
         </div>
 
         <p className={styles.shelfNote}>
           <span className={styles.brand}>Darkside</span> & <span className={styles.brand}>MustHave</span> on the shelf.
-          <br />
-          Custom blends welcome — just ask the host.
         </p>
       </section>
 
@@ -109,25 +118,33 @@ export default function CafeMazPage() {
           <div className={styles.wwItem}>
             <div className={styles.wwLbl}>Hours</div>
             <div className={styles.wwVal}>
-              Whenever you&apos;re at the door.
+              If the kettle&apos;s on,
               <br />
-              (text first.)
+              the café&apos;s open.
             </div>
           </div>
           <div className={styles.wwItem}>
             <div className={styles.wwLbl}>The Address</div>
             <div className={styles.wwVal}>
-              My kitchen counter.
+              Past the espresso machine,
               <br />
-              You know the one.
+              third stool from the wall.
             </div>
           </div>
           <div className={styles.wwItem}>
             <div className={styles.wwLbl}>Reservations</div>
             <div className={styles.wwVal}>
-              A nod, a knock,
+              A knock, a text, or just
               <br />
-              or a &ldquo;you free?&rdquo;
+              barge in like a neighbor.
+            </div>
+          </div>
+          <div className={styles.wwItem}>
+            <div className={styles.wwLbl}>Tonight</div>
+            <div className={styles.wwVal}>
+              On the speakers:
+              <br />
+              {TONIGHT_MUSIC}
             </div>
           </div>
         </div>

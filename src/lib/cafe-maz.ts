@@ -54,7 +54,7 @@ export const DRINK_SECTIONS: DrinkSection[] = [
     lat: "Other",
     ar: "أخرى",
     items: [
-      { name: "Turkish Coffee", desc: "cezve, with cardamom · slow" },
+      { name: "Turkish Coffee", desc: "cezve, slow · ask for sade, orta, or şekerli" },
       { name: "Cardamom Coffee", desc: "espresso, fresh-ground cardamom" },
       { name: "Hot Chocolate", desc: "dark cocoa, steamed milk" },
     ],
@@ -166,3 +166,17 @@ export const TAGLINE = "a one-table café — open whenever you're over"
 
 export const HOOKAH_INTRO =
   "Cold mint is the foundation — every bowl starts there. Tell us a feeling, we'll build it. We pour Darkside & MustHave; names below are ours."
+
+// Off-Menu wink — rendered after the named combos on the website
+// (not on the print menu). Mirrors the "lab night" concept from
+// the original design.
+export const OFF_MENU = {
+  num: "Nº ∞",
+  name: "Off-Menu",
+  ar: "خارج القائمة",
+  mix: "Cold Mint · ??? · ???",
+  desc: "Cold mint is the only rule. Tell me a feeling, I'll build it.",
+}
+
+// Edit this line before guests arrive (or leave on shuffle).
+export const TONIGHT_MUSIC = "tarab on shuffle"
