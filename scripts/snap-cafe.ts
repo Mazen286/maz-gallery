@@ -3,43 +3,32 @@ import path from "path"
 import fs from "fs"
 
 async function run() {
-  const outDir = path.join(process.cwd(), "screenshots")
+  const outDir = path.join(process.cwd(), "screenshots", "mobile")
   fs.mkdirSync(outDir, { recursive: true })
-  fs.mkdirSync(path.join(outDir, "mobile"), { recursive: true })
 
   const browser = await chromium.launch()
+  const context = await browser.newContext({ ...devices["iPhone 13"] })
 
-  // Desktop
-  const desktop = await browser.newContext({ viewport: { width: 1440, height: 900 } })
-  for (const route of [
-    { name: "cafe-hookah-offmenu", anchor: 'h3:has-text("Off-Menu")' },
-    { name: "cafe-visit-4col", anchor: 'h2:has-text("Come Over")' },
-  ]) {
-    const p = await desktop.newPage()
-    await p.goto(`http://localhost:2892/cafe-maz/cafe`, { waitUntil: "networkidle" })
-    await p.waitForTimeout(1000)
-    await p.locator(route.anchor).first().scrollIntoViewIfNeeded()
-    await p.waitForTimeout(400)
-    await p.screenshot({ path: path.join(outDir, `${route.name}.png`), fullPage: false })
-    console.log(`✓ desktop ${route.name}`)
-    await p.close()
-  }
+  // Cafe website headers (Menu, Hookah)
+  let p = await context.newPage()
+  await p.goto(`http://localhost:2892/cafe-maz/cafe`, { waitUntil: "networkidle" })
+  await p.waitForTimeout(1000)
+  await p.locator('h2:has-text("The Menu")').first().scrollIntoViewIfNeeded()
+  await p.waitForTimeout(400)
+  await p.screenshot({ path: path.join(outDir, "cafe-section-menu.png"), fullPage: false })
+  await p.locator('h2:has-text("The Hookah")').first().scrollIntoViewIfNeeded()
+  await p.waitForTimeout(400)
+  await p.screenshot({ path: path.join(outDir, "cafe-section-hookah.png"), fullPage: false })
+  await p.close()
 
-  // Mobile
-  const mobile = await browser.newContext({ ...devices["iPhone 13"] })
-  for (const route of [
-    { name: "cafe-hookah-offmenu-mobile", anchor: 'h3:has-text("Off-Menu")' },
-    { name: "cafe-visit-mobile", anchor: 'h2:has-text("Come Over")' },
-  ]) {
-    const p = await mobile.newPage()
-    await p.goto(`http://localhost:2892/cafe-maz/cafe`, { waitUntil: "networkidle" })
-    await p.waitForTimeout(1000)
-    await p.locator(route.anchor).first().scrollIntoViewIfNeeded()
-    await p.waitForTimeout(400)
-    await p.screenshot({ path: path.join(outDir, "mobile", `${route.name}.png`), fullPage: false })
-    console.log(`✓ mobile ${route.name}`)
-    await p.close()
-  }
+  // Lab section headers
+  p = await context.newPage()
+  await p.goto(`http://localhost:2892/cafe-maz/lab`, { waitUntil: "networkidle" })
+  await p.waitForTimeout(1000)
+  await p.locator('h2:has-text("Filter")').first().scrollIntoViewIfNeeded()
+  await p.waitForTimeout(400)
+  await p.screenshot({ path: path.join(outDir, "lab-section-filter.png"), fullPage: false })
+  await p.close()
 
   await browser.close()
 }

@@ -33,6 +33,13 @@ export const metadata: Metadata = {
   description: "A one-table café — open whenever you're over.",
   robots: { index: false, follow: false, nocache: true },
   alternates: { canonical: undefined },
+  // Override the root layout's MazGallery favicons with the brass
+  // diamond keystone served from /cafe-maz/icon (icon.tsx).
+  icons: {
+    icon: [{ url: "/cafe-maz/icon", type: "image/png", sizes: "32x32" }],
+    shortcut: "/cafe-maz/icon",
+    apple: "/cafe-maz/icon",
+  },
   openGraph: {
     type: "website",
     title: "Café Maz",
