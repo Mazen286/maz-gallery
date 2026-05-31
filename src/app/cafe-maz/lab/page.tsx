@@ -44,7 +44,7 @@ const SEED_BOWLS: Combo[] = [
       { brand: "Darkside", line: "Standard", name: "Needls", percent: 30 },
       { brand: "Darkside", line: "Standard", name: "Basil Blast", percent: 20 },
     ],
-    note: "Cold mint backbone, sharp pine, soft basil finish. The house pour.",
+    note: "Cold mint backbone, sharp pine, soft basil finish. The house bowl.",
     session: "afternoon",
   },
   {

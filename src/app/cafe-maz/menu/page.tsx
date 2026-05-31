@@ -87,7 +87,7 @@ export default function PrintMenuPage() {
                 <h2 className={styles.cBackTitle}>THE HOOKAH</h2>
                 <div className={styles.cBackAr} lang="ar" dir="rtl">الأرجيلة</div>
                 <p className={styles.cBackTag}>
-                  poured by hand · combos by Maz
+                  packed by hand · combos by Maz
                   <br />— Ultra-cool mint is the foundation —
                 </p>
               </div>
