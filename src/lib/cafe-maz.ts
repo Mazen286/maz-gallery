@@ -85,7 +85,7 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
   {
     num: "Nº 01",
     name: "The Garden",
-    ar: "الحديقة",
+    ar: "الجنينة",
     mix: "Cold Mint · Pine · Basil",
     desc: "Cold mint backbone, sharp pine, soft basil finish. The house pour.",
     ratios: [
@@ -180,3 +180,11 @@ export const OFF_MENU = {
 
 // Edit this line before guests arrive (or leave on shuffle).
 export const TONIGHT_MUSIC = "tarab on shuffle"
+
+// Snacks usually around — edit when stock changes.
+export const PLATES = {
+  lat: "Plates",
+  ar: "أطباق",
+  items: "mixed nuts · dates · olives",
+  ask: "or ask what's around tonight",
+}

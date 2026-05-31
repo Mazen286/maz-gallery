@@ -11,7 +11,11 @@ import {
   flavorId,
   type Flavor,
 } from "@/lib/cafe-maz-flavors"
+import { HOOKAH_COMBOS } from "@/lib/cafe-maz"
 import styles from "./lab.module.css"
+
+const HOOKAH_PUBLIC_COUNT = HOOKAH_COMBOS.length
+const escape = (s: string) => s.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
 
 type BlendItem = { brand: string; line: string; name: string; percent: number; offShelf?: boolean }
 type Combo = {
@@ -33,7 +37,7 @@ const SEED_BOWLS: Combo[] = [
     id: "seed-garden",
     num: "Nº 01",
     name: "The Garden",
-    ar: "الحديقة",
+    ar: "الجنينة",
     profile: ["cool", "herbal"],
     blend: [
       { brand: "Darkside", line: "Standard", name: "Ultranova / Super Nova", percent: 50 },
@@ -195,6 +199,40 @@ export default function FlavorLabPage() {
   const resetBowls = () => {
     if (confirm("Reset house bowls to the seed list?")) {
       setBowls(SEED_BOWLS)
+    }
+  }
+
+  const [justCopied, setJustCopied] = useState<string | null>(null)
+  const copyBowlForMenu = async (b: Combo, idx: number) => {
+    // Emit a paste-ready HookahCombo object that drops into HOOKAH_COMBOS
+    // in src/lib/cafe-maz.ts to promote this bowl to the public menu.
+    const num = `Nº ${String(HOOKAH_PUBLIC_COUNT + idx + 1).padStart(2, "0")}`
+    const mix = b.blend.map((x) => x.name).join(" · ")
+    const ratiosLines = b.blend
+      .map(
+        (x) =>
+          `      { pct: "${x.percent}%", name: "${escape(x.name)}", shelf: { brand: "${x.brand}", line: "${x.line}", flavor: "${escape(x.name)}" } },`,
+      )
+      .join("\n")
+    const ts = `{
+    num: "${num}",
+    name: "${escape(b.name)}",
+    ar: "${b.ar}",
+    mix: "${escape(mix)}",
+    desc: "${escape(b.note)}",
+    ratios: [
+${ratiosLines}
+    ],
+    note: "${b.session}",
+  },`
+    try {
+      await navigator.clipboard.writeText(ts)
+      setJustCopied(b.id)
+      setTimeout(() => setJustCopied((cur) => (cur === b.id ? null : cur)), 1800)
+    } catch {
+      // Clipboard write can fail in some contexts; fall back to console
+      console.log(ts)
+      alert("Clipboard blocked — TS object logged to console.")
     }
   }
 
@@ -432,6 +470,14 @@ export default function FlavorLabPage() {
                   {b.blend.map((x) => `${x.brand}/${x.name} ${x.percent}%`).join(" · ")}
                 </span>
                 <span className={styles.bowlActions}>
+                  <button
+                    type="button"
+                    className={styles.bowlBtn}
+                    onClick={() => copyBowlForMenu(b, idx)}
+                    title="Copy as TypeScript for cafe-maz.ts"
+                  >
+                    {justCopied === b.id ? "✓ copied" : "copy"}
+                  </button>
                   <button type="button" className={styles.bowlBtn} onClick={() => deleteBowl(b.id)} title="Remove">
                     ×
                   </button>

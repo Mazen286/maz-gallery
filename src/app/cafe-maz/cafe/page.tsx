@@ -1,4 +1,4 @@
-import { DRINK_SECTIONS, HOOKAH_COMBOS, HOOKAH_INTRO, OFF_MENU, TAGLINE, TONIGHT_MUSIC } from "@/lib/cafe-maz"
+import { DRINK_SECTIONS, HOOKAH_COMBOS, HOOKAH_INTRO, OFF_MENU, PLATES, TAGLINE, TONIGHT_MUSIC } from "@/lib/cafe-maz"
 import styles from "./website.module.css"
 
 export default function CafeMazPage() {
@@ -59,6 +59,13 @@ export default function CafeMazPage() {
                 ))}
               </div>
             ))}
+
+            <div className={styles.subLabel}>
+              <span className={styles.subLat}>— {PLATES.lat} —</span>
+              <span className={styles.subAr} lang="ar">{PLATES.ar}</span>
+            </div>
+            <div className={styles.platesLine}>{PLATES.items}</div>
+            <div className={styles.platesAsk}>{PLATES.ask}</div>
           </div>
         </div>
       </section>

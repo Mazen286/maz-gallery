@@ -260,6 +260,24 @@
   text-transform: uppercase;
 }
 
+/* PLATES — single rotating line under the drink list */
+.platesLine {
+  font-family: var(--f-head);
+  font-weight: 500;
+  font-size: clamp(16px, 1.8vw, 19px);
+  color: var(--cream-bright);
+  text-align: center;
+  margin-top: calc(4px * var(--sp));
+}
+.platesAsk {
+  font-family: var(--f-head);
+  font-style: italic;
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: var(--cream-faint);
+  text-align: center;
+  margin-top: calc(4px * var(--sp));
+}
+
 /* HOOKAH */
 .hookahLede {
   font-family: var(--f-head);
