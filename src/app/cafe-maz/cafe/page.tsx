@@ -1,11 +1,5 @@
-import { DRINK_SECTIONS, HOOKAH_COMBOS, HOOKAH_INTRO, OFF_MENU, PLATES, SPOTIFY_PLAYLIST, TAGLINE, TONIGHT_MUSIC } from "@/lib/cafe-maz"
-
-// Extract Spotify playlist ID from any open.spotify.com/playlist URL.
-function spotifyEmbedUrl(url: string): string | null {
-  const m = url.match(/\/playlist\/([A-Za-z0-9]+)/)
-  if (!m) return null
-  return `https://open.spotify.com/embed/playlist/${m[1]}?utm_source=generator&theme=0`
-}
+import { DRINK_SECTIONS, HOOKAH_COMBOS, HOOKAH_INTRO, OFF_MENU, PLATES, TAGLINE, TONIGHT_MUSIC } from "@/lib/cafe-maz"
+import { MoodPlayer } from "./MoodPlayer"
 import styles from "./website.module.css"
 
 export default function CafeMazPage() {
@@ -163,20 +157,7 @@ export default function CafeMazPage() {
           </div>
         </div>
 
-        {SPOTIFY_PLAYLIST && spotifyEmbedUrl(SPOTIFY_PLAYLIST.url) && (
-          <div className={styles.spotifyWrap}>
-            <p className={styles.spotifyLabel}>— Now playing · {SPOTIFY_PLAYLIST.name} —</p>
-            <iframe
-              className={styles.spotifyFrame}
-              src={spotifyEmbedUrl(SPOTIFY_PLAYLIST.url)!}
-              width="100%"
-              height="80"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              title={`Spotify: ${SPOTIFY_PLAYLIST.name}`}
-            />
-          </div>
-        )}
+        <MoodPlayer />
       </section>
 
       <footer className={styles.foot}>

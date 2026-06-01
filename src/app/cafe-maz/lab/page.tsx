@@ -267,7 +267,7 @@ ${ratiosLines}
         </h1>
         <div className={styles.heroAr} lang="ar" dir="rtl">مختبر النكهات</div>
         <p className={styles.heroTag}>
-          Filter by profile, pick from the shelf, set the mood — Claude pours two named combos.
+          Filter by profile, pick from the shelf, set the mood — Claude builds two named bowls.
           <br />
           {DARKSIDE.length} Darkside · {MUSTHAVE.length} MustHave on the rack.
         </p>
@@ -396,8 +396,8 @@ ${ratiosLines}
 
           <div className={styles.goRow}>
             <button type="button" className={styles.goBtn} onClick={generate} disabled={loading}>
-              <span className={styles.goAr} lang="ar">إصب</span>
-              {loading ? "pouring…" : "pour suggestions"}
+              <span className={styles.goAr} lang="ar">ابني</span>
+              {loading ? "building…" : "build a bowl"}
             </button>
           </div>
 
@@ -421,7 +421,7 @@ ${ratiosLines}
         )}
 
         {!loading && suggestions.length === 0 && !error && (
-          <p className={styles.placeholder}>— pick some flavors, then pour —</p>
+          <p className={styles.placeholder}>— pick some flavors, then build —</p>
         )}
 
         {!loading && suggestions.length > 0 && (

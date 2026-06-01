@@ -476,7 +476,7 @@
 
 /* SPOTIFY EMBED — small compact player below the Visit grid */
 .spotifyWrap {
-  max-width: 420px;
+  max-width: 560px;
   margin: 48px auto 0;
   text-align: center;
 }
@@ -488,6 +488,46 @@
   color: var(--brass);
   margin: 0 0 14px;
   opacity: 0.85;
+}
+.spotifyLabel [lang="ar"] {
+  font-family: var(--f-arabic);
+  font-size: 14px;
+  letter-spacing: 0;
+  margin-left: 4px;
+  color: var(--brass-bright);
+}
+.moodPicker {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+.moodPill {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brass);
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.moodPill:hover:not(:disabled) {
+  color: var(--brass-bright);
+  border-color: var(--brass);
+}
+.moodPillActive,
+.moodPillActive:hover {
+  background: var(--brass);
+  color: var(--coffee);
+  border-color: var(--brass);
+}
+.moodPill:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 .spotifyFrame {
   border: 0;

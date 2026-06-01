@@ -181,13 +181,25 @@ export const OFF_MENU = {
 // Edit this line before guests arrive (or leave on shuffle).
 export const TONIGHT_MUSIC = "tarab on shuffle"
 
-// Spotify playlist for the Tonight section. Paste any open.spotify.com
-// playlist URL here — the cafe page extracts the ID and renders an
-// embed widget. Set to null to hide the player.
-export const SPOTIFY_PLAYLIST: { name: string; url: string } | null = {
-  name: "Tarab on Shuffle",
-  url: "https://open.spotify.com/playlist/0AT4VdqjlzcSk7NzYBQ0PG",
+// Cafe Maz mood playlists. Set url to null while a playlist is being
+// built. Cover art for all five lives in public/cafe-maz/playlist-covers
+// and regenerates from scripts/playlist-covers.ts.
+type Playlist = { name: string; arabic: string; url: string | null }
+
+export const SPOTIFY_PLAYLISTS: Record<string, Playlist> = {
+  tarab:         { name: "Tarab on Shuffle", arabic: "طرب",   url: "https://open.spotify.com/playlist/0AT4VdqjlzcSk7NzYBQ0PG" },
+  lateNight:     { name: "Late Night",       arabic: "الليل",  url: "https://open.spotify.com/playlist/7FZbbM9YYkt6dY4P6P6roO" },
+  afternoon:     { name: "Afternoon",        arabic: "العصر",  url: "https://open.spotify.com/playlist/6xDfxhFKCuQGM7bvpgWKry" },
+  morningCoffee: { name: "Morning Coffee",   arabic: "الصباح", url: "https://open.spotify.com/playlist/6XLcLhgdNzlqwqW5BPa0nK" },
+  fridaySahra:   { name: "Friday Sahra",     arabic: "السهرة", url: "https://open.spotify.com/playlist/5TIYG0gCf00RfsesYpyVac" },
+  sahretPop:     { name: "Sahret Pop",       arabic: "سهرة بوب", url: "https://open.spotify.com/playlist/4OM70Cv7cFxkTLVqfrpOVi" },
 }
+
+// Active playlist for the cafe Tonight section. Swap to any key above.
+export const SPOTIFY_PLAYLIST: { name: string; url: string } | null = (() => {
+  const p = SPOTIFY_PLAYLISTS.tarab
+  return p.url ? { name: p.name, url: p.url } : null
+})()
 
 // Snacks usually around — edit when stock changes.
 export const PLATES = {

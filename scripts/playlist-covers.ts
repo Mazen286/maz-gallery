@@ -19,6 +19,7 @@ const COVERS: Cover[] = [
   { slug: "afternoon", eyebrow: "Café Maz", title: "Afternoon", arabic: "العصر" },
   { slug: "morning-coffee", eyebrow: "Café Maz", title: "Morning Coffee", arabic: "الصباح" },
   { slug: "friday-sahra", eyebrow: "Café Maz", title: "Friday Sahra", arabic: "السهرة" },
+  { slug: "sahret-pop", eyebrow: "Café Maz", title: "Sahret Pop", arabic: "سهرة بوب" },
 ]
 
 function html({ eyebrow, title, arabic }: Cover): string {
