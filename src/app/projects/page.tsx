@@ -46,6 +46,17 @@ const PROJECTS = [
     accent: "#4ecdc4",
   },
   {
+    title: "Café Maz",
+    subtitle: "Home Café & Brand System",
+    description:
+      "A one-table home café for friends who come over. Bilingual brand system with a digital menu, printable menu, and hookah combos named after Palestinian places.",
+    url: "/cafe-maz/cafe",
+    image: "/images/projects/cafe-maz.png",
+    cta: "Step Inside",
+    tags: ["Brand System", "Bilingual", "Hospitality"],
+    accent: "#c9a667",
+  },
+  {
     title: "LA 311 Dashboard",
     subtitle: "Civic Data Analytics",
     description:
