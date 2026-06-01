@@ -30,6 +30,17 @@ export const CATEGORY_COLORS: Record<BlogCategory, string> = {
 // Draft posts - set published: true when ready
 export const ALL_POSTS: BlogPost[] = [
   {
+    slug: "cafe-maz",
+    title: "The Café That Lives at My Kitchen Counter",
+    description:
+      "Why I built a home cafe for my friends. On Palestinian hospitality, music as architecture, and the things you make for the people who walk into your apartment.",
+    date: "2026-05-31",
+    category: "Food",
+    image: "/images/blog/cafe-maz.png",
+    readTime: "9 min read",
+    published: true,
+  },
+  {
     slug: "top-10-video-games",
     title: "My Top 10 Video Games of All Time",
     description:

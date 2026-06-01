@@ -5,26 +5,26 @@ import fs from "fs"
 async function run() {
   const outDir = path.join(process.cwd(), "screenshots")
   fs.mkdirSync(outDir, { recursive: true })
-  fs.mkdirSync(path.join(outDir, "mobile"), { recursive: true })
 
   const browser = await chromium.launch()
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
 
-  for (const [label, ctx] of [
-    ["desktop", await browser.newContext({ viewport: { width: 1440, height: 900 } })],
-    ["mobile", await browser.newContext({ ...devices["iPhone 13"] })],
-  ] as const) {
-    const p = await ctx.newPage()
-    await p.goto(`http://localhost:2892/cafe-maz/cafe`, { waitUntil: "networkidle" })
-    await p.waitForTimeout(2000)
-    await p.locator(':text("Now playing")').first().scrollIntoViewIfNeeded()
-    await p.waitForTimeout(1500)
-    const out = label === "mobile"
-      ? path.join(outDir, "mobile", "cafe-mood-picker.png")
-      : path.join(outDir, "cafe-mood-picker.png")
-    await p.screenshot({ path: out, fullPage: false })
-    console.log(`✓ ${label}`)
-    await p.close()
-  }
+  const blog = await ctx.newPage()
+  await blog.goto(`http://localhost:2892/blog`, { waitUntil: "networkidle" })
+  await blog.waitForTimeout(1000)
+  await blog.screenshot({ path: path.join(outDir, "blog-index-with-cafe-maz.png"), fullPage: false })
+  console.log("✓ blog index")
+  await blog.close()
+
+  const post = await ctx.newPage()
+  await post.goto(`http://localhost:2892/blog/cafe-maz`, { waitUntil: "networkidle" })
+  await post.waitForTimeout(1000)
+  await post.screenshot({ path: path.join(outDir, "cafe-maz-post-top.png"), fullPage: false })
+  await post.evaluate(() => window.scrollBy(0, 700))
+  await post.waitForTimeout(400)
+  await post.screenshot({ path: path.join(outDir, "cafe-maz-post-body.png"), fullPage: false })
+  console.log("✓ post")
+  await post.close()
 
   await browser.close()
 }
