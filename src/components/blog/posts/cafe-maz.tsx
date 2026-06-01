@@ -177,9 +177,9 @@ export function CafeMaz() {
       <p>
         This is what I&apos;ve learned: the most personal projects make the
         most generous gifts. I built{" "}
-        <Link href="/cafe-maz">Café Maz</Link> for the people who already walk
-        through my door. If you&apos;re one of them, <em>tafaddal</em>. You
-        don&apos;t have to ask.
+        <Link href="/cafe-maz">Café Maz</Link>{" "}for the people who already
+        walk through my door. If you&apos;re one of them, <em>tafaddal</em>.
+        You don&apos;t have to ask.
       </p>
     </>
   )
