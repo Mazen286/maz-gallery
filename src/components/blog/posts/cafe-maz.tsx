@@ -1,3 +1,5 @@
+import { MoodPlayer } from "@/app/cafe-maz/cafe/MoodPlayer"
+
 export function CafeMaz() {
   return (
     <>
@@ -22,11 +24,12 @@ export function CafeMaz() {
 
       <p>
         Some of my best memories are nights in Amman. Guests around the table,
-        the kettle going. Coffee, then tea, then coffee, then tea, into the
-        night. Plates of fruit and small snacks between the rounds, never asked
-        for, always there. Whether it was friends or family, every night had
-        that rhythm. That&apos;s what cemented it for me: hospitality lives in
-        the cup that keeps refilling.
+        coffee on the stove, cardamom in the air. Coffee, then tea, then
+        coffee, then tea, into the night. Plates of fruit and small snacks
+        between the rounds. Never asked for, always there. Always more than
+        enough. Whether it was friends or family, every night had that rhythm.
+        That&apos;s what cemented it for me: hospitality lives in the cup that
+        keeps refilling.
       </p>
 
       <p>
@@ -47,10 +50,17 @@ export function CafeMaz() {
       </p>
 
       <p>
+        A menu is the opposite of all of that, of course. A menu asks the
+        guest to choose. That tension is half the joke of Café Maz. The menu
+        is for guests who already know. If you don&apos;t, <em>tafaddal</em>.
+        I&apos;ll decide for you.
+      </p>
+
+      <p>
         So when I started having friends over in my own apartment, the joke
-        about Café Maz wasn&apos;t really a joke. It was me trying to reproduce
-        something I&apos;d been raised inside. And when Gino&apos;s video
-        showed up, I realized the joke could become the project.
+        about Café Maz wasn&apos;t really a joke. It was me trying to recreate
+        the table I grew up at. And when Gino&apos;s video showed up, I
+        realized the joke could become the project.
       </p>
 
       <hr />
@@ -62,7 +72,8 @@ export function CafeMaz() {
         hand-written nothing at all and just kept asking people what they
         wanted. Instead I built five pages (an index, a printable A5 menu, a
         recipe book, a flavor lab, an AI tool that brainstorms hookah combos
-        with me) and curated six Spotify playlists to go with them.
+        with me, picking blends for whatever mood I&apos;m trying to set) and
+        curated six Spotify playlists to go with them.
       </p>
 
       <p>
@@ -87,7 +98,9 @@ export function CafeMaz() {
         Arabic, italic Cormorant for the small things. Bilingual everywhere,
         because that&apos;s how the house sounds. There&apos;s a signature
         drink: pistachio latte with orange blossom water, marked ✦ on the
-        menu. It&apos;s the thing I&apos;m proudest of making.
+        menu. It&apos;s the thing I&apos;m proudest of making. Pistachios
+        blended into a cream. More crushed by hand with a mortar and pestle,
+        scattered on top.
       </p>
 
       <hr />
@@ -99,8 +112,8 @@ export function CafeMaz() {
         come over, we&apos;d play tarneeb, sometimes nothing in particular was
         happening. She was always there, working her way through{" "}
         <em>Al-Atlal</em> in the background of everything. I bought one of her
-        records for my own collection a few years ago. The cover is faded. It
-        still plays.
+        records for my own collection recently. The cover is faded. It still
+        plays beautifully.
       </p>
 
       <p>
@@ -112,62 +125,14 @@ export function CafeMaz() {
 
       <p>
         So I built six playlists: one for each mood Café Maz might hold across
-        a day. The music chooses the drink. The drink decides how you sit.
-        Together they&apos;re how you say to a guest{" "}
-        <em>you&apos;re welcome, no rush</em>.
+        a day.
       </p>
 
-      <h3>Morning Coffee + flat white</h3>
-      <p>
-        Both are gentle invitations. Ibrahim Maalouf&apos;s quarter-tone
-        trumpet matches steamed milk: warm, sweet, not loud. The drink that
-        wakes you up without yelling.
-      </p>
+      <p>Here&apos;s the picker from the cafe.</p>
 
-      <h3>Afternoon + cortado</h3>
-      <p>
-        Modern Levantine indie is global music speaking Arabic. Cortado is
-        global coffee speaking Spanish. Both are translations: songs and
-        drinks that arrived in your city by way of somewhere else.
-        Mashrou&apos; Leila and a small cup, mid-afternoon, conversation that
-        picks up speed.
-      </p>
-
-      <h3>Tarab on Shuffle + Turkish coffee</h3>
-      <p>
-        Both refuse to be rushed. Umm Kulthum takes twenty minutes to make a
-        point; the cezve takes ten minutes to brew. They share a rhythm. Slow,
-        deliberate, with cardamom running through both: in the pot, in the
-        songs. Pour the coffee while <em>Al-Atlal</em> is just starting. Sit.
-        Wait. Listen.
-      </p>
-
-      <h3>Friday Sahra + cardamom coffee</h3>
-      <p>
-        The heaviest pairing. Abdel Halim Hafez&apos;s voice carries weight;
-        cardamom in unsweetened coffee carries weight; the night that gathers
-        everyone carries weight. They belong together.
-      </p>
-
-      <h3>Late Night + pistachio latte</h3>
-      <p>
-        Dessert music for dessert hour. The house drink pairs with the
-        playlist that smokes for hours. Nuts, cream, slow time,{" "}
-        <em>Le Pas du Chat Noir</em> somewhere in the room, no one in a hurry
-        to leave.
-      </p>
-
-      <h3>Sahret Pop + cappuccino</h3>
-      <p>
-        Foam crown, party energy. The drink that announces itself, paired with
-        hooks that announce themselves. Nancy Ajram and a fresh micro-foam,
-        for when the room is up.
-      </p>
-
-      <p>
-        Music and coffee together are choreography. The drink decides how you
-        sit. The music decides how long you stay.
-      </p>
+      <div className="not-prose my-8">
+        <MoodPlayer />
+      </div>
 
       <hr />
 
@@ -201,15 +166,9 @@ export function CafeMaz() {
 
       <p>
         This is what I&apos;ve learned: the most personal projects make the
-        most generous gifts. I built Café Maz for the people who walk into my
-        apartment. That&apos;s the whole audience. That&apos;s the whole
-        point.
-      </p>
-
-      <p>
-        If you&apos;re ever in San Diego, the kettle&apos;s on. I&apos;ll meet
-        you at the door with a menu, and you can pick something. Or{" "}
-        <em>tafaddal</em>. I&apos;ll just decide for you.
+        most generous gifts. I built Café Maz for the people who already walk
+        through my door. If you&apos;re one of them, <em>tafaddal</em>. You
+        don&apos;t have to ask.
       </p>
     </>
   )

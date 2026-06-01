@@ -14,12 +14,12 @@ type Cover = {
 }
 
 const COVERS: Cover[] = [
-  { slug: "tarab-on-shuffle", eyebrow: "Café Maz", title: "Tarab on Shuffle", arabic: "طرب" },
+  { slug: "tarab", eyebrow: "Café Maz", title: "Tarab", arabic: "طرب" },
   { slug: "late-night", eyebrow: "Café Maz", title: "Late Night", arabic: "الليل" },
   { slug: "afternoon", eyebrow: "Café Maz", title: "Afternoon", arabic: "العصر" },
   { slug: "morning-coffee", eyebrow: "Café Maz", title: "Morning Coffee", arabic: "الصباح" },
   { slug: "friday-sahra", eyebrow: "Café Maz", title: "Friday Sahra", arabic: "السهرة" },
-  { slug: "sahret-pop", eyebrow: "Café Maz", title: "Sahret Pop", arabic: "سهرة بوب" },
+  { slug: "aghani", eyebrow: "Café Maz", title: "Aghani", arabic: "أغاني" },
 ]
 
 function html({ eyebrow, title, arabic }: Cover): string {
