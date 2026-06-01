@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { MoodPlayer } from "@/app/cafe-maz/cafe/MoodPlayer"
 
 export function CafeMaz() {
@@ -154,6 +155,15 @@ export function CafeMaz() {
       </p>
 
       <p>
+        The quality matters as much as the ritual. The hookah I use, the coals
+        I burn, the ingredients in every blend. I don&apos;t compromise on any
+        of it. Most lounges don&apos;t carry these brands, and the ones that
+        do charge a premium for them. Every blend gets tested before it lands
+        on the menu. The point isn&apos;t to have hookah at the cafe. The
+        point is for the bowl to be worth sitting with.
+      </p>
+
+      <p>
         The six bowls on the menu are named after Palestinian places and
         traditions. Karm al-Khalil for Hebron&apos;s vineyards. Knafeh Nabulsi
         for the syrup-soaked pastry from Nablus. Sahlab Layl for the winter
@@ -166,7 +176,8 @@ export function CafeMaz() {
 
       <p>
         This is what I&apos;ve learned: the most personal projects make the
-        most generous gifts. I built Café Maz for the people who already walk
+        most generous gifts. I built{" "}
+        <Link href="/cafe-maz">Café Maz</Link> for the people who already walk
         through my door. If you&apos;re one of them, <em>tafaddal</em>. You
         don&apos;t have to ask.
       </p>
