@@ -72,7 +72,7 @@ const SEED_BOWLS: Combo[] = [
       { brand: "MustHave", line: "125g", name: "Masala Tea", percent: 30 },
       { brand: "Darkside", line: "Standard", name: "Honey Dust", percent: 30 },
     ],
-    note: "Cardamom chai and honey on a stone balcony — afternoon over the old city.",
+    note: "Cardamom chai and honey on a stone balcony. Afternoon over the old city.",
     session: "afternoon",
   },
   {
@@ -100,7 +100,7 @@ const SEED_BOWLS: Combo[] = [
       { brand: "MustHave", line: "125g", name: "Milky Rice", percent: 35 },
       { brand: "MustHave", line: "125g", name: "Pistachio", percent: 25 },
     ],
-    note: "Hot sahlab made cool — pistachio dust, milk steam, cinnamon glow.",
+    note: "Hot sahlab made cool. Pistachio dust, milk steam, cinnamon glow.",
     session: "late night",
   },
 ]
@@ -232,7 +232,7 @@ ${ratiosLines}
     } catch {
       // Clipboard write can fail in some contexts; fall back to console
       console.log(ts)
-      alert("Clipboard blocked — TS object logged to console.")
+      alert("Clipboard blocked. TS object logged to console.")
     }
   }
 
@@ -267,7 +267,7 @@ ${ratiosLines}
         </h1>
         <div className={styles.heroAr} lang="ar" dir="rtl">مختبر النكهات</div>
         <p className={styles.heroTag}>
-          Filter by profile, pick from the shelf, set the mood — Claude builds two named bowls.
+          Filter by profile, pick from the shelf, set the mood. Claude builds two named bowls.
           <br />
           {DARKSIDE.length} Darkside · {MUSTHAVE.length} MustHave on the rack.
         </p>
@@ -359,7 +359,7 @@ ${ratiosLines}
               Selected · {selectedIds.length}/{MAX_PICKS}
             </span>
             {selectedIds.length === 0 ? (
-              <span className={styles.empty}>pick up to {MAX_PICKS} — or leave blank for full surprise</span>
+              <span className={styles.empty}>pick up to {MAX_PICKS}, or leave blank for full surprise</span>
             ) : (
               selectedIds.map((id) => {
                 const f = findFlavor(id)
@@ -385,7 +385,7 @@ ${ratiosLines}
             <input
               className={styles.moodInput}
               type="text"
-              placeholder='optional — "late summer evening," "the first cold night," "rainy slow afternoon"…'
+              placeholder='optional: "late summer evening," "the first cold night," "rainy slow afternoon"…'
               value={mood}
               onChange={(e) => setMood(e.target.value)}
               onKeyDown={(e) => {
@@ -510,13 +510,13 @@ ${ratiosLines}
             <div className={styles.shelfLines}>125g · regular cut</div>
             <p className={styles.shelfDesc}>
               Lighter, brighter, fruit-forward. Use when guests say they &quot;don&apos;t really
-              smoke&quot; — gentle entry, generous smoke.
+              smoke&quot;: gentle entry, generous smoke.
             </p>
           </div>
         </div>
 
         <p className={styles.shelfFoot}>
-          The catalog lives in <code>src/lib/cafe-maz-flavors.ts</code> — edit it to match exactly
+          The catalog lives in <code>src/lib/cafe-maz-flavors.ts</code>. Edit it to match exactly
           what&apos;s on your shelf. {CATALOG.length} flavors total right now.
         </p>
       </section>

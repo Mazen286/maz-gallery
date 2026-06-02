@@ -113,7 +113,7 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     name: "Al-Quds Asr",
     ar: "عصر القدس",
     mix: "Cold Mint · Masala Chai · Honey",
-    desc: "Cardamom chai and honey on a stone balcony — afternoon over the old city.",
+    desc: "Cardamom chai and honey on a stone balcony. Afternoon over the old city.",
     ratios: [
       { pct: "40%", name: "Cold Mint", shelf: ULTRA_NOVA },
       { pct: "30%", name: "Masala Chai", shelf: { brand: "MustHave", line: "125g", flavor: "Masala Tea" } },
@@ -126,7 +126,7 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     name: "Karm al-Khalil",
     ar: "كرم الخليل",
     mix: "Cold Mint · Grape · Honey",
-    desc: "Hebron terraces at harvest — dark garnet grape, mountain honey, cool stone shade.",
+    desc: "Hebron terraces at harvest. Dark garnet grape, mountain honey, cool stone shade.",
     ratios: [
       { pct: "40%", name: "Cold Mint", shelf: ULTRA_NOVA },
       { pct: "35%", name: "Grape", shelf: { brand: "MustHave", line: "125g", flavor: "Garnet Grape" } },
@@ -152,7 +152,7 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     name: "Sahlab Layl",
     ar: "سحلب الليل",
     mix: "Cold Mint · Milky · Pistachio",
-    desc: "Hot sahlab made cool — pistachio dust, milk steam, cinnamon glow.",
+    desc: "Hot sahlab made cool. Pistachio dust, milk steam, cinnamon glow.",
     ratios: [
       { pct: "40%", name: "Cold Mint", shelf: ULTRA_NOVA },
       { pct: "35%", name: "Milky", shelf: { brand: "MustHave", line: "125g", flavor: "Milky Rice" } },
@@ -162,7 +162,7 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
   },
 ]
 
-export const TAGLINE = "a one-table café — open whenever you're over"
+export const TAGLINE = "a one-table café, open whenever you're over"
 
 export const HOOKAH_INTRO =
   "Cold mint is the foundation. Every bowl starts there. Tell us a feeling, we'll build it. We blend Darkside & MustHave; names below are ours."

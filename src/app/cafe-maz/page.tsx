@@ -7,14 +7,14 @@ const TILES = [
     title: "The Café",
     ar: "الموقع",
     href: "/cafe-maz/cafe",
-    meta: "Single page — menu, hookah combos, the welcome. The link you send before they come over.",
+    meta: "Single page. Menu, hookah combos, the welcome. The link you send before they come over.",
   },
   {
     num: "№ 02 · For Guests",
     title: "Print Menu",
     ar: "القائمة",
     href: "/cafe-maz/menu",
-    meta: "A5 duplex — drinks on the front, hookah on the back. Designed for an evening at the counter.",
+    meta: "A5 duplex. Drinks on the front, hookah on the back. Designed for an evening at the counter.",
   },
   {
     num: "№ 03 · For Me",

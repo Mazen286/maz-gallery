@@ -116,7 +116,7 @@ export default function PrintMenuPage() {
 
               <p className={styles.shelfLine}>
                 <span className={styles.brand}>Darkside</span> &amp;{" "}
-                <span className={styles.brand}>MustHave</span> on the shelf · custom blends welcome — just ask.
+                <span className={styles.brand}>MustHave</span> on the shelf · custom blends welcome. Just ask.
               </p>
 
               <div className={styles.cFoot}>— ask the host —</div>
@@ -140,8 +140,8 @@ export default function PrintMenuPage() {
       </div>
 
       <p className={styles.notes}>
-        Designed for A5 (5.5 × 8.5″) duplex print. The browser print dialog will set up two pages —
-        front and back — at the correct size.
+        Designed for A5 (5.5 × 8.5″) duplex print. The browser print dialog will set up two pages
+        (front and back) at the correct size.
         <br />
         <br />
         <strong className={styles.tip}>Tip:</strong> in the print dialog, enable{" "}

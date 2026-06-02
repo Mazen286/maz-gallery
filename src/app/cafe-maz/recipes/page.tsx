@@ -20,7 +20,7 @@ const ESPRESSO_RECIPES: Recipe[] = [
     blurb: "The whole machine in one sip. If this is dialed, everything else falls in line.",
     steps: [
       { text: "Pre-warm a demitasse with hot water." },
-      { text: "Pull a <b>double</b> — 18g in, 36g out, 27–32s." },
+      { text: "Pull a <b>double</b>: 18g in, 36g out, 27–32s." },
       { text: "Serve immediately. No stirring, no waiting." },
     ],
     spec: [
@@ -54,7 +54,7 @@ const ESPRESSO_RECIPES: Recipe[] = [
     steps: [
       { text: "Pull a <b>double espresso</b> into a 4.5 oz Gibraltar." },
       { text: "Steam ~70ml milk to <b>thin</b> microfoam (60°C)." },
-      { text: "Pour from low, no art needed — just integrate." },
+      { text: "Pour from low, no art needed. Just integrate." },
     ],
     spec: [
       { k: "Espresso", v: "36 g" },
@@ -70,7 +70,7 @@ const ESPRESSO_RECIPES: Recipe[] = [
     steps: [
       { text: "Add <b>120ml hot water</b> (~85°C) to an 8 oz cup." },
       { text: "Pull a <b>double espresso</b> directly into the water." },
-      { text: "Don't stir — let the crema layer rest on top." },
+      { text: "Don't stir. Let the crema layer rest on top." },
     ],
     spec: [
       { k: "Espresso", v: "36 g" },
@@ -87,7 +87,7 @@ const TEA_RECIPES: Recipe[] = [
     name: "Mint Tea",
     star: "MAGHREBI",
     blurb:
-      "Gunpowder green tea, fresh mint, sugar to taste. The pour is the show — pour from a height so foam forms on the surface.",
+      "Gunpowder green tea, fresh mint, sugar to taste. The pour is the show. Pour from a height so foam forms on the surface.",
     steps: [
       {
         text: "Add <b>1 tbsp gunpowder green tea</b> to a small pot; rinse with boiling water and discard (removes bitterness).",
@@ -97,7 +97,7 @@ const TEA_RECIPES: Recipe[] = [
       },
       { text: "Simmer 3–4 min on low. Don't boil the leaves." },
       {
-        text: "Pour from <b>12 inches up</b> into a small glass — foam should form. Re-pour into pot once to mix.",
+        text: "Pour from <b>12 inches up</b> into a small glass. Foam should form. Re-pour into pot once to mix.",
       },
     ],
     spec: [
@@ -113,7 +113,7 @@ const TEA_RECIPES: Recipe[] = [
     rid: "T · 02",
     name: "Matcha",
     blurb:
-      "Whisked, not stirred. Use <b>ceremonial</b> for straight, <b>culinary</b> for latte. Sift the powder — it clumps.",
+      "Whisked, not stirred. Use <b>ceremonial</b> for straight, <b>culinary</b> for latte. Sift the powder. It clumps.",
     steps: [
       { text: "Straight · usucha", subhead: true },
       { text: "Sift <b>2g matcha</b> (1 tsp) into a bowl through a fine mesh." },
@@ -142,7 +142,7 @@ const TEA_RECIPES: Recipe[] = [
     name: "Turkish Coffee",
     star: "CEZVE",
     blurb:
-      "Slow, unfiltered, served in demitasse. The foam (<em>köpük</em>) is the soul — if you don't get foam, start over.",
+      "Slow, unfiltered, served in demitasse. The foam (<em>köpük</em>) is the soul. If you don't get foam, start over.",
     steps: [
       {
         text: "For each cup: <b>2 tsp Turkish-ground coffee</b> (much finer than espresso) + <b>1/2 tsp sugar</b> + optional <b>1 cardamom pod or pinch ground</b>.",
@@ -172,7 +172,7 @@ const PISTACHIO: Recipe = {
   name: "Pistachio Latte",
   star: "★ HOUSE",
   blurb:
-    "The signature. Salt is the trick — without it, pistachio reads as \"vague nut.\" With it, it reads as pistachio.",
+    "The signature. Salt is the trick. Without it, pistachio reads as \"vague nut.\" With it, it reads as pistachio.",
   steps: [
     { text: "Pistachio Cream · batch · keeps 5 days", subhead: true },
     {
@@ -184,7 +184,7 @@ const PISTACHIO: Recipe = {
     { text: "Strain through fine mesh. Store in squeeze bottle. Shake before use." },
     { text: "Build", subhead: true },
     { text: "Add <b>25ml pistachio cream</b> to a 10 oz cup." },
-    { text: "Pull a <b>double espresso</b> over the cream — stir briefly." },
+    { text: "Pull a <b>double espresso</b> over the cream. Stir briefly." },
     { text: "Steam 200ml whole milk to silky microfoam; pour from height." },
     { text: "Finish with <b>crushed pistachio dust</b> on the foam. That's the photo." },
   ],
@@ -266,7 +266,7 @@ export default function RecipesPage() {
             <span className={styles.chRule} />
           </div>
           <p className={styles.lede}>
-            Defaults for the kitchen counter. Everything else builds on this — if the espresso
+            Defaults for the kitchen counter. Everything else builds on this. If the espresso
             isn&apos;t right, the drink isn&apos;t right. Start here.
           </p>
           <div className={styles.params}>
@@ -489,7 +489,7 @@ export default function RecipesPage() {
           </div>
 
           <p className={styles.lede} style={{ margin: "14px 0 18px" }}>
-            Profiles, not brands — we keep two shelves:{" "}
+            Profiles, not brands. We keep two shelves:{" "}
             <b className={styles.bBrand}>Darkside</b> (workhorse, dark leaf, long session) and{" "}
             <b className={styles.bBrand}>MustHave</b> (lighter, fruit-forward, gentle entry).
             Translate the profile into whichever brand sits closest that night.
