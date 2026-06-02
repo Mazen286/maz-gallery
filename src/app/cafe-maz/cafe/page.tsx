@@ -126,7 +126,7 @@ export default function CafeMazPage() {
           <div className={styles.wwItem}>
             <div className={styles.wwLbl}>Hours</div>
             <div className={styles.wwVal}>
-              If the kettle&apos;s on,
+              If I&apos;m home,
               <br />
               the café&apos;s open.
             </div>
