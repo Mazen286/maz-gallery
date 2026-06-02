@@ -165,7 +165,7 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
 export const TAGLINE = "a one-table café — open whenever you're over"
 
 export const HOOKAH_INTRO =
-  "Cold mint is the foundation — every bowl starts there. Tell us a feeling, we'll build it. We blend Darkside & MustHave; names below are ours."
+  "Cold mint is the foundation. Every bowl starts there. Tell us a feeling, we'll build it. We blend Darkside & MustHave; names below are ours."
 
 // Off-Menu wink — rendered after the named combos on the website
 // (not on the print menu). Mirrors the "lab night" concept from
