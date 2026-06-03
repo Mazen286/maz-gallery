@@ -100,7 +100,7 @@ export const HOOKAH_COMBOS: HookahCombo[] = [
     name: "Yaffa Moonmilk",
     ar: "حليب قمر يافا",
     mix: "Cold Mint · Banana & Strawberry · Milky",
-    desc: "Cool mint, ripe banana, condensed-milk finish. Late by the sea at Yaffa.",
+    desc: "Cool mint, ripe banana and strawberry, condensed-milk finish. Late by the sea at Yaffa.",
     ratios: [
       { pct: "40%", name: "Cold Mint", shelf: ULTRA_NOVA },
       { pct: "35%", name: "Banana & Strawberry", shelf: { brand: "Darkside", line: "Experience", flavor: "Bana-Nscr" } },

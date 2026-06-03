@@ -58,7 +58,7 @@ const SEED_BOWLS: Combo[] = [
       { brand: "Darkside", line: "Experience", name: "Bana-Nscr", percent: 35 },
       { brand: "Darkside", line: "Standard", name: "Killer Milk", percent: 25 },
     ],
-    note: "Cool mint, ripe banana, condensed-milk finish. Late by the sea at Yaffa.",
+    note: "Cool mint, ripe banana and strawberry, condensed-milk finish. Late by the sea at Yaffa.",
     session: "late night",
   },
   {
