@@ -21,7 +21,7 @@ export function Story() {
           </DiagonalWipe>
           <FadeIn delay={300}>
             <div>
-              <h2 className="text-2xl font-bold leading-relaxed text-white sm:text-3xl">
+              <h2 className="font-display text-2xl leading-relaxed text-white sm:text-3xl">
                 A spreadsheet and a camera have more in common than you think.
                 Both are tools for seeing what others miss. I use them to tell
                 stories that move people.

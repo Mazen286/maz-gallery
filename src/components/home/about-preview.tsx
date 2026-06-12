@@ -6,13 +6,13 @@ export function AboutPreview() {
     <section id="about" className="bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-4xl px-6">
         <FadeIn>
-          <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
-            About Mazen
+          <h2 className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-teal">
+            About the Artist
           </h2>
         </FadeIn>
         <StaggerText
           text="I'm a data analyst and photographer based in San Diego. I studied structural engineering, got my MBA at UC San Diego, co-founded a tech startup, and somewhere along the way picked up a camera. Now I spend my days turning messy datasets into clear decisions, and my evenings turning interesting scenes into photographs."
-          className="mt-6 text-xl leading-relaxed text-charcoal sm:text-2xl"
+          className="mt-6 font-display text-xl leading-relaxed text-charcoal sm:text-2xl"
           delay={200}
         />
       </div>

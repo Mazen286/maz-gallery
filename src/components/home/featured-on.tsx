@@ -7,8 +7,8 @@ export function FeaturedOn() {
     <section id="featured" className="bg-cream py-14 sm:py-18">
       <div className="mx-auto max-w-7xl px-6">
         <FadeIn>
-          <h2 className="text-center text-3xl font-bold text-navy sm:text-4xl">
-            As Featured On
+          <h2 className="text-center font-display text-2xl italic text-navy sm:text-3xl">
+            As reviewed in
           </h2>
         </FadeIn>
         <div className="mt-12 flex flex-wrap items-center justify-center gap-12">

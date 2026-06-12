@@ -8,10 +8,10 @@ export function Philosophy() {
     <section id="philosophy" className="bg-slate-50 py-16 sm:py-20">
       <div className="mx-auto max-w-4xl px-6">
         <SlideIn>
-          <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
+          <h2 className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-teal">
             Philosophy
           </h2>
-          <p className="mt-6 text-xl leading-relaxed text-charcoal sm:text-2xl">
+          <p className="mt-6 font-display text-xl leading-relaxed text-charcoal sm:text-2xl">
             I believe the best insights hide in plain sight. The patterns in a
             dataset, the geometry of a skyline, the rhythm of a city street.
             My job is to slow down, look closer, and make the invisible
@@ -21,7 +21,7 @@ export function Philosophy() {
 
         <FadeIn delay={200}>
           <hr className="my-8 border-border" />
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal">
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-teal">
             What I Do
           </p>
           <p className="mt-4 text-lg text-charcoal/80">

@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
 import { Hero } from "@/components/home/hero"
+import { FeaturedExhibits } from "@/components/home/featured-exhibits"
 import { AboutPreview } from "@/components/home/about-preview"
 import { Philosophy } from "@/components/home/philosophy"
+import { SelectedWorks } from "@/components/home/selected-works"
 import { Story } from "@/components/home/story"
 import { FeaturedOn } from "@/components/home/featured-on"
 import { Marquee } from "@/components/home/marquee"
@@ -31,9 +33,16 @@ export default function HomePage() {
     <>
       <Hero />
 
+      <div className="bg-[#0a0c11] px-6 pt-8">
+        <div className="mx-auto max-w-6xl">
+          <ChapterMarker number="I" title="The Collection" dark />
+        </div>
+      </div>
+      <FeaturedExhibits />
+
       <div className="bg-white px-6">
         <div className="mx-auto max-w-4xl">
-          <ChapterMarker number="I" title="The Analyst" />
+          <ChapterMarker number="II" title="The Artist" />
         </div>
       </div>
       <AboutPreview />
@@ -45,21 +54,28 @@ export default function HomePage() {
 
       <div className="bg-slate-50 px-6">
         <div className="mx-auto max-w-4xl">
-          <ChapterMarker number="II" title="The Dreamer" />
+          <ChapterMarker number="III" title="The Dreamer" />
         </div>
       </div>
       <Philosophy />
 
+      <div className="bg-white px-6">
+        <div className="mx-auto max-w-6xl">
+          <ChapterMarker number="IV" title="The Builder" />
+        </div>
+      </div>
+      <SelectedWorks />
+
       <div className="bg-charcoal px-6">
         <div className="mx-auto max-w-4xl">
-          <ChapterMarker number="III" title="The Storyteller" dark />
+          <ChapterMarker number="V" title="The Storyteller" dark />
         </div>
       </div>
       <Story />
 
       <div className="bg-cream px-6">
         <div className="mx-auto max-w-4xl">
-          <ChapterMarker number="IV" title="Recognition" />
+          <ChapterMarker number="VI" title="Recognition" />
         </div>
       </div>
       <FeaturedOn />

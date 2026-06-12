@@ -56,7 +56,7 @@ export const PROJECTS = [
     title: "Figment Analytics",
     description: "Data analytics & BI consulting for growing businesses.",
     url: "https://figment-analytics.com",
-    image: "/images/projects/cover.png",
+    image: "/images/projects/figment-analytics.png",
   },
   {
     title: "SurfUp",
@@ -68,6 +68,6 @@ export const PROJECTS = [
     title: "Runes & Reagents",
     description: "An alchemy-themed card game.",
     url: "https://runesandreagents.netlify.app",
-    image: "/images/projects/1.png",
+    image: "/images/projects/runes-reagents.png",
   },
 ] as const

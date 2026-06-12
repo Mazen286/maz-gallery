@@ -17,7 +17,7 @@ export function Marquee() {
         {Array.from({ length: 8 }).map((_, i) => (
           <span
             key={i}
-            className="mx-8 text-6xl font-bold italic text-navy/10 sm:text-8xl"
+            className="mx-8 font-display text-6xl font-semibold italic text-navy/10 sm:text-8xl"
           >
             Talk Data to Me
           </span>
