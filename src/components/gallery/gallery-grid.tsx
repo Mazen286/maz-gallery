@@ -159,7 +159,7 @@ export function GalleryGrid({ filterLocation }: GalleryGridProps) {
                 width={images[selected].width}
                 height={images[selected].height}
                 className="max-h-[50vh] max-w-[90vw] w-auto rounded-lg object-contain shadow-2xl"
-                priority
+                preload
               />
             </div>
 

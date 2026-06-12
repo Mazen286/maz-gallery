@@ -157,7 +157,7 @@ export function FilmStripView({ images }: FilmStripViewProps) {
               width={images[selected].width}
               height={images[selected].height}
               className="max-h-[85vh] w-auto rounded-lg object-contain shadow-2xl"
-              priority
+              preload
             />
             {images[selected].location && (
               <p className="mt-4 text-center text-sm text-white/60">

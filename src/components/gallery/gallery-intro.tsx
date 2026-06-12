@@ -73,7 +73,7 @@ export function GalleryIntro({ onComplete }: GalleryIntroProps) {
           alt={featured.alt}
           fill
           className="object-cover"
-          priority
+          preload
         />
         {phase === "develop" && featured.location && (
           <div

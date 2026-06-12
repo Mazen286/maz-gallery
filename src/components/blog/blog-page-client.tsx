@@ -26,16 +26,18 @@ export function BlogPageClient() {
       <section className="bg-white pb-6 pt-36 sm:pt-44">
         <div className="mx-auto max-w-5xl px-6">
           <FadeIn>
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
-              Blog
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.4em] text-teal">
+              No. 05 &middot; Reading Room
             </p>
             <h1
-              className="mt-4 font-bold leading-[0.95] text-navy"
-              style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
+              className="mt-4 font-display font-semibold leading-[1] text-navy"
+              style={{ fontSize: "clamp(2.8rem, 8vw, 6rem)" }}
             >
-              Thoughts &<br />Stories
+              Thoughts &amp;
+              <br />
+              <span className="italic">stories</span>
             </h1>
-            <p className="mt-5 max-w-lg text-lg text-charcoal/50">
+            <p className="mt-5 max-w-lg font-display text-lg italic text-charcoal/50">
               Travel, food, games, and whatever else is on my mind.
             </p>
           </FadeIn>
@@ -123,7 +125,7 @@ export function BlogPageClient() {
                         <span>&middot;</span>
                         <span>{post.readTime}</span>
                       </div>
-                      <h2 className="mt-2 text-lg font-bold text-navy group-hover:text-teal transition-colors duration-300">
+                      <h2 className="mt-2 font-display text-lg text-navy group-hover:text-teal transition-colors duration-300">
                         {post.title}
                       </h2>
                       <p className="mt-2 text-sm leading-relaxed text-charcoal/55">

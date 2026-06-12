@@ -111,16 +111,19 @@ export default function AboutPage() {
             width={1400}
             height={600}
             className="h-[420px] w-full object-cover object-[center_15%] sm:h-[500px] lg:h-[600px]"
-            priority
+            preload
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
           <div className="absolute inset-x-0 bottom-0 px-8 pb-10 sm:pb-14">
             <div className="mx-auto max-w-7xl">
+              <p className="font-mono text-[11px] font-medium uppercase tracking-[0.4em] text-teal">
+                No. 02 &middot; The Artist
+              </p>
               <h1
-                className="font-bold uppercase leading-[0.9] tracking-tight text-white"
-                style={{ fontSize: "clamp(4rem, 12vw, 10rem)" }}
+                className="mt-3 font-display font-semibold leading-[0.95] text-white"
+                style={{ fontSize: "clamp(3.2rem, 10vw, 8rem)" }}
               >
-                About Me
+                About <span className="italic">me</span>
               </h1>
             </div>
           </div>
@@ -131,7 +134,7 @@ export default function AboutPage() {
       <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <FadeIn>
-            <p className="text-2xl leading-relaxed text-charcoal sm:text-3xl lg:text-4xl">
+            <p className="font-display text-2xl leading-relaxed text-charcoal sm:text-3xl lg:text-4xl">
               I build things that help people see clearly. Whether that&apos;s a
               dashboard, a photograph, or a product, the goal is the same: take
               something complex and make it feel simple.
@@ -144,7 +147,7 @@ export default function AboutPage() {
       <section className="bg-charcoal py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <FadeIn>
-            <h2 className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
+            <h2 className="font-mono text-xs font-semibold uppercase tracking-[0.4em] text-teal">
               The Journey
             </h2>
           </FadeIn>
@@ -159,7 +162,7 @@ export default function AboutPage() {
                     <time dateTime={item.year} className="font-mono text-sm font-bold text-teal">{item.year}</time>
                   )}
                   <div>
-                    <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                    <h3 className="font-display text-xl text-white">{item.title}</h3>
                     <p className="mt-2 text-[15px] leading-relaxed text-white/50">
                       {item.text}
                     </p>
@@ -178,10 +181,10 @@ export default function AboutPage() {
             {STATS.map((stat, i) => (
               <FadeIn key={stat.label} delay={i * 80}>
                 <div className="text-center">
-                  <p className="text-4xl font-bold text-teal sm:text-5xl">
+                  <p className="font-display text-4xl font-semibold text-teal sm:text-5xl">
                     {stat.number}
                   </p>
-                  <p className="mt-2 text-xs uppercase tracking-[0.2em] text-white/40">
+                  <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-white/40">
                     {stat.label}
                   </p>
                 </div>
@@ -239,7 +242,7 @@ export default function AboutPage() {
       <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <FadeIn>
-            <h2 className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
+            <h2 className="font-mono text-xs font-semibold uppercase tracking-[0.4em] text-teal">
               What I&apos;m Into
             </h2>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -260,7 +263,7 @@ export default function AboutPage() {
       <section className="bg-slate-50 py-14">
         <div className="mx-auto max-w-5xl px-6">
           <FadeIn>
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.4em] text-charcoal/40">
+            <p className="text-center font-mono text-xs font-semibold uppercase tracking-[0.4em] text-charcoal/40">
               Featured On
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-12">
@@ -289,8 +292,8 @@ export default function AboutPage() {
       <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <FadeIn>
-            <p className="text-2xl font-bold text-navy sm:text-3xl">
-              Want to work together?
+            <p className="font-display text-2xl text-navy sm:text-3xl">
+              Want to work <span className="italic">together</span>?
             </p>
             <p className="mt-3 text-charcoal/50">
               I run{" "}

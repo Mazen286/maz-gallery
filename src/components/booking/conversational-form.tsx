@@ -52,11 +52,15 @@ export function ConversationalForm() {
     }
   }, [messages, isTyping])
 
-  // Focus input
+  // Focus input. On touch devices, skip the initial autofocus: it scrolls
+  // the page past the header and pops the keyboard before the visitor
+  // has read anything. Focus only once they have started answering.
   useEffect(() => {
-    if (!isTyping && !isComplete && inputRef.current) {
-      inputRef.current.focus()
-    }
+    if (isTyping || isComplete || !inputRef.current) return
+    const isTouch = window.matchMedia("(pointer: coarse)").matches
+    if (isTouch && messages.length <= 1) return
+    inputRef.current.focus({ preventScroll: messages.length <= 1 })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTyping, isComplete])
 
   const handleSubmitAnswer = () => {
@@ -108,7 +112,7 @@ export function ConversationalForm() {
 
   if (submitted) {
     return (
-      <div className="flex h-[500px] items-center justify-center rounded-2xl border border-navy/10 bg-white shadow-lg">
+      <div className="flex h-[500px] items-center justify-center rounded-lg border border-navy/15 bg-[#fffdf8] shadow-lg">
         <div
           className="text-center"
           style={{ animation: "envelopeFlyAway 2s ease-in 1.5s forwards" }}
@@ -154,7 +158,7 @@ export function ConversationalForm() {
   }
 
   return (
-    <div className="flex h-[500px] flex-col rounded-2xl border border-navy/10 bg-white shadow-lg">
+    <div className="flex h-[500px] flex-col rounded-lg border border-navy/15 bg-[#fffdf8] shadow-lg">
       {/* Chat area */}
       <div ref={chatRef} className="flex-1 overflow-y-auto p-6" aria-live="polite">
         <div className="space-y-4">

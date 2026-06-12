@@ -150,7 +150,7 @@ function ProjectCard({
           </p>
 
           {/* Title */}
-          <h2 className="mt-2 text-2xl font-bold text-navy sm:text-3xl">
+          <h2 className="mt-2 font-display text-2xl text-navy sm:text-3xl">
             {project.title}
           </h2>
 
@@ -218,16 +218,16 @@ export default function ProjectsPage() {
       <section className="bg-white pb-8 pt-36 sm:pt-44">
         <div className="mx-auto max-w-5xl px-6">
           <FadeIn>
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-teal">
-              Portfolio
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.4em] text-teal">
+              No. 04 &middot; Projects Wing
             </p>
             <h1
-              className="mt-4 font-bold leading-[0.95] text-navy"
-              style={{ fontSize: "clamp(3.5rem, 10vw, 8rem)" }}
+              className="mt-4 font-display font-semibold leading-[1] text-navy"
+              style={{ fontSize: "clamp(2.8rem, 8vw, 6.5rem)" }}
             >
-              WHAT I<br />BUILD
+              What I<br /><span className="italic">build</span>
             </h1>
-            <p className="mt-6 max-w-lg text-lg text-charcoal/50">
+            <p className="mt-6 max-w-lg font-display text-lg italic text-charcoal/50">
               Startups, dashboards, games, and experiments. Each one taught me
               something the last one couldn&apos;t.
             </p>
@@ -264,7 +264,7 @@ export default function ProjectsPage() {
                       >
                         {project.subtitle}
                       </p>
-                      <h2 className="mt-2 text-3xl font-bold text-navy sm:text-4xl">
+                      <h2 className="mt-2 font-display text-3xl text-navy sm:text-4xl">
                         {project.title}
                       </h2>
                       <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-charcoal/60">
