@@ -2,7 +2,7 @@ export const SITE_NAME = "MazGallery"
 export const SITE_URL = "https://maz.gallery"
 export const SITE_DESCRIPTION =
   "Mazen Abugharbieh. Data analyst, photographer, and startup co-founder based in San Diego."
-export const EMAIL = "mazen@figment-analytics.com"
+export const EMAIL = "mazen@figmentanalytics.com"
 
 export const SOCIAL = {
   instagram: "https://instagram.com/mazen2892",
@@ -55,7 +55,7 @@ export const PROJECTS = [
   {
     title: "Figment Analytics",
     description: "Data analytics & BI consulting for growing businesses.",
-    url: "https://figment-analytics.com",
+    url: "https://figmentanalytics.com",
     image: "/images/projects/figment-analytics.png",
   },
   {
