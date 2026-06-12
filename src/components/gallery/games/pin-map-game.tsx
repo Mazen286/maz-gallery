@@ -173,7 +173,7 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
       </div>
 
       <div className="flex-1 overflow-y-auto px-5 pb-8 sm:px-8">
-        <div className="mx-auto w-full max-w-5xl">
+        <div className="mx-auto w-full max-w-6xl">
           <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
             Pin the Map
           </p>
