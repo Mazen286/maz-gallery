@@ -52,11 +52,20 @@ const JOURNEY = [
   },
 ]
 
+const PLACES = new Set(GALLERY.map((img) => img.location).filter(Boolean)).size
+
 const STATS = [
   { number: "7+", label: "Projects shipped" },
-  { number: "10+", label: "Locations photographed" },
-  { number: "3", label: "Media features" },
-  { number: `${GALLERY.length}`, label: "Gallery photos" },
+  { number: `${PLACES}`, label: "Places photographed" },
+  { number: `${PRESS.length}`, label: "Media features" },
+  { number: `${GALLERY.length}`, label: "Photographs on display" },
+]
+
+// Pulled from the gallery manifest so captions and locations stay true
+const PHOTO_BREAK_SRCS = [
+  "/images/gallery/Istanbul-1.jpg",
+  "/images/gallery/Jordan-3.jpg",
+  "/images/gallery/IMG_3901.jpg",
 ]
 
 const INTERESTS = [
@@ -141,6 +150,18 @@ export default function AboutPage() {
               something complex and make it feel simple.
             </p>
           </FadeIn>
+          <FadeIn delay={200}>
+            <div className="mt-12 max-w-sm border border-navy/15 bg-slate-50/70 p-5">
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-teal">
+                Currently
+              </p>
+              <ul className="mt-3 space-y-1.5 text-sm text-charcoal/70">
+                <li>Running Figment Analytics</li>
+                <li>Designing the next card game</li>
+                <li>Photographing wherever I happen to be</li>
+              </ul>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -153,18 +174,27 @@ export default function AboutPage() {
             </h2>
           </FadeIn>
 
-          <div className="mt-10 space-y-0">
+          <div className="relative mt-12">
+            <div className="absolute bottom-3 left-[7px] top-2 w-px bg-white/10" aria-hidden="true" />
             {JOURNEY.map((item, i) => (
               <FadeIn key={item.year} delay={i * 100}>
-                <div className="grid grid-cols-[60px_1fr] gap-6 border-l border-white/10 py-8 pl-8 sm:grid-cols-[80px_1fr]">
+                <div className="relative grid gap-2 pb-12 pl-10 last:pb-2 sm:grid-cols-[90px_1fr] sm:gap-6">
+                  <span
+                    className={`absolute left-0 top-1.5 h-[15px] w-[15px] rounded-full border ${
+                      item.year === "Now"
+                        ? "border-teal bg-teal/30"
+                        : "border-white/25 bg-charcoal"
+                    }`}
+                    aria-hidden="true"
+                  />
                   {item.year === "Now" ? (
-                    <span className="font-mono text-sm font-bold text-teal">{item.year}</span>
+                    <span className="font-mono text-sm text-teal/90">{item.year}</span>
                   ) : (
-                    <time dateTime={item.year} className="font-mono text-sm font-bold text-teal">{item.year}</time>
+                    <time dateTime={item.year} className="font-mono text-sm text-teal/90">{item.year}</time>
                   )}
                   <div>
-                    <h3 className="font-display text-xl text-white">{item.title}</h3>
-                    <p className="mt-2 text-[15px] leading-relaxed text-white/50">
+                    <h3 className="font-display text-2xl italic text-white">{item.title}</h3>
+                    <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/50">
                       {item.text}
                     </p>
                   </div>
@@ -176,7 +206,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats strip */}
-      <section className="border-y border-white/10 bg-charcoal py-12">
+      <section className="bg-charcoal py-12">
         <div className="mx-auto max-w-5xl px-6">
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {STATS.map((stat, i) => (
@@ -195,46 +225,47 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Photo break - 3 standout images */}
-      <section className="bg-charcoal py-12">
+      {/* Photo break - framed pieces from the collection */}
+      <section className="bg-charcoal pb-20 pt-8">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-4 sm:grid-cols-3">
-            <FadeIn delay={0}>
-              <div className="overflow-hidden rounded-xl">
-                <Image
-                  src="/images/gallery/Istanbul-1.jpg"
-                  alt="Light inside the Hagia Sophia"
-                  width={1500}
-                  height={1000}
-                  className="h-64 w-full object-cover sm:h-80"
-                  loading="lazy"
-                />
-              </div>
-            </FadeIn>
-            <FadeIn delay={100}>
-              <div className="overflow-hidden rounded-xl">
-                <Image
-                  src="/images/gallery/Jordan-3.jpg"
-                  alt="The Abdoun Bridge at night"
-                  width={1500}
-                  height={1000}
-                  className="h-64 w-full object-cover sm:h-80"
-                  loading="lazy"
-                />
-              </div>
-            </FadeIn>
-            <FadeIn delay={200}>
-              <div className="overflow-hidden rounded-xl">
-                <Image
-                  src="/images/gallery/IMG_3901.jpg"
-                  alt="Autumn in Central Park"
-                  width={1500}
-                  height={1000}
-                  className="h-64 w-full object-cover sm:h-80"
-                  loading="lazy"
-                />
-              </div>
-            </FadeIn>
+          <div className="grid gap-8 sm:grid-cols-3">
+            {PHOTO_BREAK_SRCS.map((src, i) => {
+              const img = GALLERY.find((g) => g.src === src)
+              if (!img) return null
+              return (
+                <FadeIn key={src} delay={i * 120}>
+                  <Link
+                    href={`/gallery?piece=${encodeURIComponent(img.src)}`}
+                    className="group block"
+                  >
+                    <figure>
+                      <div className="border border-[#a08c5f]/35 bg-[#efece4] p-2.5 shadow-[0_14px_40px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]">
+                        <div className="overflow-hidden">
+                          <Image
+                            src={img.src}
+                            alt={img.alt}
+                            width={img.width}
+                            height={img.height}
+                            className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:h-64"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+                      <figcaption className="mt-3 flex items-baseline justify-between gap-3">
+                        <span className="font-display text-sm italic text-white/70">
+                          {img.alt}
+                        </span>
+                        {img.location && (
+                          <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.2em] text-teal/60">
+                            {img.location}
+                          </span>
+                        )}
+                      </figcaption>
+                    </figure>
+                  </Link>
+                </FadeIn>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -250,7 +281,7 @@ export default function AboutPage() {
               {INTERESTS.map((interest) => (
                 <span
                   key={interest}
-                  className="rounded-full border border-navy/15 px-5 py-2 text-sm font-medium text-navy/70"
+                  className="rounded-full border border-navy/15 px-4 py-2 font-mono text-xs text-navy/70"
                 >
                   {interest}
                 </span>
