@@ -1,13 +1,13 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
-import { Shuffle, Grid3x3, Eye, Puzzle } from "lucide-react"
+import { Shuffle, Grid3x3, Eye, Gamepad2 } from "lucide-react"
 import { GALLERY } from "@/lib/gallery"
 import { GalleryIntro } from "./gallery-intro"
 import { ExhibitionView } from "./exhibition-view"
 import { GalleryGrid } from "./gallery-grid"
-import { JigsawPuzzle } from "./jigsaw-puzzle"
+import { GameRoom } from "./games/game-room"
 
 const COLLECTION = [
   { src: "/images/collection/IMG_7908.jpeg", alt: "Digital collectible showcase", width: 600, height: 800 },
@@ -36,9 +36,22 @@ export function GalleryPageClient() {
   const [introComplete, setIntroComplete] = useState(false)
   const [view, setView] = useState<ViewMode>("exhibition")
   const [exhibitionStart, setExhibitionStart] = useState(0)
-  const [puzzleIndex, setPuzzleIndex] = useState<number | null>(null)
+  const [gameRoomOpen, setGameRoomOpen] = useState(false)
 
   const handleIntroComplete = useCallback(() => setIntroComplete(true), [])
+
+  // Deep link: /gallery?piece=<src> opens the exhibition on that photo,
+  // skipping the intro so the visitor lands directly on the piece
+  useEffect(() => {
+    const piece = new URLSearchParams(window.location.search).get("piece")
+    if (!piece) return
+    const idx = GALLERY.findIndex((img) => img.src === piece)
+    if (idx >= 0) {
+      setExhibitionStart(idx)
+      setView("exhibition")
+      setIntroComplete(true)
+    }
+  }, [])
   const handleSurprise = () => {
     setExhibitionStart(Math.floor(Math.random() * GALLERY.length))
     setView("exhibition")
@@ -58,7 +71,7 @@ export function GalleryPageClient() {
             width={1500}
             height={1000}
             className="h-[340px] w-full object-cover sm:h-[420px] lg:h-[480px]"
-            priority
+            preload
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
           <div className="absolute inset-x-0 bottom-0 px-8 pb-10 text-center sm:pb-12">
@@ -96,11 +109,11 @@ export function GalleryPageClient() {
             Surprise Me
           </button>
           <button
-            onClick={() => setPuzzleIndex(Math.floor(Math.random() * GALLERY.length))}
+            onClick={() => setGameRoomOpen(true)}
             className="flex items-center gap-2 rounded-full border border-teal/30 px-4 py-2 text-xs font-medium text-teal transition-all hover:bg-teal/10"
           >
-            <Puzzle className="size-3.5" />
-            Jigsaw
+            <Gamepad2 className="size-3.5" />
+            Game Room
           </button>
         </div>
       </section>
@@ -150,18 +163,8 @@ export function GalleryPageClient() {
         </div>
       </section>
 
-      {/* Jigsaw Puzzle overlay */}
-      {puzzleIndex !== null && (
-        <JigsawPuzzle
-          image={GALLERY[puzzleIndex]}
-          onClose={() => setPuzzleIndex(null)}
-          onNewImage={() => {
-            let next: number
-            do { next = Math.floor(Math.random() * GALLERY.length) } while (next === puzzleIndex)
-            setPuzzleIndex(next)
-          }}
-        />
-      )}
+      {/* Game Room overlay */}
+      {gameRoomOpen && <GameRoom onClose={() => setGameRoomOpen(false)} />}
     </>
   )
 }

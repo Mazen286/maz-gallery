@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useRef, useCallback, useEffect, useMemo } from "react"
+import { useState, useRef, useCallback, useEffect } from "react"
 import { X } from "lucide-react"
 import type { GalleryImage } from "@/lib/gallery"
+import { ConfettiOverlay } from "./games/confetti"
 
 /* ────────────────────────────────────────────────────────────
    Types
@@ -13,6 +14,8 @@ interface JigsawPuzzleProps {
   difficulty?: "easy" | "medium" | "hard"
   onClose: () => void
   onNewImage?: () => void
+  onChangePhoto?: () => void
+  onRandomPhoto?: () => void
 }
 
 type EdgeType = "flat" | "tab" | "blank"
@@ -232,48 +235,6 @@ function generateGrid(
 }
 
 /* ────────────────────────────────────────────────────────────
-   Confetti particle
-   ──────────────────────────────────────────────────────────── */
-
-function ConfettiOverlay() {
-  const particles = useMemo(() => {
-    return Array.from({ length: 60 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      delay: Math.random() * 2,
-      duration: 2 + Math.random() * 2,
-      size: 4 + Math.random() * 6,
-      color: ["#78c8d6", "#ffffff", "#f0c040", "#e06070", "#80e0a0"][
-        Math.floor(Math.random() * 5)
-      ],
-      rotation: Math.random() * 360,
-    }))
-  }, [])
-
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          style={{
-            position: "absolute",
-            left: `${p.x}%`,
-            top: "-10px",
-            width: p.size,
-            height: p.size,
-            backgroundColor: p.color,
-            borderRadius: p.size > 7 ? "50%" : "1px",
-            transform: `rotate(${p.rotation}deg)`,
-            animation: `jigsaw-confetti-fall ${p.duration}s ${p.delay}s ease-in forwards`,
-            opacity: 0,
-          }}
-        />
-      ))}
-    </div>
-  )
-}
-
-/* ────────────────────────────────────────────────────────────
    Main component
    ──────────────────────────────────────────────────────────── */
 
@@ -282,6 +243,8 @@ export function JigsawPuzzle({
   difficulty: initialDifficulty = "medium",
   onClose,
   onNewImage,
+  onChangePhoto,
+  onRandomPhoto,
 }: JigsawPuzzleProps) {
   const [difficulty, setDifficulty] = useState(initialDifficulty)
   const [pieces, setPieces] = useState<PieceData[]>([])
@@ -526,10 +489,6 @@ export function JigsawPuzzle({
           0% { box-shadow: 0 0 15px 5px rgba(120,200,214,0.6); }
           100% { box-shadow: 0 0 0 0 rgba(120,200,214,0); }
         }
-        @keyframes jigsaw-confetti-fall {
-          0% { opacity: 1; transform: translateY(0) rotate(0deg); }
-          100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
-        }
         @keyframes jigsaw-celebration-in {
           0% { opacity: 0; transform: scale(0.8) translateY(20px); }
           100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -539,7 +498,7 @@ export function JigsawPuzzle({
       {/* Full-screen overlay */}
       <div className="fixed inset-0 z-50 flex flex-col bg-black/95">
         {/* Header bar */}
-        <div className="flex items-center justify-between px-4 py-3 sm:px-6">
+        <div className="relative flex items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-center gap-4">
             <span className="font-mono text-sm" style={{ color: "#78c8d6" }}>
               {formatTime(elapsed)}
@@ -548,6 +507,11 @@ export function JigsawPuzzle({
               {moves} move{moves !== 1 ? "s" : ""}
             </span>
           </div>
+          {image.location && (
+            <p className="absolute left-1/2 hidden -translate-x-1/2 font-display text-sm italic text-white/50 sm:block">
+              {image.location}
+            </p>
+          )}
           <button
             onClick={onClose}
             className="rounded-full p-2 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
@@ -703,14 +667,22 @@ export function JigsawPuzzle({
                   {formatTime(elapsed)} &middot; {moves} move
                   {moves !== 1 ? "s" : ""}
                 </p>
-                <div className="mt-6 flex gap-3">
+                <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <button
-                    onClick={() => onNewImage ? onNewImage() : initPuzzle(difficulty)}
+                    onClick={() => initPuzzle(difficulty)}
                     className="rounded-full border px-5 py-2 text-sm transition-all hover:bg-white/10"
                     style={{ borderColor: "#78c8d6", color: "#78c8d6" }}
                   >
                     Play Again
                   </button>
+                  {(onRandomPhoto || onNewImage) && (
+                    <button
+                      onClick={() => (onRandomPhoto ?? onNewImage)?.()}
+                      className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/60 transition-all hover:text-white"
+                    >
+                      Another Photo
+                    </button>
+                  )}
                   <button
                     onClick={onClose}
                     className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/50 transition-all hover:text-white"
@@ -741,6 +713,22 @@ export function JigsawPuzzle({
           >
             Shuffle
           </button>
+          {onChangePhoto && (
+            <button
+              onClick={onChangePhoto}
+              className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/70"
+            >
+              New Photo
+            </button>
+          )}
+          {onRandomPhoto && (
+            <button
+              onClick={onRandomPhoto}
+              className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/70"
+            >
+              Random
+            </button>
+          )}
           <div className="flex rounded-full border border-white/15">
             {(["easy", "medium", "hard"] as const).map((d) => (
               <button
