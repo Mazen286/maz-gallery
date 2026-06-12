@@ -16,6 +16,21 @@ export const NAV_LINKS = [
   { label: "Blog", href: "/blog" },
 ] as const
 
+// The site as a museum: every route is a room with a placard
+export const ROOMS = [
+  { href: "/", number: "No. 01", name: "Entrance" },
+  { href: "/about", number: "No. 02", name: "The Artist" },
+  { href: "/gallery", number: "No. 03", name: "The Gallery" },
+  { href: "/projects", number: "No. 04", name: "Projects Wing" },
+  { href: "/blog", number: "No. 05", name: "Reading Room" },
+  { href: "/booking", number: "No. 06", name: "Front Desk" },
+] as const
+
+export function roomFor(pathname: string) {
+  if (pathname === "/") return ROOMS[0]
+  return ROOMS.find((r) => r.href !== "/" && pathname.startsWith(r.href))
+}
+
 export const FIGMENT_URL = "https://figmentanalytics.com"
 
 export const PRESS = [

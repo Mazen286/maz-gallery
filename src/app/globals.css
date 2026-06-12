@@ -35,6 +35,7 @@ html {
   --color-teal: var(--teal);
   --color-slate-50: var(--slate-50);
   --font-sans: var(--font-inter-tight);
+  --font-display: var(--font-fraunces);
 }
 
 body {
@@ -46,6 +47,17 @@ body {
 :focus-visible {
   outline: 2px solid var(--teal);
   outline-offset: 2px;
+}
+
+/* ─── Reading Room: drop cap on the opening paragraph ─── */
+.reading-room > p:first-of-type::first-letter {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 3.3em;
+  float: left;
+  line-height: 0.85;
+  padding-right: 0.09em;
+  padding-top: 0.04em;
+  color: var(--navy);
 }
 
 /* ─── Reduced motion ─── */
@@ -146,24 +158,6 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Keyframes: Museum cat ─── */
-@keyframes tailSway {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(12deg); }
-  75% { transform: rotate(-8deg); }
-}
-@keyframes earTwitch {
-  0%, 90%, 100% { transform: rotate(0deg); }
-  93% { transform: rotate(-8deg); }
-  96% { transform: rotate(3deg); }
-}
-
-/* ─── Keyframes: Star twinkle ─── */
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
-
 /* ─── Keyframes: Cursor word trail ─── */
 @keyframes wordFade {
   0% { opacity: 0.4; transform: translateY(0) scale(1); }
@@ -181,7 +175,27 @@ body {
   100% { transform: translateY(-200px) scale(0.3); opacity: 0; }
 }
 
-/* ─── Keyframes: Glitch transition (Sombra-inspired) ─── */
+/* ─── Keyframes: Gallery placard transition ─── */
+@keyframes placardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes lineGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ─── Keyframes: Overlay menu ─── */
+@keyframes menuItemIn {
+  from { opacity: 0; transform: translateY(44px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes menuVeilIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Keyframes: Glitch transition (Sombra-inspired, kept for easter eggs) ─── */
 @keyframes glitchShift {
   0% { transform: translate(0, 0) skewX(0deg); filter: none; }
   8% { transform: translate(-8px, 0) skewX(-2deg); filter: hue-rotate(90deg) saturate(3); }

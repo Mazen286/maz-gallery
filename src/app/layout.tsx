@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter_Tight } from "next/font/google"
+import { Inter_Tight, Fraunces } from "next/font/google"
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
 import { GalleryChrome } from "@/components/layout/gallery-chrome"
@@ -11,6 +11,13 @@ const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+})
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
 })
 
@@ -58,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${interTight.variable} h-full antialiased`}>
+    <html lang="en" className={`${interTight.variable} ${fraunces.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <script
           type="application/ld+json"
