@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: GALLERY.map((img) => `${SITE_URL}${img.src}`),
     },
     { url: `${SITE_URL}/blog`, lastModified: REDESIGN, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${SITE_URL}/daily`, lastModified: REDESIGN, changeFrequency: "daily", priority: 0.7 },
     { url: `${SITE_URL}/booking`, lastModified: REDESIGN, changeFrequency: "yearly", priority: 0.6 },
   ]
 

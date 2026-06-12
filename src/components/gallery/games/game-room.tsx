@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useMemo } from "react"
 import Image from "next/image"
-import { X, Puzzle, Copy, Mail, MapPin } from "lucide-react"
+import Link from "next/link"
+import { X, Puzzle, Copy, Mail, MapPin, CalendarDays, ArrowRight } from "lucide-react"
+import { getDailyPuzzle } from "@/lib/daily"
 import { GALLERY, type GalleryImage } from "@/lib/gallery"
 import { JigsawPuzzle } from "../jigsaw-puzzle"
 import { PhotoPicker } from "./photo-picker"
@@ -157,7 +159,27 @@ export function GameRoom({ onClose }: GameRoomProps) {
               When the museum closes, the collection comes out to play.
             </p>
 
-            <div className="mt-10 grid w-full max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Today's challenge */}
+            <Link
+              href="/daily"
+              className="group mt-10 flex w-full max-w-5xl items-center justify-between gap-4 rounded-lg border border-teal/30 bg-teal/[0.05] px-5 py-4 transition-all hover:border-teal/60 hover:bg-teal/10"
+              style={{ animation: "menuItemIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both" }}
+            >
+              <div className="flex items-center gap-3">
+                <CalendarDays className="size-5 text-teal" />
+                <div>
+                  <p className="font-display text-lg italic text-white">
+                    The Daily Postcard
+                  </p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/45">
+                    No. {getDailyPuzzle().number} &middot; one photo, three tries, every day
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="size-4 shrink-0 text-teal/60 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+
+            <div className="mt-4 grid w-full max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {games.map((game, i) => (
                 <button
                   key={game.key}

@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react"
 import Image from "next/image"
-import { Shuffle, Grid3x3, Eye, Gamepad2, ArrowLeft } from "lucide-react"
+import Link from "next/link"
+import { Shuffle, Grid3x3, Eye, Gamepad2, ArrowLeft, CalendarDays } from "lucide-react"
 import { GALLERY, LOCATION_COORDS, type GalleryImage } from "@/lib/gallery"
 import { ExhibitionView } from "./exhibition-view"
 import { GalleryGrid } from "./gallery-grid"
@@ -185,6 +186,13 @@ export function GalleryPageClient() {
                 <Gamepad2 className="size-3.5" />
                 Game Room
               </button>
+              <Link
+                href="/daily"
+                className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/80"
+              >
+                <CalendarDays className="size-3.5" />
+                Daily Postcard
+              </Link>
             </div>
           </div>
         </section>
