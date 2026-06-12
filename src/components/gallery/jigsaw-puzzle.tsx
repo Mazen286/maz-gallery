@@ -37,6 +37,8 @@ const DIFFICULTY_MAP = {
 
 const OVERHANG = 0.2 // 20% of cell size for tab overhang
 const SNAP_DISTANCE = 30
+const SNAP_DISTANCE_TOUCH = 46 // fingers are less precise than cursors
+const BEST_KEY = "mazgallery.jigsaw.best.v1"
 
 /* ────────────────────────────────────────────────────────────
    SVG path generation for jigsaw piece clip-paths
@@ -254,6 +256,33 @@ export function JigsawPuzzle({
   const [completed, setCompleted] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
   const [boardSize, setBoardSize] = useState({ w: 600, h: 400 })
+  const [isTouch, setIsTouch] = useState(false)
+  const [best, setBest] = useState<Record<string, number> | null>(null)
+  const [newBest, setNewBest] = useState(false)
+
+  useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) setIsTouch(true)
+    try {
+      setBest(JSON.parse(localStorage.getItem(BEST_KEY) ?? "{}"))
+    } catch {
+      setBest({})
+    }
+  }, [])
+
+  // Record best time on completion
+  useEffect(() => {
+    if (!completed || best === null) return
+    const prev = best[difficulty]
+    if (prev === undefined || elapsed < prev) {
+      const next = { ...best, [difficulty]: elapsed }
+      setBest(next)
+      setNewBest(true)
+      try {
+        localStorage.setItem(BEST_KEY, JSON.stringify(next))
+      } catch {}
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completed])
 
   const boardRef = useRef<HTMLDivElement>(null)
   const dragRef = useRef<{
@@ -296,6 +325,7 @@ export function JigsawPuzzle({
       setElapsed(0)
       setTimerStarted(false)
       setCompleted(false)
+      setNewBest(false)
       if (timerRef.current) clearInterval(timerRef.current)
       timerRef.current = null
     },
@@ -426,7 +456,8 @@ export function JigsawPuzzle({
         const dx = Math.abs(piece.x - target.x)
         const dy = Math.abs(piece.y - target.y)
 
-        if (dx < SNAP_DISTANCE && dy < SNAP_DISTANCE) {
+        const snap = isTouch ? SNAP_DISTANCE_TOUCH : SNAP_DISTANCE
+        if (dx < snap && dy < snap) {
           next[pieceIdx] = { ...piece, x: target.x, y: target.y, placed: true }
         }
 
@@ -435,7 +466,7 @@ export function JigsawPuzzle({
         return next
       })
     },
-    [correctPos, checkCompletion]
+    [correctPos, checkCompletion, isTouch]
   )
 
   // Shuffle unplaced pieces
@@ -667,6 +698,17 @@ export function JigsawPuzzle({
                   {formatTime(elapsed)} &middot; {moves} move
                   {moves !== 1 ? "s" : ""}
                 </p>
+                {newBest ? (
+                  <p className="mt-1 font-mono text-xs uppercase tracking-[0.3em] text-[#78c8d6]/80">
+                    New personal best
+                  </p>
+                ) : (
+                  best?.[difficulty] !== undefined && (
+                    <p className="mt-1 font-mono text-xs uppercase tracking-[0.3em] text-white/35">
+                      Best: {formatTime(best[difficulty])}
+                    </p>
+                  )
+                )}
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <button
                     onClick={() => initPuzzle(difficulty)}

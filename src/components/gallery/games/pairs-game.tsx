@@ -50,6 +50,7 @@ export function PairsGame({ images, onBack }: PairsGameProps) {
   const [running, setRunning] = useState(false)
   const [best, setBest] = useState<Record<string, number> | null>(null)
   const [newBest, setNewBest] = useState(false)
+  const [streak, setStreak] = useState(0)
   const lockRef = useRef(false)
 
   const won = cards.length > 0 && matched.size === cards.length / 2
@@ -63,6 +64,7 @@ export function PairsGame({ images, onBack }: PairsGameProps) {
       setElapsed(0)
       setRunning(false)
       setNewBest(false)
+      setStreak(0)
       lockRef.current = false
     },
     [images]
@@ -126,7 +128,9 @@ export function PairsGame({ images, onBack }: PairsGameProps) {
     if (cards[first].image.src === cards[idx].image.src) {
       setMatched((prev) => new Set(prev).add(cards[idx].image.src))
       setFlipped([])
+      setStreak((s) => s + 1)
     } else {
+      setStreak(0)
       lockRef.current = true
       setTimeout(() => {
         setFlipped([])
@@ -156,6 +160,15 @@ export function PairsGame({ images, onBack }: PairsGameProps) {
           Game Room
         </button>
         <div className="flex items-center gap-4">
+          {streak >= 2 && (
+            <span
+              key={streak}
+              className="font-mono text-xs uppercase tracking-[0.2em] text-teal"
+              style={{ animation: "placardIn 0.3s ease-out both" }}
+            >
+              streak x{streak}
+            </span>
+          )}
           <span className="font-mono text-sm text-teal">{formatTime(elapsed)}</span>
           <span className="text-sm text-white/50">
             {moves} move{moves !== 1 ? "s" : ""}

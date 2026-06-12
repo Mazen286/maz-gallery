@@ -14,6 +14,8 @@ interface PostcardsGameProps {
 const ROUNDS = 8
 const OPTIONS = 4
 const BEST_KEY = "mazgallery.postcards.best.v1"
+const RECENT_KEY = "mazgallery.postcards.recent.v1"
+const RECENT_LIMIT = 24
 
 interface Round {
   image: GalleryImage
@@ -29,18 +31,20 @@ function shuffle<T>(arr: T[]): T[] {
   return a
 }
 
-function buildRounds(images: GalleryImage[]): Round[] {
+function buildRounds(images: GalleryImage[], recent: Set<string>): Round[] {
   const located = images.filter((img) => img.location)
   const allLocations = [...new Set(located.map((img) => img.location as string))]
-  return shuffle(located)
-    .slice(0, ROUNDS)
-    .map((image) => {
-      const wrong = shuffle(allLocations.filter((l) => l !== image.location)).slice(
-        0,
-        OPTIONS - 1
-      )
-      return { image, options: shuffle([image.location as string, ...wrong]) }
-    })
+  // Prefer photos the visitor has not seen in recent games; pad with the
+  // rest if the fresh pool runs short
+  const fresh = shuffle(located.filter((img) => !recent.has(img.src)))
+  const seen = shuffle(located.filter((img) => recent.has(img.src)))
+  return [...fresh, ...seen].slice(0, ROUNDS).map((image) => {
+    const wrong = shuffle(allLocations.filter((l) => l !== image.location)).slice(
+      0,
+      OPTIONS - 1
+    )
+    return { image, options: shuffle([image.location as string, ...wrong]) }
+  })
 }
 
 function rankFor(score: number): string {
@@ -60,7 +64,18 @@ export function PostcardsGame({ images, onBack }: PostcardsGameProps) {
   const [newBest, setNewBest] = useState(false)
 
   const reset = useCallback(() => {
-    setRounds(buildRounds(images))
+    let recent: string[] = []
+    try {
+      recent = JSON.parse(localStorage.getItem(RECENT_KEY) ?? "[]")
+    } catch {}
+    const next = buildRounds(images, new Set(recent))
+    try {
+      localStorage.setItem(
+        RECENT_KEY,
+        JSON.stringify([...next.map((r) => r.image.src), ...recent].slice(0, RECENT_LIMIT))
+      )
+    } catch {}
+    setRounds(next)
     setCurrent(0)
     setPicked(null)
     setScore(0)

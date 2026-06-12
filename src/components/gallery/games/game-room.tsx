@@ -2,18 +2,49 @@
 
 import { useState, useEffect, useMemo } from "react"
 import Image from "next/image"
-import { X, Puzzle, Copy, MapPin } from "lucide-react"
+import { X, Puzzle, Copy, Mail, MapPin } from "lucide-react"
 import { GALLERY, type GalleryImage } from "@/lib/gallery"
 import { JigsawPuzzle } from "../jigsaw-puzzle"
 import { PhotoPicker } from "./photo-picker"
 import { PairsGame } from "./pairs-game"
 import { PostcardsGame } from "./postcards-game"
+import { PinMapGame } from "./pin-map-game"
 
 interface GameRoomProps {
   onClose: () => void
 }
 
-type Screen = "hub" | "pick" | "jigsaw" | "pairs" | "postcards"
+type Screen = "hub" | "pick" | "jigsaw" | "pairs" | "postcards" | "pinmap"
+
+const fmtTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`
+
+// Pull each game's personal best out of localStorage for the hub cards
+function readBests(): Record<string, string> {
+  const out: Record<string, string> = {}
+  try {
+    const j = JSON.parse(localStorage.getItem("mazgallery.jigsaw.best.v1") ?? "{}")
+    for (const d of ["medium", "easy", "hard"]) {
+      if (j[d] !== undefined) {
+        out.jigsaw = `Best (${d}): ${fmtTime(j[d])}`
+        break
+      }
+    }
+  } catch {}
+  try {
+    const p = JSON.parse(localStorage.getItem("mazgallery.pairs.best.v1") ?? "{}")
+    for (const d of ["medium", "easy", "hard"]) {
+      if (p[d] !== undefined) {
+        out.pairs = `Best (${d}): ${p[d]} moves`
+        break
+      }
+    }
+  } catch {}
+  const pc = localStorage.getItem("mazgallery.postcards.best.v1")
+  if (pc !== null) out.postcards = `Best: ${pc} / 8`
+  const pm = localStorage.getItem("mazgallery.pinmap.best.v1")
+  if (pm !== null) out.pinmap = `Best: ${pm} / 500`
+  return out
+}
 
 const randomImage = () => GALLERY[Math.floor(Math.random() * GALLERY.length)]
 
@@ -24,8 +55,14 @@ export function GameRoom({ onClose }: GameRoomProps) {
   // One random photo per card, fresh every visit
   const cardArt = useMemo(() => {
     const shuffled = [...GALLERY].sort(() => Math.random() - 0.5)
-    return [shuffled[0], shuffled[1], shuffled[2]]
+    return [shuffled[0], shuffled[1], shuffled[2], shuffled[3]]
   }, [])
+
+  // Personal bests, refreshed whenever the visitor returns to the hub
+  const [bests, setBests] = useState<Record<string, string>>({})
+  useEffect(() => {
+    if (screen === "hub") setBests(readBests())
+  }, [screen])
 
   // Lock page scroll while the room is open
   useEffect(() => {
@@ -64,11 +101,19 @@ export function GameRoom({ onClose }: GameRoomProps) {
     },
     {
       key: "postcards",
-      icon: MapPin,
+      icon: Mail,
       title: "Postcards",
       blurb: "Eight photos, one question each: where was this taken?",
       art: cardArt[2],
       start: () => setScreen("postcards"),
+    },
+    {
+      key: "pinmap",
+      icon: MapPin,
+      title: "Pin the Map",
+      blurb: "Five photos, one world map. Drop a pin where each was shot.",
+      art: cardArt[3],
+      start: () => setScreen("pinmap"),
     },
   ]
 
@@ -112,7 +157,7 @@ export function GameRoom({ onClose }: GameRoomProps) {
               When the museum closes, the collection comes out to play.
             </p>
 
-            <div className="mt-10 grid w-full max-w-4xl grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="mt-10 grid w-full max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {games.map((game, i) => (
                 <button
                   key={game.key}
@@ -136,9 +181,14 @@ export function GameRoom({ onClose }: GameRoomProps) {
                       <h3 className="font-display text-xl italic text-white">{game.title}</h3>
                     </div>
                     <p className="mt-1.5 text-xs leading-relaxed text-white/45">{game.blurb}</p>
-                    <p className="mt-3 font-mono text-[9px] uppercase tracking-[0.3em] text-teal/60 transition-colors group-hover:text-teal">
-                      Play
-                    </p>
+                    <div className="mt-3 flex items-baseline justify-between gap-2">
+                      <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-teal/60 transition-colors group-hover:text-teal">
+                        Play
+                      </p>
+                      {bests[game.key] && (
+                        <p className="font-mono text-[9px] text-white/35">{bests[game.key]}</p>
+                      )}
+                    </div>
                   </div>
                 </button>
               ))}
@@ -173,6 +223,8 @@ export function GameRoom({ onClose }: GameRoomProps) {
       {screen === "postcards" && (
         <PostcardsGame images={GALLERY} onBack={() => setScreen("hub")} />
       )}
+
+      {screen === "pinmap" && <PinMapGame onBack={() => setScreen("hub")} />}
     </div>
   )
 }

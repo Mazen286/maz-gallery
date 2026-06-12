@@ -7,20 +7,22 @@ export interface GalleryImage {
   height: number
 }
 
+// Pin positions use the same equirectangular projection as WORLD_PATHS
+// in location-map.tsx: x = (lon + 180) * 2.5, y = (90 - lat) * 2.5
 export const LOCATION_COORDS: Record<string, { cx: number; cy: number; label: string }> = {
-  "Alanya, Turkey": { cx: 545, cy: 195, label: "Alanya" },
-  "Istanbul, Turkey": { cx: 530, cy: 182, label: "Istanbul" },
-  "Amman, Jordan": { cx: 548, cy: 210, label: "Amman" },
-  "New York, NY": { cx: 280, cy: 175, label: "New York" },
-  "San Diego, CA": { cx: 195, cy: 195, label: "San Diego" },
-  "Catalina Island, CA": { cx: 200, cy: 198, label: "Catalina" },
-  "Disneyland, CA": { cx: 198, cy: 197, label: "Disneyland" },
-  "Turkey": { cx: 537, cy: 190, label: "Turkey" },
-  "Antalya, Turkey": { cx: 542, cy: 193, label: "Antalya" },
-  "Alacati, Turkey": { cx: 527, cy: 188, label: "Alacati" },
-  "Cesme, Turkey": { cx: 525, cy: 188, label: "Cesme" },
-  "Izmir, Turkey": { cx: 528, cy: 187, label: "Izmir" },
-  "Walt Disney World, FL": { cx: 263, cy: 207, label: "Disney World" },
+  "Alanya, Turkey": { cx: 530, cy: 134, label: "Alanya" },
+  "Istanbul, Turkey": { cx: 522, cy: 123, label: "Istanbul" },
+  "Amman, Jordan": { cx: 540, cy: 145, label: "Amman" },
+  "New York, NY": { cx: 265, cy: 123, label: "New York" },
+  "San Diego, CA": { cx: 157, cy: 143, label: "San Diego" },
+  "Catalina Island, CA": { cx: 154, cy: 142, label: "Catalina" },
+  "Disneyland, CA": { cx: 155, cy: 141, label: "Disneyland" },
+  "Turkey": { cx: 531, cy: 129, label: "Turkey" },
+  "Antalya, Turkey": { cx: 527, cy: 133, label: "Antalya" },
+  "Alacati, Turkey": { cx: 516, cy: 129, label: "Alacati" },
+  "Cesme, Turkey": { cx: 515, cy: 129, label: "Cesme" },
+  "Izmir, Turkey": { cx: 518, cy: 129, label: "Izmir" },
+  "Walt Disney World, FL": { cx: 246, cy: 154, label: "Disney World" },
 }
 
 /**
