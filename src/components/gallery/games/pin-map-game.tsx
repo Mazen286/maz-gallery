@@ -31,6 +31,22 @@ interface Guess {
   y: number
   points: number
   verdict: string
+  km: number
+}
+
+// Projection back to lon/lat, then great-circle distance for the verdict
+function toLonLat(x: number, y: number): [number, number] {
+  return [x / 2.5 - 180, 90 - y / 2.5]
+}
+
+function kmBetween(a: [number, number], b: [number, number]): number {
+  const rad = Math.PI / 180
+  const dLat = (b[1] - a[1]) * rad
+  const dLon = (b[0] - a[0]) * rad
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(a[1] * rad) * Math.cos(b[1] * rad) * Math.sin(dLon / 2) ** 2
+  return Math.round(6371 * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h)))
 }
 
 function shuffle<T>(arr: T[]): T[] {
@@ -116,7 +132,8 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
     const y = VIEW_Y + ((e.clientY - rect.top) / rect.height) * VIEW_H
     const dist = Math.hypot(x - round.target.cx, y - round.target.cy)
     const { points, verdict } = judge(dist)
-    setGuess({ x, y, points, verdict })
+    const km = kmBetween(toLonLat(x, y), toLonLat(round.target.cx, round.target.cy))
+    setGuess({ x, y, points, verdict, km })
     setTotal((t) => t + points)
   }
 
@@ -186,7 +203,7 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
 
             {/* The map */}
             <div className="min-w-0 flex-1">
-              <div className="relative overflow-hidden rounded-xl border border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.45)]">
+              <div className="relative overflow-hidden rounded-xl border border-[#a08c5f]/30 shadow-[0_24px_60px_rgba(0,0,0,0.6)]">
                 <svg
                   viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
                   onClick={dropPin}
@@ -194,21 +211,43 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                   role="img"
                   aria-label="World map. Click to drop your pin."
                 >
+                  <defs>
+                    <radialGradient id="pinmap-ocean" cx="50%" cy="42%" r="75%">
+                      <stop offset="0%" stopColor="#0e1726" />
+                      <stop offset="70%" stopColor="#0a111c" />
+                      <stop offset="100%" stopColor="#070b12" />
+                    </radialGradient>
+                    <linearGradient id="pinmap-land" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="rgba(126,205,219,0.17)" />
+                      <stop offset="100%" stopColor="rgba(120,200,214,0.09)" />
+                    </linearGradient>
+                    <radialGradient id="pinmap-vignette" cx="50%" cy="48%" r="72%">
+                      <stop offset="0%" stopColor="rgba(0,0,0,0)" />
+                      <stop offset="78%" stopColor="rgba(0,0,0,0)" />
+                      <stop offset="100%" stopColor="rgba(0,0,0,0.4)" />
+                    </radialGradient>
+                    <filter id="pinmap-glow" x="-5%" y="-5%" width="110%" height="110%">
+                      <feGaussianBlur stdDeviation="2.4" />
+                    </filter>
+                  </defs>
+
                   {/* Ocean */}
-                  <rect x={VIEW_X} y={VIEW_Y} width={VIEW_W} height={VIEW_H} fill="#0a111c" />
-                  {/* Graticules */}
-                  {[75, 150, 225, 300].map((y) => (
-                    <line key={`lat${y}`} x1="0" y1={y} x2="900" y2={y} stroke="rgba(120,200,214,0.05)" strokeWidth="0.75" />
-                  ))}
-                  {Array.from({ length: 11 }, (_, i) => (i + 1) * 75).map((x) => (
-                    <line key={`lon${x}`} x1={x} y1={VIEW_Y} x2={x} y2={VIEW_Y + VIEW_H} stroke="rgba(120,200,214,0.05)" strokeWidth="0.75" />
-                  ))}
-                  {/* Land: Natural Earth */}
+                  <rect x={VIEW_X} y={VIEW_Y} width={VIEW_W} height={VIEW_H} fill="url(#pinmap-ocean)" />
+
+                  {/* Coastline glow under the land */}
                   <path
                     d={WORLD_LAND_PATH}
-                    fill="rgba(120,200,214,0.13)"
-                    stroke="rgba(120,200,214,0.45)"
-                    strokeWidth="0.6"
+                    fill="none"
+                    stroke="rgba(120,200,214,0.35)"
+                    strokeWidth="2.4"
+                    filter="url(#pinmap-glow)"
+                  />
+                  {/* Land */}
+                  <path
+                    d={WORLD_LAND_PATH}
+                    fill="url(#pinmap-land)"
+                    stroke="rgba(150,215,226,0.55)"
+                    strokeWidth="0.5"
                   />
 
                   {guess && (
@@ -225,25 +264,49 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                       {/* Your pin */}
                       <circle cx={guess.x} cy={guess.y} r="9" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" />
                       <circle cx={guess.x} cy={guess.y} r="4.5" fill="rgba(255,255,255,0.92)" />
-                      {/* True pin */}
-                      <circle cx={round.target.cx} cy={round.target.cy} r="10" fill="none" stroke="rgba(120,200,214,0.5)" strokeWidth="1.5" />
+                      {/* True pin with a slow pulse */}
+                      <circle
+                        cx={round.target.cx}
+                        cy={round.target.cy}
+                        r="11"
+                        fill="none"
+                        stroke="rgba(120,200,214,0.5)"
+                        strokeWidth="1.5"
+                        className="animate-pulse-dot"
+                        style={{ transformOrigin: `${round.target.cx}px ${round.target.cy}px` }}
+                      />
                       <circle cx={round.target.cx} cy={round.target.cy} r="5" fill="#78c8d6" />
                       <text
                         x={round.target.cx}
                         y={round.target.cy - 16}
                         textAnchor="middle"
-                        fill="#9fdce6"
+                        fill="#b5e4ec"
                         fontSize="13"
                         fontWeight="600"
                         stroke="#06090f"
-                        strokeWidth="3"
+                        strokeWidth="3.5"
                         paintOrder="stroke"
                       >
                         {round.target.label}
                       </text>
                     </>
                   )}
+
+                  {/* Vignette */}
+                  <rect
+                    x={VIEW_X}
+                    y={VIEW_Y}
+                    width={VIEW_W}
+                    height={VIEW_H}
+                    fill="url(#pinmap-vignette)"
+                    pointerEvents="none"
+                  />
                 </svg>
+
+                {/* Brass corner accents */}
+                {["left-2 top-2 border-l border-t", "right-2 top-2 border-r border-t", "left-2 bottom-2 border-l border-b", "right-2 bottom-2 border-r border-b"].map((cls) => (
+                  <span key={cls} className={`pointer-events-none absolute h-4 w-4 border-[#a08c5f]/50 ${cls}`} />
+                ))}
 
                 {/* Verdict chip */}
                 {guess && (
@@ -253,6 +316,9 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                   >
                     <p className="font-mono text-xs text-teal">
                       {guess.verdict} &middot; +{guess.points}
+                      {guess.points < 100 && (
+                        <span className="text-white/45"> &middot; {guess.km.toLocaleString()} km off</span>
+                      )}
                     </p>
                   </div>
                 )}

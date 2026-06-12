@@ -36,30 +36,6 @@ export function LocationMap({ onSelectLocation, activeLocation }: LocationMapPro
           strokeWidth="0.6"
         />
 
-        {/* Grid lines */}
-        {Array.from({ length: 9 }).map((_, i) => (
-          <line
-            key={`h${i}`}
-            x1="0"
-            y1={i * 50}
-            x2="900"
-            y2={i * 50}
-            stroke="rgba(120,200,214,0.05)"
-            strokeWidth="0.5"
-          />
-        ))}
-        {Array.from({ length: 18 }).map((_, i) => (
-          <line
-            key={`v${i}`}
-            x1={i * 50}
-            y1="0"
-            x2={i * 50}
-            y2="450"
-            stroke="rgba(120,200,214,0.05)"
-            strokeWidth="0.5"
-          />
-        ))}
-
         {/* Location dots */}
         {locationsWithPhotos.map(([location, coords]) => {
           const isActive = activeLocation === location
