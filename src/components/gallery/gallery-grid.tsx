@@ -8,6 +8,7 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 interface GalleryGridProps {
   filterLocation?: string | null
+  images?: typeof GALLERY
 }
 
 function GalleryImage({ src, alt, width, height, onClick }: {
@@ -38,12 +39,13 @@ function GalleryImage({ src, alt, width, height, onClick }: {
   )
 }
 
-export function GalleryGrid({ filterLocation }: GalleryGridProps) {
+export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridProps) {
   const [selected, setSelected] = useState<number | null>(null)
 
+  const base = imagesProp ?? GALLERY
   const images = filterLocation
-    ? GALLERY.filter((img) => img.location === filterLocation)
-    : GALLERY
+    ? base.filter((img) => img.location === filterLocation)
+    : base
 
   const navigate = useCallback(
     (direction: "prev" | "next") => {

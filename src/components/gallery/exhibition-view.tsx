@@ -93,6 +93,9 @@ export function ExhibitionView({ images, startIndex = 0 }: ExhibitionViewProps) 
       "San Diego, CA": "rgb(12,18,22)",
       "Catalina Island, CA": "rgb(14,20,24)",
       "Disneyland, CA": "rgb(12,12,18)",
+      "Walt Disney World, FL": "rgb(14,12,16)",
+      "Antalya, Turkey": "rgb(14,20,18)",
+      "Cesme, Turkey": "rgb(13,18,22)",
       "Turkey": "rgb(16,18,20)",
     }
     setBgColor(colors[img?.location || ""] || "rgb(10,10,10)")
