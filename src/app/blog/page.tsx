@@ -4,7 +4,7 @@ import { BlogPageClient } from "@/components/blog/blog-page-client"
 export const metadata: Metadata = {
   title: "Blog | Travel, Food, and Games by Mazen Abugharbieh",
   description:
-    "Travel stories, food rankings, video game thoughts, board game design, and whatever else is on my mind.",
+    "Travel stories from Turkey and Jordan, food rankings, video game retrospectives, board game design notes, and whatever else is on my mind.",
   alternates: { canonical: "/blog" },
   openGraph: {
     title: "Blog - Mazen Abugharbieh",

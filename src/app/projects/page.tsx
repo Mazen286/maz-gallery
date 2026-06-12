@@ -6,7 +6,7 @@ import { ExternalLink } from "lucide-react"
 export const metadata: Metadata = {
   title: "Projects | Figment Analytics, SurfUp, and More",
   description:
-    "Explore my projects: Figment Analytics, SurfUp, LA 311, FlightPulse, Figment Gaming, Runes & Reagents, and more.",
+    "Explore my projects: Figment Analytics, SurfUp, LA 311, FlightPulse, Figment Gaming, Runes & Reagents, and more, with live demos and the lessons each one taught me.",
   alternates: { canonical: "/projects" },
   openGraph: {
     title: "Projects by Mazen Abugharbieh",

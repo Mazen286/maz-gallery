@@ -30,7 +30,7 @@ export async function generateMetadata({
       publishedTime: `${post.date}T12:00:00Z`,
       modifiedTime: `${post.date}T12:00:00Z`,
       authors: ["https://maz.gallery/about"],
-      images: [{ url: post.image, alt: post.title }],
+      images: [{ url: post.image, width: post.imageWidth, height: post.imageHeight, alt: post.title }],
     },
     twitter: {
       card: "summary_large_image",
@@ -61,7 +61,12 @@ export default async function BlogPostPage({
     datePublished: post.date,
     dateModified: post.date,
     author: { "@type": "Person", name: "Mazen Abugharbieh", url: "https://maz.gallery" },
-    publisher: { "@type": "Person", name: "Mazen Abugharbieh", url: "https://maz.gallery" },
+    publisher: {
+      "@type": "Organization",
+      name: "Maz Gallery",
+      url: "https://maz.gallery",
+      logo: { "@type": "ImageObject", url: "https://maz.gallery/favicon-512.png" },
+    },
     mainEntityOfPage: { "@type": "WebPage", "@id": `https://maz.gallery/blog/${post.slug}` },
     keywords: post.category,
   }

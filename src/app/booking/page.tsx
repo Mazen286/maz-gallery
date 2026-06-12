@@ -4,7 +4,7 @@ import { FIGMENT_URL, EMAIL, SOCIAL } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Contact Mazen Abugharbieh | Say Hello",
-  description: "Reach out to Mazen about projects, collaborations, photography, or just to say hello.",
+  description: "Reach out to Mazen about projects, collaborations, or photography, or just to say hello. Available for data consulting, dashboards, and creative work from San Diego.",
   alternates: { canonical: "/booking" },
   openGraph: {
     title: "Get in Touch - Mazen Abugharbieh",

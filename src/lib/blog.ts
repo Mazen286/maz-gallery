@@ -7,6 +7,8 @@ export interface BlogPost {
   date: string
   category: BlogCategory
   image: string
+  imageWidth?: number
+  imageHeight?: number
   readTime: string
   published?: boolean
 }
@@ -37,6 +39,8 @@ export const ALL_POSTS: BlogPost[] = [
     date: "2026-05-31",
     category: "Food",
     image: "/images/blog/cafe-maz.png",
+    imageWidth: 1200,
+    imageHeight: 630,
     readTime: "9 min read",
     published: true,
   },
@@ -48,6 +52,8 @@ export const ALL_POSTS: BlogPost[] = [
     date: "2026-04-01",
     category: "Video Games",
     image: "/images/blog/top-10-video-games.jpg",
+    imageWidth: 1280,
+    imageHeight: 720,
     readTime: "12 min read",
     published: true,
   },

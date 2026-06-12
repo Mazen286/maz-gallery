@@ -4,7 +4,7 @@ import { GalleryPageClient } from "@/components/gallery/gallery-page-client"
 
 export const metadata: Metadata = {
   title: "Photography Gallery | Travel Photos by Mazen Abugharbieh",
-  description: "Discover the world through my lens. Travel photography from Turkey, Jordan, New York, San Diego, and beyond.",
+  description: `${GALLERY.length} travel photographs with the stories behind them, shot in Alanya, Istanbul, Amman, New York, San Diego, Orlando, and beyond.`,
   alternates: { canonical: "/gallery" },
   openGraph: {
     title: "Photography Gallery - Mazen Abugharbieh",
@@ -37,13 +37,15 @@ export default function GalleryPage() {
     description: "Travel photography from Turkey, Jordan, New York, San Diego, and beyond.",
     url: "https://maz.gallery/gallery",
     author: { "@type": "Person", name: "Mazen Abugharbieh" },
-    image: GALLERY.slice(0, 20).map((img) => ({
+    image: GALLERY.map((img) => ({
       "@type": "ImageObject",
       url: `https://maz.gallery${img.src}`,
       name: img.alt,
       description: img.story || img.alt,
       width: img.width,
       height: img.height,
+      creator: { "@type": "Person", name: "Mazen Abugharbieh" },
+      creditText: "Mazen Abugharbieh",
       ...(img.location && {
         contentLocation: { "@type": "Place", name: img.location },
       }),

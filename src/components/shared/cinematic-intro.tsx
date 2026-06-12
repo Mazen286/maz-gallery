@@ -75,9 +75,9 @@ export function CinematicIntro() {
         <p className="font-mono text-xs uppercase tracking-[0.5em] text-teal/80">
           Now showing
         </p>
-        <h1 className="mt-4 font-display text-5xl font-semibold text-white sm:text-7xl">
+        <p className="mt-4 font-display text-5xl font-semibold text-white sm:text-7xl">
           Maz <span className="italic">Gallery</span>
-        </h1>
+        </p>
         <p className="mt-3 text-sm tracking-wide text-white/40">
           A permanent collection by Mazen Abugharbieh
         </p>

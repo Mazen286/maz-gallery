@@ -3,17 +3,18 @@ import Image from "next/image"
 import Link from "next/link"
 import { FadeIn } from "@/components/shared/fade-in"
 import { FIGMENT_URL, PRESS } from "@/lib/constants"
+import { GALLERY } from "@/lib/gallery"
 
 export const metadata: Metadata = {
   title: "About Mazen Abugharbieh | Data Analyst & Photographer",
   description:
-    "Mazen Abugharbieh merges data engineering precision with creative visual storytelling. Based in San Diego.",
+    "Mazen Abugharbieh merges data engineering precision with creative visual storytelling. Structural engineer turned analyst, photographer, and startup founder in San Diego.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About Mazen Abugharbieh",
     description: "Data analyst, photographer, and startup co-founder based in San Diego. Structural engineering background, MBA from UC San Diego.",
     url: "https://maz.gallery/about",
-    images: [{ url: "/images/about-1.jpg", width: 1200, height: 630, alt: "Mazen Abugharbieh on stairs" }],
+    images: [{ url: "/images/about-1.jpg", width: 1500, height: 1000, alt: "Mazen Abugharbieh on stairs" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -55,7 +56,7 @@ const STATS = [
   { number: "7+", label: "Projects shipped" },
   { number: "10+", label: "Locations photographed" },
   { number: "3", label: "Media features" },
-  { number: "57", label: "Gallery photos" },
+  { number: `${GALLERY.length}`, label: "Gallery photos" },
 ]
 
 const INTERESTS = [

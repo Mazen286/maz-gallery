@@ -76,11 +76,6 @@ export default function RootLayout({
             url: "https://maz.gallery",
             description: "Mazen Abugharbieh. Data analyst, photographer, and startup co-founder based in San Diego.",
             author: { "@type": "Person", name: "Mazen Abugharbieh" },
-            potentialAction: {
-              "@type": "SearchAction",
-              target: "https://maz.gallery/blog?q={search_term_string}",
-              "query-input": "required name=search_term_string",
-            },
           }) }}
         />
         <script
