@@ -3,15 +3,20 @@
 import { usePathname } from "next/navigation"
 import { useEffect, useState, useRef, type ReactNode } from "react"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { roomFor } from "@/lib/constants"
 
 interface PageTransitionProps {
   children: ReactNode
 }
 
+const DIM_MS = 240
+const TOTAL_MS = 820
+
 export function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname()
   const [displayChildren, setDisplayChildren] = useState(children)
-  const [glitching, setGlitching] = useState(false)
+  const [stage, setStage] = useState<"idle" | "dimmed">("idle")
+  const [room, setRoom] = useState<{ number: string; name: string } | null>(null)
   const reduced = useReducedMotion()
   const prevPathRef = useRef(pathname)
 
@@ -23,15 +28,11 @@ export function PageTransition({ children }: PageTransitionProps) {
     }
 
     prevPathRef.current = pathname
-    setGlitching(true)
+    setRoom(roomFor(pathname ?? "") ?? null)
+    setStage("dimmed")
 
-    const t1 = setTimeout(() => {
-      setDisplayChildren(children)
-    }, 250)
-
-    const t2 = setTimeout(() => {
-      setGlitching(false)
-    }, 500)
+    const t1 = setTimeout(() => setDisplayChildren(children), DIM_MS)
+    const t2 = setTimeout(() => setStage("idle"), TOTAL_MS)
 
     return () => {
       clearTimeout(t1)
@@ -41,44 +42,43 @@ export function PageTransition({ children }: PageTransitionProps) {
 
   if (reduced || pathname?.startsWith("/cafe-maz")) return <>{children}</>
 
+  const dimmed = stage === "dimmed"
+
   return (
     <div className="relative">
-      {/* Glitch overlay - Sombra-inspired */}
-      {glitching && (
-        <div className="pointer-events-none fixed inset-0 z-[9999]" aria-hidden="true">
-          {/* CRT scanlines */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: "repeating-linear-gradient(0deg, transparent 0px, transparent 1px, rgba(180,100,255,0.04) 1px, rgba(180,100,255,0.04) 2px)",
-              animation: "glitchScan 0.08s steps(12) infinite",
-            }}
-          />
-          {/* Digital noise blocks */}
-          <div className="absolute inset-0" style={{ animation: "glitchBlocks 0.15s steps(2) infinite" }} />
-          {/* Purple/teal split bars */}
-          <div className="absolute inset-0" style={{ animation: "glitchBars 0.2s steps(4) forwards" }} />
-          {/* Signal flash */}
-          <div className="absolute inset-0" style={{ animation: "glitchFlash 0.5s ease-out forwards" }} />
-          {/* Hex grid overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='28' height='49' viewBox='0 0 28 49' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9z' fill='%23b060ff' fill-opacity='1'/%3E%3C/svg%3E")`,
-              animation: "glitchScan 0.1s steps(6) infinite reverse",
-            }}
-          />
-        </div>
-      )}
-
-      {/* Content with RGB split during glitch */}
+      {/* Lights dim between rooms; a placard names where you are headed */}
       <div
-        style={glitching ? {
-          animation: "glitchShift 0.3s steps(4) forwards",
-        } : undefined}
+        className="pointer-events-none fixed inset-0 z-[9999] flex items-center justify-center transition-opacity"
+        aria-hidden="true"
+        style={{
+          opacity: dimmed ? 1 : 0,
+          transitionDuration: dimmed ? "200ms" : "380ms",
+          background: "radial-gradient(ellipse at 50% 45%, #11141d 0%, #07080c 75%)",
+        }}
       >
-        {displayChildren}
+        {dimmed && room && (
+          <div className="text-center">
+            <p
+              className="font-mono text-[10px] uppercase tracking-[0.45em] text-teal/70"
+              style={{ animation: "placardIn 0.4s ease-out 0.05s both" }}
+            >
+              {room.number}
+            </p>
+            <p
+              className="mt-3 font-display text-3xl italic text-white/90 sm:text-4xl"
+              style={{ animation: "placardIn 0.45s ease-out 0.12s both" }}
+            >
+              {room.name}
+            </p>
+            <div
+              className="mx-auto mt-5 h-px w-16 bg-teal/40"
+              style={{ animation: "lineGrow 0.5s ease-out 0.2s both", transformOrigin: "center" }}
+            />
+          </div>
+        )}
       </div>
+
+      {displayChildren}
     </div>
   )
 }

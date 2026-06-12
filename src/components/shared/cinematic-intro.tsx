@@ -73,11 +73,14 @@ export function CinematicIntro() {
         }}
       >
         <p className="font-mono text-xs uppercase tracking-[0.5em] text-teal/80">
-          A portfolio by
+          Now showing
         </p>
-        <h1 className="mt-4 text-5xl font-bold text-white sm:text-7xl">
-          Mazen Abugharbieh
+        <h1 className="mt-4 font-display text-5xl font-semibold text-white sm:text-7xl">
+          Maz <span className="italic">Gallery</span>
         </h1>
+        <p className="mt-3 text-sm tracking-wide text-white/40">
+          A permanent collection by Mazen Abugharbieh
+        </p>
         <div className="mx-auto mt-4 h-px w-24 bg-teal/50" />
       </div>
 

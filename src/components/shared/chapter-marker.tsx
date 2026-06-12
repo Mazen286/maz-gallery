@@ -22,7 +22,7 @@ export function ChapterMarker({ number, title, dark = false }: ChapterMarkerProp
           transform: isVisible ? "translateX(0)" : "translateX(-10px)",
         }}
       >
-        {number}
+        Room {number}
       </span>
       <div
         className="h-px flex-1 bg-teal/20 transition-all duration-1000"
@@ -32,7 +32,7 @@ export function ChapterMarker({ number, title, dark = false }: ChapterMarkerProp
         }}
       />
       <span
-        className={`text-xs font-medium uppercase tracking-[0.2em] transition-all duration-700 ${textColor}`}
+        className={`font-display text-sm italic tracking-wide transition-all duration-700 ${textColor}`}
         style={{
           opacity: isVisible ? 1 : 0,
           transform: isVisible ? "translateX(0)" : "translateX(10px)",
