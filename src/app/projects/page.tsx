@@ -128,13 +128,17 @@ function ProjectCard({
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg"
       >
-        {/* Image — identical aspect ratio on every card */}
-        <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+        {/* Image — 16:9 (matches most sources); contain so nothing crops,
+            with a faint accent panel framing any letterbox */}
+        <div
+          className="relative aspect-video overflow-hidden"
+          style={{ backgroundColor: `${project.accent}14` }}
+        >
           <Image
             src={project.image}
             alt={project.title}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            className="object-contain transition-transform duration-700 group-hover:scale-[1.03]"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         </div>
