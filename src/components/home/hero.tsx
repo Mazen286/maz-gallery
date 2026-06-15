@@ -118,9 +118,6 @@ export function Hero() {
         <p className="mt-1 text-[10px] text-white/40">
           Analyst, photographer, founder
         </p>
-        <p className="mt-3 font-mono text-[9px] uppercase tracking-[0.2em] text-teal/70">
-          Permanent collection
-        </p>
       </div>
     </section>
   )

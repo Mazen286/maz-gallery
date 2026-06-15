@@ -18,7 +18,7 @@ export function Footer() {
               Maz <span className="italic">Gallery</span>
             </p>
             <p className="mt-3 font-display text-sm italic text-white/40">
-              A permanent collection by Mazen Abugharbieh
+              Photographs by Mazen Abugharbieh
             </p>
             <address className="mt-2 text-sm not-italic text-white/35">
               San Diego, CA

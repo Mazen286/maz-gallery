@@ -79,7 +79,7 @@ export function CinematicIntro() {
           Maz <span className="italic">Gallery</span>
         </p>
         <p className="mt-3 text-sm tracking-wide text-white/40">
-          A permanent collection by Mazen Abugharbieh
+          Photographs by Mazen Abugharbieh
         </p>
         <div className="mx-auto mt-4 h-px w-24 bg-teal/50" />
       </div>
