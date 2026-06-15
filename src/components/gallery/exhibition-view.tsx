@@ -1,16 +1,15 @@
 "use client"
 
-import { useState, useEffect, useCallback, useRef } from "react"
-import Image from "next/image"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useState, useEffect } from "react"
 import type { GalleryImage } from "@/lib/gallery"
+import { SwipeCarousel } from "./swipe-carousel"
 
 interface ExhibitionViewProps {
   images: GalleryImage[]
   startIndex?: number
 }
 
-// Map locations to story snippets
+// Map locations to story snippets for photos without their own
 const STORIES: Record<string, string> = {
   "Alanya, Turkey": "The Turkish Riviera. Ancient fortress walls meet turquoise water. I spent a week here and could have stayed a month.",
   "Istanbul, Turkey": "A city that exists in two continents and a thousand timelines at once. Every alley has a story older than most countries.",
@@ -22,7 +21,21 @@ const STORIES: Record<string, string> = {
   "Turkey": "Somewhere between the bazaars and the coastline, I stopped planning shots and started just seeing.",
 }
 
-function getStory(img?: { story?: string; location?: string }): string {
+const BG_COLORS: Record<string, string> = {
+  "Alanya, Turkey": "rgb(15,20,25)",
+  "Istanbul, Turkey": "rgb(18,15,22)",
+  "Amman, Jordan": "rgb(22,18,12)",
+  "New York, NY": "rgb(12,14,20)",
+  "San Diego, CA": "rgb(12,18,22)",
+  "Catalina Island, CA": "rgb(14,20,24)",
+  "Disneyland, CA": "rgb(12,12,18)",
+  "Walt Disney World, FL": "rgb(14,12,16)",
+  "Antalya, Turkey": "rgb(14,20,18)",
+  "Cesme, Turkey": "rgb(13,18,22)",
+  "Turkey": "rgb(16,18,20)",
+}
+
+function getStory(img?: GalleryImage): string {
   if (!img) return ""
   if (img.story) return img.story
   if (img.location) return STORIES[img.location] || ""
@@ -30,158 +43,78 @@ function getStory(img?: { story?: string; location?: string }): string {
 }
 
 export function ExhibitionView({ images, startIndex = 0 }: ExhibitionViewProps) {
-  const [current, setCurrent] = useState(startIndex)
-  const [transitioning, setTransitioning] = useState(false)
-  const [bgColor, setBgColor] = useState("rgb(10,10,10)")
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [index, setIndex] = useState(startIndex)
+  const [hint, setHint] = useState(false)
 
-  const img = images[current]
+  const img = images[index]
   const story = getStory(img)
+  const bg = BG_COLORS[img?.location ?? ""] ?? "rgb(10,10,10)"
 
-  const goTo = useCallback(
-    (index: number) => {
-      if (transitioning) return
-      setTransitioning(true)
-      setTimeout(() => {
-        setCurrent(index)
-        setTransitioning(false)
-      }, 400)
-    },
-    [transitioning]
-  )
-
-  const next = useCallback(() => {
-    goTo(current < images.length - 1 ? current + 1 : 0)
-  }, [current, images.length, goTo])
-
-  const prev = useCallback(() => {
-    goTo(current > 0 ? current - 1 : images.length - 1)
-  }, [current, images.length, goTo])
-
-  // Keyboard
+  // One-time swipe hint on touch devices
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); next() }
-      if (e.key === "ArrowLeft") { e.preventDefault(); prev() }
-    }
-    window.addEventListener("keydown", handleKey)
-    return () => window.removeEventListener("keydown", handleKey)
-  }, [next, prev])
-
-  // Scroll to advance
-  useEffect(() => {
-    let lastScroll = 0
-    const handleWheel = (e: WheelEvent) => {
-      const now = Date.now()
-      if (now - lastScroll < 800) return
-      lastScroll = now
-      if (e.deltaY > 30) next()
-      else if (e.deltaY < -30) prev()
-    }
-    const el = containerRef.current
-    if (el) el.addEventListener("wheel", handleWheel, { passive: true })
-    return () => { if (el) el.removeEventListener("wheel", handleWheel) }
-  }, [next, prev])
-
-  // Dynamic background color based on image location
-  useEffect(() => {
-    const colors: Record<string, string> = {
-      "Alanya, Turkey": "rgb(15,20,25)",
-      "Istanbul, Turkey": "rgb(18,15,22)",
-      "Amman, Jordan": "rgb(22,18,12)",
-      "New York, NY": "rgb(12,14,20)",
-      "San Diego, CA": "rgb(12,18,22)",
-      "Catalina Island, CA": "rgb(14,20,24)",
-      "Disneyland, CA": "rgb(12,12,18)",
-      "Walt Disney World, FL": "rgb(14,12,16)",
-      "Antalya, Turkey": "rgb(14,20,18)",
-      "Cesme, Turkey": "rgb(13,18,22)",
-      "Turkey": "rgb(16,18,20)",
-    }
-    setBgColor(colors[img?.location || ""] || "rgb(10,10,10)")
-  }, [img])
+    if (typeof window === "undefined") return
+    if (!window.matchMedia("(pointer: coarse)").matches) return
+    if (sessionStorage.getItem("exhibit-swipe-hint")) return
+    setHint(true)
+    const t = setTimeout(() => {
+      setHint(false)
+      sessionStorage.setItem("exhibit-swipe-hint", "1")
+    }, 2800)
+    return () => clearTimeout(t)
+  }, [])
 
   if (!img) return null
 
   return (
     <div
-      ref={containerRef}
-      className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden px-6 py-12 transition-colors duration-1000"
-      style={{ backgroundColor: bgColor }}
+      className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden py-10 transition-colors duration-1000"
+      style={{ backgroundColor: bg }}
     >
-      {/* Photo */}
-      <div
-        className="relative max-h-[65vh] w-full max-w-5xl transition-all duration-500"
-        style={{
-          opacity: transitioning ? 0 : 1,
-          transform: transitioning ? "scale(0.97) translateY(10px)" : "scale(1) translateY(0)",
-        }}
-      >
-        <Image
-          src={img.src}
-          alt={img.alt}
-          width={img.width}
-          height={img.height}
-          className="mx-auto max-h-[65vh] w-auto rounded-lg object-contain shadow-2xl"
-          preload
-        />
+      <div className="w-full max-w-5xl px-4 sm:px-6">
+        <SwipeCarousel images={images} index={index} onIndexChange={setIndex} />
       </div>
 
-      {/* Caption & Story */}
+      {/* Caption & story, crossfading per photo */}
       <div
-        className="mt-8 max-w-2xl text-center transition-all duration-500"
-        style={{
-          opacity: transitioning ? 0 : 1,
-          transform: transitioning ? "translateY(15px)" : "translateY(0)",
-        }}
+        key={index}
+        className="mt-7 max-w-2xl px-6 text-center"
+        style={{ animation: "placardIn 0.5s ease-out both" }}
       >
         {img.location && (
-          <p className="text-xs font-medium uppercase tracking-[0.3em] text-teal">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.3em] text-teal">
             {img.location}
           </p>
         )}
+        <p className="mt-2 font-display text-lg italic text-white/80">{img.alt}</p>
         {story && (
-          <p className="mt-3 text-sm leading-relaxed text-white/50 italic">
-            {story}
-          </p>
+          <p className="mt-3 text-sm leading-relaxed text-white/45">{story}</p>
         )}
       </div>
 
-      {/* Counter */}
-      <div className="mt-6 flex items-center gap-4">
-        <span className="font-mono text-xs text-white/20">
-          {String(current + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
+      {/* Counter + progress */}
+      <div className="mt-6 flex flex-col items-center gap-3">
+        <span className="font-mono text-xs text-white/30">
+          {String(index + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
         </span>
+        <div className="h-px w-48 bg-white/10">
+          <div
+            className="h-full bg-teal/50 transition-all duration-300"
+            style={{ width: `${((index + 1) / images.length) * 100}%` }}
+          />
+        </div>
       </div>
 
-      {/* Progress bar */}
-      <div className="mt-3 h-px w-48 bg-white/10">
+      {/* One-time mobile hint */}
+      {hint && (
         <div
-          className="h-full bg-teal/40 transition-all duration-500"
-          style={{ width: `${((current + 1) / images.length) * 100}%` }}
-        />
-      </div>
-
-      {/* Navigation arrows */}
-      <button
-        onClick={prev}
-        className="fixed left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/5 p-3 text-white/40 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white sm:left-8"
-        aria-label="Previous photo"
-      >
-        <ChevronLeft className="size-5" />
-      </button>
-      <button
-        onClick={next}
-        className="fixed right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/5 p-3 text-white/40 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white sm:right-8"
-        aria-label="Next photo"
-      >
-        <ChevronRight className="size-5" />
-      </button>
-
-      {/* Hint */}
-      <p className="absolute bottom-4 text-[10px] text-white/15">
-        scroll, arrow keys, or click arrows to navigate
-      </p>
+          className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-white/15 bg-black/40 px-4 py-1.5 backdrop-blur-sm"
+          style={{ animation: "placardIn 0.4s ease-out both" }}
+        >
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
+            Swipe to explore
+          </p>
+        </div>
+      )}
     </div>
   )
 }

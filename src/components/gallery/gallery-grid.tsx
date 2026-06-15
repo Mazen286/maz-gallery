@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import { X } from "lucide-react"
 import { GALLERY } from "@/lib/gallery"
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
+import { SwipeCarousel } from "./swipe-carousel"
 
 interface GalleryGridProps {
   filterLocation?: string | null
@@ -47,29 +48,15 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
     ? base.filter((img) => img.location === filterLocation)
     : base
 
-  const navigate = useCallback(
-    (direction: "prev" | "next") => {
-      if (selected === null) return
-      if (direction === "prev") {
-        setSelected(selected > 0 ? selected - 1 : images.length - 1)
-      } else {
-        setSelected(selected < images.length - 1 ? selected + 1 : 0)
-      }
-    },
-    [selected, images.length]
-  )
-
-  // Keyboard navigation
+  // Escape closes; left/right are handled by the carousel
   useEffect(() => {
     if (selected === null) return
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setSelected(null)
-      if (e.key === "ArrowLeft") navigate("prev")
-      if (e.key === "ArrowRight") navigate("next")
     }
     window.addEventListener("keydown", handleKey)
     return () => window.removeEventListener("keydown", handleKey)
-  }, [selected, navigate])
+  }, [selected])
 
   // Lock body scroll when lightbox is open
   useEffect(() => {
@@ -122,69 +109,40 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
           {/* Close button */}
           <button
             onClick={() => setSelected(null)}
-            className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white"
+            className="absolute right-4 top-4 z-20 rounded-full bg-white/10 p-2 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white"
             aria-label="Close"
           >
             <X className="size-6" />
           </button>
 
-          {/* Prev button */}
-          <button
-            onClick={(e) => { e.stopPropagation(); navigate("prev") }}
-            className="absolute left-4 z-10 rounded-full bg-white/10 p-3 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white"
-            aria-label="Previous photo"
-          >
-            <ChevronLeft className="size-6" />
-          </button>
-
-          {/* Next button */}
-          <button
-            onClick={(e) => { e.stopPropagation(); navigate("next") }}
-            className="absolute right-4 z-10 rounded-full bg-white/10 p-3 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white"
-            aria-label="Next photo"
-          >
-            <ChevronRight className="size-6" />
-          </button>
-
-          {/* Image + story panel */}
+          {/* Swipeable image + story */}
           <div
-            className="pointer-events-none relative z-10 mx-auto flex max-h-[92vh] max-w-3xl flex-col items-center gap-4 overflow-y-auto px-6 py-4"
+            className="relative z-10 flex w-full max-w-4xl flex-col items-center gap-4 px-2"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div
-              className="pointer-events-auto flex-shrink-0"
-              onClick={(e) => e.stopPropagation()}
-              style={{ animation: "imageFloatIn 0.5s cubic-bezier(0.33, 1, 0.68, 1) forwards" }}
-            >
-              <Image
-                src={images[selected].src}
-                alt={images[selected].alt}
-                width={images[selected].width}
-                height={images[selected].height}
-                className="max-h-[50vh] max-w-[90vw] w-auto rounded-lg object-contain shadow-2xl"
-                preload
-              />
-            </div>
+            <SwipeCarousel
+              images={images}
+              index={selected}
+              onIndexChange={(i) => setSelected(i)}
+              heightClass="h-[64vh]"
+            />
 
-            <div
-              className="pointer-events-auto max-w-lg pb-6 text-center"
-              onClick={(e) => e.stopPropagation()}
-              style={{ animation: "fadeSlideIn 0.6s ease-out 0.2s both" }}
-            >
+            <div className="max-w-lg px-4 pb-2 text-center">
               {images[selected].location && (
-                <p className="text-[10px] uppercase tracking-[0.4em] text-teal/70">
+                <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
                   {images[selected].location}
                 </p>
               )}
-              <h3 className="mt-1.5 text-lg font-bold text-white">
+              <h3 className="mt-1.5 font-display text-lg italic text-white">
                 {images[selected].alt}
               </h3>
               {images[selected].story && (
-                <p className="mt-3 text-sm leading-relaxed text-white/45 italic">
+                <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white/45">
                   {images[selected].story}
                 </p>
               )}
-              <p className="mt-3 font-mono text-[9px] text-white/20">
-                {selected + 1} / {images.length} &middot; arrow keys to navigate
+              <p className="mt-3 font-mono text-[9px] text-white/25">
+                {selected + 1} / {images.length}
               </p>
             </div>
           </div>
