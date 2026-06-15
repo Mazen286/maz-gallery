@@ -34,6 +34,7 @@ function GalleryImage({ src, alt, width, height, onClick }: {
           height={height}
           className="h-auto w-full"
           loading="lazy"
+          sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 25vw"
         />
       </button>
     </div>
