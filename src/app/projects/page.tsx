@@ -120,58 +120,55 @@ function ProjectCard({
   project: (typeof PROJECTS)[number]
   index: number
 }) {
+  const external = project.url.startsWith("http")
   return (
-    <FadeIn delay={index * 80}>
+    <FadeIn delay={(index % 3) * 80}>
       <a
         href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg"
       >
-        {/* Image */}
-        <div className="relative aspect-[16/9] overflow-hidden bg-slate-100">
+        {/* Image — identical aspect ratio on every card */}
+        <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
           <Image
             src={project.image}
             alt={project.title}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         </div>
 
-        {/* Content */}
-        <div className="p-6 sm:p-8">
-          {/* Subtitle */}
+        {/* Content — fills remaining height so footers align */}
+        <div className="flex flex-1 flex-col p-5">
           <p
-            className="text-[10px] font-semibold uppercase tracking-[0.3em]"
+            className="font-mono text-[10px] font-semibold uppercase tracking-[0.25em]"
             style={{ color: project.accent }}
           >
             {project.subtitle}
           </p>
-
-          {/* Title */}
-          <h2 className="mt-2 font-display text-2xl text-navy sm:text-3xl">
+          <h2 className="mt-1.5 font-display text-xl text-navy">
             {project.title}
           </h2>
-
-          {/* Description */}
-          <p className="mt-3 text-[15px] leading-relaxed text-charcoal/60">
+          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-charcoal/55">
             {project.description}
           </p>
 
-          {/* Tags + CTA */}
-          <div className="mt-5 flex flex-wrap items-center gap-2">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-navy/10 px-3 py-1 text-[11px] font-medium text-navy/50"
-              >
-                {tag}
-              </span>
-            ))}
-            <span className="ml-auto flex items-center gap-1.5 text-sm font-semibold text-navy/60 transition-all duration-300 group-hover:gap-2.5 group-hover:text-navy">
+          {/* Footer pinned to the bottom of every card */}
+          <div className="mt-auto pt-4">
+            <div className="flex flex-wrap gap-1.5">
+              {project.tags.slice(0, 3).map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-navy/10 px-2.5 py-0.5 text-[10px] font-medium text-navy/45"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <span className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-navy/60 transition-all duration-300 group-hover:gap-2.5 group-hover:text-navy">
               {project.cta}
-              <ExternalLink className="size-3.5" />
+              <ExternalLink className="size-3" />
             </span>
           </div>
         </div>
@@ -235,73 +232,11 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Featured projects - full width */}
-      <section className="bg-white pb-6 pt-4">
-        <div className="mx-auto max-w-6xl px-6 space-y-6">
-          {PROJECTS.slice(0, 2).map((project, i) => (
-            <FadeIn key={project.title} delay={i * 100}>
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div className="relative aspect-[2.2/1] overflow-hidden bg-slate-100">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="100vw"
-                  />
-                </div>
-                <div className="p-6 sm:p-8">
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
-                      <p
-                        className="text-[10px] font-semibold uppercase tracking-[0.3em]"
-                        style={{ color: project.accent }}
-                      >
-                        {project.subtitle}
-                      </p>
-                      <h2 className="mt-2 font-display text-3xl text-navy sm:text-4xl">
-                        {project.title}
-                      </h2>
-                      <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-charcoal/60">
-                        {project.description}
-                      </p>
-                    </div>
-                    <span className="flex items-center gap-1.5 text-sm font-semibold text-navy/60 transition-all duration-300 group-hover:gap-2.5 group-hover:text-navy">
-                      {project.cta}
-                      <ExternalLink className="size-3.5" />
-                    </span>
-                  </div>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-navy/10 px-3 py-1 text-[11px] font-medium text-navy/50"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  className="h-[3px] w-0 transition-all duration-500 group-hover:w-full"
-                  style={{ backgroundColor: project.accent }}
-                />
-              </a>
-            </FadeIn>
-          ))}
-        </div>
-      </section>
-
-      {/* Grid projects */}
+      {/* Uniform grid: 1 / 2 / 3 columns, identical tiles at every width */}
       <section className="pb-32 pt-6">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            {PROJECTS.slice(2).map((project, i) => (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {PROJECTS.map((project, i) => (
               <ProjectCard key={project.title} project={project} index={i} />
             ))}
           </div>
