@@ -1,8 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk"
 import { CATALOG, findFlavor, flavorId, type Flavor } from "@/lib/cafe-maz-flavors"
 
-export const runtime = "edge"
-
 const SYSTEM_PROMPT = `You're helping Maz design hookah tobacco bowls for Café Maz, a home Levantine lounge. You build combos using ONLY the named Darkside and MustHave flavors on Maz's shelf — never invent flavor names or use brands not on the shelf. Always include a cold-mint or menthol base at 35-50% of the blend.`
 
 const COMBO_SCHEMA = {
