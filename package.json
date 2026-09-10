@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev -p 2892",
     "build": "next build",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:deploy": "npx wrangler pages deploy .vercel/output/static",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.100.1",
@@ -17,26 +18,26 @@
     "@tailwindcss/typography": "^0.5.19",
     "clsx": "^2.1.1",
     "lucide-react": "^0.577.0",
-    "next": "16.2.1",
+    "next": "16.3.4",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "tailwind-merge": "^3.5.0",
     "three": "^0.183.2"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "1.13.16",
+    "@opennextjs/cloudflare": "1.20.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.183.1",
     "eslint": "^9",
-    "eslint-config-next": "16.2.0",
+    "eslint-config-next": "16.3.4",
     "playwright": "^1.58.2",
     "tailwindcss": "^4",
     "topojson-client": "^3.1.0",
     "typescript": "^5",
-    "vercel": "47.0.4",
-    "world-atlas": "^2.0.2"
+    "world-atlas": "^2.0.2",
+    "wrangler": "4.131.0"
   }
 }

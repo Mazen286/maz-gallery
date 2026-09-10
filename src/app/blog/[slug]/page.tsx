@@ -7,8 +7,6 @@ import { BLOG_POSTS, getPost, formatDate, CATEGORY_COLORS } from "@/lib/blog"
 import { POST_CONTENT } from "@/components/blog/posts"
 import { ReadingProgress } from "@/components/blog/reading-progress"
 
-export const runtime = "edge"
-
 export async function generateMetadata({
   params,
 }: {

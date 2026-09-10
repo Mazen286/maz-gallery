@@ -14,3 +14,6 @@ yarn-error.log*
 next-env.d.ts
 /screenshots/
 
+
+# OpenNext build output
+.open-next/
