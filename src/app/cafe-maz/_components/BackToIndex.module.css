@@ -1,0 +1,13 @@
+.back {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--brass);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+.back:hover {
+  color: var(--brass-bright);
+}

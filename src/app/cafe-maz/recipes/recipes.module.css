@@ -637,6 +637,19 @@
 }
 
 /* COLOPHON */
+.topNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--brass);
+  border-bottom: 1px solid var(--rule);
+}
+
 .colophon {
   padding: 50px 80px 60px;
   text-align: center;
@@ -672,6 +685,9 @@
   .tapeAr {
     margin: 0 4px;
     font-size: 12px;
+  }
+  .topNav {
+    padding: 16px 24px;
   }
   .cover {
     padding: 56px 24px 40px;

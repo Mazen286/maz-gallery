@@ -2,20 +2,19 @@
 
 import Link from "next/link"
 import { DRINK_SECTIONS, HOOKAH_COMBOS } from "@/lib/cafe-maz"
+import { BackToIndex } from "../_components/BackToIndex"
 import styles from "./menu.module.css"
 
 export default function PrintMenuPage() {
   return (
     <main className={styles.root}>
       <div className={styles.meta}>
-        <span>
-          <Link href="/cafe-maz">← Café Maz / Index</Link>
-        </span>
         <div className={styles.specs}>
           <span>A5 · 5.5 × 8.5 in</span>
           <span>Front + Back</span>
           <span>Duplex Print</span>
         </div>
+        <BackToIndex />
       </div>
 
       <div className={styles.lead}>

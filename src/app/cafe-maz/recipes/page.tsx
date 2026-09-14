@@ -1,5 +1,5 @@
-import Link from "next/link"
 import { HOOKAH_COMBOS } from "@/lib/cafe-maz"
+import { BackToIndex } from "../_components/BackToIndex"
 import styles from "./recipes.module.css"
 
 type SpecRow = { k: string; v: string }
@@ -246,6 +246,11 @@ export default function RecipesPage() {
       </div>
 
       <article className={styles.book}>
+        <nav className={styles.topNav}>
+          <span>CAFÉ MAZ</span>
+          <BackToIndex />
+        </nav>
+
         {/* COVER */}
         <section className={styles.cover}>
           <p className={styles.coverEyebrow}>— The Barista Book —</p>
@@ -558,9 +563,7 @@ export default function RecipesPage() {
         <div className={styles.colophon}>
           Café Maz · The Barista Book
           <br />
-          <Link href="/cafe-maz" className={styles.colLink}>
-            ← back to index
-          </Link>
+          <BackToIndex className={styles.colLink} />
         </div>
       </article>
     </>

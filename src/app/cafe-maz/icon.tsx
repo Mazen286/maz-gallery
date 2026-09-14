@@ -3,8 +3,8 @@ import { ImageResponse } from "next/og"
 export const size = { width: 32, height: 32 }
 export const contentType = "image/png"
 
-// Brass diamond keystone on coffee black — mirrors the keystone
-// that sits at the top of every arch panel and print menu card.
+// Brass four-pointed star on coffee black, mirroring the ✦ ornament
+// (.ornStar) used across the Café Maz menu, cafe, and lab pages.
 export default function Icon() {
   return new ImageResponse(
     (
@@ -18,15 +18,12 @@ export default function Icon() {
           justifyContent: "center",
         }}
       >
-        <div
-          style={{
-            width: 16,
-            height: 16,
-            background: "#c9a667",
-            transform: "rotate(45deg)",
-            display: "flex",
-          }}
-        />
+        <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+          <path
+            d="M16 2 L18.8 13.2 L30 16 L18.8 18.8 L16 30 L13.2 18.8 L2 16 L13.2 13.2 Z"
+            fill="#c9a667"
+          />
+        </svg>
       </div>
     ),
     { ...size },
