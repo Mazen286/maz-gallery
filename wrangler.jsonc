@@ -14,6 +14,11 @@
   "images": {
     "binding": "IMAGES"
   },
+  // Front Desk messages go out through Cloudflare Email Service. The from
+  // domain (maz.gallery) must be onboarded under Email Sending.
+  "send_email": [
+    { "name": "EMAIL", "allowed_sender_addresses": ["frontdesk@maz.gallery"] }
+  ],
   "observability": {
     "enabled": true
   },

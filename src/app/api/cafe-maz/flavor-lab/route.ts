@@ -92,7 +92,7 @@ function resolveApiKey(): string | undefined {
   // process.env is the fallback for `next dev` with a .env file.
   try {
     const { env } = getCloudflareContext()
-    const fromBinding = (env as Record<string, unknown>).ANTHROPIC_API_KEY
+    const fromBinding = (env as unknown as Record<string, unknown>).ANTHROPIC_API_KEY
     if (typeof fromBinding === "string" && fromBinding) return fromBinding
   } catch {
     // Not running inside the Workers runtime (plain `next dev`)
