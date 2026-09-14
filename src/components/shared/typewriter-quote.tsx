@@ -12,7 +12,7 @@ export function TypewriterQuote({ text, className = "" }: TypewriterQuoteProps) 
   const [displayText, setDisplayText] = useState("")
   const [showCursor, setShowCursor] = useState(false)
   const [started, setStarted] = useState(false)
-  const [done, setDone] = useState(false)
+  const [, setDone] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const reduced = useReducedMotion()
 

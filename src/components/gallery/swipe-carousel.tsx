@@ -38,7 +38,9 @@ export function SwipeCarousel({
   const [dragging, setDragging] = useState(false)
 
   const idxRef = useRef(index)
-  idxRef.current = index
+  useEffect(() => {
+    idxRef.current = index
+  }, [index])
   const gesture = useRef<{
     startX: number
     startY: number

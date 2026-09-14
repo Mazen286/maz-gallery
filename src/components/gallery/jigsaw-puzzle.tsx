@@ -441,7 +441,7 @@ export function JigsawPuzzle({
   )
 
   const handlePointerUp = useCallback(
-    (_e: React.PointerEvent) => {
+    () => {
       if (!dragRef.current) return
       const { pieceIdx } = dragRef.current
       dragRef.current = null
