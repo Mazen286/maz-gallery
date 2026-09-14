@@ -1,6 +1,7 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare"
 import { EMAIL, SITE_URL, TURNSTILE_ACTION } from "@/lib/constants"
 import { getPhotoBySlug } from "@/lib/gallery"
+import { renderFrontDeskEmail } from "@/lib/front-desk-email"
 
 // Front Desk messages. Sent through Cloudflare Email Service from
 // frontdesk@maz.gallery to the site owner, with the visitor as Reply-To.
@@ -87,8 +88,6 @@ async function verifyTurnstile(secret: string, token: string, ip: string): Promi
 }
 
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "")
-const escapeHtml = (s: string) =>
-  s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string)
 
 export async function POST(req: Request) {
   const origin = req.headers.get("origin")
@@ -152,33 +151,23 @@ export async function POST(req: Request) {
     return Response.json({ error: "The front desk is unattended right now." }, { status: 503 })
   }
 
-  const lines = [
-    `Name: ${name}`,
-    `Email: ${email}`,
-    phone ? `Phone: ${phone}` : null,
-    contactPref ? `Prefers: ${contactPref}` : null,
-    photo ? `Photograph: ${photo.alt} (${SITE_URL}/gallery/${photoSlugValue})` : null,
-    "",
+  const mail = renderFrontDeskEmail({
+    name,
+    email,
+    phone: phone || undefined,
+    contactPref: contactPref || undefined,
     message,
-  ].filter((l): l is string => l !== null)
-
-  const html = `
-    <div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.55;color:#1b2233">
-      <p style="margin:0 0 4px"><strong>${escapeHtml(name)}</strong> &lt;${escapeHtml(email)}&gt;</p>
-      ${phone ? `<p style="margin:0 0 4px">Phone: ${escapeHtml(phone)}</p>` : ""}
-      ${contactPref ? `<p style="margin:0 0 12px">Prefers: ${escapeHtml(contactPref)}</p>` : ""}
-      <p style="white-space:pre-wrap;margin:12px 0 0;padding:12px 16px;border-left:3px solid #78c8d6;background:#f6f8f9">${escapeHtml(message)}</p>
-      <p style="margin:20px 0 0;font-size:12px;color:#6b6e78">Sent from the Front Desk at maz.gallery. Reply to answer ${escapeHtml(name)} directly.</p>
-    </div>`
+    photo: photo ? { image: photo, slug: photoSlugValue } : undefined,
+  })
 
   try {
     await sender.send({
       to: EMAIL,
       from: FROM,
       replyTo: email,
-      subject: photo ? `Front Desk: ${name} · print of "${photo.alt}"` : `Front Desk: ${name}`,
-      text: lines.join("\n"),
-      html,
+      subject: mail.subject,
+      text: mail.text,
+      html: mail.html,
     })
     return Response.json({ ok: true })
   } catch (err) {

@@ -105,12 +105,11 @@ export function ConversationalForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTyping, isComplete, editing])
 
-  const summaryShown = isComplete && !editing
-
-  // Render the Turnstile widget once the summary is on screen. Interaction-only
+  // Render the Turnstile widget as soon as the form mounts, so the token is
+  // usually ready long before the visitor reaches Send. Interaction-only
   // appearance means most people never see it; a challenge appears only if needed.
   useEffect(() => {
-    if (!summaryShown || turnstileId.current || !turnstileHost.current) return
+    if (turnstileId.current || !turnstileHost.current) return
     let cancelled = false
     const host = turnstileHost.current
     loadTurnstile().then((ts) => {
@@ -135,7 +134,7 @@ export function ConversationalForm() {
     return () => {
       cancelled = true
     }
-  }, [summaryShown])
+  }, [])
 
   const showingInput = !isTyping && (!isComplete || editing) && currentStep < STEPS.length
   const step = STEPS[currentStep]
@@ -305,8 +304,6 @@ export function ConversationalForm() {
                   </div>
                 ))}
               </dl>
-              {/* Turnstile mounts here; interaction-only, so usually invisible */}
-              <div ref={turnstileHost} className="mt-3 empty:hidden" />
               {turnstileState === "unavailable" && (
                 <p className="mt-3 text-xs text-charcoal/50">
                   The bot check couldn&apos;t load (an ad blocker, maybe). You can still{" "}
@@ -339,6 +336,9 @@ export function ConversationalForm() {
           )}
         </div>
       </div>
+
+      {/* Turnstile lives here for the whole conversation; interaction-only, so usually invisible */}
+      <div ref={turnstileHost} className="px-4 empty:hidden [&:not(:empty)]:pb-2" />
 
       {/* Input area */}
       {showingInput && (
