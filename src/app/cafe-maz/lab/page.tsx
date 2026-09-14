@@ -1,7 +1,6 @@
 "use client"
 
-import Link from "next/link"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   CATALOG,
   DARKSIDE,
@@ -12,6 +11,7 @@ import {
   type Flavor,
 } from "@/lib/cafe-maz-flavors"
 import { HOOKAH_COMBOS } from "@/lib/cafe-maz"
+import { BackToIndex } from "../_components/BackToIndex"
 import styles from "./lab.module.css"
 
 const HOOKAH_PUBLIC_COUNT = HOOKAH_COMBOS.length
@@ -164,14 +164,24 @@ export default function FlavorLabPage() {
     })
   }
 
+  // One in-flight request at a time; a new run or unmount aborts the previous one.
+  const abortRef = useRef<AbortController | null>(null)
+  useEffect(() => () => abortRef.current?.abort(), [])
+
   const generate = useCallback(async () => {
+    if (loading) return
+    abortRef.current?.abort()
+    const controller = new AbortController()
+    abortRef.current = controller
     setError("")
+    setSuggestions([])
     setLoading(true)
     try {
       const res = await fetch("/api/cafe-maz/flavor-lab", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ selectedIds, mood }),
+        signal: controller.signal,
       })
       const data = (await res.json()) as { combos?: Combo[]; error?: string }
       if (!res.ok) {
@@ -180,12 +190,13 @@ export default function FlavorLabPage() {
         setSuggestions(data.combos)
       }
     } catch (e) {
+      if (controller.signal.aborted) return
       const msg = e instanceof Error ? e.message : "unknown"
       setError(`Couldn't reach the lab. (${msg})`)
     } finally {
-      setLoading(false)
+      if (!controller.signal.aborted) setLoading(false)
     }
-  }, [selectedIds, mood])
+  }, [selectedIds, mood, loading])
 
   const saveCombo = (c: Combo) => {
     setBowls((b) => [...b, { ...c, num: `Nº ${String(b.length + 1).padStart(2, "0")}` }])
@@ -257,7 +268,7 @@ ${ratiosLines}
     <main className={styles.root}>
       <nav className={styles.nav}>
         <span>CAFÉ MAZ</span>
-        <Link href="/cafe-maz">← back to index</Link>
+        <BackToIndex />
       </nav>
 
       <section className={styles.hero}>
@@ -389,7 +400,7 @@ ${ratiosLines}
               value={mood}
               onChange={(e) => setMood(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") generate()
+                if (e.key === "Enter" && !loading) generate()
               }}
             />
           </div>
@@ -523,7 +534,7 @@ ${ratiosLines}
 
       <footer className={styles.footer}>
         <span>Café Maz · Flavor Lab</span>
-        <Link href="/cafe-maz">↳ index</Link>
+        <BackToIndex />
       </footer>
     </main>
   )
