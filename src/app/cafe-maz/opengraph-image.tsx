@@ -1,34 +1,19 @@
 import { ImageResponse } from "next/og"
+import { ogFont } from "@/lib/og"
 
 export const alt = "Café Maz — a one-table café"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
-async function loadGoogleFont(
-  family: string,
-  weight = 400,
-  italic = false,
-): Promise<ArrayBuffer> {
-  const param = italic ? `ital,wght@1,${weight}` : `wght@${weight}`
-  const cssUrl = `https://fonts.googleapis.com/css2?family=${family.replace(/ /g, "+")}:${param}`
-  // Use an older Firefox UA so Google Fonts serves TTF rather than WOFF2
-  // (Satori, which powers ImageResponse, only supports TTF/OTF).
-  const css = await fetch(cssUrl, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1",
-    },
-  }).then((r) => r.text())
-  const match = css.match(/src:\s*url\((.+?)\)\s+format\(/)
-  if (!match) throw new Error(`No font URL found for ${family} ${param}`)
-  return await fetch(match[1]).then((r) => r.arrayBuffer())
-}
+// Fonts are vendored under /fonts and fetched from our own assets at render
+// time, so this route is dynamic rather than prerendered.
+export const dynamic = "force-dynamic"
 
 export default async function Image() {
   const [cinzel, cormorantItalic, mono] = await Promise.all([
-    loadGoogleFont("Cinzel", 700),
-    loadGoogleFont("Cormorant Garamond", 400, true),
-    loadGoogleFont("JetBrains Mono", 500),
+    ogFont("Cinzel-Bold.woff"),
+    ogFont("CormorantGaramond-Italic.woff"),
+    ogFont("JetBrainsMono-Medium.woff"),
   ])
 
   return new ImageResponse(

@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og"
 import { getCloudflareContext } from "@opennextjs/cloudflare"
 import { getDailyPuzzle } from "@/lib/daily"
 import { SITE_URL } from "@/lib/constants"
+import { OG_BASE, ogFont } from "@/lib/og"
 
 export const alt = "The Daily Postcard: guess where today's photograph was taken"
 export const size = { width: 1200, height: 630 }
@@ -9,24 +10,6 @@ export const contentType = "image/png"
 
 // A new card every UTC day; never prerendered (fonts and the photo are fetched at request time)
 export const dynamic = "force-dynamic"
-
-// Assets come from our own origin; in next dev that is the local server
-const BASE = process.env.NODE_ENV === "development" ? "http://localhost:2892" : SITE_URL
-
-// Fonts are vendored under /fonts and fetched from our own assets; each
-// isolate keeps them after the first render.
-const fontCache = new Map<string, Promise<ArrayBuffer>>()
-function font(file: string): Promise<ArrayBuffer> {
-  let p = fontCache.get(file)
-  if (!p) {
-    p = fetch(`${BASE}/fonts/${file}`).then((r) => {
-      if (!r.ok) throw new Error(`font ${file}: ${r.status}`)
-      return r.arrayBuffer()
-    })
-    fontCache.set(file, p)
-  }
-  return p
-}
 
 // A 48px-wide version of the photo, stretched to the card, is a blur that
 // teases the picture without giving the place away. The IMAGES binding
@@ -52,7 +35,7 @@ async function teaser(src: string): Promise<string> {
     bytes = null
   }
   if (!bytes) {
-    const r = await fetch(`${BASE}/_next/image?url=${encodeURIComponent(src)}&w=48&q=75`, {
+    const r = await fetch(`${OG_BASE}/_next/image?url=${encodeURIComponent(src)}&w=48&q=75`, {
       headers: { Accept: "image/jpeg,image/*" },
     })
     if (r.ok) bytes = await r.arrayBuffer()
@@ -65,8 +48,8 @@ async function teaser(src: string): Promise<string> {
 export default async function Image() {
   const puzzle = getDailyPuzzle()
   const [display, mono, img] = await Promise.all([
-    font("Fraunces-SemiBoldItalic.woff"),
-    font("JetBrainsMono-Medium.woff"),
+    ogFont("Fraunces-SemiBoldItalic.woff"),
+    ogFont("JetBrainsMono-Medium.woff"),
     teaser(puzzle.image.src),
   ])
 
