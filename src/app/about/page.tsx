@@ -4,9 +4,10 @@ import Link from "next/link"
 import { FadeIn } from "@/components/shared/fade-in"
 import { FIGMENT_URL, PRESS } from "@/lib/constants"
 import { GALLERY } from "@/lib/gallery"
+import { ALL_PROJECTS } from "@/lib/projects"
 
 export const metadata: Metadata = {
-  title: "About Mazen Abugharbieh | Data Analyst & Photographer",
+  title: "About Mazen | Data Analyst & Photographer",
   description:
     "Mazen Abugharbieh merges data engineering precision with creative visual storytelling. Structural engineer turned analyst, photographer, and startup founder in San Diego.",
   alternates: { canonical: "/about" },
@@ -55,7 +56,7 @@ const JOURNEY = [
 const PLACES = new Set(GALLERY.map((img) => img.location).filter(Boolean)).size
 
 const STATS = [
-  { number: "7+", label: "Projects shipped" },
+  { number: `${ALL_PROJECTS.length}`, label: "Projects shipped" },
   { number: `${PLACES}`, label: "Places photographed" },
   { number: `${PRESS.length}`, label: "Media features" },
   { number: `${GALLERY.length}`, label: "Photographs on display" },

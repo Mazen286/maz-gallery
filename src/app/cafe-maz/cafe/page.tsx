@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { DRINK_SECTIONS, HOOKAH_COMBOS, HOOKAH_INTRO, OFF_MENU, PLATES, TAGLINE, TONIGHT_MUSIC } from "@/lib/cafe-maz"
 import { MoodPlayer } from "./MoodPlayer"
 import styles from "./website.module.css"
@@ -162,6 +163,7 @@ export default function CafeMazPage() {
 
       <footer className={styles.foot}>
         <span>Café Maz · made at the kitchen counter</span>
+        <Link href="/">maz.gallery</Link>
       </footer>
     </main>
   )
