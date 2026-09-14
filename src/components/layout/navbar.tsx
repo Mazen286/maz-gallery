@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
-import { NAV_LINKS, ROOMS, EMAIL, SOCIAL } from "@/lib/constants"
+import { NAV_LINKS, ROOMS, EMAIL, SOCIAL, roomSubtitle } from "@/lib/constants"
 import { Magnetic } from "@/components/shared/magnetic"
 import { ScrambleWrapper } from "@/components/shared/text-scramble"
 
@@ -64,9 +64,6 @@ export function Navbar() {
                       solid ? "text-charcoal/70 hover:text-navy" : "text-white/70 hover:text-white"
                     }`}
                   >
-                    <span className={`mr-1.5 text-[9px] ${solid ? "text-teal" : "text-teal/80"}`}>
-                      {link.number.slice(-2)}
-                    </span>
                     {display}
                   </Link>
                 )}
@@ -133,12 +130,17 @@ export function Navbar() {
                   <span className="w-12 shrink-0 font-mono text-[10px] uppercase tracking-[0.15em] text-teal/60">
                     {room.number}
                   </span>
-                  <span
-                    className={`font-display text-3xl transition-colors ${
-                      active ? "italic text-teal" : "text-white/90 group-hover:text-white"
-                    }`}
-                  >
-                    {room.name}
+                  <span className="flex flex-col">
+                    <span
+                      className={`font-display text-3xl transition-colors ${
+                        active ? "italic text-teal" : "text-white/90 group-hover:text-white"
+                      }`}
+                    >
+                      {room.label}
+                    </span>
+                    {roomSubtitle(room) && (
+                      <span className="mt-0.5 font-display text-sm italic text-white/35">{roomSubtitle(room)}</span>
+                    )}
                   </span>
                 </Link>
               )

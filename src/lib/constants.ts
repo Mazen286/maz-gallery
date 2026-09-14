@@ -21,7 +21,8 @@ export const ROOMS = [
   { href: "/about", number: "No. 02", label: "About", name: "The Artist", nav: true },
   { href: "/gallery", number: "No. 03", label: "Gallery", name: "The Gallery", nav: true },
   { href: "/projects", number: "No. 04", label: "Projects", name: "Projects Wing", nav: true },
-  { href: "/blog", number: "No. 05", label: "Blog", name: "Reading Room", nav: true },
+  // Blog returns to the header nav once it has enough posts to earn the slot
+  { href: "/blog", number: "No. 05", label: "Blog", name: "Reading Room", nav: false },
   { href: "/daily", number: "No. 06", label: "Daily", name: "Daily Postcard", nav: true },
   { href: "/annex", number: "No. 07", label: "Annex", name: "The Annex", nav: false },
   { href: "/booking", number: "No. 08", label: "Say Hello", name: "Front Desk", nav: false },
@@ -30,6 +31,9 @@ export const ROOMS = [
 export type Room = (typeof ROOMS)[number]
 
 export const NAV_LINKS = ROOMS.filter((r) => r.nav)
+
+// The museum name is a subtitle; skip it when it only adds "The" to the label
+export const roomSubtitle = (room: Room) => (room.name === `The ${room.label}` ? null : room.name)
 
 export function roomFor(pathname: string): Room | undefined {
   if (pathname === "/") return ROOMS[0]

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Instagram, Linkedin } from "lucide-react"
-import { SOCIAL, ROOMS, EMAIL, FIGMENT_URL } from "@/lib/constants"
+import { SOCIAL, ROOMS, EMAIL, FIGMENT_URL, roomSubtitle } from "@/lib/constants"
 
 export function Footer() {
   const pathname = usePathname()
@@ -44,7 +44,12 @@ export function Footer() {
                     <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-white/25 transition-colors group-hover:text-teal/70">
                       {room.number}
                     </span>
-                    {room.name}
+                    <span>
+                      {room.label}
+                      {roomSubtitle(room) && (
+                        <span className="ml-2 font-display text-xs italic text-white/30">{roomSubtitle(room)}</span>
+                      )}
+                    </span>
                   </Link>
                 </li>
               ))}
