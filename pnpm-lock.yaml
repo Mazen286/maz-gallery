@@ -51,6 +51,9 @@ importers:
       playwright:
         specifier: ^1.58.2
         version: 1.58.2
+      sharp:
+        specifier: ^0.35.4
+        version: 0.35.4(@types/node@20.19.37)
       tailwindcss:
         specifier: ^4
         version: 4.2.2

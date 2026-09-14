@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { getDailyPuzzle, getYesterdayPuzzle } from "@/lib/daily"
 import { SITE_URL } from "@/lib/constants"
+import { photoSlug } from "@/lib/gallery"
 import { DailyPostcard } from "./daily-client"
 
 // A new postcard every UTC midnight: render per request, never cache
@@ -9,6 +10,8 @@ export const dynamic = "force-dynamic"
 export async function generateMetadata(): Promise<Metadata> {
   const puzzle = getDailyPuzzle()
   const title = `The Daily Postcard No. ${puzzle.number}`
+  // Prerendered per photograph, so the daily preview costs nothing to serve
+  const card = { url: `/daily/card/${photoSlug(puzzle.image)}`, width: 1200, height: 630, alt: "The Daily Postcard: where was this taken?" }
   const description = "One photograph from the collection every day. Guess where it was taken in three tries, keep your streak alive, and share your result."
   return {
     title: "The Daily Postcard",
@@ -18,12 +21,13 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description: "One photo a day. Guess where it was taken in three tries.",
       url: `${SITE_URL}/daily`,
-      // The per-day image comes from opengraph-image.tsx next to this file
+      images: [card],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: "One photo a day. Guess where it was taken in three tries.",
+      images: [card],
     },
   }
 }

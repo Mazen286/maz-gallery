@@ -5,9 +5,7 @@ export const alt = "Café Maz — a one-table café"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
-// Fonts are vendored under /fonts and fetched from our own assets at render
-// time, so this route is dynamic rather than prerendered.
-export const dynamic = "force-dynamic"
+// Prerendered at build with the vendored fonts under public/fonts
 
 export default async function Image() {
   const [cinzel, cormorantItalic, mono] = await Promise.all([
