@@ -42,6 +42,12 @@ export function roomFor(pathname: string): Room | undefined {
 
 export const FIGMENT_URL = "https://figmentanalytics.com"
 
+// Turnstile guards the Front Desk. The site key is public. In development
+// Cloudflare's test key always passes so the form works on localhost.
+export const TURNSTILE_SITE_KEY =
+  process.env.NODE_ENV === "development" ? "1x00000000000000000000AA" : "0x4AAAAAAE0p1VtBH6VubcbD"
+export const TURNSTILE_ACTION = "front-desk"
+
 export const PRESS = [
   {
     name: "SD Voyager",

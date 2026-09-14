@@ -1,5 +1,5 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare"
-import { EMAIL, SITE_URL } from "@/lib/constants"
+import { EMAIL, SITE_URL, TURNSTILE_ACTION } from "@/lib/constants"
 import { getPhotoBySlug } from "@/lib/gallery"
 
 // Front Desk messages. Sent through Cloudflare Email Service from
@@ -34,6 +34,7 @@ type ContactBody = {
   contactPref?: string
   photo?: string // slug of a photograph the message is about
   website?: string // honeypot, must stay empty
+  turnstileToken?: string
   startedAt?: number
 }
 
@@ -46,6 +47,43 @@ type EmailBinding = {
     text: string
     html: string
   }) => Promise<unknown>
+}
+
+// Turnstile: enforced once TURNSTILE_SECRET_KEY exists in the Worker (or
+// .dev.vars). Without it the honeypot and fill-time checks stand alone, and
+// the skip is logged so it is never silent. Development uses Cloudflare's
+// always-pass test secret so the widget works on localhost.
+const IS_DEV = process.env.NODE_ENV === "development"
+const TURNSTILE_HOSTNAMES = new Set(IS_DEV ? ["localhost", "127.0.0.1"] : ["maz.gallery", "www.maz.gallery"])
+
+function turnstileSecret(env: Record<string, unknown>): string | undefined {
+  if (IS_DEV) return "1x0000000000000000000000000000000AA"
+  const fromBinding = env.TURNSTILE_SECRET_KEY
+  return typeof fromBinding === "string" && fromBinding ? fromBinding : process.env.TURNSTILE_SECRET_KEY
+}
+
+async function verifyTurnstile(secret: string, token: string, ip: string): Promise<boolean> {
+  if (!token || token.length > 2048) return false
+  try {
+    const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      signal: AbortSignal.timeout(10_000),
+      body: new URLSearchParams({ secret, response: token, remoteip: ip }),
+    })
+    if (!r.ok) return false
+    const result = (await r.json()) as { success?: boolean; action?: string; hostname?: string; "error-codes"?: string[] }
+    if (!result.success) {
+      console.warn("contact: turnstile rejected", result["error-codes"])
+      return false
+    }
+    // Test keys report a fixed action and hostname; only real keys are checked strictly
+    if (IS_DEV) return true
+    return result.action === TURNSTILE_ACTION && !!result.hostname && TURNSTILE_HOSTNAMES.has(result.hostname)
+  } catch (err) {
+    console.error("contact: siteverify failed", err instanceof Error ? err.message : err)
+    return false
+  }
 }
 
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "")
@@ -91,12 +129,24 @@ export async function POST(req: Request) {
     return Response.json({ error: "That email address doesn't look right." }, { status: 400 })
   }
 
-  let sender: EmailBinding | undefined
+  let env: Record<string, unknown> = {}
   try {
-    sender = (getCloudflareContext().env as { EMAIL?: EmailBinding }).EMAIL
+    env = getCloudflareContext().env as unknown as Record<string, unknown>
   } catch {
-    sender = undefined
+    env = {}
   }
+
+  const secret = turnstileSecret(env)
+  if (secret) {
+    const human = await verifyTurnstile(secret, clean(body.turnstileToken, 2048), ip)
+    if (!human) {
+      return Response.json({ error: "The bot check didn't pass. Try once more, or email me directly." }, { status: 403 })
+    }
+  } else {
+    console.warn("contact: TURNSTILE_SECRET_KEY not set; skipping bot verification")
+  }
+
+  const sender = env.EMAIL as EmailBinding | undefined
   if (!sender) {
     console.error("contact: EMAIL binding unavailable")
     return Response.json({ error: "The front desk is unattended right now." }, { status: 503 })

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Send, Pencil } from "lucide-react"
 import { useSearchParams } from "next/navigation"
-import { EMAIL, SITE_URL } from "@/lib/constants"
+import { EMAIL, SITE_URL, TURNSTILE_SITE_KEY, TURNSTILE_ACTION } from "@/lib/constants"
 import { getPhotoBySlug, photoSlug } from "@/lib/gallery"
 
 interface Step {
@@ -30,6 +30,29 @@ interface Message {
 
 type Status = "idle" | "sending" | "sent" | "failed"
 
+// Turnstile's explicit-render API, loaded once from Cloudflare
+type Turnstile = {
+  render: (el: HTMLElement, opts: Record<string, unknown>) => string
+  reset: (id: string) => void
+  remove: (id: string) => void
+}
+declare global {
+  interface Window {
+    turnstile?: Turnstile
+  }
+}
+const TURNSTILE_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+function loadTurnstile(): Promise<Turnstile | null> {
+  if (window.turnstile) return Promise.resolve(window.turnstile)
+  return new Promise((resolve) => {
+    const existing = document.querySelector<HTMLScriptElement>(`script[src="${TURNSTILE_SRC}"]`)
+    const script = existing ?? Object.assign(document.createElement("script"), { src: TURNSTILE_SRC, async: true, defer: true })
+    script.addEventListener("load", () => resolve(window.turnstile ?? null))
+    script.addEventListener("error", () => resolve(null))
+    if (!existing) document.head.appendChild(script)
+  })
+}
+
 export function ConversationalForm() {
   // Arriving from a photograph page pre-writes the message about that print
   const photo = getPhotoBySlug(useSearchParams().get("photo") ?? "")
@@ -43,6 +66,11 @@ export function ConversationalForm() {
   const [status, setStatus] = useState<Status>("idle")
   const [errorText, setErrorText] = useState("")
   const [honeypot, setHoneypot] = useState("")
+  // Turnstile token for this submission; widgets are single-use and reset after a failed send
+  const [turnstileToken, setTurnstileToken] = useState("")
+  const [turnstileState, setTurnstileState] = useState<"pending" | "ready" | "unavailable">("pending")
+  const turnstileHost = useRef<HTMLDivElement>(null)
+  const turnstileId = useRef<string | null>(null)
   const startedAt = useRef(Date.now())
   const chatRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
@@ -76,6 +104,38 @@ export function ConversationalForm() {
     inputRef.current.focus({ preventScroll: messages.length <= 1 })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTyping, isComplete, editing])
+
+  const summaryShown = isComplete && !editing
+
+  // Render the Turnstile widget once the summary is on screen. Interaction-only
+  // appearance means most people never see it; a challenge appears only if needed.
+  useEffect(() => {
+    if (!summaryShown || turnstileId.current || !turnstileHost.current) return
+    let cancelled = false
+    const host = turnstileHost.current
+    loadTurnstile().then((ts) => {
+      if (cancelled || !ts || turnstileId.current) return
+      try {
+        turnstileId.current = ts.render(host, {
+          sitekey: TURNSTILE_SITE_KEY,
+          action: TURNSTILE_ACTION,
+          appearance: "interaction-only",
+          theme: "light",
+          callback: (token: string) => {
+            setTurnstileToken(token)
+            setTurnstileState("ready")
+          },
+          "expired-callback": () => setTurnstileToken(""),
+          "error-callback": () => setTurnstileState("unavailable"),
+        })
+      } catch {
+        setTurnstileState("unavailable")
+      }
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [summaryShown])
 
   const showingInput = !isTyping && (!isComplete || editing) && currentStep < STEPS.length
   const step = STEPS[currentStep]
@@ -131,7 +191,13 @@ export function ConversationalForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...answers, photo: photo ? photoSlug(photo) : undefined, website: honeypot, startedAt: startedAt.current }),
+        body: JSON.stringify({
+          ...answers,
+          photo: photo ? photoSlug(photo) : undefined,
+          website: honeypot,
+          startedAt: startedAt.current,
+          turnstileToken,
+        }),
       })
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (res.ok && data.ok) {
@@ -143,6 +209,12 @@ export function ConversationalForm() {
     } catch {
       setErrorText("Couldn't reach the front desk.")
       setStatus("failed")
+    }
+    // A token is single-use: get a fresh one before any retry
+    if (turnstileId.current && window.turnstile) {
+      setTurnstileToken("")
+      setTurnstileState("pending")
+      window.turnstile.reset(turnstileId.current)
     }
   }
 
@@ -233,6 +305,14 @@ export function ConversationalForm() {
                   </div>
                 ))}
               </dl>
+              {/* Turnstile mounts here; interaction-only, so usually invisible */}
+              <div ref={turnstileHost} className="mt-3 empty:hidden" />
+              {turnstileState === "unavailable" && (
+                <p className="mt-3 text-xs text-charcoal/50">
+                  The bot check couldn&apos;t load (an ad blocker, maybe). You can still{" "}
+                  <a href={mailtoFallback} className="font-medium underline underline-offset-2">send it by email</a>.
+                </p>
+              )}
               {status === "failed" && (
                 <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-800">
                   {errorText}{" "}
@@ -244,10 +324,16 @@ export function ConversationalForm() {
               )}
               <button
                 onClick={handleSend}
-                disabled={status === "sending"}
+                disabled={status === "sending" || turnstileState === "pending"}
                 className="mt-4 w-full rounded-full bg-navy px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy/90 disabled:opacity-60"
               >
-                {status === "sending" ? "Sending…" : status === "failed" ? "Try again" : "Send Message"}
+                {status === "sending"
+                  ? "Sending…"
+                  : turnstileState === "pending"
+                    ? "One moment…"
+                    : status === "failed"
+                      ? "Try again"
+                      : "Send Message"}
               </button>
             </div>
           )}
