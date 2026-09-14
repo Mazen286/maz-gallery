@@ -144,13 +144,22 @@ export function ConversationalForm() {
             className="mt-6 text-lg font-bold text-navy"
             style={{ animation: "fadeIn 0.5s ease-out 1s both" }}
           >
-            Message sealed & sent
+            Your mail app should be open
           </p>
           <p
             className="mt-1 text-sm text-charcoal/60"
             style={{ animation: "fadeIn 0.5s ease-out 1.2s both" }}
           >
-            I&apos;ll get back to you shortly.
+            Hit send there and I&apos;ll get back to you within a day.
+          </p>
+          <p
+            className="mt-4 text-sm text-charcoal/60"
+            style={{ animation: "fadeIn 0.5s ease-out 1.4s both" }}
+          >
+            Nothing opened? Email me directly at{" "}
+            <a href={`mailto:${EMAIL}`} className="font-medium text-teal underline underline-offset-2">
+              {EMAIL}
+            </a>
           </p>
         </div>
       </div>
