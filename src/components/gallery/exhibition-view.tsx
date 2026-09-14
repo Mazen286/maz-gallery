@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { photoSlug, type GalleryImage } from "@/lib/gallery"
+import { useMediaQuery, useSessionFlag } from "@/hooks/use-client-state"
 import { SwipeCarousel } from "./swipe-carousel"
 
 interface ExhibitionViewProps {
@@ -50,24 +51,27 @@ export function ExhibitionView({ images, startIndex = 0, onIndexChange }: Exhibi
     setIndexState(i)
     onIndexChange?.(i)
   }
-  const [hint, setHint] = useState(false)
+  // One-time swipe hint on touch devices: shown while it has not been
+  // dismissed this session, then remembered
+  const touch = useMediaQuery("(pointer: coarse)")
+  const hinted = useSessionFlag("exhibit-swipe-hint")
+  const [dismissed, setDismissed] = useState(false)
+  const hint = touch && !hinted && !dismissed
 
   const img = images[index]
   const story = getStory(img)
   const bg = BG_COLORS[img?.location ?? ""] ?? "rgb(10,10,10)"
 
-  // One-time swipe hint on touch devices
   useEffect(() => {
-    if (typeof window === "undefined") return
-    if (!window.matchMedia("(pointer: coarse)").matches) return
-    if (sessionStorage.getItem("exhibit-swipe-hint")) return
-    setHint(true)
+    if (!hint) return
     const t = setTimeout(() => {
-      setHint(false)
-      sessionStorage.setItem("exhibit-swipe-hint", "1")
+      setDismissed(true)
+      try {
+        sessionStorage.setItem("exhibit-swipe-hint", "1")
+      } catch {}
     }, 2800)
     return () => clearTimeout(t)
-  }, [])
+  }, [hint])
 
   if (!img) return null
 

@@ -5,27 +5,33 @@ import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { NAV_LINKS, ROOMS, EMAIL, SOCIAL, roomSubtitle } from "@/lib/constants"
+import { useHydrated } from "@/hooks/use-client-state"
 import { Magnetic } from "@/components/shared/magnetic"
 import { ScrambleWrapper } from "@/components/shared/text-scramble"
 
 export function Navbar() {
-  const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [mounted, setMounted] = useState(false)
   const pathname = usePathname()
+  // The directory remembers which path it was opened on, so navigating
+  // anywhere closes it without an effect
+  const [openOn, setOpenOn] = useState<string | null>(null)
+  const open = openOn !== null && openOn === pathname
+  const setOpen = (next: boolean) => setOpenOn(next ? pathname : null)
+  const [scrolled, setScrolled] = useState(false)
+  const mounted = useHydrated()
   const isHome = pathname === "/"
   const hideChrome = pathname?.startsWith("/cafe-maz") ?? false
 
   useEffect(() => {
-    setMounted(true)
     const onScroll = () => setScrolled(window.scrollY > 50)
-    onScroll()
+    const raf = requestAnimationFrame(onScroll)
     window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener("scroll", onScroll)
+    }
   }, [])
 
-  // Close the directory on navigation and lock scroll while it is open
-  useEffect(() => setOpen(false), [pathname])
+  // Lock page scroll while the directory is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
     return () => {

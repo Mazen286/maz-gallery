@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 
 export type TimeOfDay = "morning" | "afternoon" | "evening" | "night"
 
@@ -46,19 +46,24 @@ function getTimeOfDay(): TimeOfDay {
   return "night"
 }
 
+// One shared clock: every subscriber re-checks the period every 15 minutes
+const listeners = new Set<() => void>()
+let timer: ReturnType<typeof setInterval> | null = null
+function subscribe(onChange: () => void) {
+  listeners.add(onChange)
+  if (!timer) timer = setInterval(() => listeners.forEach((l) => l()), 15 * 60 * 1000)
+  return () => {
+    listeners.delete(onChange)
+    if (listeners.size === 0 && timer) {
+      clearInterval(timer)
+      timer = null
+    }
+  }
+}
+
+// The server does not know the visitor's local hour, so it renders the
+// neutral afternoon theme and the client corrects it after hydration.
 export function useTimeTheme(): TimeTheme {
-  const [theme, setTheme] = useState<TimeTheme>(THEMES.afternoon)
-
-  useEffect(() => {
-    setTheme(THEMES[getTimeOfDay()])
-
-    // Update every 15 minutes
-    const interval = setInterval(() => {
-      setTheme(THEMES[getTimeOfDay()])
-    }, 15 * 60 * 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  return theme
+  const period = useSyncExternalStore(subscribe, getTimeOfDay, () => "afternoon" as TimeOfDay)
+  return THEMES[period]
 }

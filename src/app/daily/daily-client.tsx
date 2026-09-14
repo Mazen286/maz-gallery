@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Share2, Check, ArrowRight, History } from "lucide-react"
 import { msUntilNextPostcard, type DailyPuzzle } from "@/lib/daily"
 import { photoSlug } from "@/lib/gallery"
+import { useLocalJSON } from "@/hooks/use-client-state"
 import { ConfettiOverlay } from "@/components/gallery/games/confetti"
 
 const MAX_TRIES = 3
@@ -29,15 +30,6 @@ interface Stats {
 
 const EMPTY_STATS: Stats = { streak: 0, maxStreak: 0, played: 0, wins: 0, lastKey: "", lastWinKey: "" }
 
-function loadJSON<T>(key: string, fallback: T): T {
-  try {
-    const raw = localStorage.getItem(key)
-    return raw ? { ...fallback, ...JSON.parse(raw) } : fallback
-  } catch {
-    return fallback
-  }
-}
-
 function squares(guesses: string[], won: boolean): string {
   const cells: string[] = guesses.map((_, i) =>
     won && i === guesses.length - 1 ? "🟩" : "🟥"
@@ -50,23 +42,20 @@ function squares(guesses: string[], won: boolean): string {
 // The puzzle is chosen on the server (UTC) so the first paint, crawlers,
 // and link previews all see today's card; only progress lives in the browser.
 export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yesterday: DailyPuzzle | null }) {
-  const [guesses, setGuesses] = useState<string[]>([])
-  const [won, setWon] = useState(false)
-  const [stats, setStats] = useState<Stats>(EMPTY_STATS)
+  // What this browser remembers (empty during server render), overridden by
+  // anything done in this session
+  const storedDay = useLocalJSON<DayState>(STATE_KEY, { key: "", guesses: [], won: false })
+  const storedStats = useLocalJSON<Stats>(STATS_KEY, EMPTY_STATS)
+  const [session, setSession] = useState<{ guesses: string[]; won: boolean } | null>(null)
+  const [sessionStats, setSessionStats] = useState<Stats | null>(null)
+  const restored = storedDay.key === puzzle.key ? storedDay : null
+  const guesses = session?.guesses ?? restored?.guesses ?? []
+  const won = session?.won ?? restored?.won ?? false
+  const stats = sessionStats ?? storedStats
   const [copied, setCopied] = useState(false)
   const [countdown, setCountdown] = useState("")
 
   const done = won || guesses.length >= MAX_TRIES
-
-  // Restore today's progress and lifetime stats from this browser
-  useEffect(() => {
-    const state = loadJSON<DayState>(STATE_KEY, { key: "", guesses: [], won: false })
-    if (state.key === puzzle.key) {
-      setGuesses(state.guesses)
-      setWon(state.won)
-    }
-    setStats(loadJSON<Stats>(STATS_KEY, EMPTY_STATS))
-  }, [puzzle.key])
 
   // Countdown to the next postcard (UTC midnight); reload when it arrives
   useEffect(() => {
@@ -91,8 +80,7 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
     const nextGuesses = [...guesses, option]
     const nowWon = correct
     const nowDone = nowWon || nextGuesses.length >= MAX_TRIES
-    setGuesses(nextGuesses)
-    setWon(nowWon)
+    setSession({ guesses: nextGuesses, won: nowWon })
     try {
       localStorage.setItem(
         STATE_KEY,
@@ -110,7 +98,7 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
         lastKey: puzzle.key,
         lastWinKey: nowWon ? puzzle.key : stats.lastWinKey,
       }
-      setStats(next)
+      setSessionStats(next)
       try {
         localStorage.setItem(STATS_KEY, JSON.stringify(next))
       } catch {}

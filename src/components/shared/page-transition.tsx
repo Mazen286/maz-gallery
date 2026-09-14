@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { useEffect, useState, useRef, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { roomFor } from "@/lib/constants"
 
@@ -10,46 +10,32 @@ interface PageTransitionProps {
 }
 
 // Brief: long enough to read the placard, short enough not to feel like a gate
-const DIM_MS = 120
 const TOTAL_MS = 420
 
 export function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname()
-  const [displayChildren, setDisplayChildren] = useState(children)
-  const [stage, setStage] = useState<"idle" | "dimmed">("idle")
-  const [room, setRoom] = useState<{ number: string; name: string } | null>(null)
   const reduced = useReducedMotion()
-  const prevPathRef = useRef(pathname)
 
+  // The dim starts the moment the path changes. Adjusting state while
+  // rendering (not in an effect) is how React wants derived-from-props state.
+  const [seenPath, setSeenPath] = useState(pathname)
+  const [dimmedFor, setDimmedFor] = useState<string | null>(null)
+  if (seenPath !== pathname) {
+    setSeenPath(pathname)
+    setDimmedFor(roomFor(pathname ?? "") ? pathname : null)
+  }
+
+  // Lift the dim after the placard has had its moment
   useEffect(() => {
-    if (reduced || prevPathRef.current === pathname) {
-      setDisplayChildren(children)
-      prevPathRef.current = pathname
-      return
-    }
-
-    prevPathRef.current = pathname
-    const nextRoom = roomFor(pathname ?? "")
-    if (!nextRoom) {
-      // No placard for this route: swap without dimming rather than show a blank card
-      setDisplayChildren(children)
-      return
-    }
-    setRoom(nextRoom)
-    setStage("dimmed")
-
-    const t1 = setTimeout(() => setDisplayChildren(children), DIM_MS)
-    const t2 = setTimeout(() => setStage("idle"), TOTAL_MS)
-
-    return () => {
-      clearTimeout(t1)
-      clearTimeout(t2)
-    }
-  }, [pathname, children, reduced])
+    if (!dimmedFor) return
+    const t = setTimeout(() => setDimmedFor(null), TOTAL_MS)
+    return () => clearTimeout(t)
+  }, [dimmedFor])
 
   if (reduced || pathname?.startsWith("/cafe-maz")) return <>{children}</>
 
-  const dimmed = stage === "dimmed"
+  const dimmed = dimmedFor !== null && dimmedFor === pathname
+  const room = dimmed ? roomFor(pathname ?? "") : undefined
 
   return (
     <div className="relative">
@@ -59,7 +45,7 @@ export function PageTransition({ children }: PageTransitionProps) {
         aria-hidden="true"
         style={{
           opacity: dimmed ? 1 : 0,
-          transitionDuration: dimmed ? "200ms" : "380ms",
+          transitionDuration: dimmed ? "120ms" : "300ms",
           background: "radial-gradient(ellipse at 50% 45%, #11141d 0%, #07080c 75%)",
         }}
       >
@@ -85,7 +71,7 @@ export function PageTransition({ children }: PageTransitionProps) {
         )}
       </div>
 
-      {displayChildren}
+      {children}
     </div>
   )
 }

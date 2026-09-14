@@ -54,41 +54,47 @@ function rankFor(score: number): string {
   return "Time to book a flight"
 }
 
+// Fresh rounds that avoid recently shown photos, remembering what was shown
+function nextRounds(images: GalleryImage[]): Round[] {
+  let recent: string[] = []
+  try {
+    recent = JSON.parse(localStorage.getItem(RECENT_KEY) ?? "[]")
+  } catch {}
+  const next = buildRounds(images, new Set(recent))
+  try {
+    localStorage.setItem(
+      RECENT_KEY,
+      JSON.stringify([...next.map((r) => r.image.src), ...recent].slice(0, RECENT_LIMIT))
+    )
+  } catch {}
+  return next
+}
+
 export function PostcardsGame({ images, onBack }: PostcardsGameProps) {
-  const [rounds, setRounds] = useState<Round[]>([])
+  // Client-only component: the first rounds and the stored best are lazy initial state
+  const [rounds, setRounds] = useState<Round[]>(() => nextRounds(images))
   const [current, setCurrent] = useState(0)
   const [picked, setPicked] = useState<string | null>(null)
   const [score, setScore] = useState(0)
   const [finished, setFinished] = useState(false)
-  const [best, setBest] = useState<number | null>(null)
+  const [best, setBest] = useState<number | null>(() => {
+    try {
+      const raw = localStorage.getItem(BEST_KEY)
+      return raw !== null && !Number.isNaN(Number(raw)) ? Number(raw) : null
+    } catch {
+      return null
+    }
+  })
   const [newBest, setNewBest] = useState(false)
 
   const reset = useCallback(() => {
-    let recent: string[] = []
-    try {
-      recent = JSON.parse(localStorage.getItem(RECENT_KEY) ?? "[]")
-    } catch {}
-    const next = buildRounds(images, new Set(recent))
-    try {
-      localStorage.setItem(
-        RECENT_KEY,
-        JSON.stringify([...next.map((r) => r.image.src), ...recent].slice(0, RECENT_LIMIT))
-      )
-    } catch {}
-    setRounds(next)
+    setRounds(nextRounds(images))
     setCurrent(0)
     setPicked(null)
     setScore(0)
     setFinished(false)
     setNewBest(false)
   }, [images])
-
-  useEffect(() => reset(), [reset])
-
-  useEffect(() => {
-    const stored = Number(localStorage.getItem(BEST_KEY))
-    if (!Number.isNaN(stored) && localStorage.getItem(BEST_KEY) !== null) setBest(stored)
-  }, [])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

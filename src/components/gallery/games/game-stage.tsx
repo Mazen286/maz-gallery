@@ -4,11 +4,15 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { GALLERY, getPhotoBySlug, type GalleryImage } from "@/lib/gallery"
 import type { GameSlug } from "@/lib/annex"
-import { JigsawPuzzle } from "../jigsaw-puzzle"
+import dynamic from "next/dynamic"
 import { PhotoPicker } from "./photo-picker"
-import { PairsGame } from "./pairs-game"
-import { PostcardsGame } from "./postcards-game"
-import { PinMapGame } from "./pin-map-game"
+
+// The games shuffle photos and read personal bests when they mount, so they
+// render on the client only; the stage itself paints the backdrop first.
+const JigsawPuzzle = dynamic(() => import("../jigsaw-puzzle").then((m) => m.JigsawPuzzle), { ssr: false })
+const PairsGame = dynamic(() => import("./pairs-game").then((m) => m.PairsGame), { ssr: false })
+const PostcardsGame = dynamic(() => import("./postcards-game").then((m) => m.PostcardsGame), { ssr: false })
+const PinMapGame = dynamic(() => import("./pin-map-game").then((m) => m.PinMapGame), { ssr: false })
 
 const randomImage = () => GALLERY[Math.floor(Math.random() * GALLERY.length)]
 

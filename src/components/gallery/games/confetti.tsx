@@ -1,21 +1,38 @@
 "use client"
 
-import { useMemo } from "react"
+import { useId } from "react"
+
+// Deterministic per instance: a small seeded generator keyed on useId, so
+// render stays pure and the burst still looks scattered
+function mulberry32(seed: number) {
+  return function () {
+    seed |= 0
+    seed = (seed + 0x6d2b79f5) | 0
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+const hash = (s: string) => {
+  let h = 2166136261
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619)
+  return h >>> 0
+}
+
+const COLORS = ["#78c8d6", "#ffffff", "#f0c040", "#e06070", "#80e0a0"]
 
 export function ConfettiOverlay() {
-  const particles = useMemo(() => {
-    return Array.from({ length: 60 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      delay: Math.random() * 2,
-      duration: 2 + Math.random() * 2,
-      size: 4 + Math.random() * 6,
-      color: ["#78c8d6", "#ffffff", "#f0c040", "#e06070", "#80e0a0"][
-        Math.floor(Math.random() * 5)
-      ],
-      rotation: Math.random() * 360,
-    }))
-  }, [])
+  const rng = mulberry32(hash(useId()))
+  const particles = Array.from({ length: 60 }, (_, i) => ({
+    id: i,
+    x: rng() * 100,
+    delay: rng() * 2,
+    duration: 2 + rng() * 2,
+    size: 4 + rng() * 6,
+    color: COLORS[Math.floor(rng() * COLORS.length)],
+    rotation: rng() * 360,
+  }))
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">

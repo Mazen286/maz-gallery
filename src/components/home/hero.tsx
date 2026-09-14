@@ -2,8 +2,8 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { useHydrated } from "@/hooks/use-client-state"
 import { useTimeTheme, type TimeOfDay } from "@/hooks/use-time-theme"
 
 const GREETINGS: Record<TimeOfDay, string> = {
@@ -23,11 +23,10 @@ function entrance(mounted: boolean, delay: number): React.CSSProperties {
 }
 
 export function Hero() {
-  const [mounted, setMounted] = useState(false)
+  // false while the HTML is rendered and hydrated, true right after: the entrance rises once
+  const mounted = useHydrated()
   const reduced = useReducedMotion()
   const { period } = useTimeTheme()
-
-  useEffect(() => setMounted(true), [])
 
   const settled = mounted || reduced
 

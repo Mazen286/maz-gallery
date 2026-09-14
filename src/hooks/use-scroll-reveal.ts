@@ -18,16 +18,13 @@ interface ScrollRevealResult {
 export function useScrollReveal(options: ScrollRevealOptions = {}): ScrollRevealResult {
   const { threshold = 0.15, rootMargin = "0px", once = true } = options
   const ref = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-  const [progress, setProgress] = useState(0)
+  const [seen, setSeen] = useState(false)
+  const [ratio, setRatio] = useState(0)
   const reduced = useReducedMotion()
 
   useEffect(() => {
-    if (reduced) {
-      setIsVisible(true)
-      setProgress(1)
-      return
-    }
+    // Reduced motion shows everything immediately; no observer needed
+    if (reduced) return
 
     const el = ref.current
     if (!el) return
@@ -35,12 +32,12 @@ export function useScrollReveal(options: ScrollRevealOptions = {}): ScrollReveal
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
-          setProgress(entry.intersectionRatio)
+          setSeen(true)
+          setRatio(entry.intersectionRatio)
           if (once) observer.disconnect()
         } else if (!once) {
-          setIsVisible(false)
-          setProgress(0)
+          setSeen(false)
+          setRatio(0)
         }
       },
       { threshold: [0, threshold, 0.5, 1], rootMargin }
@@ -50,5 +47,5 @@ export function useScrollReveal(options: ScrollRevealOptions = {}): ScrollReveal
     return () => observer.disconnect()
   }, [threshold, rootMargin, once, reduced])
 
-  return { ref, isVisible, progress }
+  return { ref, isVisible: reduced || seen, progress: reduced ? 1 : ratio }
 }

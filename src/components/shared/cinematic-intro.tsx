@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { useSessionFlag } from "@/hooks/use-client-state"
 
 // A short title card on the first visit to the entrance. Deep links into
 // other rooms skip it: someone following a link to a photo or a post
@@ -11,50 +12,53 @@ const LIGHTLEAK_AT = 250
 const REVEAL_AT = 700
 const DONE_AT = 1300
 
+const markSeen = () => {
+  try {
+    sessionStorage.setItem("intro-seen", "1")
+  } catch {}
+}
+
 export function CinematicIntro() {
   const pathname = usePathname()
   const reduced = useReducedMotion()
-  const onEntrance = pathname === "/"
-  const [phase, setPhase] = useState<"black" | "lightleak" | "reveal" | "done">(() =>
-    onEntrance ? "black" : "done",
-  )
+  const seen = useSessionFlag("intro-seen")
+  const [phase, setPhase] = useState<"black" | "lightleak" | "reveal" | "done">("black")
+  const [skipped, setSkipped] = useState(false)
+
+  // Everything that decides whether the curtain shows is derived, not copied into state
+  const active = pathname === "/" && !reduced && !seen && !skipped && phase !== "done"
 
   useEffect(() => {
-    if (!onEntrance || reduced || sessionStorage.getItem("intro-seen")) {
-      setPhase("done")
-      return
-    }
-
+    if (!active) return
     const t1 = setTimeout(() => setPhase("lightleak"), LIGHTLEAK_AT)
     const t2 = setTimeout(() => setPhase("reveal"), REVEAL_AT)
     const t3 = setTimeout(() => {
       setPhase("done")
-      sessionStorage.setItem("intro-seen", "1")
+      markSeen()
     }, DONE_AT)
-
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
       clearTimeout(t3)
     }
-  }, [reduced, onEntrance])
+  }, [active])
 
   const skip = () => {
-    setPhase("done")
-    sessionStorage.setItem("intro-seen", "1")
+    setSkipped(true)
+    markSeen()
   }
 
-  // Escape or Enter skips, so keyboard visitors are never stuck behind it
+  // Escape, Enter, or Space skips, so keyboard visitors are never stuck behind it
   useEffect(() => {
-    if (phase === "done") return
+    if (!active) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" || e.key === "Enter" || e.key === " ") skip()
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [phase])
+  }, [active])
 
-  if (phase === "done") return null
+  if (!active) return null
 
   return (
     <div

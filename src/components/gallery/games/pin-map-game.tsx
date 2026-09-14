@@ -90,12 +90,20 @@ function rankFor(total: number): string {
 }
 
 export function PinMapGame({ onBack }: PinMapGameProps) {
-  const [rounds, setRounds] = useState<Round[]>([])
+  // Client-only component: the first rounds and the stored best are lazy initial state
+  const [rounds, setRounds] = useState<Round[]>(() => buildRounds())
   const [current, setCurrent] = useState(0)
   const [guess, setGuess] = useState<Guess | null>(null)
   const [total, setTotal] = useState(0)
   const [finished, setFinished] = useState(false)
-  const [best, setBest] = useState<number | null>(null)
+  const [best, setBest] = useState<number | null>(() => {
+    try {
+      const stored = localStorage.getItem(BEST_KEY)
+      return stored !== null && !Number.isNaN(Number(stored)) ? Number(stored) : null
+    } catch {
+      return null
+    }
+  })
   const [newBest, setNewBest] = useState(false)
   // Keyboard cursor over the map, in projection units; shown while the map has focus
   const [cursor, setCursor] = useState({ x: VIEW_X + VIEW_W / 2, y: VIEW_Y + VIEW_H / 2 })
@@ -109,13 +117,6 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
     setTotal(0)
     setFinished(false)
     setNewBest(false)
-  }, [])
-
-  useEffect(() => reset(), [reset])
-
-  useEffect(() => {
-    const stored = localStorage.getItem(BEST_KEY)
-    if (stored !== null && !Number.isNaN(Number(stored))) setBest(Number(stored))
   }, [])
 
   useEffect(() => {
