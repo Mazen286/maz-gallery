@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import { ConversationalForm } from "@/components/booking/conversational-form"
-import { FIGMENT_URL, EMAIL, SOCIAL } from "@/lib/constants"
+import { FIGMENT_URL, EMAIL, SOCIAL, roomFor } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Say Hello | Contact Mazen",
@@ -26,7 +26,7 @@ export default function BookingPage() {
     <section className="bg-[#f7f5ef] pb-20 pt-28 sm:pb-28 sm:pt-36">
       <div className="mx-auto max-w-6xl px-6">
         <p className="font-mono text-[11px] font-medium uppercase tracking-[0.4em] text-teal">
-          No. 06 &middot; Front Desk
+          {roomFor("/booking")?.number} &middot; Front Desk
         </p>
         <h1
           className="mt-4 font-display font-semibold leading-[1.02] text-navy"

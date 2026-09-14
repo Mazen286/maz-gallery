@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next"
 import { BLOG_POSTS } from "@/lib/blog"
 import { GALLERY, ORDERED_GALLERY, photoSlug } from "@/lib/gallery"
 import { SITE_URL } from "@/lib/constants"
+import { GAMES } from "@/lib/annex"
 
 // Bump a route's date when its content meaningfully changes. The Daily
 // Postcard changes every day by definition, so it always reports today.
@@ -12,6 +13,7 @@ const LAST_MODIFIED = {
   "/gallery": "2026-09-10",
   "/blog": "2026-09-14",
   "/booking": "2026-09-14",
+  "/annex": "2026-09-14",
 } as const
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -30,6 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/blog`, lastModified: LAST_MODIFIED["/blog"], changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/daily`, lastModified: new Date(), changeFrequency: "daily", priority: 0.7 },
     { url: `${SITE_URL}/booking`, lastModified: LAST_MODIFIED["/booking"], changeFrequency: "yearly", priority: 0.6 },
+    { url: `${SITE_URL}/annex`, lastModified: LAST_MODIFIED["/annex"], changeFrequency: "monthly", priority: 0.6 },
+    ...GAMES.map((g) => ({
+      url: `${SITE_URL}/annex/${g.slug}`,
+      lastModified: LAST_MODIFIED["/annex"],
+      changeFrequency: "yearly" as const,
+      priority: 0.4,
+    })),
   ]
 
   const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({

@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useMemo, useRef } from "react"
-import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -10,9 +9,6 @@ import { GALLERY, LOCATIONS, ORDERED_GALLERY, wingLabel, wingSlug, type GalleryI
 import { ExhibitionView } from "./exhibition-view"
 import { GalleryGrid } from "./gallery-grid"
 import { LocationMap } from "./location-map"
-
-// The Game Room (four games plus their assets) only loads when opened
-const GameRoom = dynamic(() => import("./games/game-room").then((m) => m.GameRoom), { ssr: false })
 
 const COLLECTION = [
   { src: "/images/collection/IMG_7908.jpeg", alt: "Digital collectible showcase", width: 600, height: 800 },
@@ -71,7 +67,6 @@ export function GalleryPageClient() {
     return Number.isInteger(i) && i >= 0 ? i : 0
   })
   const [liveIndex, setLiveIndex] = useState(exhibitionStart)
-  const [gameRoomOpen, setGameRoomOpen] = useState(false)
 
   const visible: GalleryImage[] = useMemo(
     () => (location ? ordered.filter((img) => img.location === location) : ordered),
@@ -205,8 +200,8 @@ export function GalleryPageClient() {
                 The Annex &middot; After hours
               </p>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <button
-                  onClick={() => setGameRoomOpen(true)}
+                <Link
+                  href="/annex"
                   className="group flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] px-5 py-4 text-left transition-all hover:border-teal/50 hover:bg-white/[0.05]"
                 >
                   <span>
@@ -219,7 +214,7 @@ export function GalleryPageClient() {
                     </span>
                   </span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 group-hover:text-teal">Open</span>
-                </button>
+                </Link>
                 <Link
                   href="/daily"
                   className="group flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] px-5 py-4 text-left transition-all hover:border-teal/50 hover:bg-white/[0.05]"
@@ -347,9 +342,6 @@ export function GalleryPageClient() {
           </details>
         </div>
       </section>
-
-      {/* Game Room overlay */}
-      {gameRoomOpen && <GameRoom onClose={() => setGameRoomOpen(false)} />}
     </>
   )
 }

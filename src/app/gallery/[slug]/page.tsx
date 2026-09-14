@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, ArrowRight, Eye, Printer } from "lucide-react"
+import { ArrowLeft, ArrowRight, Eye, Printer, Puzzle } from "lucide-react"
 import {
   ORDERED_GALLERY,
   getPhotoBySlug,
@@ -189,6 +189,10 @@ export default async function PhotoPage({ params }: { params: Params }) {
             <Link href={`/booking?photo=${slug}`} className={actionClass}>
               <Printer className="size-3.5" />
               Ask about a print
+            </Link>
+            <Link href={`/annex/jigsaw?photo=${slug}`} className={actionClass}>
+              <Puzzle className="size-3.5" />
+              Solve as a jigsaw
             </Link>
           </div>
         </div>

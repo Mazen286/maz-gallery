@@ -23,7 +23,8 @@ export const ROOMS = [
   { href: "/projects", number: "No. 04", label: "Projects", name: "Projects Wing", nav: true },
   { href: "/blog", number: "No. 05", label: "Blog", name: "Reading Room", nav: true },
   { href: "/daily", number: "No. 06", label: "Daily", name: "Daily Postcard", nav: true },
-  { href: "/booking", number: "No. 07", label: "Say Hello", name: "Front Desk", nav: false },
+  { href: "/annex", number: "No. 07", label: "Annex", name: "The Annex", nav: false },
+  { href: "/booking", number: "No. 08", label: "Say Hello", name: "Front Desk", nav: false },
 ] as const
 
 export type Room = (typeof ROOMS)[number]
