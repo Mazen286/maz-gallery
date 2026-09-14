@@ -10,22 +10,6 @@ import { ExhibitionView } from "./exhibition-view"
 import { GalleryGrid } from "./gallery-grid"
 import { LocationMap } from "./location-map"
 
-const COLLECTION = [
-  { src: "/images/collection/IMG_7908.jpeg", alt: "Digital collectible showcase", width: 600, height: 800 },
-  { src: "/images/collection/IMG_7895.jpeg", alt: "VeVe collectible display", width: 600, height: 800 },
-  { src: "/images/collection/IMG_7903.jpeg", alt: "Digital art piece", width: 600, height: 800 },
-  { src: "/images/collection/IMG_7906.jpeg", alt: "Collectible figure", width: 600, height: 800 },
-  { src: "/images/collection/IMG_7914.jpeg", alt: "VeVe showcase room", width: 600, height: 800 },
-  { src: "/images/collection/IMG_7915.jpeg", alt: "Digital art display", width: 600, height: 800 },
-  { src: "/images/collection/IMG_7519.jpeg", alt: "Collectible exhibit", width: 600, height: 800 },
-  { src: "/images/collection/IMG_1438.jpg", alt: "Digital art collection", width: 600, height: 800 },
-  { src: "/images/collection/IMG_1909.jpg", alt: "VeVe collection piece", width: 600, height: 800 },
-  { src: "/images/collection/IMG_0253.jpeg", alt: "Digital showcase", width: 600, height: 800 },
-  { src: "/images/collection/IMG_0637.jpeg", alt: "Collectible art", width: 600, height: 800 },
-  { src: "/images/collection/IMG_1007.jpeg", alt: "Digital gallery", width: 600, height: 800 },
-  { src: "/images/collection/87192.jpg", alt: "VeVe collectible", width: 600, height: 800 },
-]
-
 // Wing tiles and chips use a short slug in the URL: /gallery?wing=alanya
 const locFromSlug = (slug: string | null) => LOCATIONS.find((loc) => wingSlug(loc) === slug) ?? null
 
@@ -310,38 +294,6 @@ export function GalleryPageClient() {
         </section>
       )}
 
-      {/* Digital Collection - collapsed by default */}
-      <section className="bg-charcoal pb-16 pt-8">
-        <div className="mx-auto max-w-7xl px-6">
-          <details className="group">
-            <summary className="flex cursor-pointer items-center justify-center gap-3 py-4 text-center list-none">
-              <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-white/25 transition-colors group-open:text-teal/60">
-                Digital Collection
-              </span>
-              <span className="text-white/20 transition-transform duration-300 group-open:rotate-180">
-                ▾
-              </span>
-            </summary>
-            <div className="pt-6">
-              <div className="columns-2 gap-4 sm:columns-3 lg:columns-4">
-                {COLLECTION.map((item) => (
-                  <div key={item.src} className="mb-4 break-inside-avoid overflow-hidden rounded-lg">
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      width={item.width}
-                      height={item.height}
-                      className="h-auto w-full object-cover"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </details>
-        </div>
-      </section>
     </>
   )
 }
