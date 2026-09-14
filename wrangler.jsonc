@@ -8,6 +8,12 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  // Enables next/image resizing and AVIF/WebP on Workers. Without this
+  // binding OpenNext serves the original file for every /_next/image request.
+  // Requires Image Transformations to be enabled on the zone.
+  "images": {
+    "binding": "IMAGES"
+  },
   "observability": {
     "enabled": true
   }
