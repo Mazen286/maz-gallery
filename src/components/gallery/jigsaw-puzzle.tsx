@@ -712,15 +712,12 @@ export function JigsawPuzzle({
                     backgroundSize: `${boardSize.w}px ${boardSize.h}px`,
                     backgroundPosition: `${bgPosX}px ${bgPosY}px`,
                     backgroundRepeat: "no-repeat",
-                    // A clip-path hides outlines, so keyboard focus shows as a teal glow
                     filter: piece.placed
                       ? "none"
                       : `drop-shadow(2px 3px 4px rgba(0,0,0,0.5))${
                           dragRef.current?.pieceIdx === idx
                             ? " drop-shadow(0 0 8px rgba(0,0,0,0.7))"
-                            : focusedIdx === idx
-                              ? " drop-shadow(0 0 0 2px #78c8d6) drop-shadow(0 0 10px rgba(120,200,214,0.8))"
-                              : ""
+                            : ""
                         }`,
                     transition: piece.placed
                       ? "transform 0.2s ease-out"
@@ -733,6 +730,24 @@ export function JigsawPuzzle({
                 />
               )
             })}
+
+            {/* Keyboard focus ring: drawn separately because clip-path would clip an outline */}
+            {focusedIdx !== null && pieces[focusedIdx] && !pieces[focusedIdx].placed && (
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  width: pieceW,
+                  height: pieceH,
+                  transform: `translate(${pieces[focusedIdx].x}px, ${pieces[focusedIdx].y}px)`,
+                  border: "2px solid #78c8d6",
+                  borderRadius: 10,
+                  boxShadow: "0 0 0 4px rgba(120,200,214,0.25), 0 0 18px rgba(120,200,214,0.6)",
+                  pointerEvents: "none",
+                  zIndex: 101,
+                }}
+              />
+            )}
 
             {/* Completion overlay */}
             {completed && (
