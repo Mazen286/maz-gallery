@@ -10,16 +10,17 @@ interface Step {
   id: "name" | "email" | "message" | "phone" | "contactPref"
   question: string
   label: string
+  placeholder?: string
   type: "text" | "email" | "tel" | "textarea" | "select"
   options?: string[]
   required: boolean
 }
 
 const STEPS: Step[] = [
-  { id: "name", question: "Hey there. What should I call you?", label: "Name", type: "text", required: true },
-  { id: "email", question: "Nice to meet you. Where can I reply?", label: "Email", type: "email", required: true },
-  { id: "message", question: "What's on your mind? A project, a photo, a question, anything.", label: "Message", type: "textarea", required: true },
-  { id: "phone", question: "A phone number, if you'd rather talk. Skip is fine.", label: "Phone", type: "tel", required: false },
+  { id: "name", question: "Hey there. Five quick questions and your note is on its way. What should I call you?", label: "Your name", placeholder: "First name is fine", type: "text", required: true },
+  { id: "email", question: "Nice to meet you. Where should I reply?", label: "Your email", placeholder: "you@example.com", type: "email", required: true },
+  { id: "message", question: "What's on your mind? A project, a photo, a question, anything.", label: "Your message", placeholder: "Write as much or as little as you like", type: "textarea", required: true },
+  { id: "phone", question: "A phone number, if you'd rather talk. Optional.", label: "Phone", placeholder: "(619) 555 0142", type: "tel", required: false },
   { id: "contactPref", question: "Last one. How should I get back to you?", label: "Prefers", type: "select", options: ["Email", "Phone", "Text"], required: false },
 ]
 
@@ -173,6 +174,12 @@ export function ConversationalForm() {
     const value = inputValue.trim()
     if (step.required && !value) return
     record(value)
+  }
+
+  const skipStep = () => {
+    if (step.required) return
+    setInputValue("")
+    record("")
   }
 
   const handleEdit = (id: Step["id"]) => {
@@ -383,7 +390,7 @@ export function ConversationalForm() {
                       handleSubmitAnswer()
                     }
                   }}
-                  placeholder="Type your message. Cmd+Enter to send."
+                  placeholder={step.placeholder}
                   rows={3}
                   required
                   aria-required="true"
@@ -396,22 +403,44 @@ export function ConversationalForm() {
                   type={step.type}
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder={step.required ? "Type your answer..." : "Type your answer, or send empty to skip"}
+                  placeholder={step.placeholder}
                   required={step.required}
                   aria-required={step.required}
                   autoComplete={step.id === "email" ? "email" : step.id === "phone" ? "tel" : step.id === "name" ? "name" : "off"}
                   className="flex-1 rounded-full border border-navy/20 bg-transparent px-4 py-2.5 text-sm text-navy outline-none placeholder:text-charcoal/30 focus:border-teal"
                 />
               )}
+              {!step.required && (
+                <button
+                  type="button"
+                  onClick={skipStep}
+                  className="h-11 shrink-0 rounded-full border border-navy/20 px-4 text-sm text-navy/70 transition-colors hover:border-navy/40 hover:text-navy"
+                >
+                  Skip
+                </button>
+              )}
               <button
                 type="submit"
                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-navy text-white transition-colors hover:bg-navy/90"
-                aria-label="Send"
+                aria-label="Continue"
               >
                 <Send className="size-4" />
               </button>
             </form>
           )}
+          {/* What this step is, and which key moves it along */}
+          <div className="mt-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-charcoal/40">
+            <span>
+              {editing ? "Fixing" : `Step ${currentStep + 1} of ${STEPS.length}`} &middot; {step.label}
+            </span>
+            {step.type === "textarea" ? (
+              <span>&#8984;/Ctrl + Enter to continue</span>
+            ) : step.type === "select" ? (
+              <span>Pick one</span>
+            ) : (
+              <span>Enter to continue</span>
+            )}
+          </div>
         </div>
       )}
     </div>
