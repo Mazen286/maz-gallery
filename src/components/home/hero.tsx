@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { useTimeTheme, type TimeOfDay } from "@/hooks/use-time-theme"
@@ -86,20 +87,26 @@ export function Hero() {
           </h1>
 
           <p
-            className="mt-6 font-mono text-[11px] uppercase tracking-[0.3em] text-white/45"
+            className="mt-6 max-w-xl font-display text-lg leading-relaxed text-white/75 sm:text-xl"
             style={entrance(mounted, 550)}
           >
-            Data &middot; Photography &middot; Startups &middot; San Diego
+            A data analyst in San Diego who takes photographs. This is where the
+            photographs live, with the stories behind them.
           </p>
 
-          <div
-            className="mt-10 flex items-center gap-3"
-            style={entrance(mounted, 900)}
-          >
-            <div className="h-8 w-px bg-gradient-to-b from-teal to-transparent" />
-            <p className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-              Begin the tour
-            </p>
+          <div className="mt-8 flex flex-wrap items-center gap-3" style={entrance(mounted, 800)}>
+            <Link
+              href="/gallery"
+              className="rounded-full bg-white px-7 py-3 text-sm font-semibold text-[#0a0c11] transition-colors hover:bg-teal"
+            >
+              Enter the Gallery
+            </Link>
+            <Link
+              href="/booking"
+              className="rounded-full border border-white/30 px-7 py-3 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
+            >
+              Say Hello
+            </Link>
           </div>
         </div>
       </div>

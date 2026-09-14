@@ -1,13 +1,10 @@
 import type { Metadata } from "next"
 import { Hero } from "@/components/home/hero"
 import { FeaturedExhibits } from "@/components/home/featured-exhibits"
-import { AboutPreview } from "@/components/home/about-preview"
-import { Philosophy } from "@/components/home/philosophy"
+import { Introduction } from "@/components/home/introduction"
 import { SelectedWorks } from "@/components/home/selected-works"
-import { Story } from "@/components/home/story"
+import { AnnexTeaser } from "@/components/home/annex-teaser"
 import { FeaturedOn } from "@/components/home/featured-on"
-import { Marquee } from "@/components/home/marquee"
-import { TypewriterQuote } from "@/components/shared/typewriter-quote"
 import { ChapterMarker } from "@/components/shared/chapter-marker"
 
 export const metadata: Metadata = {
@@ -28,6 +25,7 @@ export const metadata: Metadata = {
   },
 }
 
+// Five short rooms. Each one says a different thing and leads somewhere.
 export default function HomePage() {
   return (
     <>
@@ -45,49 +43,28 @@ export default function HomePage() {
           <ChapterMarker number="II" title="The Artist" />
         </div>
       </div>
-      <AboutPreview />
-
-      <TypewriterQuote
-        text="Numbers don't lie, but they don't speak either. Someone has to give them a voice."
-        className="bg-white"
-      />
+      <Introduction />
 
       <div className="bg-slate-50 px-6">
-        <div className="mx-auto max-w-4xl">
-          <ChapterMarker number="III" title="The Dreamer" />
-        </div>
-      </div>
-      <Philosophy />
-
-      <div className="bg-white px-6">
         <div className="mx-auto max-w-6xl">
-          <ChapterMarker number="IV" title="The Builder" />
+          <ChapterMarker number="III" title="The Builder" />
         </div>
       </div>
       <SelectedWorks />
 
-      <div className="bg-charcoal px-6">
-        <div className="mx-auto max-w-4xl">
-          <ChapterMarker number="V" title="The Storyteller" dark />
+      <div className="bg-[#0a0c11] px-6">
+        <div className="mx-auto max-w-6xl">
+          <ChapterMarker number="IV" title="The Annex" dark />
         </div>
       </div>
-      <Story />
+      <AnnexTeaser />
 
       <div className="bg-cream px-6">
         <div className="mx-auto max-w-4xl">
-          <ChapterMarker number="VI" title="Recognition" />
+          <ChapterMarker number="V" title="Recognition" />
         </div>
       </div>
       <FeaturedOn />
-
-      <Marquee />
-
-      {/* Hidden scroll message */}
-      <div className="bg-charcoal py-4 text-center">
-        <p className="text-[10px] tracking-widest text-white/40">
-          You scrolled all the way down? You must really like data.
-        </p>
-      </div>
     </>
   )
 }

@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { GALLERY } from "@/lib/gallery"
+import { GALLERY, photoSlug } from "@/lib/gallery"
 import { FadeIn } from "@/components/shared/fade-in"
 
 // Hand-picked pieces for the entrance wall, varied in subject and place
@@ -31,7 +31,7 @@ export function FeaturedExhibits() {
           {picks.map((img, i) => (
             <FadeIn key={img.src} delay={i * 150}>
               <Link
-                href={`/gallery?piece=${encodeURIComponent(img.src)}`}
+                href={`/gallery/${photoSlug(img)}`}
                 className={`group block ${OFFSETS[i]}`}
               >
                 <figure>
