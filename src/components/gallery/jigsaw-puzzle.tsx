@@ -259,6 +259,9 @@ export function JigsawPuzzle({
   const [isTouch, setIsTouch] = useState(false)
   const [best, setBest] = useState<Record<string, number> | null>(null)
   const [newBest, setNewBest] = useState(false)
+  // Keyboard: the piece currently focused, and a status line for screen readers
+  const [focusedIdx, setFocusedIdx] = useState<number | null>(null)
+  const [status, setStatus] = useState("")
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) setIsTouch(true)
@@ -440,12 +443,9 @@ export function JigsawPuzzle({
     []
   )
 
-  const handlePointerUp = useCallback(
-    () => {
-      if (!dragRef.current) return
-      const { pieceIdx } = dragRef.current
-      dragRef.current = null
-
+  // Dropping a piece, from a pointer release or the keyboard: snap if close
+  const dropPiece = useCallback(
+    (pieceIdx: number, generous = false) => {
       setMoves((m) => m + 1)
 
       setPieces((prev) => {
@@ -456,10 +456,17 @@ export function JigsawPuzzle({
         const dx = Math.abs(piece.x - target.x)
         const dy = Math.abs(piece.y - target.y)
 
-        const snap = isTouch ? SNAP_DISTANCE_TOUCH : SNAP_DISTANCE
-        if (dx < snap && dy < snap) {
+        const snap = isTouch || generous ? SNAP_DISTANCE_TOUCH : SNAP_DISTANCE
+        const snapped = dx < snap && dy < snap
+        if (snapped) {
           next[pieceIdx] = { ...piece, x: target.x, y: target.y, placed: true }
         }
+        const remaining = next.filter((p) => !p.placed).length
+        setStatus(
+          snapped
+            ? `Piece placed. ${remaining} ${remaining === 1 ? "piece" : "pieces"} left.`
+            : "Not there yet. Keep moving it.",
+        )
 
         // Check completion async to allow state update
         setTimeout(() => checkCompletion(next), 50)
@@ -467,6 +474,42 @@ export function JigsawPuzzle({
       })
     },
     [correctPos, checkCompletion, isTouch]
+  )
+
+  const handlePointerUp = useCallback(() => {
+    if (!dragRef.current) return
+    const { pieceIdx } = dragRef.current
+    dragRef.current = null
+    dropPiece(pieceIdx)
+  }, [dropPiece])
+
+  // Keyboard: arrows nudge the focused piece (Shift for bigger steps),
+  // Enter or Space drops it with a slightly forgiving snap
+  const handlePieceKey = useCallback(
+    (e: React.KeyboardEvent, idx: number) => {
+      if (pieces[idx].placed || completed) return
+      const step = e.shiftKey ? 32 : 8
+      const move: Record<string, [number, number]> = {
+        ArrowLeft: [-step, 0],
+        ArrowRight: [step, 0],
+        ArrowUp: [0, -step],
+        ArrowDown: [0, step],
+      }
+      if (move[e.key]) {
+        e.preventDefault()
+        ensureTimerStarted()
+        const [dx, dy] = move[e.key]
+        setPieces((prev) => {
+          const next = [...prev]
+          next[idx] = { ...next[idx], x: next[idx].x + dx, y: next[idx].y + dy }
+          return next
+        })
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault()
+        dropPiece(idx, true)
+      }
+    },
+    [pieces, completed, ensureTimerStarted, dropPiece],
   )
 
   // Shuffle unplaced pieces
@@ -637,9 +680,20 @@ export function JigsawPuzzle({
               return (
                 <div
                   key={`${piece.row}-${piece.col}`}
+                  role="button"
+                  tabIndex={piece.placed ? -1 : 0}
+                  aria-label={
+                    piece.placed
+                      ? `Piece row ${piece.row + 1}, column ${piece.col + 1}, placed`
+                      : `Piece row ${piece.row + 1}, column ${piece.col + 1}. Arrow keys move it, Enter drops it.`
+                  }
+                  onFocus={() => setFocusedIdx(idx)}
+                  onBlur={() => setFocusedIdx((f) => (f === idx ? null : f))}
+                  onKeyDown={(e) => handlePieceKey(e, idx)}
                   onPointerDown={(e) => handlePointerDown(e, idx)}
                   onPointerMove={handlePointerMove}
                   onPointerUp={handlePointerUp}
+                  className="outline-none"
                   style={{
                     position: "absolute",
                     width: pieceW,
@@ -649,7 +703,7 @@ export function JigsawPuzzle({
                     }`,
                     zIndex: piece.placed
                       ? 1
-                      : dragRef.current?.pieceIdx === idx
+                      : dragRef.current?.pieceIdx === idx || focusedIdx === idx
                         ? 100
                         : 10,
                     cursor: piece.placed ? "default" : "grab",
@@ -658,12 +712,15 @@ export function JigsawPuzzle({
                     backgroundSize: `${boardSize.w}px ${boardSize.h}px`,
                     backgroundPosition: `${bgPosX}px ${bgPosY}px`,
                     backgroundRepeat: "no-repeat",
+                    // A clip-path hides outlines, so keyboard focus shows as a teal glow
                     filter: piece.placed
                       ? "none"
                       : `drop-shadow(2px 3px 4px rgba(0,0,0,0.5))${
                           dragRef.current?.pieceIdx === idx
                             ? " drop-shadow(0 0 8px rgba(0,0,0,0.7))"
-                            : ""
+                            : focusedIdx === idx
+                              ? " drop-shadow(0 0 0 2px #78c8d6) drop-shadow(0 0 10px rgba(120,200,214,0.8))"
+                              : ""
                         }`,
                     transition: piece.placed
                       ? "transform 0.2s ease-out"
@@ -736,6 +793,12 @@ export function JigsawPuzzle({
             )}
           </div>
         </div>
+
+        {/* Screen-reader status and the keyboard hint */}
+        <p className="sr-only" role="status" aria-live="polite">{status}</p>
+        <p className="hidden text-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/30 sm:block">
+          Tab to a piece &middot; arrows move &middot; Enter drops
+        </p>
 
         {/* Bottom controls */}
         <div className="flex flex-wrap items-center justify-center gap-3 px-4 pb-4 pt-2">

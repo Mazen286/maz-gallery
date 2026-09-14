@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import Image from "next/image"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { GALLERY, LOCATION_COORDS, type GalleryImage } from "@/lib/gallery"
@@ -97,6 +97,10 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
   const [finished, setFinished] = useState(false)
   const [best, setBest] = useState<number | null>(null)
   const [newBest, setNewBest] = useState(false)
+  // Keyboard cursor over the map, in projection units; shown while the map has focus
+  const [cursor, setCursor] = useState({ x: VIEW_X + VIEW_W / 2, y: VIEW_Y + VIEW_H / 2 })
+  const [mapFocused, setMapFocused] = useState(false)
+  const nextRef = useRef<HTMLButtonElement>(null)
 
   const reset = useCallback(() => {
     setRounds(buildRounds())
@@ -125,16 +129,46 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
   const round = rounds[current]
   if (!round) return null
 
-  const dropPin = (e: React.MouseEvent<SVGSVGElement>) => {
+  // One placement path for the pointer and the keyboard
+  const placePin = (x: number, y: number) => {
     if (guess) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = VIEW_X + ((e.clientX - rect.left) / rect.width) * VIEW_W
-    const y = VIEW_Y + ((e.clientY - rect.top) / rect.height) * VIEW_H
     const dist = Math.hypot(x - round.target.cx, y - round.target.cy)
     const { points, verdict } = judge(dist)
     const km = kmBetween(toLonLat(x, y), toLonLat(round.target.cx, round.target.cy))
     setGuess({ x, y, points, verdict, km })
     setTotal((t) => t + points)
+    // Hand focus to Next so a keyboard player can keep going without hunting
+    setTimeout(() => nextRef.current?.focus(), 50)
+  }
+
+  const dropPin = (e: React.MouseEvent<SVGSVGElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    placePin(
+      VIEW_X + ((e.clientX - rect.left) / rect.width) * VIEW_W,
+      VIEW_Y + ((e.clientY - rect.top) / rect.height) * VIEW_H,
+    )
+  }
+
+  const onMapKey = (e: React.KeyboardEvent<SVGSVGElement>) => {
+    if (guess) return
+    const step = e.shiftKey ? 40 : 10
+    const move: Record<string, [number, number]> = {
+      ArrowLeft: [-step, 0],
+      ArrowRight: [step, 0],
+      ArrowUp: [0, -step],
+      ArrowDown: [0, step],
+    }
+    if (move[e.key]) {
+      e.preventDefault()
+      const [dx, dy] = move[e.key]
+      setCursor((c) => ({
+        x: Math.min(Math.max(c.x + dx, VIEW_X), VIEW_X + VIEW_W),
+        y: Math.min(Math.max(c.y + dy, VIEW_Y), VIEW_Y + VIEW_H),
+      }))
+    } else if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      placePin(cursor.x, cursor.y)
+    }
   }
 
   const next = () => {
@@ -207,9 +241,13 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                 <svg
                   viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
                   onClick={dropPin}
-                  className={`block w-full ${guess ? "" : "cursor-crosshair"}`}
-                  role="img"
-                  aria-label="World map. Click to drop your pin."
+                  onKeyDown={onMapKey}
+                  onFocus={() => setMapFocused(true)}
+                  onBlur={() => setMapFocused(false)}
+                  tabIndex={guess ? -1 : 0}
+                  className={`block w-full outline-none focus-visible:ring-2 focus-visible:ring-teal ${guess ? "" : "cursor-crosshair"}`}
+                  role="application"
+                  aria-label="World map. Click to drop your pin, or use the arrow keys to move the crosshair and Enter to drop it."
                 >
                   <defs>
                     <radialGradient id="pinmap-ocean" cx="50%" cy="42%" r="75%">
@@ -249,6 +287,14 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                     stroke="rgba(150,215,226,0.55)"
                     strokeWidth="0.5"
                   />
+
+                  {!guess && mapFocused && (
+                    <g pointerEvents="none" aria-hidden="true">
+                      <line x1={cursor.x - 14} y1={cursor.y} x2={cursor.x + 14} y2={cursor.y} stroke="rgba(255,255,255,0.7)" strokeWidth="1.2" />
+                      <line x1={cursor.x} y1={cursor.y - 14} x2={cursor.x} y2={cursor.y + 14} stroke="rgba(255,255,255,0.7)" strokeWidth="1.2" />
+                      <circle cx={cursor.x} cy={cursor.y} r="7" fill="none" stroke="#78c8d6" strokeWidth="1.5" />
+                    </g>
+                  )}
 
                   {guess && (
                     <>
@@ -311,6 +357,8 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                 {/* Verdict chip */}
                 {guess && (
                   <div
+                    role="status"
+                    aria-live="polite"
                     className="absolute left-1/2 top-3 -translate-x-1/2 rounded-full border border-teal/40 bg-[#0a111c]/90 px-4 py-1.5 backdrop-blur-sm"
                     style={{ animation: "placardIn 0.35s ease-out both" }}
                   >
@@ -326,10 +374,11 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
 
               <div className="mt-3 flex min-h-10 items-center justify-between">
                 <p className="text-xs text-white/40">
-                  {guess ? "" : "Tap the map to drop your pin"}
+                  {guess ? "" : mapFocused ? "Arrow keys move the crosshair, Enter drops the pin" : "Tap the map to drop your pin"}
                 </p>
                 {guess && (
                   <button
+                    ref={nextRef}
                     onClick={next}
                     className="flex items-center gap-2 rounded-full border border-teal px-5 py-2 text-sm text-teal transition-all hover:bg-teal/10"
                   >
