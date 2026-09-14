@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { BlogPageClient } from "@/components/blog/blog-page-client"
 
 export const metadata: Metadata = {
-  title: "Blog | Travel, Food, and Games by Mazen Abugharbieh",
+  title: "Blog | Travel, Food, and Games",
   description:
     "Travel stories from Turkey and Jordan, food rankings, video game retrospectives, board game design notes, and whatever else is on my mind.",
   alternates: { canonical: "/blog" },

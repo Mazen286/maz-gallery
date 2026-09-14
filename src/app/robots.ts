@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next"
+import { SITE_URL } from "@/lib/constants"
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/cafe-maz",
+      disallow: ["/cafe-maz", "/api"],
     },
-    sitemap: "https://maz.gallery/sitemap.xml",
+    sitemap: `${SITE_URL}/sitemap.xml`,
   }
 }

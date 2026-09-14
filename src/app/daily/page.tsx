@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { DailyPostcard } from "./daily-client"
 
 export const metadata: Metadata = {
-  title: "The Daily Postcard | A Photo Guessing Game",
+  title: "The Daily Postcard",
   description:
     "One photograph from the collection every day. Guess where it was taken in three tries, keep your streak alive, and share your result.",
   alternates: { canonical: "/daily" },
