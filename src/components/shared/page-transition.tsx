@@ -9,8 +9,9 @@ interface PageTransitionProps {
   children: ReactNode
 }
 
-const DIM_MS = 240
-const TOTAL_MS = 820
+// Brief: long enough to read the placard, short enough not to feel like a gate
+const DIM_MS = 120
+const TOTAL_MS = 420
 
 export function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname()
@@ -28,7 +29,13 @@ export function PageTransition({ children }: PageTransitionProps) {
     }
 
     prevPathRef.current = pathname
-    setRoom(roomFor(pathname ?? "") ?? null)
+    const nextRoom = roomFor(pathname ?? "")
+    if (!nextRoom) {
+      // No placard for this route: swap without dimming rather than show a blank card
+      setDisplayChildren(children)
+      return
+    }
+    setRoom(nextRoom)
     setStage("dimmed")
 
     const t1 = setTimeout(() => setDisplayChildren(children), DIM_MS)

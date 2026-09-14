@@ -4,90 +4,101 @@ import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
 
+// A short title card on the first visit to the entrance. Deep links into
+// other rooms skip it: someone following a link to a photo or a post
+// should land on that content, not on a curtain.
+const LIGHTLEAK_AT = 250
+const REVEAL_AT = 700
+const DONE_AT = 1300
+
 export function CinematicIntro() {
-  const [phase, setPhase] = useState<"black" | "lightleak" | "reveal" | "done">("black")
-  const [skip, setSkip] = useState(false)
-  const reduced = useReducedMotion()
   const pathname = usePathname()
-  const onCafeMaz = pathname?.startsWith("/cafe-maz") ?? false
+  const reduced = useReducedMotion()
+  const onEntrance = pathname === "/"
+  const [phase, setPhase] = useState<"black" | "lightleak" | "reveal" | "done">(() =>
+    onEntrance ? "black" : "done",
+  )
 
   useEffect(() => {
-    // Skip intro on cafe-maz pages (separate brand) and once-per-session everywhere
-    if (onCafeMaz || sessionStorage.getItem("intro-seen") || reduced) {
+    if (!onEntrance || reduced || sessionStorage.getItem("intro-seen")) {
       setPhase("done")
       return
     }
 
-    const t1 = setTimeout(() => setPhase("lightleak"), 600)
-    const t2 = setTimeout(() => setPhase("reveal"), 1800)
+    const t1 = setTimeout(() => setPhase("lightleak"), LIGHTLEAK_AT)
+    const t2 = setTimeout(() => setPhase("reveal"), REVEAL_AT)
     const t3 = setTimeout(() => {
       setPhase("done")
       sessionStorage.setItem("intro-seen", "1")
-    }, 3200)
+    }, DONE_AT)
 
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
       clearTimeout(t3)
     }
-  }, [reduced, onCafeMaz])
+  }, [reduced, onEntrance])
 
+  const skip = () => {
+    setPhase("done")
+    sessionStorage.setItem("intro-seen", "1")
+  }
+
+  // Escape or Enter skips, so keyboard visitors are never stuck behind it
   useEffect(() => {
-    if (skip) {
-      setPhase("done")
-      sessionStorage.setItem("intro-seen", "1")
+    if (phase === "done") return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" || e.key === "Enter" || e.key === " ") skip()
     }
-  }, [skip])
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [phase])
 
-  if (phase === "done" || onCafeMaz) return null
+  if (phase === "done") return null
 
   return (
     <div
       className="fixed inset-0 z-[10000] flex items-center justify-center"
-      onClick={() => setSkip(true)}
+      onClick={skip}
       role="presentation"
     >
-      {/* Black overlay */}
       <div
-        className="absolute inset-0 bg-black transition-opacity duration-1000"
+        className="absolute inset-0 bg-black transition-opacity duration-500"
+        style={{ opacity: phase === "black" ? 1 : phase === "lightleak" ? 0.85 : 0 }}
+      />
+
+      <div
+        className="absolute inset-0 transition-opacity duration-500"
         style={{
-          opacity: phase === "black" ? 1 : phase === "lightleak" ? 0.85 : 0,
+          opacity: phase === "lightleak" ? 1 : 0,
+          background:
+            "radial-gradient(ellipse at 60% 40%, rgba(120,200,214,0.3) 0%, rgba(255,200,120,0.15) 30%, transparent 70%)",
         }}
       />
 
-      {/* Light leak effect */}
       <div
-        className="absolute inset-0 transition-opacity duration-700"
-        style={{
-          opacity: phase === "lightleak" ? 1 : phase === "reveal" ? 0 : 0,
-          background: "radial-gradient(ellipse at 60% 40%, rgba(120,200,214,0.3) 0%, rgba(255,200,120,0.15) 30%, transparent 70%)",
-        }}
-      />
-
-      {/* Title card */}
-      <div
-        className="relative z-10 text-center transition-all duration-1000"
+        className="relative z-10 text-center transition-all duration-500"
         style={{
           opacity: phase === "lightleak" || phase === "reveal" ? 1 : 0,
-          transform: phase === "reveal" ? "scale(1.1)" : "scale(1)",
+          transform: phase === "reveal" ? "scale(1.06)" : "scale(1)",
         }}
       >
-        <p className="font-mono text-xs uppercase tracking-[0.5em] text-teal/80">
-          Now showing
-        </p>
+        <p className="font-mono text-xs uppercase tracking-[0.5em] text-teal/80">Now showing</p>
         <p className="mt-4 font-display text-5xl font-semibold text-white sm:text-7xl">
           Maz <span className="italic">Gallery</span>
         </p>
-        <p className="mt-3 text-sm tracking-wide text-white/40">
-          Photographs by Mazen Abugharbieh
-        </p>
+        <p className="mt-3 text-sm tracking-wide text-white/40">Photographs by Mazen Abugharbieh</p>
         <div className="mx-auto mt-4 h-px w-24 bg-teal/50" />
       </div>
 
-      {/* Skip hint */}
-      <p className="absolute bottom-8 text-xs text-white/30">
-        click anywhere to skip
-      </p>
+      <button
+        type="button"
+        onClick={skip}
+        autoFocus
+        className="absolute bottom-8 rounded-full border border-white/20 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-white/60 transition-colors hover:border-white/50 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-teal"
+      >
+        Skip
+      </button>
     </div>
   )
 }

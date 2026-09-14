@@ -8,7 +8,7 @@ export function FeaturedOn() {
       <div className="mx-auto max-w-7xl px-6">
         <FadeIn>
           <h2 className="text-center font-display text-2xl italic text-navy sm:text-3xl">
-            As reviewed in
+            Featured on
           </h2>
         </FadeIn>
         <div className="mt-12 flex flex-wrap items-center justify-center gap-12">

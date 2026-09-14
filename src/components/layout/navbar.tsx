@@ -54,7 +54,7 @@ export function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link, i) => (
+          {NAV_LINKS.map((link) => (
             <Magnetic key={link.href} strength={0.25}>
               <ScrambleWrapper text={link.label}>
                 {(display) => (
@@ -65,7 +65,7 @@ export function Navbar() {
                     }`}
                   >
                     <span className={`mr-1.5 text-[9px] ${solid ? "text-teal" : "text-teal/80"}`}>
-                      0{i + 2}
+                      {link.number.slice(-2)}
                     </span>
                     {display}
                   </Link>

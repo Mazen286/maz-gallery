@@ -1,5 +1,6 @@
 export const SITE_NAME = "MazGallery"
 export const SITE_URL = "https://maz.gallery"
+export const AUTHOR_NAME = "Mazen Abugharbieh"
 export const SITE_DESCRIPTION =
   "Mazen Abugharbieh. Data analyst, photographer, and startup co-founder based in San Diego."
 export const EMAIL = "mazen@figmentanalytics.com"
@@ -9,24 +10,27 @@ export const SOCIAL = {
   linkedin: "https://www.linkedin.com/in/mazenabugharbieh/",
 } as const
 
-export const NAV_LINKS = [
-  { label: "About", href: "/about" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "My Projects", href: "/projects" },
-  { label: "Blog", href: "/blog" },
-] as const
-
-// The site as a museum: every route is a room with a placard
+// The site as a museum: every route is a room with a placard. This is the
+// single source for the header nav, the mobile directory, the footer, the
+// placards between rooms, and the navigation schema.
+//   label: plain wording for the header nav
+//   name:  the museum name used on placards and in the directory
+//   nav:   whether the room appears in the header nav (the CTA is separate)
 export const ROOMS = [
-  { href: "/", number: "No. 01", name: "Entrance" },
-  { href: "/about", number: "No. 02", name: "The Artist" },
-  { href: "/gallery", number: "No. 03", name: "The Gallery" },
-  { href: "/projects", number: "No. 04", name: "Projects Wing" },
-  { href: "/blog", number: "No. 05", name: "Reading Room" },
-  { href: "/booking", number: "No. 06", name: "Front Desk" },
+  { href: "/", number: "No. 01", label: "Home", name: "Entrance", nav: false },
+  { href: "/about", number: "No. 02", label: "About", name: "The Artist", nav: true },
+  { href: "/gallery", number: "No. 03", label: "Gallery", name: "The Gallery", nav: true },
+  { href: "/projects", number: "No. 04", label: "Projects", name: "Projects Wing", nav: true },
+  { href: "/blog", number: "No. 05", label: "Blog", name: "Reading Room", nav: true },
+  { href: "/daily", number: "No. 06", label: "Daily", name: "Daily Postcard", nav: true },
+  { href: "/booking", number: "No. 07", label: "Say Hello", name: "Front Desk", nav: false },
 ] as const
 
-export function roomFor(pathname: string) {
+export type Room = (typeof ROOMS)[number]
+
+export const NAV_LINKS = ROOMS.filter((r) => r.nav)
+
+export function roomFor(pathname: string): Room | undefined {
   if (pathname === "/") return ROOMS[0]
   return ROOMS.find((r) => r.href !== "/" && pathname.startsWith(r.href))
 }
@@ -51,6 +55,7 @@ export const PRESS = [
   },
 ] as const
 
+// Selected works shown on the home page. The full list lives in lib/projects.ts.
 export const PROJECTS = [
   {
     title: "Figment Analytics",
