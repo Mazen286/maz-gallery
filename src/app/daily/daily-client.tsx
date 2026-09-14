@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Share2, Check, ArrowRight } from "lucide-react"
-import { getDailyPuzzle, dateKey, type DailyPuzzle } from "@/lib/daily"
+import { Share2, Check, ArrowRight, History } from "lucide-react"
+import { msUntilNextPostcard, type DailyPuzzle } from "@/lib/daily"
 import { photoSlug } from "@/lib/gallery"
 import { ConfettiOverlay } from "@/components/gallery/games/confetti"
 
@@ -47,8 +47,9 @@ function squares(guesses: string[], won: boolean): string {
   return cells.join("")
 }
 
-export function DailyPostcard() {
-  const [puzzle, setPuzzle] = useState<DailyPuzzle | null>(null)
+// The puzzle is chosen on the server (UTC) so the first paint, crawlers,
+// and link previews all see today's card; only progress lives in the browser.
+export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yesterday: DailyPuzzle | null }) {
   const [guesses, setGuesses] = useState<string[]>([])
   const [won, setWon] = useState(false)
   const [stats, setStats] = useState<Stats>(EMPTY_STATS)
@@ -57,25 +58,24 @@ export function DailyPostcard() {
 
   const done = won || guesses.length >= MAX_TRIES
 
-  // Everything is computed client-side so the puzzle follows the
-  // visitor's local midnight
+  // Restore today's progress and lifetime stats from this browser
   useEffect(() => {
-    const p = getDailyPuzzle()
-    setPuzzle(p)
     const state = loadJSON<DayState>(STATE_KEY, { key: "", guesses: [], won: false })
-    if (state.key === p.key) {
+    if (state.key === puzzle.key) {
       setGuesses(state.guesses)
       setWon(state.won)
     }
     setStats(loadJSON<Stats>(STATS_KEY, EMPTY_STATS))
-  }, [])
+  }, [puzzle.key])
 
-  // Countdown to the next postcard
+  // Countdown to the next postcard (UTC midnight); reload when it arrives
   useEffect(() => {
     const tick = () => {
-      const now = new Date()
-      const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
-      const ms = midnight.getTime() - now.getTime()
+      const ms = msUntilNextPostcard()
+      if (ms <= 0) {
+        window.location.reload()
+        return
+      }
       const h = Math.floor(ms / 3600000)
       const m = Math.floor((ms % 3600000) / 60000)
       setCountdown(`${h}h ${String(m).padStart(2, "0")}m`)
@@ -84,10 +84,6 @@ export function DailyPostcard() {
     const t = setInterval(tick, 30000)
     return () => clearInterval(t)
   }, [])
-
-  if (!puzzle) {
-    return <div className="min-h-[100svh] bg-[#0a0c11]" />
-  }
 
   const choose = (option: string) => {
     if (done || guesses.includes(option)) return
@@ -105,8 +101,7 @@ export function DailyPostcard() {
     } catch {}
 
     if (nowDone && stats.lastKey !== puzzle.key) {
-      const yesterday = dateKey(new Date(Date.now() - 86400000))
-      const streak = nowWon ? (stats.lastWinKey === yesterday ? stats.streak + 1 : 1) : 0
+      const streak = nowWon ? (yesterday && stats.lastWinKey === yesterday.key ? stats.streak + 1 : 1) : 0
       const next: Stats = {
         streak,
         maxStreak: Math.max(stats.maxStreak, streak),
@@ -123,7 +118,7 @@ export function DailyPostcard() {
   }
 
   const share = async () => {
-    const text = `The Daily Postcard No. ${puzzle.number}\n${squares(guesses, won)}\nmaz.gallery/daily`
+    const text = `The Daily Postcard No. ${puzzle.number}\n${squares(guesses, won)}\nhttps://maz.gallery/daily`
     try {
       await navigator.clipboard.writeText(text)
       setCopied(true)
@@ -250,6 +245,28 @@ export function DailyPostcard() {
           </span>
           <span className="text-white/30">Next postcard in {countdown}</span>
         </div>
+
+        {/* Yesterday's answer, for the ones who missed it */}
+        {yesterday && (
+          <Link
+            href={`/gallery/${photoSlug(yesterday.image)}`}
+            className="group mt-6 flex items-center gap-4 rounded-md border border-white/10 bg-white/[0.02] p-3 transition-all hover:border-teal/50"
+          >
+            <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded">
+              <Image src={yesterday.image.src} alt="" fill sizes="80px" className="object-cover opacity-70 transition-opacity group-hover:opacity-100" />
+            </div>
+            <div className="min-w-0">
+              <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
+                <History className="size-3" />
+                Yesterday, No. {yesterday.number}
+              </p>
+              <p className="truncate font-display italic text-white/85">
+                {yesterday.image.alt} <span className="not-italic text-white/40">&middot; {yesterday.image.location}</span>
+              </p>
+            </div>
+            <ArrowRight className="ml-auto size-4 shrink-0 text-white/30 group-hover:text-teal" />
+          </Link>
+        )}
       </div>
     </section>
   )
