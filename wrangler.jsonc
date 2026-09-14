@@ -16,5 +16,11 @@
   },
   "observability": {
     "enabled": true
-  }
+  },
+  // Production hostnames. Routes intercept the proxied hostname in front of
+  // the legacy Pages project, so no DNS change was needed for the cutover.
+  "routes": [
+    { "pattern": "maz.gallery/*", "zone_name": "maz.gallery" },
+    { "pattern": "www.maz.gallery/*", "zone_name": "maz.gallery" }
+  ]
 }
