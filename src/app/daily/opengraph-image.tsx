@@ -7,6 +7,9 @@ export const alt = "The Daily Postcard: guess where today's photograph was taken
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
+// A new card every UTC day; never prerendered (fonts and the photo are fetched at request time)
+export const dynamic = "force-dynamic"
+
 // Assets come from our own origin; in next dev that is the local server
 const BASE = process.env.NODE_ENV === "development" ? "http://localhost:2892" : SITE_URL
 
