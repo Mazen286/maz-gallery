@@ -2,7 +2,9 @@
 
 import { useState, useRef, useEffect } from "react"
 import { Send, Pencil } from "lucide-react"
-import { EMAIL } from "@/lib/constants"
+import { useSearchParams } from "next/navigation"
+import { EMAIL, SITE_URL } from "@/lib/constants"
+import { getPhotoBySlug, photoSlug } from "@/lib/gallery"
 
 interface Step {
   id: "name" | "email" | "message" | "phone" | "contactPref"
@@ -29,6 +31,8 @@ interface Message {
 type Status = "idle" | "sending" | "sent" | "failed"
 
 export function ConversationalForm() {
+  // Arriving from a photograph page pre-writes the message about that print
+  const photo = getPhotoBySlug(useSearchParams().get("photo") ?? "")
   const [currentStep, setCurrentStep] = useState(0)
   const [answers, setAnswers] = useState<Partial<Record<Step["id"], string>>>({})
   const [messages, setMessages] = useState<Message[]>([])
@@ -46,10 +50,13 @@ export function ConversationalForm() {
   // Show first question on mount
   useEffect(() => {
     const timer = setTimeout(() => {
-      setMessages([{ type: "question", text: STEPS[0].question }])
+      setMessages([
+        { type: "question", text: photo ? `Asking about "${photo.alt}"? Good eye. ${STEPS[0].question}` : STEPS[0].question },
+      ])
       setIsTyping(false)
     }, 800)
     return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Auto-scroll chat
@@ -95,6 +102,9 @@ export function ConversationalForm() {
       setCurrentStep(nextStep)
       setTimeout(() => {
         setMessages((prev) => [...prev, { type: "question", text: STEPS[nextStep].question }])
+        if (STEPS[nextStep].id === "message" && photo) {
+          setInputValue(`I'd like to ask about a print of "${photo.alt}" (${SITE_URL}/gallery/${photoSlug(photo)}).\n\n`)
+        }
         setIsTyping(false)
       }, 600)
     }
@@ -121,7 +131,7 @@ export function ConversationalForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...answers, website: honeypot, startedAt: startedAt.current }),
+        body: JSON.stringify({ ...answers, photo: photo ? photoSlug(photo) : undefined, website: honeypot, startedAt: startedAt.current }),
       })
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (res.ok && data.ok) {

@@ -110,3 +110,64 @@ export const GALLERY: GalleryImage[] = [
   { src: "/images/gallery/new-york-st-patricks-cathedral.jpg", alt: "St. Patrick's Cathedral reaching upward", location: "New York, NY", story: "St. Patrick's from the sidewalk, doing exactly what Gothic architecture was built to do: make you look up. Every line of it points the same direction. Fifth Avenue rushes past behind you, and the cathedral just keeps pointing. I stripped the color out so the stone could do the talking.", width: 2560, height: 1802 },
   { src: "/images/gallery/new-york-brownstone-stoop.jpg", alt: "A brownstone stoop on a quiet block", location: "New York, NY", story: "Just a stoop. Number 48, planters out, doors painted like someone cares. New York's brownstones make you imagine the lives inside, a hundred years of people taking these steps two at a time. Some buildings you photograph for the skyline. This one felt like a front door I haven't knocked on yet.", width: 2560, height: 1707 },
 ]
+
+// Deliberate walking order through the collection: Turkey, Jordan, then
+// east coast to west. Any location in the data that is not listed here is
+// appended at the end, so a new place can never silently vanish.
+const WALK_ORDER = [
+  "Alanya, Turkey",
+  "Antalya, Turkey",
+  "Istanbul, Turkey",
+  "Izmir, Turkey",
+  "Cesme, Turkey",
+  "Alacati, Turkey",
+  "Amman, Jordan",
+  "New York, NY",
+  "San Diego, CA",
+  "Catalina Island, CA",
+  "Disneyland, CA",
+  "Walt Disney World, FL",
+]
+
+export const LOCATIONS: string[] = (() => {
+  const present = new Set(GALLERY.map((img) => img.location).filter((l): l is string => !!l))
+  const ordered = WALK_ORDER.filter((loc) => present.has(loc))
+  const extra = [...present].filter((loc) => !WALK_ORDER.includes(loc)).sort()
+  return [...ordered, ...extra]
+})()
+
+// The full collection in walking order
+export const ORDERED_GALLERY: GalleryImage[] = LOCATIONS.flatMap((loc) =>
+  GALLERY.filter((img) => img.location === loc),
+)
+
+export const wingLabel = (loc: string) => LOCATION_COORDS[loc]?.label ?? loc
+
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+
+// Wing tiles and chips use a short slug in the URL: /gallery?wing=alanya
+export const wingSlug = (loc: string) => slugify(wingLabel(loc))
+
+// Every photograph has its own page at /gallery/<slug>, named after its caption
+export const photoSlug = (img: GalleryImage) => slugify(img.alt)
+
+export function getPhotoBySlug(slug: string): GalleryImage | undefined {
+  return ORDERED_GALLERY.find((img) => photoSlug(img) === slug)
+}
+
+export function photoIndex(img: GalleryImage): number {
+  return ORDERED_GALLERY.findIndex((i) => i.src === img.src)
+}
+
+// Previous and next photographs along the walking order
+export function photoNeighbors(img: GalleryImage): { prev: GalleryImage; next: GalleryImage } {
+  const i = photoIndex(img)
+  const n = ORDERED_GALLERY.length
+  return { prev: ORDERED_GALLERY[(i - 1 + n) % n], next: ORDERED_GALLERY[(i + 1) % n] }
+}

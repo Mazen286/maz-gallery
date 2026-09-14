@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
 import { ConversationalForm } from "@/components/booking/conversational-form"
 import { FIGMENT_URL, EMAIL, SOCIAL } from "@/lib/constants"
 
@@ -106,7 +107,9 @@ export default function BookingPage() {
             <p className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-charcoal/40">
               The guest book
             </p>
-            <ConversationalForm />
+            <Suspense fallback={<div className="h-[500px] rounded-lg border border-navy/15 bg-[#fffdf8]" />}>
+              <ConversationalForm />
+            </Suspense>
           </div>
         </div>
       </div>

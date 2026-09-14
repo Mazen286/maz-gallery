@@ -1,5 +1,6 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare"
 import { EMAIL, SITE_URL } from "@/lib/constants"
+import { getPhotoBySlug } from "@/lib/gallery"
 
 // Front Desk messages. Sent through Cloudflare Email Service from
 // frontdesk@maz.gallery to the site owner, with the visitor as Reply-To.
@@ -31,6 +32,7 @@ type ContactBody = {
   phone?: string
   message?: string
   contactPref?: string
+  photo?: string // slug of a photograph the message is about
   website?: string // honeypot, must stay empty
   startedAt?: number
 }
@@ -79,6 +81,8 @@ export async function POST(req: Request) {
   const phone = clean(body.phone, 40)
   const message = clean(body.message, 4000)
   const contactPref = clean(body.contactPref, 20)
+  const photoSlugValue = clean(body.photo, 120)
+  const photo = getPhotoBySlug(photoSlugValue)
 
   if (!name || !message) {
     return Response.json({ error: "A name and a message are the minimum." }, { status: 400 })
@@ -103,6 +107,7 @@ export async function POST(req: Request) {
     `Email: ${email}`,
     phone ? `Phone: ${phone}` : null,
     contactPref ? `Prefers: ${contactPref}` : null,
+    photo ? `Photograph: ${photo.alt} (${SITE_URL}/gallery/${photoSlugValue})` : null,
     "",
     message,
   ].filter((l): l is string => l !== null)
@@ -121,7 +126,7 @@ export async function POST(req: Request) {
       to: EMAIL,
       from: FROM,
       replyTo: email,
-      subject: `Front Desk: ${name}`,
+      subject: photo ? `Front Desk: ${name} · print of "${photo.alt}"` : `Front Desk: ${name}`,
       text: lines.join("\n"),
       html,
     })

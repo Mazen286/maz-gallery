@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { GALLERY } from "@/lib/gallery"
+import { GALLERY, ORDERED_GALLERY, photoSlug } from "@/lib/gallery"
 import { Suspense } from "react"
 import { GalleryPageClient } from "@/components/gallery/gallery-page-client"
 
@@ -38,9 +38,11 @@ export default function GalleryPage() {
     description: "Travel photography from Turkey, Jordan, New York, San Diego, and beyond.",
     url: "https://maz.gallery/gallery",
     author: { "@type": "Person", name: "Mazen Abugharbieh" },
-    image: GALLERY.map((img) => ({
+    image: ORDERED_GALLERY.map((img) => ({
       "@type": "ImageObject",
-      url: `https://maz.gallery${img.src}`,
+      "@id": `https://maz.gallery/gallery/${photoSlug(img)}#image`,
+      url: `https://maz.gallery/gallery/${photoSlug(img)}`,
+      contentUrl: `https://maz.gallery${img.src}`,
       name: img.alt,
       description: img.story || img.alt,
       width: img.width,

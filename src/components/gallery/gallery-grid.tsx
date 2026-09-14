@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { X } from "lucide-react"
-import { GALLERY } from "@/lib/gallery"
+import Link from "next/link"
+import { GALLERY, photoSlug } from "@/lib/gallery"
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 import { SwipeCarousel } from "./swipe-carousel"
 
@@ -159,6 +160,12 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
               <p className="mt-3 font-mono text-[9px] text-white/25">
                 {selected + 1} / {images.length}
               </p>
+              <Link
+                href={`/gallery/${photoSlug(images[selected])}`}
+                className="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.25em] text-teal/70 transition-colors hover:text-teal"
+              >
+                Open this photograph &rarr;
+              </Link>
             </div>
           </div>
         </div>

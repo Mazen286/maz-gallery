@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Share2, Check, ArrowRight } from "lucide-react"
 import { getDailyPuzzle, dateKey, type DailyPuzzle } from "@/lib/daily"
+import { photoSlug } from "@/lib/gallery"
 import { ConfettiOverlay } from "@/components/gallery/games/confetti"
 
 const MAX_TRIES = 3
@@ -231,7 +232,7 @@ export function DailyPostcard() {
                 {copied ? "Copied" : "Share result"}
               </button>
               <Link
-                href={`/gallery?piece=${encodeURIComponent(puzzle.image.src)}`}
+                href={`/gallery/${photoSlug(puzzle.image)}`}
                 className="flex items-center gap-1.5 text-sm text-white/50 transition-colors hover:text-white"
               >
                 See it in the gallery

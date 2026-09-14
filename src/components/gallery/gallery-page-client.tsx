@@ -5,10 +5,11 @@ import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { Shuffle, Grid3x3, Eye, Gamepad2, ArrowLeft, CalendarDays } from "lucide-react"
-import { GALLERY, LOCATION_COORDS, type GalleryImage } from "@/lib/gallery"
+import { Shuffle, Grid3x3, Eye, Gamepad2, ArrowLeft, CalendarDays, MapPin } from "lucide-react"
+import { GALLERY, LOCATIONS, ORDERED_GALLERY, wingLabel, wingSlug, type GalleryImage } from "@/lib/gallery"
 import { ExhibitionView } from "./exhibition-view"
 import { GalleryGrid } from "./gallery-grid"
+import { LocationMap } from "./location-map"
 
 // The Game Room (four games plus their assets) only loads when opened
 const GameRoom = dynamic(() => import("./games/game-room").then((m) => m.GameRoom), { ssr: false })
@@ -29,51 +30,19 @@ const COLLECTION = [
   { src: "/images/collection/87192.jpg", alt: "VeVe collectible", width: 600, height: 800 },
 ]
 
-// Deliberate walking order through the collection: Turkey, Jordan, then
-// east coast to west. Any location in the data that is not listed here is
-// appended at the end, so a new place can never silently vanish.
-const WALK_ORDER = [
-  "Alanya, Turkey",
-  "Antalya, Turkey",
-  "Istanbul, Turkey",
-  "Izmir, Turkey",
-  "Cesme, Turkey",
-  "Alacati, Turkey",
-  "Amman, Jordan",
-  "New York, NY",
-  "San Diego, CA",
-  "Catalina Island, CA",
-  "Disneyland, CA",
-  "Walt Disney World, FL",
-]
-
-const LOCATIONS: string[] = (() => {
-  const present = new Set(GALLERY.map((img) => img.location).filter((l): l is string => !!l))
-  const ordered = WALK_ORDER.filter((loc) => present.has(loc))
-  const extra = [...present].filter((loc) => !WALK_ORDER.includes(loc)).sort()
-  return [...ordered, ...extra]
-})()
-
-const wingLabel = (loc: string) => LOCATION_COORDS[loc]?.label ?? loc
-
 // Wing tiles and chips use a short slug in the URL: /gallery?wing=alanya
-const slugOf = (loc: string) => wingLabel(loc).toLowerCase().replace(/[^a-z0-9]+/g, "-")
-const locFromSlug = (slug: string | null) => LOCATIONS.find((loc) => slugOf(loc) === slug) ?? null
+const locFromSlug = (slug: string | null) => LOCATIONS.find((loc) => wingSlug(loc) === slug) ?? null
 
-type ViewMode = "wings" | "exhibition" | "grid"
+type ViewMode = "wings" | "map" | "exhibition" | "grid"
 
-const VIEWS: ViewMode[] = ["wings", "exhibition", "grid"]
+const VIEWS: ViewMode[] = ["wings", "map", "exhibition", "grid"]
 
 export function GalleryPageClient() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // The full collection in walking order
-  const ordered = useMemo(
-    () => LOCATIONS.flatMap((loc) => GALLERY.filter((img) => img.location === loc)),
-    [],
-  )
+  const ordered = ORDERED_GALLERY
 
   const wings = useMemo(
     () =>
@@ -114,7 +83,7 @@ export function GalleryPageClient() {
   useEffect(() => {
     const params = new URLSearchParams()
     if (view !== "wings") params.set("view", view)
-    if (location) params.set("wing", slugOf(location))
+    if (location) params.set("wing", wingSlug(location))
     if (view === "exhibition" && liveIndex > 0) params.set("i", String(liveIndex))
     const qs = params.toString()
     const url = qs ? `${pathname}?${qs}` : pathname
@@ -221,6 +190,13 @@ export function GalleryPageClient() {
                 <Shuffle className="size-3.5" />
                 Surprise Me
               </button>
+              <button
+                onClick={() => { switchLocation(null); setView("map") }}
+                className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/80"
+              >
+                <MapPin className="size-3.5" />
+                The Map
+              </button>
             </div>
 
             {/* The Annex: games and the daily puzzle get their own shelf */}
@@ -310,6 +286,18 @@ export function GalleryPageClient() {
       )}
 
       {/* Views */}
+      {view === "map" && (
+        <section className="bg-[#0a0c11] pb-20 pt-12">
+          <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[0.4em] text-white/40">
+            Pick a pin to walk that wing
+          </p>
+          <LocationMap
+            activeLocation={location}
+            onSelectLocation={(loc) => (loc ? openWing(loc) : setView("wings"))}
+          />
+        </section>
+      )}
+
       {view === "exhibition" && (
         <ExhibitionView
           key={`${location ?? "all"}-${exhibitionStart}`}

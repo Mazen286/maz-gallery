@@ -1,7 +1,8 @@
 "use client"
 
+import Link from "next/link"
 import { useState, useEffect } from "react"
-import type { GalleryImage } from "@/lib/gallery"
+import { photoSlug, type GalleryImage } from "@/lib/gallery"
 import { SwipeCarousel } from "./swipe-carousel"
 
 interface ExhibitionViewProps {
@@ -94,6 +95,12 @@ export function ExhibitionView({ images, startIndex = 0, onIndexChange }: Exhibi
         {story && (
           <p className="mt-3 text-sm leading-relaxed text-white/45">{story}</p>
         )}
+        <Link
+          href={`/gallery/${photoSlug(img)}`}
+          className="mt-4 inline-block font-mono text-[10px] uppercase tracking-[0.25em] text-teal/70 transition-colors hover:text-teal"
+        >
+          Open this photograph &rarr;
+        </Link>
       </div>
 
       {/* Counter + progress */}

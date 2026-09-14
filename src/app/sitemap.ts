@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 import { BLOG_POSTS } from "@/lib/blog"
-import { GALLERY } from "@/lib/gallery"
+import { GALLERY, ORDERED_GALLERY, photoSlug } from "@/lib/gallery"
 import { SITE_URL } from "@/lib/constants"
 
 // Bump a route's date when its content meaningfully changes. The Daily
@@ -40,5 +40,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [`${SITE_URL}${post.image}`],
   }))
 
-  return [...staticPages, ...blogPages]
+  const photoPages: MetadataRoute.Sitemap = ORDERED_GALLERY.map((img) => ({
+    url: `${SITE_URL}/gallery/${photoSlug(img)}`,
+    lastModified: LAST_MODIFIED["/gallery"],
+    changeFrequency: "yearly" as const,
+    priority: 0.5,
+    images: [`${SITE_URL}${img.src}`],
+  }))
+
+  return [...staticPages, ...blogPages, ...photoPages]
 }
