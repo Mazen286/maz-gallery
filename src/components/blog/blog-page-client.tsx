@@ -12,6 +12,9 @@ import {
   type BlogCategory,
 } from "@/lib/blog"
 
+// Only offer filters that lead somewhere
+const CATEGORIES = BLOG_CATEGORIES.filter((cat) => BLOG_POSTS.some((p) => p.category === cat))
+
 export function BlogPageClient() {
   const [activeCategory, setActiveCategory] = useState<BlogCategory | "All">("All")
 
@@ -58,7 +61,7 @@ export function BlogPageClient() {
             >
               All
             </button>
-            {BLOG_CATEGORIES.map((cat) => (
+            {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}

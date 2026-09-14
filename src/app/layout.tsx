@@ -7,17 +7,19 @@ import { PageTransition } from "@/components/shared/page-transition"
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, NAV_LINKS } from "@/lib/constants"
 import "./globals.css"
 
+// Only the weights and styles actually used. Each extra combination is
+// another preloaded font file on every page.
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600"],
+  style: ["normal"],
 })
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "600"],
   style: ["normal", "italic"],
 })
 

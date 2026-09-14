@@ -137,11 +137,11 @@ export function ConversationalForm() {
                 animation: "fadeIn 0.3s ease-out 0.9s both",
               }}
             >
-              <span className="flex h-full items-center justify-center text-xs font-bold text-white">M</span>
+              <span className="flex h-full items-center justify-center text-xs font-semibold text-white">M</span>
             </div>
           </div>
           <p
-            className="mt-6 text-lg font-bold text-navy"
+            className="mt-6 text-lg font-semibold text-navy"
             style={{ animation: "fadeIn 0.5s ease-out 1s both" }}
           >
             Your mail app should be open

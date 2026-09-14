@@ -54,7 +54,7 @@ export function Hero() {
 
       {/* Arabic watermark, still and faint */}
       <p
-        className="pointer-events-none absolute bottom-[8%] left-[3%] select-none font-bold leading-none text-white/[0.05]"
+        className="pointer-events-none absolute bottom-[8%] left-[3%] select-none font-semibold leading-none text-white/[0.05]"
         style={{ fontSize: "clamp(10rem, 28vw, 28rem)" }}
         dir="rtl"
         lang="ar"

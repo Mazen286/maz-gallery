@@ -41,7 +41,7 @@ export default function NotFound() {
         <p className="font-mono text-xs uppercase tracking-[0.5em] text-red-400/60">
           Error 404
         </p>
-        <h1 className="mt-6 text-6xl font-bold text-white/90 sm:text-8xl">
+        <h1 className="mt-6 text-6xl font-semibold text-white/90 sm:text-8xl">
           Lost in the
           <br />
           <span className="italic text-red-400/80">Darkroom</span>
