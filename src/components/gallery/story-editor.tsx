@@ -72,7 +72,7 @@ export function StoryEditor() {
       <div className="mx-auto max-w-5xl px-6">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white">Photo Story Editor</h1>
+          <h1 className="text-3xl font-semibold text-white">Photo Story Editor</h1>
           <p className="mt-2 text-sm text-white/50">
             Write a short story or note for each photo. These appear in the Exhibition view,
             3D Museum plaques, and lightbox. Write naturally, I&apos;ll embellish later.
@@ -177,7 +177,7 @@ export function StoryEditor() {
 
         {/* Bottom export */}
         <div className="mt-12 rounded-xl border border-white/10 bg-white/5 p-6">
-          <h2 className="text-lg font-bold text-white">When you&apos;re done</h2>
+          <h2 className="text-lg font-semibold text-white">When you&apos;re done</h2>
           <p className="mt-2 text-sm text-white/50">
             Click &ldquo;Copy as gallery.ts entries&rdquo; above. Then paste the result into{" "}
             <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs text-teal">

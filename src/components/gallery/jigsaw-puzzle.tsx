@@ -689,7 +689,7 @@ export function JigsawPuzzle({
               >
                 <ConfettiOverlay />
                 <h2
-                  className="text-3xl font-bold sm:text-4xl"
+                  className="text-3xl font-semibold sm:text-4xl"
                   style={{ color: "#78c8d6" }}
                 >
                   Puzzle Complete!

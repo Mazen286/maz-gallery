@@ -1,13 +1,17 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
+import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Shuffle, Grid3x3, Eye, Gamepad2, ArrowLeft, CalendarDays } from "lucide-react"
 import { GALLERY, LOCATION_COORDS, type GalleryImage } from "@/lib/gallery"
 import { ExhibitionView } from "./exhibition-view"
 import { GalleryGrid } from "./gallery-grid"
-import { GameRoom } from "./games/game-room"
+
+// The Game Room (four games plus their assets) only loads when opened
+const GameRoom = dynamic(() => import("./games/game-room").then((m) => m.GameRoom), { ssr: false })
 
 const COLLECTION = [
   { src: "/images/collection/IMG_7908.jpeg", alt: "Digital collectible showcase", width: 600, height: 800 },
@@ -25,15 +29,16 @@ const COLLECTION = [
   { src: "/images/collection/87192.jpg", alt: "VeVe collectible", width: 600, height: 800 },
 ]
 
-// Deliberate walking order through the collection: Turkey, Jordan,
-// then east coast to west. Data-file order stops mattering.
-const WING_ORDER = [
+// Deliberate walking order through the collection: Turkey, Jordan, then
+// east coast to west. Any location in the data that is not listed here is
+// appended at the end, so a new place can never silently vanish.
+const WALK_ORDER = [
   "Alanya, Turkey",
   "Antalya, Turkey",
   "Istanbul, Turkey",
   "Izmir, Turkey",
   "Cesme, Turkey",
-  "Turkey",
+  "Alacati, Turkey",
   "Amman, Jordan",
   "New York, NY",
   "San Diego, CA",
@@ -42,63 +47,100 @@ const WING_ORDER = [
   "Walt Disney World, FL",
 ]
 
+const LOCATIONS: string[] = (() => {
+  const present = new Set(GALLERY.map((img) => img.location).filter((l): l is string => !!l))
+  const ordered = WALK_ORDER.filter((loc) => present.has(loc))
+  const extra = [...present].filter((loc) => !WALK_ORDER.includes(loc)).sort()
+  return [...ordered, ...extra]
+})()
+
 const wingLabel = (loc: string) => LOCATION_COORDS[loc]?.label ?? loc
+
+// Wing tiles and chips use a short slug in the URL: /gallery?wing=alanya
+const slugOf = (loc: string) => wingLabel(loc).toLowerCase().replace(/[^a-z0-9]+/g, "-")
+const locFromSlug = (slug: string | null) => LOCATIONS.find((loc) => slugOf(loc) === slug) ?? null
 
 type ViewMode = "wings" | "exhibition" | "grid"
 
+const VIEWS: ViewMode[] = ["wings", "exhibition", "grid"]
+
 export function GalleryPageClient() {
-  const [view, setView] = useState<ViewMode>("wings")
-  const [location, setLocation] = useState<string | null>(null)
-  const [exhibitionStart, setExhibitionStart] = useState(0)
-  const [gameRoomOpen, setGameRoomOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   // The full collection in walking order
-  const ordered = useMemo(() => {
-    const grouped = WING_ORDER.flatMap((loc) => GALLERY.filter((img) => img.location === loc))
-    const rest = GALLERY.filter((img) => !img.location || !WING_ORDER.includes(img.location))
-    return [...grouped, ...rest]
-  }, [])
+  const ordered = useMemo(
+    () => LOCATIONS.flatMap((loc) => GALLERY.filter((img) => img.location === loc)),
+    [],
+  )
 
   const wings = useMemo(
     () =>
-      WING_ORDER.map((loc) => ({
+      LOCATIONS.map((loc) => ({
         loc,
         images: GALLERY.filter((img) => img.location === loc),
-      })).filter((w) => w.images.length > 0),
-    []
+      })),
+    [],
   )
+
+  // Initial state comes from the URL so a refreshed or shared link lands on
+  // the same view. ?piece=<src> is the older deep-link form and still works.
+  const [view, setView] = useState<ViewMode>(() => {
+    const v = searchParams.get("view")
+    if (searchParams.get("piece")) return "exhibition"
+    return VIEWS.includes(v as ViewMode) ? (v as ViewMode) : "wings"
+  })
+  const [location, setLocation] = useState<string | null>(() => locFromSlug(searchParams.get("wing")))
+  const [exhibitionStart, setExhibitionStart] = useState(() => {
+    const piece = searchParams.get("piece")
+    if (piece) {
+      const idx = ordered.findIndex((img) => img.src === piece)
+      if (idx >= 0) return idx
+    }
+    const i = Number(searchParams.get("i"))
+    return Number.isInteger(i) && i >= 0 ? i : 0
+  })
+  const [liveIndex, setLiveIndex] = useState(exhibitionStart)
+  const [gameRoomOpen, setGameRoomOpen] = useState(false)
 
   const visible: GalleryImage[] = useMemo(
     () => (location ? ordered.filter((img) => img.location === location) : ordered),
-    [ordered, location]
+    [ordered, location],
   )
 
-  // Deep link: /gallery?piece=<src> opens the exhibition on that photo
+  // Mirror state into the URL (replace, no scroll) so back/refresh/share work
+  const lastUrl = useRef<string | null>(null)
   useEffect(() => {
-    const piece = new URLSearchParams(window.location.search).get("piece")
-    if (!piece) return
-    const idx = ordered.findIndex((img) => img.src === piece)
-    if (idx >= 0) {
-      setLocation(null)
-      setExhibitionStart(idx)
-      setView("exhibition")
-    }
-  }, [ordered])
+    const params = new URLSearchParams()
+    if (view !== "wings") params.set("view", view)
+    if (location) params.set("wing", slugOf(location))
+    if (view === "exhibition" && liveIndex > 0) params.set("i", String(liveIndex))
+    const qs = params.toString()
+    const url = qs ? `${pathname}?${qs}` : pathname
+    if (url === lastUrl.current) return
+    lastUrl.current = url
+    router.replace(url, { scroll: false })
+  }, [view, location, liveIndex, pathname, router])
 
   const openWing = (loc: string) => {
     setLocation(loc)
     setExhibitionStart(0)
+    setLiveIndex(0)
     setView("exhibition")
   }
 
   const switchLocation = (loc: string | null) => {
     setLocation(loc)
     setExhibitionStart(0)
+    setLiveIndex(0)
   }
 
   const handleSurprise = () => {
+    const idx = Math.floor(Math.random() * ordered.length)
     setLocation(null)
-    setExhibitionStart(Math.floor(Math.random() * ordered.length))
+    setExhibitionStart(idx)
+    setLiveIndex(idx)
     setView("exhibition")
   }
 
@@ -179,20 +221,45 @@ export function GalleryPageClient() {
                 <Shuffle className="size-3.5" />
                 Surprise Me
               </button>
-              <button
-                onClick={() => setGameRoomOpen(true)}
-                className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/80"
-              >
-                <Gamepad2 className="size-3.5" />
-                Game Room
-              </button>
-              <Link
-                href="/daily"
-                className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/80"
-              >
-                <CalendarDays className="size-3.5" />
-                Daily Postcard
-              </Link>
+            </div>
+
+            {/* The Annex: games and the daily puzzle get their own shelf */}
+            <div className="mt-14 border-t border-white/[0.08] pt-10">
+              <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
+                The Annex &middot; After hours
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <button
+                  onClick={() => setGameRoomOpen(true)}
+                  className="group flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] px-5 py-4 text-left transition-all hover:border-teal/50 hover:bg-white/[0.05]"
+                >
+                  <span>
+                    <span className="flex items-center gap-2 font-display text-lg italic text-white">
+                      <Gamepad2 className="size-4 text-teal" />
+                      The Game Room
+                    </span>
+                    <span className="mt-1 block text-xs text-white/45">
+                      Jigsaw, Pairs, Postcards, and Pin the Map, all built from the collection.
+                    </span>
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 group-hover:text-teal">Open</span>
+                </button>
+                <Link
+                  href="/daily"
+                  className="group flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] px-5 py-4 text-left transition-all hover:border-teal/50 hover:bg-white/[0.05]"
+                >
+                  <span>
+                    <span className="flex items-center gap-2 font-display text-lg italic text-white">
+                      <CalendarDays className="size-4 text-teal" />
+                      The Daily Postcard
+                    </span>
+                    <span className="mt-1 block text-xs text-white/45">
+                      One photo, three guesses, a new one every day.
+                    </span>
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 group-hover:text-teal">Play</span>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -248,6 +315,7 @@ export function GalleryPageClient() {
           key={`${location ?? "all"}-${exhibitionStart}`}
           images={visible}
           startIndex={Math.min(exhibitionStart, Math.max(visible.length - 1, 0))}
+          onIndexChange={setLiveIndex}
         />
       )}
 
@@ -281,6 +349,7 @@ export function GalleryPageClient() {
                       width={item.width}
                       height={item.height}
                       className="h-auto w-full object-cover"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       loading="lazy"
                     />
                   </div>

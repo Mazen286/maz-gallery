@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { GALLERY } from "@/lib/gallery"
+import { Suspense } from "react"
 import { GalleryPageClient } from "@/components/gallery/gallery-page-client"
 
 export const metadata: Metadata = {
-  title: "Photography Gallery | Travel Photos by Mazen Abugharbieh",
+  title: "Travel Photography Gallery",
   description: `${GALLERY.length} travel photographs with the stories behind them, shot in Alanya, Istanbul, Amman, New York, San Diego, Orlando, and beyond.`,
   alternates: { canonical: "/gallery" },
   openGraph: {
@@ -56,7 +57,10 @@ export default function GalleryPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gallerySchema) }} />
-      <GalleryPageClient />
+      {/* useSearchParams in the client needs a boundary for static rendering */}
+      <Suspense fallback={<div className="min-h-screen bg-[#0a0c11]" />}>
+        <GalleryPageClient />
+      </Suspense>
     </>
   )
 }

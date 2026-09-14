@@ -43,6 +43,11 @@ function GalleryImage({ src, alt, width, height, onClick }: {
 
 export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridProps) {
   const [selected, setSelected] = useState<number | null>(null)
+  const [storyOpen, setStoryOpen] = useState(false)
+  const select = (i: number | null) => {
+    setSelected(i)
+    setStoryOpen(false)
+  }
 
   const base = imagesProp ?? GALLERY
   const images = filterLocation
@@ -53,7 +58,7 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
   useEffect(() => {
     if (selected === null) return
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSelected(null)
+      if (e.key === "Escape") select(null)
     }
     window.addEventListener("keydown", handleKey)
     return () => window.removeEventListener("keydown", handleKey)
@@ -87,7 +92,7 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
             alt={img.alt}
             width={img.width}
             height={img.height}
-            onClick={() => setSelected(i)}
+            onClick={() => select(i)}
           />
         ))}
       </div>
@@ -96,7 +101,7 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
       {selected !== null && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelected(null)}
+          onClick={() => select(null)}
           style={{
             animation: "lightboxIn 0.4s ease-out forwards",
           }}
@@ -109,7 +114,7 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
 
           {/* Close button */}
           <button
-            onClick={() => setSelected(null)}
+            onClick={() => select(null)}
             className="absolute right-4 top-4 z-20 rounded-full bg-white/10 p-2 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white"
             aria-label="Close"
           >
@@ -124,7 +129,7 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
             <SwipeCarousel
               images={images}
               index={selected}
-              onIndexChange={(i) => setSelected(i)}
+              onIndexChange={(i) => select(i)}
               heightClass="h-[64vh]"
             />
 
@@ -138,9 +143,18 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
                 {images[selected].alt}
               </h3>
               {images[selected].story && (
-                <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white/45">
-                  {images[selected].story}
-                </p>
+                <>
+                  <p className={`mt-2 text-sm leading-relaxed text-white/45 ${storyOpen ? "" : "line-clamp-3"}`}>
+                    {images[selected].story}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setStoryOpen((o) => !o)}
+                    className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-teal/70 transition-colors hover:text-teal"
+                  >
+                    {storyOpen ? "Less" : "Read the story"}
+                  </button>
+                </>
               )}
               <p className="mt-3 font-mono text-[9px] text-white/25">
                 {selected + 1} / {images.length}

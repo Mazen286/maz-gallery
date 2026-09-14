@@ -7,6 +7,7 @@ import { SwipeCarousel } from "./swipe-carousel"
 interface ExhibitionViewProps {
   images: GalleryImage[]
   startIndex?: number
+  onIndexChange?: (index: number) => void
 }
 
 // Map locations to story snippets for photos without their own
@@ -42,8 +43,12 @@ function getStory(img?: GalleryImage): string {
   return ""
 }
 
-export function ExhibitionView({ images, startIndex = 0 }: ExhibitionViewProps) {
-  const [index, setIndex] = useState(startIndex)
+export function ExhibitionView({ images, startIndex = 0, onIndexChange }: ExhibitionViewProps) {
+  const [index, setIndexState] = useState(startIndex)
+  const setIndex = (i: number) => {
+    setIndexState(i)
+    onIndexChange?.(i)
+  }
   const [hint, setHint] = useState(false)
 
   const img = images[index]

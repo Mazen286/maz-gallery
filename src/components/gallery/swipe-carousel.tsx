@@ -227,7 +227,7 @@ export function SwipeCarousel({
                 draggable={false}
                 className="pointer-events-none select-none object-contain"
                 sizes="(max-width: 1024px) 100vw, 1024px"
-                {...(isCurrent ? { preload: true } : { loading: "eager" as const })}
+                {...(isCurrent ? { preload: true } : { loading: "lazy" as const })}
               />
             </div>
           )
