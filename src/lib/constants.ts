@@ -82,8 +82,8 @@ export const PROJECTS = [
   },
   {
     title: "Runes & Reagents",
-    description: "An alchemy-themed card game.",
-    url: "https://runesandreagents.netlify.app",
+    description: "A crafting and adventure RPG you play in the browser.",
+    url: "https://figmentgaming.com/runes",
     image: "/images/projects/runes-reagents.png",
   },
 ] as const

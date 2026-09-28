@@ -82,8 +82,8 @@ export const ALL_PROJECTS = [
     title: "Runes & Reagents",
     subtitle: "Adventure Game",
     description:
-      "Gather elements, combine them to craft powerful items, complete quests, and explore an adventure world.",
-    url: "https://runesandreagents.netlify.app",
+      "Combine elements into thousands of discoveries, recruit a party of companions, battle legendary bosses and cross into a second world. Free to play in the browser.",
+    url: "https://figmentgaming.com/runes",
     image: "/images/projects/runes-reagents.png",
     cta: "Play It",
     tags: ["Game Design", "React", "Crafting"],
