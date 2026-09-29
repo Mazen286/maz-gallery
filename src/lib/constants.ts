@@ -84,6 +84,6 @@ export const PROJECTS = [
     title: "Runes & Reagents",
     description: "A crafting and adventure RPG you play in the browser.",
     url: "https://figmentgaming.com/runes",
-    image: "/images/projects/runes-reagents.png",
+    image: "/images/projects/runes-reagents.jpg",
   },
 ] as const

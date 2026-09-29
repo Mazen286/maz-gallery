@@ -84,7 +84,7 @@ export const ALL_PROJECTS = [
     description:
       "Combine elements into thousands of discoveries, recruit a party of companions, battle legendary bosses and cross into a second world. Free to play in the browser.",
     url: "https://figmentgaming.com/runes",
-    image: "/images/projects/runes-reagents.png",
+    image: "/images/projects/runes-reagents.jpg",
     cta: "Play It",
     tags: ["Game Design", "React", "Crafting"],
     accent: "#c678dd",

@@ -94,7 +94,7 @@ export const ALL_POSTS: BlogPost[] = [
       "Runes & Reagents started as a napkin sketch. Here's how it became a playable game and what I'd do differently.",
     date: "2026-03-01",
     category: "Board Games",
-    image: "/images/projects/runes-reagents.png",
+    image: "/images/projects/runes-reagents.jpg",
     readTime: "7 min read",
   },
   {
