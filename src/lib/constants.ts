@@ -78,7 +78,7 @@ export const PROJECTS = [
     title: "SurfUp",
     description: "Automated surfboard rentals with SurfPod stations.",
     url: "https://surfupapp.com",
-    image: "/images/projects/surfup-banner.png",
+    image: "/images/projects/surfup-beach.png",
   },
   {
     title: "Runes & Reagents",

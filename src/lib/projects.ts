@@ -18,7 +18,7 @@ export const ALL_PROJECTS = [
     description:
       "The startup I co-founded. Automated surfboard rental stations across San Diego. Featured on ABC 10 News, CBS 8, and the San Diego Union-Tribune.",
     url: "https://surfupapp.com",
-    image: "/images/projects/surfup-banner.png",
+    image: "/images/projects/surfup-beach.png",
     cta: "See It Live",
     tags: ["React Native", "TypeScript", "Square", "Maps"],
     accent: "#4ecdc4",
