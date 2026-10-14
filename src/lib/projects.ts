@@ -69,9 +69,9 @@ export const ALL_PROJECTS = [
   },
   {
     title: "Figment Gaming",
-    subtitle: "Multi-Game Platform",
+    subtitle: "Gaming Platform",
     description:
-      "Free companion platform for tabletop gamers. 7+ game systems, multiplayer drafting, AI opponents, and deck building.",
+      "Original browser games plus free companion tools for card and tabletop games. Multiplayer drafting, duels, AI opponents, and deck building.",
     url: "https://figmentgaming.com",
     image: "/images/projects/figment-gaming.png",
     cta: "Play Now",
@@ -82,7 +82,7 @@ export const ALL_PROJECTS = [
     title: "Runes & Reagents",
     subtitle: "Adventure Game",
     description:
-      "Combine elements into thousands of discoveries, recruit a party of companions, battle legendary bosses and cross into a second world. Free to play in the browser.",
+      "Combine elements into thousands of discoveries, recruit a party of companions, battle legendary bosses and cross into new worlds. Free to play in the browser.",
     url: "https://figmentgaming.com/runes",
     image: "/images/projects/runes-reagents.jpg",
     cta: "Play It",
