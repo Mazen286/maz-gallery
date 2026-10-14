@@ -39,7 +39,7 @@ const JOURNEY = [
   {
     year: "2020",
     title: "Co-Founded SurfUp",
-    text: "Built automated surfboard rental stations across San Diego. Hardware, software, operations. Featured on ABC 10 News, CBS 8, and the San Diego Union-Tribune.",
+    text: "Built SurfPods, self-service surfboard rental stations that run 24/7 with no staff. We started in San Diego and launched in Waikiki at the Hyatt Regency in October 2026. Featured in Surfer, KHON2, Pacific Business News, AOL, ABC 10 and CBS 8.",
   },
   {
     year: "2021",

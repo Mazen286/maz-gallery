@@ -16,7 +16,7 @@ export const ALL_PROJECTS = [
     title: "SurfUp",
     subtitle: "Hardware Startup",
     description:
-      "The startup I co-founded. Automated surfboard rental stations across San Diego. Featured on ABC 10 News, CBS 8, and the San Diego Union-Tribune.",
+      "The startup I co-founded. SurfPods are self-service surfboard rental stations, from San Diego to Waikiki. Featured in Surfer, KHON2, Pacific Business News, and AOL.",
     url: "https://surfupapp.com",
     image: "/images/projects/surfup-beach.png",
     cta: "See It Live",

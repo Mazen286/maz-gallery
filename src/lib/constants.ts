@@ -76,7 +76,7 @@ export const PROJECTS = [
   },
   {
     title: "SurfUp",
-    description: "Automated surfboard rentals with SurfPod stations.",
+    description: "Self-service surfboard rentals with SurfPod stations, from San Diego to Waikiki.",
     url: "https://surfupapp.com",
     image: "/images/projects/surfup-beach.png",
   },
