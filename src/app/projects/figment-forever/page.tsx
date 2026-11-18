@@ -7,6 +7,13 @@ const TITLE = "Figment Forever"
 const DESCRIPTION = "Wedding invitations and websites that make the moment yours."
 const URL = "https://maz.gallery/projects/figment-forever"
 const ACCENT = "#c48a7d"
+// the live demo: each link is a guest's personal invitation, so it opens addressed to them
+const DEMO = "https://figment-forever-demo.vercel.app"
+const LIVE = [
+  { name: "Damascene", couple: "Layla & Karim", href: `${DEMO}/en?i=demoen0001` },
+  { name: "Garden Romantic", couple: "Olivia & James", href: `${DEMO}/en?i=demogd0001` },
+  { name: "Coastal", couple: "Maya & Lucas", href: `${DEMO}/en?i=democo0001` },
+]
 
 export const metadata: Metadata = {
   title: `${TITLE} | Projects`,
@@ -145,8 +152,24 @@ export default function FigmentForeverPage() {
             <h2>Three looks</h2>
             <p>
               Damascene, Garden Romantic and Coastal. Each one has its own colors, art, type and opening. The couples
-              here are made up, so you can see the range.
+              here are made up, so you can see the range. Each link below opens a guest&apos;s personal invitation, so you can
+              walk in the way a guest would, reply and all.
             </p>
+            <div className="not-prose my-8 grid gap-3 sm:grid-cols-3">
+              {LIVE.map((d) => (
+                <a
+                  key={d.name}
+                  href={d.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-xl border border-navy/10 bg-white px-5 py-4 transition-all hover:-translate-y-0.5 hover:shadow-md"
+                >
+                  <span className="block font-mono text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: ACCENT }}>See it live</span>
+                  <span className="mt-1 block font-display text-lg text-navy">{d.name}</span>
+                  <span className="block font-display text-sm italic text-charcoal/55">{d.couple}</span>
+                </a>
+              ))}
+            </div>
             <Figure
               src="/images/projects/figment-forever/openings.webp"
               alt="The opening of three wedding sites: a ribboned gatefold, a card on linen, and a card on sand"
