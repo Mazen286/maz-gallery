@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     url: URL,
-    images: [{ url: `${IMG}/hero-four.webp`, width: 2400, height: 1350, alt: "Four Figment Forever wedding sites, one in each look" }],
+    images: [{ url: `${IMG}/hero-v3.webp`, width: 2400, height: 1350, alt: "Four Figment Forever wedding sites, one in each look" }],
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: [`${IMG}/hero-four.webp`] },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: [`${IMG}/hero-v3.webp`] },
 }
 
 function Figure({ src, alt, caption, width = 1600, height = 1150 }: { src: string; alt: string; caption: string; width?: number; height?: number }) {
@@ -118,9 +118,9 @@ export default function FigmentForeverPage() {
           {/* the four openings, in motion: what a guest sees first */}
           <div className="relative mt-8 aspect-[16/10] overflow-hidden rounded-xl bg-[#f4f1eb]">
             <LoopVideo
-              src={`${IMG}/openings-together.mp4`}
-              poster={`${IMG}/openings-together-poster.webp`}
-              label="Four wedding invitations opening on phones, one in each look"
+              src={`${IMG}/openings-v3.mp4`}
+              poster={`${IMG}/openings-v3-poster.webp`}
+              label="Four wedding invitations opening on phones, one in each look: a gatefold tied with a ribbon, two cards, and a letter sealed with wax"
               width={1600}
               height={1000}
               className="absolute inset-0 h-full w-full object-cover"
@@ -229,7 +229,7 @@ export default function FigmentForeverPage() {
             </p>
             <Live />
             <Figure
-              src={`${IMG}/hero-four.webp`}
+              src={`${IMG}/hero-v3.webp`}
               alt="Four wedding sites on phones, one in each look: Damascene, Garden Romantic, Coastal and Crimson Rose"
               caption="Damascene, Garden Romantic, Coastal and Crimson Rose."
               width={2400}
