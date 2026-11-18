@@ -9,7 +9,7 @@ import { GAMES } from "@/lib/annex"
 const LAST_MODIFIED = {
   "/": "2026-09-14",
   "/about": "2026-09-14",
-  "/projects": "2026-09-14",
+  "/projects": "2026-11-17",
   "/gallery": "2026-09-14",
   "/blog": "2026-09-14",
   "/booking": "2026-09-14",
@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: SITE_URL, lastModified: LAST_MODIFIED["/"], changeFrequency: "monthly", priority: 1 },
     { url: `${SITE_URL}/about`, lastModified: LAST_MODIFIED["/about"], changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/projects`, lastModified: LAST_MODIFIED["/projects"], changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/projects/figment-forever`, lastModified: LAST_MODIFIED["/projects"], changeFrequency: "monthly", priority: 0.7 },
     {
       url: `${SITE_URL}/gallery`,
       lastModified: LAST_MODIFIED["/gallery"],

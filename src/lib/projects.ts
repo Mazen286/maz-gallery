@@ -13,6 +13,17 @@ export const ALL_PROJECTS = [
     accent: "#78c8d6",
   },
   {
+    title: "Figment Forever",
+    subtitle: "Wedding Studio",
+    description:
+      "Wedding invitations and websites that make the moment yours. Built for a friend's wedding, with personal invitations, replies and tracking in English and Arabic.",
+    url: "/projects/figment-forever",
+    image: "/images/projects/figment-forever.webp",
+    cta: "Read the Story",
+    tags: ["Next.js", "Supabase", "Themes"],
+    accent: "#c48a7d",
+  },
+  {
     title: "SurfUp",
     subtitle: "Hardware Startup",
     description:
