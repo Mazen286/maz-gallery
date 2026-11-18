@@ -118,8 +118,8 @@ export default function FigmentForeverPage() {
           {/* the four openings, in motion: what a guest sees first */}
           <div className="relative mt-8 aspect-[16/10] overflow-hidden rounded-xl bg-[#f4f1eb]">
             <LoopVideo
-              src={`${IMG}/openings-four.mp4`}
-              poster={`${IMG}/openings-four-poster.webp`}
+              src={`${IMG}/openings-together.mp4`}
+              poster={`${IMG}/openings-together-poster.webp`}
               label="Four wedding invitations opening on phones, one in each look"
               width={1600}
               height={1000}
