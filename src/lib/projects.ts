@@ -61,9 +61,9 @@ export const ALL_PROJECTS = [
     subtitle: "Geospatial Analytics",
     description:
       "Interactive flight tracking that brings aircraft data to life on the map. Temporal filtering, altitude coloring, and individual tracking.",
-    url: "https://figmentanalytics.com/portfolio/flightpulse",
+    url: "https://flightpulse.figmentanalytics.com",
     image: "/images/projects/flightpulse.png",
-    cta: "View Project",
+    cta: "Launch App",
     tags: ["React", "TypeScript", "Mapbox GL JS"],
     accent: "#5b8def",
   },
