@@ -8,7 +8,7 @@ const DESCRIPTION = "Wedding invitations and websites that make the moment yours
 const URL = "https://maz.gallery/projects/figment-forever"
 const ACCENT = "#c48a7d"
 // the live demo: each link is a guest's personal invitation, so it opens addressed to them
-const DEMO = "https://figment-forever-demo.vercel.app"
+const DEMO = "https://forever.figmentanalytics.com"
 const LIVE = [
   { name: "Damascene", couple: "Layla & Karim", href: `${DEMO}/en?i=demoen0001` },
   { name: "Garden Romantic", couple: "Olivia & James", href: `${DEMO}/en?i=demogd0001` },
