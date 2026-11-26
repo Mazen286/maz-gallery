@@ -139,7 +139,7 @@ export function GalleryPageClient() {
                       />
                     </span>
                   </span>
-                  <span className="mt-3 flex items-baseline justify-between gap-2">
+                  <span className="mt-3 flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
                     <span className="font-display text-[17px] italic text-ivory sm:text-lg">{wingLabel(wing.loc)}</span>
                     <span className="shrink-0 text-[13px] tabular-nums text-mist-2">
                       {wing.images.length} {wing.images.length === 1 ? "photo" : "photos"}

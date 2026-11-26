@@ -138,7 +138,7 @@ export function StoryEditor() {
                       {img.src.split("/").pop()}
                     </p>
                     {hasStory && isCollapsed && (
-                      <p className="mt-1 truncate text-[13px] italic text-brass-2">
+                      <p className="mt-1 text-[13px] italic leading-relaxed text-brass-2">
                         {stories[img.src]}
                       </p>
                     )}
