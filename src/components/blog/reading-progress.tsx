@@ -32,7 +32,7 @@ export function ReadingProgress() {
   return (
     <div
       ref={barRef}
-      className="fixed left-0 top-16 z-[45] h-[3px] w-full origin-left bg-teal"
+      className="fixed left-0 top-16 z-[45] h-[2px] w-full origin-left bg-brass-ink lg:top-[76px]"
       style={{ transform: "scaleX(0)" }}
       aria-hidden="true"
     />
