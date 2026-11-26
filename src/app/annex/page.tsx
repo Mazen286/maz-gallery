@@ -33,7 +33,7 @@ export default function AnnexPage() {
   return (
     <section data-tone="dark" className="min-h-[100svh] bg-wall px-5 pb-28 pt-28 text-ivory sm:px-8 sm:pt-36 lg:px-12">
       <div className="mx-auto max-w-[1216px]">
-        <div className="animate-rise-in">
+        <div>
           <p className="label text-brass">No. 07 &middot; The Annex</p>
           <h1 className="mt-4 font-display text-[40px] font-normal leading-tight tracking-[-0.01em] sm:text-[56px]">
             After <span className="italic">hours</span>

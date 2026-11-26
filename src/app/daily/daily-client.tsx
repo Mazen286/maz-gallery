@@ -120,7 +120,7 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
     <section data-tone="dark" className="relative min-h-[100svh] bg-wall px-5 pb-24 pt-28 text-ivory sm:px-6 sm:pt-36">
       {won && <ConfettiOverlay />}
       <div className="mx-auto max-w-xl">
-        <div className="animate-rise-in">
+        <div>
           <p className="label text-brass">No. 06 &middot; Daily Postcard</p>
           <h1 className="mt-4 font-display text-[40px] font-normal leading-tight tracking-[-0.01em] sm:text-[52px]">
             The Daily <span className="italic">Postcard</span>

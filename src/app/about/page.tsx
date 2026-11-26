@@ -116,10 +116,12 @@ export default function AboutPage() {
     <div className="bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageSchema) }} />
 
-      {/* Title and portrait. The photograph hangs whole in a mat, so no screen width crops the head. */}
+      {/* Title and portrait. The photograph hangs whole in a mat, so no screen width crops the head. Both are
+          there from the first paint, with no rise: the title showed at 0.9 s before the redesign and a rise
+          would hold it back. */}
       <section className="pb-20 pt-28 sm:pb-28 sm:pt-36">
         <div className="mx-auto grid max-w-[1312px] items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1.1fr] lg:gap-20 lg:px-12">
-          <FadeIn immediate>
+          <div>
             <p className="label text-brass-ink">No. 02 &middot; The Artist</p>
             <h1
               className="mt-5 font-display font-normal leading-[0.95] tracking-[-0.02em]"
@@ -139,8 +141,8 @@ export default function AboutPage() {
                 <li>Photographing wherever I happen to be</li>
               </ul>
             </div>
-          </FadeIn>
-          <FadeIn immediate delay={150}>
+          </div>
+          <div>
             <figure>
               <div className="frame-light">
                 <Image loading="eager" fetchPriority="low"
@@ -154,7 +156,7 @@ export default function AboutPage() {
                 />
               </div>
             </figure>
-          </FadeIn>
+          </div>
         </div>
       </section>
 
