@@ -1,67 +1,38 @@
-import Image from "next/image"
 import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
-import { PROJECTS } from "@/lib/constants"
+import { ALL_PROJECTS } from "@/lib/projects"
 import { FadeIn } from "@/components/shared/fade-in"
+import { SectionHead } from "@/components/shared/section-head"
+import { ProjectCard } from "@/components/projects/project-card"
+
+// Three projects with strong art, one from each room of the wing
+const PICKS = ["surfup", "figment-forever", "runes-brewstorm"]
 
 export function SelectedWorks() {
+  const picks = PICKS.map((slug) => ALL_PROJECTS.find((p) => p.slug === slug)).filter(
+    (p): p is NonNullable<typeof p> => !!p
+  )
   return (
-    <section id="works" className="bg-white py-16 sm:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <FadeIn>
-          <h2 className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-teal">
-            Selected Works
-          </h2>
-          <p className="mt-4 max-w-xl font-display text-2xl text-charcoal sm:text-3xl">
-            Some things I have built when the camera was charging.
-          </p>
-        </FadeIn>
+    <section id="works" className="bg-paper pb-24 pt-16 text-ink sm:pb-32 sm:pt-24">
+      <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
+        <SectionHead number="No. 04" title="Projects Wing" />
 
-        <div className="mt-10 grid gap-8 sm:grid-cols-3">
-          {PROJECTS.map((project, i) => (
-            <FadeIn key={project.title} delay={i * 150}>
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block"
-              >
-                <div className="overflow-hidden rounded-lg border border-border">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={640}
-                    height={400}
-                    className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    sizes="(max-width: 640px) 90vw, 30vw"
-                  />
-                </div>
-                <div className="mt-4 flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-display text-lg text-navy transition-colors group-hover:text-teal">
-                      {project.title}
-                    </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-charcoal/60">
-                      {project.description}
-                    </p>
-                  </div>
-                  <ArrowUpRight className="mt-1 size-4 shrink-0 text-charcoal/30 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-teal" />
-                </div>
-              </a>
+        <div className="mt-10 flex flex-col gap-8 sm:mt-12 lg:flex-row lg:items-end lg:justify-between">
+          <h2 className="max-w-3xl font-display text-[32px] leading-[1.15] tracking-[-0.01em] sm:text-[44px]">
+            Things I build when the camera is charging.{" "}
+            <span className="italic text-brass-ink">Startups, dashboards and games.</span>
+          </h2>
+          <Link href="/projects" className="btn btn-ink shrink-0 self-start lg:self-auto">
+            The Projects Wing
+          </Link>
+        </div>
+
+        <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+          {picks.map((project, i) => (
+            <FadeIn key={project.slug} delay={i * 120}>
+              <ProjectCard project={project} showTags={false} />
             </FadeIn>
           ))}
         </div>
-
-        <FadeIn delay={300}>
-          <div className="mt-12">
-            <Link
-              href="/projects"
-              className="inline-block rounded-full border-2 border-navy px-8 py-3 text-sm font-semibold uppercase tracking-wider text-navy transition-colors hover:bg-navy hover:text-white"
-            >
-              The Projects Wing
-            </Link>
-          </div>
-        </FadeIn>
       </div>
     </section>
   )

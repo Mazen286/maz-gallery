@@ -1,24 +1,25 @@
 import { PRESS } from "@/lib/constants"
-import { PhotoDevelop } from "@/components/shared/reveals/photo-develop"
-import { FadeIn } from "@/components/shared/fade-in"
+
+// Logos sized by eye, so a square badge and a wide wordmark read at the same weight
+const HEIGHTS: Record<string, string> = {
+  "SD Voyager": "h-8 sm:h-9",
+  "ABC 10 News San Diego": "h-12 sm:h-14",
+  "UC San Diego": "h-12 sm:h-14",
+}
 
 export function FeaturedOn() {
   return (
-    <section id="featured" className="bg-cream py-14 sm:py-18">
-      <div className="mx-auto max-w-7xl px-6">
-        <FadeIn>
-          <h2 className="text-center font-display text-2xl italic text-navy sm:text-3xl">
-            Featured on
-          </h2>
-        </FadeIn>
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-12">
-          {PRESS.map((outlet, i) => (
-            <PhotoDevelop key={outlet.name} delay={i * 200}>
+    <section id="featured" className="bg-paper py-16 text-ink sm:py-20">
+      <div className="mx-auto flex max-w-[1312px] flex-col gap-8 px-5 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12">
+        <h2 className="label text-ink-2">As featured in</h2>
+        <ul className="flex flex-wrap items-center gap-x-12 gap-y-6">
+          {PRESS.map((outlet) => (
+            <li key={outlet.name}>
               <a
                 href={outlet.url}
                 target="_blank"
                 rel="external noopener noreferrer"
-                className="transition-opacity hover:opacity-80"
+                className="block opacity-80 grayscale transition-[opacity,filter] hover:opacity-100 hover:grayscale-0"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -26,12 +27,12 @@ export function FeaturedOn() {
                   alt={`Featured in ${outlet.name}`}
                   loading="lazy"
                   decoding="async"
-                  className="h-16 w-auto object-contain sm:h-20"
+                  className={`w-auto object-contain ${HEIGHTS[outlet.name] ?? "h-12"}`}
                 />
               </a>
-            </PhotoDevelop>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )
