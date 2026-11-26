@@ -31,21 +31,27 @@ export function Hero({ works, places }: { works: number; places: number }) {
   }, [])
   const { period } = useTimeTheme()
 
+  // The watermark itself, unchanged
+  const arabicName = (
+    <p
+      className="pointer-events-none absolute bottom-[8%] left-[3%] select-none font-semibold leading-none text-white/[0.05]"
+      style={{ fontSize: "clamp(10rem, 28vw, 28rem)" }}
+      dir="rtl"
+      lang="ar"
+      aria-hidden="true"
+    >
+      مازن
+    </p>
+  )
+
   return (
     <section id="hero" className="relative overflow-hidden bg-wall text-ivory">
-      {/* Arabic watermark, still and faint, kept exactly as it was. It keeps its old frame too: a box one
-          screen tall from the top of the entrance (the portrait used to fill exactly one screen), so its
-          bottom-[8%] puts it in the same place on arrival as before, on the first screen behind the name. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[100svh]">
-        <p
-          className="pointer-events-none absolute bottom-[8%] left-[3%] select-none font-semibold leading-none text-white/[0.05]"
-          style={{ fontSize: "clamp(10rem, 28vw, 28rem)" }}
-          dir="rtl"
-          lang="ar"
-          aria-hidden="true"
-        >
-          مازن
-        </p>
+      {/* The Arabic name, still and faint, kept exactly as it was. On a computer it keeps its old frame: a box
+          one screen tall from the top of the entrance (the portrait used to fill exactly one screen), so its
+          bottom-[8%] lands where it always did, behind the name. On a phone the name and intro come first and
+          the portrait follows, so there it sits behind the intro block (below), never behind the photograph. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 hidden h-[100svh] lg:block">
+        {arabicName}
       </div>
 
       <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1312px] items-center gap-10 px-5 pb-16 pt-24 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-12 lg:pb-20 lg:pt-28">
@@ -79,7 +85,11 @@ export function Hero({ works, places }: { works: number; places: number }) {
         </figure>
 
         {/* Name first: on a phone the entrance opens on who this is, the portrait just under it (owner, 26 Nov 2026) */}
-        <div className="order-first">
+        <div className="relative order-first">
+          {/* On a phone and tablet: the same Arabic name, behind the intro block, the full width of the screen */}
+          <div aria-hidden="true" className="pointer-events-none absolute -inset-x-5 inset-y-0 -z-10 sm:-inset-x-8 lg:hidden">
+            {arabicName}
+          </div>
           <p className="label text-brass" style={entrance(play, 150)}>
             No. 01 &middot; The Entrance
           </p>
