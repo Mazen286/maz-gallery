@@ -1,19 +1,26 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import { FadeIn } from "@/components/shared/fade-in"
 import Link from "next/link"
-import { ArrowRight, ExternalLink } from "lucide-react"
-import { ALL_PROJECTS as PROJECTS } from "@/lib/projects"
+import { FadeIn } from "@/components/shared/fade-in"
+import { SectionHead } from "@/components/shared/section-head"
+import { ProjectCard } from "@/components/projects/project-card"
+import { ALL_PROJECTS as PROJECTS, PROJECT_ROOMS, projectBySlug } from "@/lib/projects"
+import { SITE_URL } from "@/lib/constants"
+
+// The newest piece in the wing gets the featured panel
+const FEATURED = "runes-brewstorm"
+
+const DESCRIPTION =
+  "Projects by Mazen Abugharbieh, a data analyst in San Diego: Figment Analytics, SurfUp, Figment Forever, Café Maz, data dashboards and browser games from Figment Gaming."
 
 export const metadata: Metadata = {
-  title: "Projects | Figment Analytics, SurfUp",
-  description:
-    "Explore my projects: Figment Analytics, SurfUp, LA 311, FlightPulse, Figment Gaming, Runes & Reagents, Runes: Brewstorm, Ink & Knuckles 2, and more, with live demos and the lessons each one taught me.",
+  title: "Projects by Mazen Abugharbieh",
+  description: DESCRIPTION,
   alternates: { canonical: "/projects" },
   openGraph: {
     title: "Projects by Mazen Abugharbieh",
-    description: "Startups, dashboards, games, and experiments. Figment Analytics, SurfUp, LA 311 Dashboard, and more.",
-    url: "https://maz.gallery/projects",
+    description: "Startups, dashboards, games, and experiments, each with its own page.",
+    url: `${SITE_URL}/projects`,
     images: [{ url: "/images/projects/figment-analytics.png", width: 1200, height: 675, alt: "Figment Analytics" }],
   },
   twitter: {
@@ -24,89 +31,15 @@ export const metadata: Metadata = {
   },
 }
 
-function ProjectCard({
-  project,
-  index,
-}: {
-  project: (typeof PROJECTS)[number]
-  index: number
-}) {
-  const external = project.url.startsWith("http")
-  // Internal projects stay inside the app; external ones open a new tab
-  const Card = external ? "a" : Link
-  return (
-    <FadeIn delay={(index % 3) * 80}>
-      <Card
-        href={project.url}
-        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg"
-      >
-        {/* Image — 16:9 (matches most sources); contain so nothing crops,
-            with a faint accent panel framing any letterbox */}
-        <div
-          className="relative aspect-video overflow-hidden"
-          style={{ backgroundColor: `${project.accent}14` }}
-        >
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-contain transition-transform duration-700 group-hover:scale-[1.03]"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
-        </div>
-
-        {/* Content — fills remaining height so footers align */}
-        <div className="flex flex-1 flex-col p-5">
-          <p
-            className="font-mono text-[10px] font-semibold uppercase tracking-[0.25em]"
-            style={{ color: project.accent }}
-          >
-            {project.subtitle}
-          </p>
-          <h2 className="mt-1.5 font-display text-xl text-navy">
-            {project.title}
-          </h2>
-          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-charcoal/55">
-            {project.description}
-          </p>
-
-          {/* Footer pinned to the bottom of every card */}
-          <div className="mt-auto pt-4">
-            <div className="flex flex-wrap gap-1.5">
-              {project.tags.slice(0, 3).map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-navy/10 px-2.5 py-0.5 text-[10px] font-medium text-navy/45"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <span className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-navy/60 transition-all duration-300 group-hover:gap-2.5 group-hover:text-navy">
-              {project.cta}
-              {external ? <ExternalLink className="size-3" /> : <ArrowRight className="size-3" />}
-            </span>
-          </div>
-        </div>
-
-        {/* Accent bottom line */}
-        <div
-          className="h-[3px] w-0 transition-all duration-500 group-hover:w-full"
-          style={{ backgroundColor: project.accent }}
-        />
-      </Card>
-    </FadeIn>
-  )
-}
-
 export default function ProjectsPage() {
+  const featured = projectBySlug(FEATURED)
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://maz.gallery" },
-      { "@type": "ListItem", position: 2, name: "Projects", item: "https://maz.gallery/projects" },
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Projects", item: `${SITE_URL}/projects` },
     ],
   }
 
@@ -114,50 +47,126 @@ export default function ProjectsPage() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: "Projects by Mazen Abugharbieh",
-    description: "Startups, dashboards, games, and experiments.",
-    url: "https://maz.gallery/projects",
-    hasPart: PROJECTS.map((p) => ({
-      "@type": "CreativeWork",
-      name: p.title,
-      description: p.description,
-      url: p.url,
-    })),
+    description: DESCRIPTION,
+    url: `${SITE_URL}/projects`,
+    author: { "@id": `${SITE_URL}/about#person` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: PROJECTS.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${SITE_URL}/projects/${p.slug}`,
+        name: p.title,
+      })),
+    },
   }
 
   return (
-    <div className="bg-slate-50">
+    <div className="bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsSchema) }} />
-      {/* Hero */}
-      <section className="bg-white pb-8 pt-36 sm:pt-44">
-        <div className="mx-auto max-w-5xl px-6">
+
+      {/* Title */}
+      <section className="pb-12 pt-32 sm:pt-40">
+        <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
           <FadeIn immediate>
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.4em] text-teal">
-              No. 04 &middot; Projects Wing
-            </p>
-            <h1
-              className="mt-4 font-display font-semibold leading-[1] text-navy"
-              style={{ fontSize: "clamp(2.8rem, 8vw, 6.5rem)" }}
-            >
-              What I<br /><span className="italic">build</span>
-            </h1>
-            <p className="mt-6 max-w-lg font-display text-lg italic text-charcoal/50">
-              Startups, dashboards, games, and experiments. Each one taught me
-              something the last one couldn&apos;t.
-            </p>
+            <p className="label text-brass-ink">No. 04 &middot; Projects Wing</p>
+            <div className="mt-5 grid gap-8 lg:grid-cols-[1fr_24rem] lg:items-end lg:gap-16">
+              <h1
+                className="font-display font-normal leading-[0.95] tracking-[-0.02em]"
+                style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)" }}
+              >
+                What I <span className="italic">build</span>
+              </h1>
+              <p className="font-display text-lg leading-relaxed text-ink-2 sm:text-xl">
+                Startups, dashboards, games, and experiments. Each one taught me something the last one
+                couldn&apos;t.
+              </p>
+            </div>
           </FadeIn>
+          <nav aria-label="Rooms in the wing" className="mt-12 flex flex-wrap gap-2 border-t border-line pt-6">
+            {PROJECT_ROOMS.map((room) => (
+              <a
+                key={room.id}
+                href={`#${room.id}`}
+                className="inline-flex min-h-10 items-center gap-2 rounded-full border border-line px-4 text-sm text-ink transition-colors hover:border-ink"
+              >
+                {room.name}
+                <span className="text-ink-3">{PROJECTS.filter((p) => p.room === room.id).length}</span>
+              </a>
+            ))}
+          </nav>
         </div>
       </section>
 
-      {/* Uniform grid: 1 / 2 / 3 columns, identical tiles at every width */}
-      <section className="pb-32 pt-6">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {PROJECTS.map((project, i) => (
-              <ProjectCard key={project.title} project={project} index={i} />
-            ))}
+      {/* Featured: the newest piece in the wing */}
+      {featured && (
+        <section className="pb-8">
+          <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
+            <div className="grid overflow-hidden bg-[#121a10] text-ivory lg:grid-cols-[1.5fr_1fr]">
+              <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[480px]">
+                <Image
+                  src="/images/projects/runes-brewstorm-wide.webp"
+                  alt="Nestor the fox lifts a carved puzzle board in a sunlit forest while a ribbon of runes and potions arcs over him"
+                  fill
+                  className="object-cover object-[45%_50%]"
+                  sizes="(min-width: 1024px) 760px, 100vw"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 hidden bg-gradient-to-r from-transparent from-60% to-[#121a10] lg:block"
+                />
+              </div>
+              <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12">
+                <p className="label text-brass-2">New in the wing &middot; {featured.subtitle}</p>
+                <h2 className="mt-4 font-display text-[36px] leading-[1.05] sm:text-[44px]">{featured.title}</h2>
+                <p className="mt-5 text-[15px] leading-relaxed text-mist">{featured.description}</p>
+                <p className="mt-5 text-[13px] text-mist-2">{featured.tags.join(" · ")}</p>
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <a href={featured.url} target="_blank" rel="noopener noreferrer" className="btn btn-ivory">
+                    Play it free
+                  </a>
+                  <Link href={`/projects/${featured.slug}`} className="btn btn-line text-ivory">
+                    Read about it
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
+      )}
+
+      {/* The rooms of the wing */}
+      {PROJECT_ROOMS.map((room) => {
+        const items = PROJECTS.filter((p) => p.room === room.id && p.slug !== FEATURED)
+        return (
+          <section key={room.id} id={room.id} aria-labelledby={`${room.id}-title`} className="scroll-mt-24 pt-20 sm:pt-24">
+            <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
+              <SectionHead title={room.name} />
+              <h2 id={`${room.id}-title`} className="sr-only">
+                {room.name}
+              </h2>
+              <p className="mt-5 max-w-xl text-[15px] text-ink-2">{room.blurb}</p>
+              <div className="mt-10 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((project, i) => (
+                  <FadeIn key={project.slug} delay={(i % 3) * 80}>
+                    <ProjectCard project={project} />
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      })}
+
+      {/* A closing line and one action */}
+      <section className="px-5 pb-28 pt-28 text-center sm:pb-36 sm:pt-36">
+        <h2 className="font-display text-[34px] leading-tight sm:text-[48px]">
+          Have something worth <span className="italic text-brass-ink">building?</span>
+        </h2>
+        <Link href="/booking" className="btn btn-ink mt-8">
+          Say hello at the Front Desk
+        </Link>
       </section>
     </div>
   )
