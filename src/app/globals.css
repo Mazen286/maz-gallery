@@ -158,6 +158,25 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Home hero entrance (hero.tsx) */
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroSettle {
+  from { transform: scale(1.05); }
+  to { transform: scale(1); }
+}
+
+/* FadeIn immediate: the same rise as the scroll reveal (1rem, 500 ms, ease-out), on first paint */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise-in {
+  animation: riseIn 500ms cubic-bezier(0, 0, 0.2, 1) both;
+}
+
 /* ─── Keyframes: Cursor word trail ─── */
 @keyframes wordFade {
   0% { opacity: 0.4; transform: translateY(0) scale(1); }

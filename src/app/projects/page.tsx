@@ -131,7 +131,7 @@ export default function ProjectsPage() {
       {/* Hero */}
       <section className="bg-white pb-8 pt-36 sm:pt-44">
         <div className="mx-auto max-w-5xl px-6">
-          <FadeIn>
+          <FadeIn immediate>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.4em] text-teal">
               No. 04 &middot; Projects Wing
             </p>

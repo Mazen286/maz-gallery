@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { NAV_LINKS, ROOMS, EMAIL, SOCIAL, roomSubtitle } from "@/lib/constants"
-import { useHydrated } from "@/hooks/use-client-state"
 import { Magnetic } from "@/components/shared/magnetic"
 import { ScrambleWrapper } from "@/components/shared/text-scramble"
 
@@ -17,7 +16,6 @@ export function Navbar() {
   const open = openOn !== null && openOn === pathname
   const setOpen = (next: boolean) => setOpenOn(next ? pathname : null)
   const [scrolled, setScrolled] = useState(false)
-  const mounted = useHydrated()
   const isHome = pathname === "/"
   const hideChrome = pathname?.startsWith("/cafe-maz") ?? false
 
@@ -39,7 +37,9 @@ export function Navbar() {
     }
   }, [open])
 
-  const solid = !mounted || scrolled || !isHome
+  // On the entrance the bar starts clear over the dark portrait, in the HTML
+  // too, so it never flashes white before the page's JavaScript arrives
+  const solid = scrolled || !isHome
 
   if (hideChrome) return null
 

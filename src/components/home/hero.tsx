@@ -1,9 +1,8 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
-import { useHydrated } from "@/hooks/use-client-state"
 import { useTimeTheme, type TimeOfDay } from "@/hooks/use-time-theme"
 
 const GREETINGS: Record<TimeOfDay, string> = {
@@ -13,32 +12,31 @@ const GREETINGS: Record<TimeOfDay, string> = {
   night: "The gallery is open late tonight.",
 }
 
-// Staggered entrance: each block rises into place once, then everything is still
-function entrance(mounted: boolean, delay: number): React.CSSProperties {
-  return {
-    opacity: mounted ? 1 : 0,
-    transform: mounted ? "translateY(0)" : "translateY(24px)",
-    transition: `opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 1100ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-  }
+// The entrance plays once per page load. Coming back to the entrance from
+// another room within the site, everything is already in place.
+let entrancePlayed = false
+
+// Staggered entrance: each block rises into place once, then everything is still.
+// CSS animations (heroRise, heroSettle in globals.css) start on first paint, so
+// the name and portrait never wait for the page's JavaScript; with reduced
+// motion every animation finishes at once.
+function entrance(play: boolean, delay: number): React.CSSProperties {
+  return play ? { animation: `heroRise 1100ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms both` } : {}
 }
 
 export function Hero() {
-  // false while the HTML is rendered and hydrated, true right after: the entrance rises once
-  const mounted = useHydrated()
-  const reduced = useReducedMotion()
+  const [play] = useState(() => !entrancePlayed)
+  useEffect(() => {
+    entrancePlayed = true
+  }, [])
   const { period } = useTimeTheme()
-
-  const settled = mounted || reduced
 
   return (
     <section id="hero" className="relative min-h-[100svh] overflow-hidden bg-[#0a0c11]">
       {/* Portrait settles with a single slow ease on load, then holds still */}
       <div
         className="absolute inset-0"
-        style={{
-          transform: settled ? "scale(1)" : "scale(1.05)",
-          transition: "transform 2400ms cubic-bezier(0.22, 1, 0.36, 1)",
-        }}
+        style={play ? { animation: "heroSettle 2400ms cubic-bezier(0.22, 1, 0.36, 1) both" } : undefined}
       >
         <Image
           src="/images/hero-portrait.jpg"
@@ -68,7 +66,7 @@ export function Hero() {
         <div className="mx-auto w-full max-w-7xl px-6 pb-14 sm:pb-20">
           <p
             className="font-mono text-[11px] font-medium uppercase tracking-[0.4em] text-teal"
-            style={entrance(mounted, 150)}
+            style={entrance(play, 150)}
           >
             {GREETINGS[period]}
           </p>
@@ -77,7 +75,7 @@ export function Hero() {
             className="mt-5 font-display font-semibold leading-[0.95] text-white"
             style={{
               fontSize: "clamp(2.9rem, 10vw, 8.5rem)",
-              ...entrance(mounted, 300),
+              ...entrance(play, 300),
             }}
           >
             Mazen
@@ -87,13 +85,13 @@ export function Hero() {
 
           <p
             className="mt-6 max-w-xl font-display text-lg leading-relaxed text-white/75 sm:text-xl"
-            style={entrance(mounted, 550)}
+            style={entrance(play, 550)}
           >
             A data analyst in San Diego who takes photographs. This is where the
             photographs live, with the stories behind them.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3" style={entrance(mounted, 800)}>
+          <div className="mt-8 flex flex-wrap items-center gap-3" style={entrance(play, 800)}>
             <Link
               href="/gallery"
               className="rounded-full bg-white px-7 py-3 text-sm font-semibold text-[#0a0c11] transition-colors hover:bg-teal"
@@ -113,7 +111,7 @@ export function Hero() {
       {/* Museum label placard */}
       <div
         className="absolute bottom-14 right-6 z-10 hidden max-w-[230px] border border-white/15 bg-black/30 p-4 backdrop-blur-sm md:block lg:right-10"
-        style={entrance(mounted, 1200)}
+        style={entrance(play, 1200)}
       >
         <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/80">
           Self Portrait
