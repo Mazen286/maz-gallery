@@ -33,16 +33,20 @@ export function Hero({ works, places }: { works: number; places: number }) {
 
   return (
     <section id="hero" className="relative overflow-hidden bg-wall text-ivory">
-      {/* Arabic watermark, still and faint (kept exactly as it was) */}
-      <p
-        className="pointer-events-none absolute bottom-[8%] left-[3%] select-none font-semibold leading-none text-white/[0.05]"
-        style={{ fontSize: "clamp(10rem, 28vw, 28rem)" }}
-        dir="rtl"
-        lang="ar"
-        aria-hidden="true"
-      >
-        مازن
-      </p>
+      {/* Arabic watermark, still and faint, kept exactly as it was. It keeps its old frame too: a box one
+          screen tall from the top of the entrance (the portrait used to fill exactly one screen), so its
+          bottom-[8%] puts it in the same place on arrival as before, on the first screen behind the name. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[100svh]">
+        <p
+          className="pointer-events-none absolute bottom-[8%] left-[3%] select-none font-semibold leading-none text-white/[0.05]"
+          style={{ fontSize: "clamp(10rem, 28vw, 28rem)" }}
+          dir="rtl"
+          lang="ar"
+          aria-hidden="true"
+        >
+          مازن
+        </p>
+      </div>
 
       <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1312px] items-center gap-10 px-5 pb-16 pt-24 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-12 lg:pb-20 lg:pt-28">
         {/* The portrait hangs in a mat at its own size, so it stays sharp on wide and dense screens */}
