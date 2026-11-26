@@ -313,28 +313,6 @@ body:has([data-tone="dark"]) .site-nav {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Entrance title card (cinematic-intro.tsx): black until 250 ms, light leak and
-   title by 700 ms, reveal by 1200 ms, gone at 1300 ms. Percentages are of 1300 ms. */
-@keyframes introBlack {
-  0%, 19.23% { opacity: 1; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-  53.85% { opacity: 0.85; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-  92.31%, 100% { opacity: 0; }
-}
-@keyframes introLeak {
-  0%, 19.23% { opacity: 0; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-  53.85% { opacity: 1; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-  92.31%, 100% { opacity: 0; }
-}
-@keyframes introTitle {
-  0%, 19.23% { opacity: 0; transform: scale(1); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-  53.85% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-  92.31%, 100% { opacity: 1; transform: scale(1.06); }
-}
-@keyframes introDone {
-  from { visibility: visible; }
-  to { visibility: hidden; pointer-events: none; }
-}
-
 /* Home hero entrance (hero.tsx) */
 @keyframes heroRise {
   from { opacity: 0; transform: translateY(24px); }
