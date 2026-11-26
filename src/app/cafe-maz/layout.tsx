@@ -15,17 +15,22 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 })
 
+// The Arabic and mono faces are not preloaded: preloading fetches every
+// weight and style up front, while without it the browser fetches only the
+// faces a page actually draws, once it draws them
 const amiri = Amiri({
   variable: "--font-amiri",
   subsets: ["arabic"],
   weight: ["400", "700"],
   style: ["normal", "italic"],
+  preload: false,
 })
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  preload: false,
 })
 
 export const metadata: Metadata = {
