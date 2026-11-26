@@ -177,7 +177,7 @@ export function SwipeCarousel({
       onPointerDown={(e) => e.stopPropagation()}
       onClick={() => settle(dir)}
       aria-label={dir === 1 ? "Next photo" : "Previous photo"}
-      className={`absolute top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-black/30 p-2.5 text-white/60 opacity-0 backdrop-blur-sm transition-all duration-200 hover:bg-black/50 hover:text-white group-hover:opacity-100 sm:block ${
+      className={`absolute top-1/2 z-10 hidden -translate-y-1/2 size-11 items-center justify-center rounded-full bg-wall/60 text-ivory opacity-0 backdrop-blur-sm transition-all duration-200 hover:bg-wall/85 focus-visible:opacity-100 group-hover:opacity-100 sm:flex ${
         dir === 1 ? "right-3" : "left-3"
       }`}
     >

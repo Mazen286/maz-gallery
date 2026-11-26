@@ -22,7 +22,7 @@ function GalleryImage({ src, alt, width, height, onClick }: {
     <div ref={ref}>
       <button
         onClick={onClick}
-        className="mb-4 block w-full overflow-hidden rounded-lg transition-all duration-700 hover:scale-[1.02]"
+        className="mb-4 block w-full overflow-hidden transition-all duration-700 hover:scale-[1.02]"
         style={{
           filter: isVisible ? "grayscale(0)" : "grayscale(1)",
           opacity: isVisible ? 1 : 0.6,
@@ -77,7 +77,7 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
 
   if (images.length === 0) {
     return (
-      <p className="py-20 text-center text-white/50">
+      <p className="py-20 text-center text-mist">
         No photos found for this location.
       </p>
     )
@@ -109,14 +109,14 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
         >
           {/* Blurred background layer */}
           <div
-            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            className="absolute inset-0 bg-wall/90 backdrop-blur-md"
             style={{ animation: "fadeIn 0.3s ease-out" }}
           />
 
           {/* Close button */}
           <button
             onClick={() => select(null)}
-            className="absolute right-4 top-4 z-20 rounded-full bg-white/10 p-2 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white"
+            className="absolute right-4 top-4 z-20 flex size-11 items-center justify-center rounded-full bg-wall-3/80 text-ivory backdrop-blur-sm transition-colors hover:bg-wall-3"
             aria-label="Close"
           >
             <X className="size-6" />
@@ -135,36 +135,30 @@ export function GalleryGrid({ filterLocation, images: imagesProp }: GalleryGridP
             />
 
             <div className="max-w-lg px-4 pb-2 text-center">
-              {images[selected].location && (
-                <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
-                  {images[selected].location}
-                </p>
-              )}
-              <h3 className="mt-1.5 font-display text-lg italic text-white">
+              {images[selected].location && <p className="label text-brass">{images[selected].location}</p>}
+              <h3 className="mt-2 font-display text-xl italic text-ivory">
                 {images[selected].alt}
               </h3>
               {images[selected].story && (
                 <>
-                  <p className={`mt-2 text-sm leading-relaxed text-white/45 ${storyOpen ? "" : "line-clamp-3"}`}>
+                  <p className={`mt-2 text-sm leading-relaxed text-mist ${storyOpen ? "" : "line-clamp-3"}`}>
                     {images[selected].story}
                   </p>
                   <button
                     type="button"
                     onClick={() => setStoryOpen((o) => !o)}
-                    className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-teal/70 transition-colors hover:text-teal"
+                    className="mt-1 inline-flex min-h-11 items-center text-[13px] font-semibold text-brass-2 underline-offset-4 hover:underline"
+                    aria-expanded={storyOpen}
                   >
                     {storyOpen ? "Less" : "Read the story"}
                   </button>
                 </>
               )}
-              <p className="mt-3 font-mono text-[9px] text-white/25">
-                {selected + 1} / {images.length}
+              <p className="mt-2 text-[13px] tabular-nums text-mist-2">
+                {selected + 1} of {images.length}
               </p>
-              <Link
-                href={`/gallery/${photoSlug(images[selected])}`}
-                className="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.25em] text-teal/70 transition-colors hover:text-teal"
-              >
-                Open this photograph &rarr;
+              <Link href={`/gallery/${photoSlug(images[selected])}`} className="link-arrow mt-3 text-ivory">
+                Open this photograph
               </Link>
             </div>
           </div>
