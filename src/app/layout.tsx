@@ -23,6 +23,10 @@ const fraunces = Fraunces({
   style: ["normal", "italic"],
 })
 
+// Runs before the entrance curtain (cinematic-intro.tsx) is parsed: anyone who
+// has seen it this session, or prefers reduced motion, never sees it drawn
+const HIDE_SEEN_INTRO = `try{if(sessionStorage.getItem("intro-seen")==="1"||matchMedia("(prefers-reduced-motion: reduce)").matches){var s=document.createElement("style");s.textContent="#intro-curtain{display:none}";document.head.appendChild(s)}}catch(e){}`
+
 export const metadata: Metadata = {
   title: {
     default: `${SITE_NAME} | Mazen Abugharbieh`,
@@ -100,6 +104,7 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
+        <script dangerouslySetInnerHTML={{ __html: HIDE_SEEN_INTRO }} />
         <GalleryChrome />
         <Navbar />
         <main id="main-content" className="flex-1">
