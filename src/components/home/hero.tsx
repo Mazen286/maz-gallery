@@ -50,7 +50,7 @@ export function Hero({ works, places }: { works: number; places: number }) {
 
       <div className="relative z-10 mx-auto grid min-h-[100svh] max-w-[1312px] items-center gap-10 px-5 pb-16 pt-24 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-12 lg:pb-20 lg:pt-28">
         {/* The portrait hangs in a mat at its own size, so it stays sharp on wide and dense screens */}
-        <figure className="order-first mx-auto w-full max-w-[min(100%,calc(52svh*0.8))] sm:max-w-[420px] lg:order-last lg:mx-0 lg:ml-auto lg:max-w-[460px]">
+        <figure className="mx-auto w-full max-w-[min(100%,calc(52svh*0.8))] sm:max-w-[420px] lg:order-last lg:mx-0 lg:ml-auto lg:max-w-[460px]">
           <div
             className="frame"
             style={play ? { animation: "heroRise 1300ms cubic-bezier(0.16, 1, 0.3, 1) 100ms both" } : undefined}
@@ -78,7 +78,8 @@ export function Hero({ works, places }: { works: number; places: number }) {
           </figcaption>
         </figure>
 
-        <div>
+        {/* Name first: on a phone the entrance opens on who this is, the portrait just under it (owner, 26 Nov 2026) */}
+        <div className="order-first">
           <p className="label text-brass" style={entrance(play, 150)}>
             No. 01 &middot; The Entrance
           </p>
