@@ -54,7 +54,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
           width: "100%",
           height: "100%",
           display: "flex",
-          background: "#0a0c11",
+          background: "#0d0e11",
           position: "relative",
           fontFamily: "Fraunces",
         }}
@@ -73,11 +73,11 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(180deg, rgba(10,12,17,0.2) 0%, rgba(10,12,17,0.55) 55%, rgba(10,12,17,0.95) 100%)",
+            background: "linear-gradient(180deg, rgba(13,14,17,0.2) 0%, rgba(13,14,17,0.55) 55%, rgba(13,14,17,0.95) 100%)",
           }}
         />
         <div style={{ position: "absolute", left: 72, right: 72, bottom: 64, display: "flex", flexDirection: "column", gap: 14 }}>
-          <div style={{ fontFamily: "JetBrains Mono", fontSize: 20, letterSpacing: 8, color: "#78c8d6" }}>THE DAILY POSTCARD</div>
+          <div style={{ fontFamily: "JetBrains Mono", fontSize: 20, letterSpacing: 8, color: "#d8bd86" }}>THE DAILY POSTCARD</div>
           <div style={{ fontSize: 84, lineHeight: 1.02, color: "#ffffff" }}>Where was this taken?</div>
           <div style={{ fontFamily: "JetBrains Mono", fontSize: 20, letterSpacing: 4, color: "rgba(255,255,255,0.55)" }}>
             ONE PHOTO · THREE TRIES · MAZ.GALLERY/DAILY
