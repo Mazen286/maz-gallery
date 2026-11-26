@@ -106,7 +106,7 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
   }
 
   const share = async () => {
-    const text = `The Daily Postcard No. ${puzzle.number}\n${squares(guesses, won)}\nhttps://maz.gallery/daily`
+    const text = `Postcard ${puzzle.number} · The Daily Postcard\n${squares(guesses, won)}\nhttps://maz.gallery/daily`
     try {
       await navigator.clipboard.writeText(text)
       setCopied(true)

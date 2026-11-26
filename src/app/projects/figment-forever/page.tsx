@@ -43,7 +43,9 @@ export const metadata: Metadata = {
 function Figure({ src, alt, caption, width = 1600, height = 1150 }: { src: string; alt: string; caption: string; width?: number; height?: number }) {
   return (
     <figure className="not-prose my-12">
-      <Image src={src} alt={alt} width={width} height={height} className="h-auto w-full rounded-xl" sizes="(max-width: 768px) 100vw, 768px" />
+      <div className="frame-light">
+        <Image src={src} alt={alt} width={width} height={height} className="h-auto w-full" sizes="(max-width: 768px) 100vw, 768px" />
+      </div>
       <figcaption className="mt-3 text-center font-display text-[15px] italic text-ink-3">{caption}</figcaption>
     </figure>
   )
@@ -118,7 +120,7 @@ export default function FigmentForeverPage() {
           <p className="mt-4 text-[13px] text-ink-3">By Mazen Abugharbieh</p>
 
           {/* the four openings, in motion: what a guest sees first */}
-          <div className="relative mt-8 aspect-[16/10] overflow-hidden rounded-xl bg-[#f4f1eb]">
+          <div className="frame-light mt-8"><div className="relative aspect-[16/10] overflow-hidden bg-[#f4f1eb]">
             <LoopVideo
               src={`${IMG}/openings-v3.mp4`}
               poster={`${IMG}/openings-v3-poster.webp`}
@@ -127,7 +129,7 @@ export default function FigmentForeverPage() {
               height={1000}
               className="absolute inset-0 h-full w-full object-cover"
             />
-          </div>
+          </div></div>
 
           <div className="mt-6">
             <p className="label mb-3 text-ink-3">
@@ -211,8 +213,8 @@ export default function FigmentForeverPage() {
             </ul>
             <figure className="not-prose my-12">
               <div className="grid gap-3 sm:grid-cols-2">
-                <Image src={`${IMG}/console-household.webp`} alt="One household in the dashboard: its invitation, contact details, celebrations and guests" width={1400} height={1750} className="h-auto w-full rounded-xl" sizes="(max-width: 640px) 100vw, 384px" />
-                <Image src={`${IMG}/console-seating.webp`} alt="The seating planner: a room with tables, every guest seated, colored by side" width={1400} height={1750} className="h-auto w-full rounded-xl" sizes="(max-width: 640px) 100vw, 384px" />
+                <Image src={`${IMG}/console-household.webp`} alt="One household in the dashboard: its invitation, contact details, celebrations and guests" width={1400} height={1750} className="frame-light h-auto w-full" sizes="(max-width: 640px) 100vw, 384px" />
+                <Image src={`${IMG}/console-seating.webp`} alt="The seating planner: a room with tables, every guest seated, colored by side" width={1400} height={1750} className="frame-light h-auto w-full" sizes="(max-width: 640px) 100vw, 384px" />
               </div>
               <Caption>A household&apos;s invitation, guests and replies, and the seating planner.</Caption>
             </figure>

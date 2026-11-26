@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic"
 
 export async function generateMetadata(): Promise<Metadata> {
   const puzzle = getDailyPuzzle()
-  const title = `The Daily Postcard No. ${puzzle.number}`
+  const title = `Postcard ${puzzle.number} · The Daily Postcard`
   // Prerendered per photograph, so the daily preview costs nothing to serve
   const card = { url: `/daily/card/${photoSlug(puzzle.image)}`, width: 1200, height: 630, alt: "The Daily Postcard: where was this taken?" }
   const description = "One photograph from the collection every day. Guess where it was taken in three tries, keep your streak alive, and share your result."
