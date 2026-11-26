@@ -129,7 +129,7 @@ export const PROJECT_PAGES: ProjectPage[] = [
     slug: "surfup",
     title: "SurfUp",
     summary:
-      "SurfUp makes SurfPods, self-service surfboard rental stations you unlock with a phone app. I co-founded it, and it is now live in Waikiki.",
+      "SurfUp makes SurfPods, self-service surfboard rental stations unlocked with a phone app, co-founded by Mazen Abugharbieh and now live in Waikiki.",
     cardLine: "Self-service surfboard rental stations, from San Diego to Waikiki.",
     schemaType: "Organization",
     facts: [
