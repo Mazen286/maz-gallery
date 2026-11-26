@@ -67,7 +67,7 @@ export const ALL_PROJECTS: {
     description:
       "A one-table home café for friends who come over. Bilingual brand system with a digital menu, printable menu, and hookah combos named after Palestinian places.",
     url: "/cafe-maz/cafe",
-    image: "/images/projects/cafe-maz.png",
+    image: "/images/projects/cafe-maz/website.webp",
     cta: "Step Inside",
     tags: ["Brand System", "Bilingual", "Hospitality"],
     accent: "#c9a667",
