@@ -145,7 +145,7 @@ export default function AboutPage() {
           <div>
             <figure>
               <div className="frame-light">
-                <Image loading="eager" fetchPriority="low"
+                <Image
                   src="/images/about-1.jpg"
                   alt="Mazen Abugharbieh sitting on concrete steps in a checked shirt"
                   width={1500}

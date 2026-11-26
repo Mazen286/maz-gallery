@@ -68,6 +68,9 @@ export default function AnnexPage() {
                 <div className="frame p-1.5 transition-transform duration-500 ease-out group-hover:-translate-y-1 sm:p-2">
                   <div className="relative aspect-[3/2] overflow-hidden">
                     <Image
+                      // the first piece is on screen when the room opens on a phone
+                      loading={i === 0 ? "eager" : undefined}
+                      fetchPriority={i === 0 ? "high" : undefined}
                       src={art[i].src}
                       alt=""
                       fill

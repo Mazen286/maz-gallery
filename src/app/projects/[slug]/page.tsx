@@ -170,7 +170,7 @@ export default async function ProjectPageRoute({ params }: { params: Promise<{ s
       {/* Hero: key art full-bleed for the games, framed for logos and dashboards */}
       {bleed ? (
         <section className="relative flex min-h-[min(86svh,820px)] items-end overflow-hidden bg-wall">
-          <Image loading="eager" fetchPriority="low"
+          <Image
             src={page.hero.src}
             alt={page.hero.alt}
             fill
@@ -187,7 +187,7 @@ export default async function ProjectPageRoute({ params }: { params: Promise<{ s
           <div className="mx-auto grid max-w-[1312px] items-center gap-12 px-5 pb-16 pt-28 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-16 lg:px-12 lg:pb-24 lg:pt-36">
             <div>{titleBlock}</div>
             <div className="frame">
-              <Image loading="eager" fetchPriority="low"
+              <Image
                 src={page.hero.src}
                 alt={page.hero.alt}
                 width={page.hero.width}
