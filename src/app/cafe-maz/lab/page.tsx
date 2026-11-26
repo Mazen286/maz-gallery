@@ -272,7 +272,7 @@ ${ratiosLines}
       </nav>
 
       <section className={styles.hero}>
-        <p className={styles.heroEyebrow}>— For Maz · Behind the Bar —</p>
+        <p className={styles.heroEyebrow}>✦ For Maz · Behind the Bar ✦</p>
         <h1 className={styles.heroH1}>
           FLAVOR <span className={styles.acc}>LAB</span>
         </h1>
@@ -293,7 +293,7 @@ ${ratiosLines}
         <div className={styles.sectionHead}>
           <span className={styles.sectionNum}>№ 01</span>
           <h2 className={styles.sectionH2}>Filter by Profile</h2>
-          <span className={styles.sectionAr} lang="ar" dir="rtl">— تصفية</span>
+          <span className={styles.sectionAr} lang="ar" dir="rtl">✦ تصفية</span>
           <span className={styles.sectionRule} />
           {activeFamilies.size > 0 && (
             <button
@@ -331,7 +331,7 @@ ${ratiosLines}
         <div className={styles.sectionHead}>
           <span className={styles.sectionNum}>№ 02</span>
           <h2 className={styles.sectionH2}>Pick From the Shelf</h2>
-          <span className={styles.sectionAr} lang="ar" dir="rtl">— الرف</span>
+          <span className={styles.sectionAr} lang="ar" dir="rtl">✦ الرف</span>
           <span className={styles.sectionRule} />
         </div>
 
@@ -420,19 +420,19 @@ ${ratiosLines}
         <div className={styles.sectionHead}>
           <span className={styles.sectionNum}>№ 03</span>
           <h2 className={styles.sectionH2}>Suggestions</h2>
-          <span className={styles.sectionAr} lang="ar" dir="rtl">— الاقتراحات</span>
+          <span className={styles.sectionAr} lang="ar" dir="rtl">✦ الاقتراحات</span>
           <span className={styles.sectionRule} />
         </div>
 
         {loading && (
           <div className={styles.spinnerWrap}>
             <span className={styles.spinner} />
-            <span className={styles.spinnerText}>— the bowl is being packed —</span>
+            <span className={styles.spinnerText}>✦ the bowl is being packed ✦</span>
           </div>
         )}
 
         {!loading && suggestions.length === 0 && !error && (
-          <p className={styles.placeholder}>— pick some flavors, then build —</p>
+          <p className={styles.placeholder}>✦ pick some flavors, then build ✦</p>
         )}
 
         {!loading && suggestions.length > 0 && (
@@ -454,7 +454,7 @@ ${ratiosLines}
         <div className={styles.sectionHead}>
           <span className={styles.sectionNum}>№ 04</span>
           <h2 className={styles.sectionH2}>House Bowls</h2>
-          <span className={styles.sectionAr} lang="ar" dir="rtl">— من البيت</span>
+          <span className={styles.sectionAr} lang="ar" dir="rtl">✦ من البيت</span>
           <span className={styles.sectionRule} />
           <button type="button" className={styles.miniBtn} onClick={resetBowls} title="Reset to seed list">
             ↺ reset
@@ -464,7 +464,7 @@ ${ratiosLines}
         <div className={styles.panel} style={{ padding: 0 }}>
           <PanelCorners />
           {bowls.length === 0 ? (
-            <div className={styles.bowlEmpty}>— no bowls yet · save one from above —</div>
+            <div className={styles.bowlEmpty}>✦ no bowls yet · save one from above ✦</div>
           ) : (
             bowls.map((b, idx) => (
               <div key={b.id} className={styles.bowl}>
@@ -503,7 +503,7 @@ ${ratiosLines}
         <div className={styles.sectionHead}>
           <span className={styles.sectionNum}>№ 05</span>
           <h2 className={styles.sectionH2}>The Shelf</h2>
-          <span className={styles.sectionAr} lang="ar" dir="rtl">— الرف</span>
+          <span className={styles.sectionAr} lang="ar" dir="rtl">✦ الرف</span>
           <span className={styles.sectionRule} />
         </div>
 
@@ -591,7 +591,7 @@ function ComboCard({
       </div>
       <p className={styles.comboNote}>{c.note}</p>
       <div className={styles.comboMeta}>
-        <span className={styles.comboSession}>— {c.session} —</span>
+        <span className={styles.comboSession}>✦ {c.session} ✦</span>
         <div className={styles.comboActions}>
           <button type="button" className={styles.comboBtn} onClick={onRegenerate}>
             ↻ again

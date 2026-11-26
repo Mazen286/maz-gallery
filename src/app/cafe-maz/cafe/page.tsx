@@ -19,7 +19,7 @@ export default function CafeMazPage() {
       </nav>
 
       <section className={styles.hero}>
-        <p className={styles.heroEyebrow}>— Est. 2026 —</p>
+        <p className={styles.heroEyebrow}>✦ Est. 2026 ✦</p>
         <h1 className={styles.heroH1}>
           CAFÉ <span className={styles.acc}>MAZ</span>
         </h1>
@@ -46,7 +46,7 @@ export default function CafeMazPage() {
             {DRINK_SECTIONS.map((s) => (
               <div key={s.id}>
                 <div className={styles.subLabel}>
-                  <span className={styles.subLat}>— {s.lat} —</span>
+                  <span className={styles.subLat}>✦ {s.lat} ✦</span>
                   <span className={styles.subAr} lang="ar">{s.ar}</span>
                 </div>
                 {s.items.map((d) => (
@@ -63,7 +63,7 @@ export default function CafeMazPage() {
             ))}
 
             <div className={styles.subLabel}>
-              <span className={styles.subLat}>— {PLATES.lat} —</span>
+              <span className={styles.subLat}>✦ {PLATES.lat} ✦</span>
               <span className={styles.subAr} lang="ar">{PLATES.ar}</span>
             </div>
             <div className={styles.platesLine}>{PLATES.items}</div>
@@ -83,7 +83,7 @@ export default function CafeMazPage() {
         <p className={styles.hookahLede}>{HOOKAH_INTRO}</p>
 
         <div className={styles.subLabel} style={{ marginTop: "calc(36px * var(--sp, 1))" }}>
-          <span className={styles.subLat}>— House Combos —</span>
+          <span className={styles.subLat}>✦ House Combos ✦</span>
           <span className={styles.subAr} lang="ar">من البيت</span>
         </div>
 
@@ -120,9 +120,9 @@ export default function CafeMazPage() {
       </section>
 
       <section className={styles.visit} id="visit">
-        <p className={styles.visitEyebrow}>— Find Us —</p>
+        <p className={styles.visitEyebrow}>✦ Find Us ✦</p>
         <h2 className={styles.visitH2}>Come Over</h2>
-        <div className={styles.visitAr} lang="ar" dir="rtl">— تفضل —</div>
+        <div className={styles.visitAr} lang="ar" dir="rtl">✦ تفضل ✦</div>
         <div className={styles.whenWhere}>
           <div className={styles.wwItem}>
             <div className={styles.wwLbl}>Hours</div>

@@ -260,7 +260,7 @@
   text-transform: uppercase;
 }
 
-/* PLATES — single rotating line under the drink list */
+/* PLATES: single rotating line under the drink list */
 .platesLine {
   font-family: var(--f-head);
   font-weight: 500;
@@ -474,7 +474,7 @@
   line-height: 1.5;
 }
 
-/* SPOTIFY EMBED — small compact player below the Visit grid */
+/* SPOTIFY EMBED: small compact player below the Visit grid */
 .spotifyWrap {
   max-width: 560px;
   margin: 48px auto 0;

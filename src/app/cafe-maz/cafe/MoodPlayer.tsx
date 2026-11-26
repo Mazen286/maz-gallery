@@ -28,7 +28,7 @@ export function MoodPlayer() {
   return (
     <div className={styles.spotifyWrap}>
       <p className={styles.spotifyLabel}>
-        — Now playing · {active.name} <span lang="ar">{active.arabic}</span> —
+        ✦ Now playing · {active.name} <span lang="ar">{active.arabic}</span> ✦
       </p>
 
       <div className={styles.moodPicker}>

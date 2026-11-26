@@ -89,7 +89,7 @@
   color: var(--brass);
 }
 
-/* THE MENU CARD — A5 portrait, 5.5 x 8.5 in */
+/* THE MENU CARD: A5 portrait, 5.5 x 8.5 in */
 .card {
   width: 520px;
   height: 810px;
@@ -293,7 +293,7 @@
   text-transform: uppercase;
 }
 
-/* BACK SIDE — HOOKAH */
+/* BACK SIDE: HOOKAH */
 .cBackHead {
   text-align: center;
   margin-top: 4px;
@@ -509,7 +509,7 @@
   }
 }
 @media (max-width: 600px) {
-  /* Hide the desktop card preview on phones — the 5.5x8.5 ratio
+  /* Hide the desktop card preview on phones: the 5.5x8.5 ratio
      renders content too small to read. Lead with the print action. */
   .spread {
     display: none;

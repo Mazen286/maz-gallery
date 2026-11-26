@@ -1,9 +1,9 @@
-// Café Maz shelf — Darkside + MustHave hookah tobacco.
+// Café Maz shelf: Darkside + MustHave hookah tobacco.
 //
 // Edit this file to match exactly what's on your shelf. Add, remove, or
 // retag flavors and the Flavor Lab picker + Claude API both update.
 //
-// Profile tags are free-form — keep them consistent (see PROFILE_FAMILIES
+// Profile tags are free-form: keep them consistent (see PROFILE_FAMILIES
 // below) so the family filter chips work cleanly.
 
 export type Brand = "Darkside" | "MustHave"
@@ -54,7 +54,7 @@ export const DARKSIDE: Flavor[] = [
   DS("Bananapapa", ["Banana", "Papaya"], "Ripe banana with mellow papaya."),
   DS("Barvy Orange", ["Orange"], "Bright orange juice."),
   DS("Basil Blast", ["Basil"], "Fresh green basil. Mixes great with cold mint."),
-  DS("Bergamonstr", ["Earl Grey", "Black Tea"], "Bergamot black tea — Earl Grey in a bowl."),
+  DS("Bergamonstr", ["Earl Grey", "Black Tea"], "Bergamot black tea: Earl Grey in a bowl."),
   DS("Bloody Orange", ["Orange"], "Blood orange, sharper than regular."),
   DS("Blueberry Blast", ["Blueberry"], "Pure blueberry."),
   DS("Bounty Hunter", ["Coconut", "Chocolate"], "Coconut base with dark chocolate notes."),
@@ -83,14 +83,14 @@ export const DARKSIDE: Flavor[] = [
   DS("Kalee Grapefruit", ["Grapefruit"], "Sharp pink grapefruit."),
   DS("Killer Milk", ["Milky", "Vanilla", "Sweet"], "Sweet milk, almost condensed."),
   DS("Lemonblast", ["Lemon"], "Bright lemon."),
-  DS("Mango Lassi 2.0", ["Mango", "Cardamom", "Milky"], "Mango lassi — mango + cardamom + cream. The closest pure cardamom on the Darkside shelf."),
+  DS("Mango Lassi 2.0", ["Mango", "Cardamom", "Milky"], "Mango lassi: mango + cardamom + cream. The closest pure cardamom on the Darkside shelf."),
   DS("MJ 2.0", ["Mixed Berry", "Sweet"], "Fruit candy blend (the MJ remake)."),
   DS("Needls", ["Pine"], "Sharp pine needle, almost juniper."),
   DS("Nordberry", ["Mixed Berry"], "Northern berry blend."),
   DS("Passion", ["Passion Fruit"], "Pure passion fruit."),
   DS("Pear", ["Pear"], "Tender sweet pear."),
   DS("Pineapple Pulse", ["Pineapple"], "Bright ripe pineapple."),
-  DS("Polar Cream", ["Cold Mint", "Milky"], "Icy cream — cool + creamy."),
+  DS("Polar Cream", ["Cold Mint", "Milky"], "Icy cream: cool + creamy."),
   DS("Pomelow", ["Grapefruit", "Lemon"], "Pomelo citrus."),
   DS("Red Alert", ["Mixed Berry", "Cherry"], "Red berry punch."),
   DS("Red Jam", ["Mixed Berry", "Sweet"], "Berry jam."),
@@ -103,30 +103,30 @@ export const DARKSIDE: Flavor[] = [
   DS("Sweet Comet", ["Cranberry", "Sweet"], "Tangy cranberry."),
   DS("TOP GUM", ["Sweet"], "Bubblegum candy."),
   DS("Torpedo", ["Watermelon", "Melon"], "Watermelon + melon."),
-  DS("Ultranova / Super Nova", ["Cold Mint", "Menthol"], "Your house cold-mint base — anchor of nearly every bowl."),
+  DS("Ultranova / Super Nova", ["Cold Mint", "Menthol"], "Your house cold-mint base: anchor of nearly every bowl."),
   DS("Virgin Peach", ["Peach"], "Pure juicy peach."),
   DS("Waffle Shuffle", ["Honey", "Vanilla", "Sweet"], "Waffle + maple syrup."),
-  DS("Wild Forest", ["Strawberry"], "Strong strawberry — the standout."),
+  DS("Wild Forest", ["Strawberry"], "Strong strawberry: the standout."),
   DS("Wildberry", ["Raspberry", "Blackberry", "Blueberry", "Mixed Berry"], "Forest-berry trio."),
 
-  // Experience (Xperience) — Virginia & Burley blend, urban/racing/gaming naming.
+  // Experience (Xperience): Virginia & Burley blend, urban/racing/gaming naming.
   // Verified against 5starhookah and thehookahlab catalogs.
-  { brand: "Darkside", line: "Experience", name: "Bana-Nscr", profiles: ["Banana", "Strawberry", "Sweet"], note: "Sweet banana + ripe strawberry — no sour, no brakes." },
+  { brand: "Darkside", line: "Experience", name: "Bana-Nscr", profiles: ["Banana", "Strawberry", "Sweet"], note: "Sweet banana + ripe strawberry: no sour, no brakes." },
   { brand: "Darkside", line: "Experience", name: "Citrus Wave", profiles: ["Strawberry", "Lemon", "Lime", "Sweet"], note: "Strawberry, lemon, lime lemonade with a light tart edge." },
-  { brand: "Darkside", line: "Experience", name: "Grape & Furious", profiles: ["Grape", "Sweet"], note: "Chilled grape soda — full tank." },
+  { brand: "Darkside", line: "Experience", name: "Grape & Furious", profiles: ["Grape", "Sweet"], note: "Chilled grape soda: full tank." },
   { brand: "Darkside", line: "Experience", name: "Lime Up", profiles: ["Lime", "Lemon"], note: "Sour citrus tonic, crashing wave of tartness." },
   { brand: "Darkside", line: "Experience", name: "Maraschini", profiles: ["Cherry", "Sweet"], note: "Sour-sweet Maraschino cherry liquor." },
   { brand: "Darkside", line: "Experience", name: "Mintslide", profiles: ["Spearmint", "Sweet"], note: "Refreshing mint gum with a sweet aftertaste." },
-  { brand: "Darkside", line: "Experience", name: "Mlty Frty", profiles: ["Mixed Berry", "Sweet"], note: "Multi-fruity — layered fruit blend." },
+  { brand: "Darkside", line: "Experience", name: "Mlty Frty", profiles: ["Mixed Berry", "Sweet"], note: "Multi-fruity: layered fruit blend." },
   { brand: "Darkside", line: "Experience", name: "Mohito Yota", profiles: ["Strawberry", "Mojito", "Cold Mint", "Lime"], note: "Sour-sweet strawberry mojito with built-in mint cooling." },
   { brand: "Darkside", line: "Experience", name: "Petrolhead", profiles: ["Mango", "Pineapple", "Passion Fruit", "Lemon"], note: "Mango lemonade + pineapple juice, drifting into tart passion fruit." },
   { brand: "Darkside", line: "Experience", name: "Pine Crime", profiles: ["Grape", "Basil"], note: "Chilled grape soda with an herbal basil touch." },
-  { brand: "Darkside", line: "Experience", name: "Pinkmania", profiles: ["Strawberry", "Sweet"], note: "Pink candy — sweet and unapologetic." },
+  { brand: "Darkside", line: "Experience", name: "Pinkmania", profiles: ["Strawberry", "Sweet"], note: "Pink candy: sweet and unapologetic." },
   { brand: "Darkside", line: "Experience", name: "Skeetl Street", profiles: ["Mixed Berry", "Sweet"], note: "Sweet berry candies with a bold rebellious sourness." },
-  { brand: "Darkside", line: "Experience", name: "Vandal Cola", profiles: ["Grapefruit", "Cola", "Sweet"], note: "Pink grapefruit with cola — a vandal cocktail." },
+  { brand: "Darkside", line: "Experience", name: "Vandal Cola", profiles: ["Grapefruit", "Cola", "Sweet"], note: "Pink grapefruit with cola: a vandal cocktail." },
 ]
 
-// MustHave — 125g line. Verified against thehookah.com catalog (87 flavors).
+// MustHave: 125g line. Verified against thehookah.com catalog (87 flavors).
 // Profile tags are best-effort based on flavor descriptions from
 // worldhookahmarket.com and other sources. Adjust freely.
 const MH = (name: string, profiles: string[], note?: string): Flavor => ({
@@ -160,17 +160,17 @@ export const MUSTHAVE: Flavor[] = [
   MH("Cinnamon Roll", ["Cinnamon", "Sweet"], "Sticky cinnamon bun."),
   MH("Citrus Spritz", ["Lemon", "Lime", "Orange"], "Sparkling mixed citrus."),
   MH("Coconut Shake", ["Coconut", "Milky"], "Creamy coconut shake."),
-  MH("Cola", ["Cola"], "Pure cola — chooses its own adventure in mixes."),
+  MH("Cola", ["Cola"], "Pure cola: chooses its own adventure in mixes."),
   MH("Cookie", ["Vanilla", "Chocolate", "Sweet"], "Shortbread chocolate cookie with cream."),
   MH("Cranberry", ["Cranberry"], "Tart Karelian cranberry."),
   MH("Cream Soda", ["Cream Soda", "Vanilla", "Sweet"], "Vanilla cream soda."),
-  MH("Cucunade", ["Cucumber", "Lime"], "Cucumber lemonade — spa-day fresh."),
+  MH("Cucunade", ["Cucumber", "Lime"], "Cucumber lemonade: spa-day fresh."),
   MH("Earl Grey", ["Earl Grey", "Black Tea"], "Bergamot-forward black tea."),
-  MH("Estragon", ["Tarragon", "Sweet"], "Tarkhun — tarragon herbal soda."),
+  MH("Estragon", ["Tarragon", "Sweet"], "Tarkhun: tarragon herbal soda."),
   MH("Feijoa", ["Feijoa"], "Tart Southern feijoa."),
   MH("Fizzy Dizzy", ["Sweet", "Cream Soda"], "Fizzy candy soda."),
   MH("Forest Berries", ["Mixed Berry"], "Bouquet of wild forest berries."),
-  MH("Frosty", ["Cold Mint", "Menthol"], "Pure cooling — pairs with anything."),
+  MH("Frosty", ["Cold Mint", "Menthol"], "Pure cooling: pairs with anything."),
   MH("Garnet Grape", ["Grape"], "Dark garnet-red grape."),
   MH("Gooseberry", ["Gooseberry", "Mixed Berry"], "Tart green gooseberry."),
   MH("Grapefruit", ["Grapefruit"], "Bitter-bright pink grapefruit."),
@@ -203,7 +203,7 @@ export const MUSTHAVE: Flavor[] = [
   MH("Pearl Pool", ["Lychee", "Milky"], "Bubble-tea lychee."),
   MH("Pineapple Rings", ["Pineapple", "Sweet"], "Candied pineapple rings."),
   MH("Pinkman", ["Grapefruit", "Strawberry", "Raspberry"], "Pink grapefruit + strawberry, raspberry syrup."),
-  MH("Pistachio", ["Pistachio", "Milky", "Sweet"], "Pistachio cream — perfect alongside your latte."),
+  MH("Pistachio", ["Pistachio", "Milky", "Sweet"], "Pistachio cream: perfect alongside your latte."),
   MH("Quince", ["Quince", "Apple", "Anise"], "Sweet-tart quince with light anise."),
   MH("Raspberry", ["Raspberry"], "Pure raspberry."),
   MH("Red Bomb", ["Mixed Berry", "Sweet"], "Red berry candy explosion."),
@@ -219,7 +219,7 @@ export const MUSTHAVE: Flavor[] = [
   MH("Tipsy", ["Whisky"], "Whisky cocktail."),
   MH("Tropic Juice", ["Pineapple", "Passion Fruit"], "Pineapple + passion fruit nectar."),
   MH("Unicorn Treats", ["Milky", "Sweet"], "Corn sticks + marshmallow + meringue."),
-  MH("Vanilla Cream", ["Vanilla", "Milky"], "Soft vanilla cream — dessert base."),
+  MH("Vanilla Cream", ["Vanilla", "Milky"], "Soft vanilla cream: dessert base."),
   MH("Violet", ["Violet", "Rose"], "Candied violet flower."),
   MH("Watermelon", ["Watermelon"], "Pure watermelon."),
   MH("Sour Apple", ["Apple"], "Tart green apple."),

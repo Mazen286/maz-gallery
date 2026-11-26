@@ -1,4 +1,4 @@
-/* Café Maz — candlelit lounge design system */
+/* Café Maz: candlelit lounge design system */
 
 .cafe-maz {
   --coffee: #14100b;
@@ -65,4 +65,32 @@
 /* hide global gallery background bleed-through */
 body:has(.cafe-maz) {
   background: var(--coffee, #14100b);
+}
+
+/* The quiet way back to Maz Gallery (GalleryLink.tsx), on every page but the guest website */
+.cafe-maz .cafe-gallery-link {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 40px 20px 48px;
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.cafe-maz .cafe-gallery-link a {
+  display: inline-block;
+  padding: 12px 8px;
+  color: var(--brass);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.cafe-maz .cafe-gallery-link a:hover {
+  color: var(--brass-bright);
+}
+@media print {
+  .cafe-maz .cafe-gallery-link {
+    display: none;
+  }
 }

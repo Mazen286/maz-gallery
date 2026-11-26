@@ -18,11 +18,11 @@ export default function PrintMenuPage() {
       </div>
 
       <div className={styles.lead}>
-        <p className={styles.leadEyebrow}>— The Menu · Print Edition —</p>
+        <p className={styles.leadEyebrow}>✦ The Menu · Print Edition ✦</p>
         <h1 className={styles.leadH1}>Café Maz</h1>
         <div className={styles.leadAr} lang="ar" dir="rtl">كافيه ماز</div>
         <p className={styles.leadTag}>
-          — printable at A5, duplex · front for drinks, back for hookah —
+          ✦ printable at A5, duplex · front for drinks, back for hookah ✦
         </p>
       </div>
 
@@ -37,7 +37,7 @@ export default function PrintMenuPage() {
             <span className={styles.keystone} />
             <div className={styles.arch} />
             <div className={styles.inner}>
-              <div className={styles.cEyebrow}>— A One-Table Café —</div>
+              <div className={styles.cEyebrow}>✦ A One-Table Café ✦</div>
               <h1 className={styles.cWordmark}>
                 CAFÉ <span className={styles.acc}>MAZ</span>
               </h1>
@@ -53,7 +53,7 @@ export default function PrintMenuPage() {
               {DRINK_SECTIONS.map((s) => (
                 <div key={s.id}>
                   <div className={styles.cSection}>
-                    <span className={styles.sectionLat}>— {s.lat} —</span>
+                    <span className={styles.sectionLat}>✦ {s.lat} ✦</span>
                     <span className={styles.sectionAr} lang="ar">{s.ar}</span>
                   </div>
                   <ul className={styles.cItems}>
@@ -70,10 +70,10 @@ export default function PrintMenuPage() {
                 </div>
               ))}
 
-              <div className={styles.cFoot}>— turn for hookah —</div>
+              <div className={styles.cFoot}>✦ turn for hookah ✦</div>
             </div>
           </div>
-          <span className={styles.pageLabel}>— front —</span>
+          <span className={styles.pageLabel}>✦ front ✦</span>
         </div>
 
         <div className={styles.pageWrap}>
@@ -81,13 +81,13 @@ export default function PrintMenuPage() {
             <span className={styles.keystone} />
             <div className={styles.arch} />
             <div className={styles.inner}>
-              <div className={styles.cEyebrow}>— After Sundown —</div>
+              <div className={styles.cEyebrow}>✦ After Sundown ✦</div>
               <div className={styles.cBackHead}>
                 <h2 className={styles.cBackTitle}>THE HOOKAH</h2>
                 <div className={styles.cBackAr} lang="ar" dir="rtl">الأرجيلة</div>
                 <p className={styles.cBackTag}>
                   packed by hand · combos by Maz
-                  <br />— Ultra-cool mint is the foundation —
+                  <br />✦ Ultra-cool mint is the foundation ✦
                 </p>
               </div>
 
@@ -98,7 +98,7 @@ export default function PrintMenuPage() {
               </div>
 
               <div className={styles.cSection}>
-                <span className={styles.sectionLat}>— House Combos —</span>
+                <span className={styles.sectionLat}>✦ House Combos ✦</span>
                 <span className={styles.sectionAr} lang="ar">من البيت</span>
               </div>
 
@@ -118,10 +118,10 @@ export default function PrintMenuPage() {
                 <span className={styles.brand}>MustHave</span> on the shelf · custom blends welcome. Just ask.
               </p>
 
-              <div className={styles.cFoot}>— ask the host —</div>
+              <div className={styles.cFoot}>✦ ask the host ✦</div>
             </div>
           </div>
-          <span className={styles.pageLabel}>— back —</span>
+          <span className={styles.pageLabel}>✦ back ✦</span>
         </div>
       </div>
 

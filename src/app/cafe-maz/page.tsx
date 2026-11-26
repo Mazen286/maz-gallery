@@ -40,12 +40,12 @@ export default function CafeMazIndexPage() {
       <span className={`${styles.corner} ${styles.bl}`} />
       <span className={`${styles.corner} ${styles.br}`} />
 
-      <p className={styles.eyebrow}>— Est. 2026 · A one-table café —</p>
+      <p className={styles.eyebrow}>✦ Est. 2026 · A one-table café ✦</p>
       <h1 className={styles.wordmark}>
         CAFÉ <span className={styles.acc}>MAZ</span>
       </h1>
       <div className={styles.ar} lang="ar" dir="rtl">كافيه ماز</div>
-      <p className={styles.tag}>— open whenever you&apos;re over —</p>
+      <p className={styles.tag}>✦ open whenever you&apos;re over ✦</p>
 
       <div className={styles.ornament}>
         <span className={styles.ornLine} />

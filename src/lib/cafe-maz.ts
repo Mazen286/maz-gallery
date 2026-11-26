@@ -167,7 +167,7 @@ export const TAGLINE = "a one-table café, open whenever you're over"
 export const HOOKAH_INTRO =
   "Cold mint is the foundation. Every bowl starts there. Tell us a feeling, we'll build it. We blend Darkside & MustHave; names below are ours."
 
-// Off-Menu wink — rendered after the named combos on the website
+// Off-Menu wink: rendered after the named combos on the website
 // (not on the print menu). Mirrors the "lab night" concept from
 // the original design.
 export const OFF_MENU = {
@@ -201,7 +201,7 @@ export const SPOTIFY_PLAYLIST: { name: string; url: string } | null = (() => {
   return p.url ? { name: p.name, url: p.url } : null
 })()
 
-// Snacks usually around — edit when stock changes.
+// Snacks usually around: edit when stock changes.
 export const PLATES = {
   lat: "Plates",
   ar: "أطباق",

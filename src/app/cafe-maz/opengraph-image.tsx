@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og"
 import { ogFont } from "@/lib/og"
 
-export const alt = "Café Maz — a one-table café"
+export const alt = "Café Maz · a one-table café"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -94,7 +94,7 @@ export default async function Image() {
             display: "flex",
           }}
         >
-          — Est. 2026 · A One-Table Café —
+          ✦ Est. 2026 · A One-Table Café ✦
         </div>
 
         {/* Wordmark */}

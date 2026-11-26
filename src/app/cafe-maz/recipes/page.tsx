@@ -223,7 +223,7 @@ function RecipeCard({ r }: { r: Recipe }) {
         <span className={`${styles.specCorner} ${styles.tr}`} />
         <span className={`${styles.specCorner} ${styles.bl}`} />
         <span className={`${styles.specCorner} ${styles.br}`} />
-        <div className={styles.specTitle}>— Spec —</div>
+        <div className={styles.specTitle}>✦ Spec ✦</div>
         {r.spec.map((row) => (
           <div key={row.k} className={styles.specRow}>
             <span className={styles.k}>{row.k}</span>
@@ -241,7 +241,7 @@ export default function RecipesPage() {
     <>
       <div className={styles.privateTape}>
         <span>※</span> PRIVATE · for Maz only{" "}
-        <span className={styles.tapeAr} lang="ar">— لماز فقط —</span>{" "}
+        <span className={styles.tapeAr} lang="ar">✦ لماز فقط ✦</span>{" "}
         <span>※</span>
       </div>
 
@@ -253,7 +253,7 @@ export default function RecipesPage() {
 
         {/* COVER */}
         <section className={styles.cover}>
-          <p className={styles.coverEyebrow}>— The Barista Book —</p>
+          <p className={styles.coverEyebrow}>✦ The Barista Book ✦</p>
           <h1 className={styles.coverH1}>
             CAFÉ <span className={styles.acc}>MAZ</span>
           </h1>
@@ -262,12 +262,12 @@ export default function RecipesPage() {
           <div className={styles.pill}>FOR MAZ · DO NOT PRINT</div>
         </section>
 
-        {/* CH 01 — Setup */}
+        {/* CH 01: Setup */}
         <section className={styles.chapter}>
           <div className={styles.chHead}>
             <span className={styles.chNo}>Ch. 01</span>
             <h2 className={styles.chH2}>The Setup</h2>
-            <span className={styles.chAr} lang="ar" dir="rtl">— التحضير</span>
+            <span className={styles.chAr} lang="ar" dir="rtl">✦ التحضير</span>
             <span className={styles.chRule} />
           </div>
           <p className={styles.lede}>
@@ -301,12 +301,12 @@ export default function RecipesPage() {
           </div>
         </section>
 
-        {/* CH 02 — Espresso */}
+        {/* CH 02: Espresso */}
         <section className={styles.chapter}>
           <div className={styles.chHead}>
             <span className={styles.chNo}>Ch. 02</span>
             <h2 className={styles.chH2}>Espresso</h2>
-            <span className={styles.chAr} lang="ar" dir="rtl">— إسبريسو</span>
+            <span className={styles.chAr} lang="ar" dir="rtl">✦ إسبريسو</span>
             <span className={styles.chRule} />
           </div>
           {ESPRESSO_RECIPES.map((r) => (
@@ -314,12 +314,12 @@ export default function RecipesPage() {
           ))}
         </section>
 
-        {/* CH 03 — With Milk */}
+        {/* CH 03: With Milk */}
         <section className={styles.chapter}>
           <div className={styles.chHead}>
             <span className={styles.chNo}>Ch. 03</span>
             <h2 className={styles.chH2}>With Milk</h2>
-            <span className={styles.chAr} lang="ar" dir="rtl">— بالحليب</span>
+            <span className={styles.chAr} lang="ar" dir="rtl">✦ بالحليب</span>
             <span className={styles.chRule} />
           </div>
           <p className={styles.lede}>
@@ -353,7 +353,7 @@ export default function RecipesPage() {
                 ],
                 [
                   "Hot Chocolate",
-                  "—",
+                  "·",
                   "240 ml",
                   "0.5 cm",
                   "10 oz",
@@ -374,12 +374,12 @@ export default function RecipesPage() {
           </div>
         </section>
 
-        {/* CH 04 — Tea & Slow Coffees */}
+        {/* CH 04: Tea & Slow Coffees */}
         <section className={styles.chapter}>
           <div className={styles.chHead}>
             <span className={styles.chNo}>Ch. 04</span>
             <h2 className={styles.chH2}>Tea &amp; Slow Coffees</h2>
-            <span className={styles.chAr} lang="ar" dir="rtl">— شاي وقهوة</span>
+            <span className={styles.chAr} lang="ar" dir="rtl">✦ شاي وقهوة</span>
             <span className={styles.chRule} />
           </div>
           <p className={styles.lede}>
@@ -389,7 +389,7 @@ export default function RecipesPage() {
           {TEA_RECIPES.map((r) => (
             <RecipeCard key={r.rid} r={r} />
           ))}
-          <p className={styles.smallHead}>— Quick Steeps —</p>
+          <p className={styles.smallHead}>✦ Quick Steeps ✦</p>
           <div className={styles.matrixWrap}>
           <table className={styles.matrix}>
             <thead>
@@ -414,8 +414,8 @@ export default function RecipesPage() {
                 [
                   "Cardamom Coffee",
                   "36 g espresso",
-                  "—",
-                  "—",
+                  "·",
+                  "·",
                   "Crush 1 fresh cardamom pod into portafilter before locking. Or dust on crema.",
                 ],
               ].map((row) => (
@@ -432,29 +432,29 @@ export default function RecipesPage() {
           </div>
         </section>
 
-        {/* CH 05 — Pistachio Latte */}
+        {/* CH 05: Pistachio Latte */}
         <section className={styles.chapter}>
           <div className={styles.chHead}>
             <span className={styles.chNo}>Ch. 05</span>
             <h2 className={styles.chH2}>The Pistachio Latte</h2>
-            <span className={styles.chAr} lang="ar" dir="rtl">— لاتيه الفستق</span>
+            <span className={styles.chAr} lang="ar" dir="rtl">✦ لاتيه الفستق</span>
             <span className={styles.chRule} />
           </div>
           <RecipeCard r={PISTACHIO} />
         </section>
 
-        {/* CH 06 — Hookah */}
+        {/* CH 06: Hookah */}
         <section className={styles.chapter}>
           <div className={styles.chHead}>
             <span className={styles.chNo}>Ch. 06</span>
             <h2 className={styles.chH2}>The Hookah</h2>
-            <span className={styles.chAr} lang="ar" dir="rtl">— الأرجيلة</span>
+            <span className={styles.chAr} lang="ar" dir="rtl">✦ الأرجيلة</span>
             <span className={styles.chRule} />
           </div>
 
           <div className={styles.hookahSpec}>
             <div>
-              <h4 className={styles.hSpecH}>— Standard Pack —</h4>
+              <h4 className={styles.hSpecH}>✦ Standard Pack ✦</h4>
               <ul className={styles.hSpecUl}>
                 {[
                   ["Bowl", "phunnel · ~14g"],
@@ -473,7 +473,7 @@ export default function RecipesPage() {
               </ul>
             </div>
             <div>
-              <h4 className={styles.hSpecH}>— Pre-Session —</h4>
+              <h4 className={styles.hSpecH}>✦ Pre-Session ✦</h4>
               <ul className={styles.hSpecUl}>
                 {[
                   ["Base water", "1\" above downstem"],
@@ -535,12 +535,12 @@ export default function RecipesPage() {
           </div>
         </section>
 
-        {/* CH 07 — Quick Ref */}
+        {/* CH 07: Quick Ref */}
         <section className={`${styles.chapter} ${styles.chapterLast}`}>
           <div className={styles.chHead}>
             <span className={styles.chNo}>Ch. 07</span>
             <h2 className={styles.chH2}>Quick Reference</h2>
-            <span className={styles.chAr} lang="ar" dir="rtl">— مرجع سريع</span>
+            <span className={styles.chAr} lang="ar" dir="rtl">✦ مرجع سريع</span>
             <span className={styles.chRule} />
           </div>
           <div className={`${styles.params} ${styles.params3}`}>
