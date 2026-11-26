@@ -75,7 +75,7 @@ html {
   --color-brass-2: var(--brass-2);
   --color-brass-ink: var(--brass-ink);
   --font-sans: var(--font-inter-tight);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-newsreader);
   /* Two faces only. No mono face is loaded, so anything still asking for
      one gets Inter Tight instead of whatever mono the device has. Café Maz
      sets its own mono through --font-jetbrains-mono. */
@@ -206,7 +206,7 @@ body:has([data-tone="dark"]) .site-nav {
 
 /* ─── Reading Room: drop cap on the opening paragraph ─── */
 .reading-room > p:first-of-type::first-letter {
-  font-family: var(--font-fraunces), Georgia, serif;
+  font-family: var(--font-newsreader), Georgia, serif;
   font-size: 3.3em;
   float: left;
   line-height: 0.85;

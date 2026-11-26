@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter_Tight, Fraunces } from "next/font/google"
+import { Inter_Tight, Newsreader } from "next/font/google"
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
 import { GalleryChrome } from "@/components/layout/gallery-chrome"
@@ -16,8 +16,9 @@ const interTight = Inter_Tight({
   style: ["normal"],
 })
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+// Headings: Newsreader (Maz's pick on Review, 26 Nov 2026, in place of Fraunces)
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
   weight: ["400", "600"],
   style: ["normal", "italic"],
@@ -67,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${interTight.variable} ${fraunces.variable} h-full antialiased`}>
+    <html lang="en" className={`${interTight.variable} ${newsreader.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <script
           type="application/ld+json"
