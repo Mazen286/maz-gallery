@@ -33,14 +33,14 @@ const JOURNEY = [
     text: "Started with a degree in structural engineering. Learned how things hold together under pressure, how to read the forces behind what you see. That foundation shaped everything that came after.",
   },
   {
+    year: "2018",
+    title: "Co-Founded SurfUp",
+    text: "Built SurfPods, self-service surfboard rental stations that run 24/7 with no staff. We started in San Diego and launched in Waikiki at the Hyatt Regency in October 2026. Featured in Surfer, KHON2, Pacific Business News, AOL, ABC 10 and CBS 8.",
+  },
+  {
     year: "2019",
     title: "MBA at UC San Diego",
     text: "Got my MBA at UCSD. Realized the same principles that hold up a building hold up a business. Data is the structure. Strategy is the design.",
-  },
-  {
-    year: "2020",
-    title: "Co-Founded SurfUp",
-    text: "Built SurfPods, self-service surfboard rental stations that run 24/7 with no staff. We started in San Diego and launched in Waikiki at the Hyatt Regency in October 2026. Featured in Surfer, KHON2, Pacific Business News, AOL, ABC 10 and CBS 8.",
   },
   {
     year: "2021",
