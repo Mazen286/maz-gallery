@@ -122,6 +122,7 @@ export default function AboutPage() {
             width={1400}
             height={600}
             className="h-[420px] w-full object-cover object-[center_15%] sm:h-[500px] lg:h-[600px]"
+            sizes="100vw"
             preload
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
@@ -248,6 +249,7 @@ export default function AboutPage() {
                             width={img.width}
                             height={img.height}
                             className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:h-64"
+                            sizes="(max-width: 640px) 100vw, 33vw"
                             loading="lazy"
                           />
                         </div>
@@ -312,6 +314,8 @@ export default function AboutPage() {
                   <img
                     src={outlet.logo}
                     alt={outlet.name}
+                    loading="lazy"
+                    decoding="async"
                     className="h-14 w-auto object-contain sm:h-16"
                   />
                 </a>

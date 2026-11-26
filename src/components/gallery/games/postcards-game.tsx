@@ -164,6 +164,7 @@ export function PostcardsGame({ images, onBack }: PostcardsGameProps) {
             width={round.image.width}
             height={round.image.height}
             className="mx-auto max-h-[42vh] w-auto rounded object-contain"
+            sizes="(max-width: 768px) 100vw, 672px"
           />
           {picked && (
             <p className="px-2 pb-1 pt-3 text-center text-xs italic text-white/50">

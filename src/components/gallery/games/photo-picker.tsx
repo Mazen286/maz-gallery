@@ -54,7 +54,7 @@ export function PhotoPicker({ images, onPick, onBack }: PhotoPickerProps) {
                 alt={img.alt}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
-                sizes="(max-width: 640px) 33vw, (max-width: 1024px) 20vw, 14vw"
+                sizes="(max-width: 640px) calc((100vw - 56px) / 3), (max-width: 1024px) calc((100vw - 112px) / 5), calc((100vw - 136px) / 7)"
               />
               {img.location && (
                 <span className="absolute inset-x-0 bottom-0 truncate bg-gradient-to-t from-black/80 to-transparent px-1.5 pb-1 pt-4 text-left text-[9px] text-white/0 transition-colors group-hover:text-white/80">

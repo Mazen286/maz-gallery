@@ -24,6 +24,8 @@ export function FeaturedOn() {
                 <img
                   src={outlet.logo}
                   alt={`Featured in ${outlet.name}`}
+                  loading="lazy"
+                  decoding="async"
                   className="h-16 w-auto object-contain sm:h-20"
                 />
               </a>
