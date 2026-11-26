@@ -2,8 +2,9 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { FadeIn } from "@/components/shared/fade-in"
+import { SectionHead } from "@/components/shared/section-head"
 import { FIGMENT_URL, PRESS } from "@/lib/constants"
-import { GALLERY } from "@/lib/gallery"
+import { GALLERY, photoSlug, wingLabel } from "@/lib/gallery"
 import { ALL_PROJECTS } from "@/lib/projects"
 
 export const metadata: Metadata = {
@@ -84,6 +85,7 @@ export default function AboutPage() {
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": "https://maz.gallery/about#person",
     name: "Mazen Abugharbieh",
     givenName: "Mazen",
     familyName: "Abugharbieh",
@@ -111,158 +113,118 @@ export default function AboutPage() {
   }
 
   return (
-    <>
+    <div className="bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageSchema) }} />
-      {/* Hero - full bleed */}
-      <section className="relative">
-        <div className="relative overflow-hidden">
-          <Image
-            src="/images/about-1.jpg"
-            alt="Mazen Abugharbieh"
-            width={1400}
-            height={600}
-            className="h-[420px] w-full object-cover object-[center_15%] sm:h-[500px] lg:h-[600px]"
-            sizes="100vw"
-            preload
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
-          <div className="absolute inset-x-0 bottom-0 px-8 pb-10 sm:pb-14">
-            <div className="mx-auto max-w-7xl">
-              <p className="font-mono text-[11px] font-medium uppercase tracking-[0.4em] text-teal">
-                No. 02 &middot; The Artist
-              </p>
-              <h1
-                className="mt-3 font-display font-semibold leading-[0.95] text-white"
-                style={{ fontSize: "clamp(3.2rem, 10vw, 8rem)" }}
-              >
-                About <span className="italic">me</span>
-              </h1>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Opening statement */}
-      <section className="bg-white py-16 sm:py-24">
-        <div className="mx-auto max-w-4xl px-6">
-          <FadeIn>
-            <p className="font-display text-2xl leading-relaxed text-charcoal sm:text-3xl lg:text-4xl">
-              I build things that help people see clearly. Whether that&apos;s a
-              dashboard, a photograph, or a product, the goal is the same: take
-              something complex and make it feel simple.
+      {/* Title and portrait. The photograph hangs whole in a mat, so no screen width crops the head. */}
+      <section className="pb-20 pt-28 sm:pb-28 sm:pt-36">
+        <div className="mx-auto grid max-w-[1312px] items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1.1fr] lg:gap-20 lg:px-12">
+          <FadeIn immediate>
+            <p className="label text-brass-ink">No. 02 &middot; The Artist</p>
+            <h1
+              className="mt-5 font-display font-normal leading-[0.95] tracking-[-0.02em]"
+              style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)" }}
+            >
+              About <span className="italic">me</span>
+            </h1>
+            <p className="mt-8 max-w-xl font-display text-[22px] leading-[1.5] sm:text-[26px]">
+              I build things that help people see clearly. Whether that&apos;s a dashboard, a photograph, or a
+              product, the goal is the same: take something complex and make it feel simple.
             </p>
-          </FadeIn>
-          <FadeIn delay={200}>
-            <div className="mt-12 max-w-sm border border-navy/15 bg-slate-50/70 p-5">
-              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-teal">
-                Currently
-              </p>
-              <ul className="mt-3 space-y-1.5 text-sm text-charcoal/70">
+            <div className="mt-10 max-w-sm border-l border-brass-ink/40 pl-6">
+              <p className="label text-brass-ink">Currently</p>
+              <ul className="mt-3 space-y-1.5 text-[15px] text-ink-2">
                 <li>Running Figment Analytics</li>
                 <li>Designing the next card game</li>
                 <li>Photographing wherever I happen to be</li>
               </ul>
             </div>
           </FadeIn>
-        </div>
-      </section>
-
-      {/* Journey timeline */}
-      <section className="bg-charcoal py-16 sm:py-24">
-        <div className="mx-auto max-w-4xl px-6">
-          <FadeIn>
-            <h2 className="font-mono text-xs font-semibold uppercase tracking-[0.4em] text-teal">
-              The Journey
-            </h2>
+          <FadeIn immediate delay={150}>
+            <figure>
+              <div className="frame-light">
+                <Image
+                  src="/images/about-1.jpg"
+                  alt="Mazen Abugharbieh sitting on concrete steps in a checked shirt"
+                  width={1500}
+                  height={1000}
+                  className="h-auto w-full"
+                  sizes="(min-width: 1312px) 640px, (min-width: 1024px) 50vw, 92vw"
+                  preload
+                />
+              </div>
+            </figure>
           </FadeIn>
+        </div>
+      </section>
 
-          <div className="relative mt-12">
-            <div className="absolute bottom-3 left-[7px] top-2 w-px bg-white/10" aria-hidden="true" />
+      {/* The journey, the numbers and three framed pieces share one dark wall */}
+      <section className="bg-wall py-20 text-ivory sm:py-28">
+        <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
+          <SectionHead title="The Journey" tone="dark" />
+
+          <ol className="relative mt-12 max-w-4xl">
+            <span className="absolute bottom-3 left-[7px] top-2 w-px bg-wall-line" aria-hidden="true" />
             {JOURNEY.map((item, i) => (
-              <FadeIn key={item.year} delay={i * 100}>
-                <div className="relative grid gap-2 pb-12 pl-10 last:pb-2 sm:grid-cols-[90px_1fr] sm:gap-6">
-                  <span
-                    className={`absolute left-0 top-1.5 h-[15px] w-[15px] rounded-full border ${
-                      item.year === "Now"
-                        ? "border-teal bg-teal/30"
-                        : "border-white/25 bg-charcoal"
-                    }`}
-                    aria-hidden="true"
-                  />
-                  {item.year === "Now" ? (
-                    <span className="font-mono text-sm text-teal/90">{item.year}</span>
-                  ) : (
-                    <time dateTime={item.year} className="font-mono text-sm text-teal/90">{item.year}</time>
-                  )}
-                  <div>
-                    <h3 className="font-display text-2xl italic text-white">{item.title}</h3>
-                    <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/50">
-                      {item.text}
-                    </p>
+              <li key={item.year}>
+                <FadeIn delay={i * 80}>
+                  <div className="relative grid gap-2 pb-12 pl-10 sm:grid-cols-[90px_1fr] sm:gap-6">
+                    <span
+                      className={`absolute left-0 top-1.5 h-[15px] w-[15px] rounded-full border ${
+                        item.year === "Now" ? "border-brass bg-brass/30" : "border-mist-2 bg-wall"
+                      }`}
+                      aria-hidden="true"
+                    />
+                    {item.year === "Now" ? (
+                      <span className="font-display text-lg italic text-brass">{item.year}</span>
+                    ) : (
+                      <time dateTime={item.year} className="font-display text-lg italic text-brass">
+                        {item.year}
+                      </time>
+                    )}
+                    <div>
+                      <h3 className="font-display text-2xl text-ivory">{item.title}</h3>
+                      <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-mist">{item.text}</p>
+                    </div>
                   </div>
-                </div>
-              </FadeIn>
+                </FadeIn>
+              </li>
             ))}
-          </div>
-        </div>
-      </section>
+          </ol>
 
-      {/* Stats strip */}
-      <section className="bg-charcoal py-12">
-        <div className="mx-auto max-w-5xl px-6">
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-            {STATS.map((stat, i) => (
-              <FadeIn key={stat.label} delay={i * 80}>
-                <div className="text-center">
-                  <p className="font-display text-4xl font-semibold text-teal sm:text-5xl">
-                    {stat.number}
-                  </p>
-                  <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-white/40">
-                    {stat.label}
-                  </p>
-                </div>
-              </FadeIn>
+          <dl className="mt-10 grid grid-cols-2 gap-x-8 gap-y-10 border-y border-wall-line py-12 sm:grid-cols-4">
+            {STATS.map((stat) => (
+              <div key={stat.label} className="flex flex-col-reverse items-center text-center">
+                <dt className="label mt-3 text-mist">{stat.label}</dt>
+                <dd className="font-display text-5xl text-brass-2">{stat.number}</dd>
+              </div>
             ))}
-          </div>
-        </div>
-      </section>
+          </dl>
 
-      {/* Photo break - framed pieces from the collection */}
-      <section className="bg-charcoal pb-20 pt-8">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-8 sm:grid-cols-3">
+          <div className="mt-16 grid gap-10 sm:grid-cols-3 sm:gap-8">
             {PHOTO_BREAK_SRCS.map((src, i) => {
               const img = GALLERY.find((g) => g.src === src)
               if (!img) return null
               return (
                 <FadeIn key={src} delay={i * 120}>
-                  <Link
-                    href={`/gallery?piece=${encodeURIComponent(img.src)}`}
-                    className="group block"
-                  >
+                  <Link href={`/gallery/${photoSlug(img)}`} className="group block">
                     <figure>
-                      <div className="border border-[#a08c5f]/35 bg-[#efece4] p-2.5 shadow-[0_14px_40px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.65)]">
+                      <div className="frame transition-transform duration-500 ease-out group-hover:-translate-y-1">
                         <div className="overflow-hidden">
                           <Image
                             src={img.src}
                             alt={img.alt}
                             width={img.width}
                             height={img.height}
-                            className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:h-64"
-                            sizes="(max-width: 640px) 100vw, 33vw"
+                            className="aspect-[3/2] h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                            sizes="(min-width: 1312px) 380px, (min-width: 640px) 30vw, 92vw"
                             loading="lazy"
                           />
                         </div>
                       </div>
-                      <figcaption className="mt-3 flex items-baseline justify-between gap-3">
-                        <span className="font-display text-sm italic text-white/70">
-                          {img.alt}
-                        </span>
-                        {img.location && (
-                          <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.2em] text-teal/60">
-                            {img.location}
-                          </span>
-                        )}
+                      <figcaption className="mt-4 flex items-baseline justify-between gap-3">
+                        <span className="font-display text-[17px] italic text-ivory">{img.alt}</span>
+                        {img.location && <span className="label shrink-0 text-mist-2">{wingLabel(img.location)}</span>}
                       </figcaption>
                     </figure>
                   </Link>
@@ -273,96 +235,64 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* What I'm Into */}
-      <section className="bg-white py-16 sm:py-24">
-        <div className="mx-auto max-w-4xl px-6">
-          <FadeIn>
-            <h2 className="font-mono text-xs font-semibold uppercase tracking-[0.4em] text-teal">
-              What I&apos;m Into
-            </h2>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {INTERESTS.map((interest) => (
-                <span
-                  key={interest}
-                  className="rounded-full border border-navy/15 px-4 py-2 font-mono text-xs text-navy/70"
-                >
-                  {interest}
-                </span>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
-      </section>
+      {/* What I'm into, and the press, on paper */}
+      <section className="py-20 sm:py-28">
+        <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
+          <SectionHead title="What I'm into" />
+          <ul className="mt-8 flex flex-wrap gap-2.5">
+            {INTERESTS.map((interest) => (
+              <li key={interest} className="rounded-full border border-line px-4 py-2 text-sm text-ink-2">
+                {interest}
+              </li>
+            ))}
+          </ul>
 
-      {/* Featured on */}
-      <section className="bg-slate-50 py-14">
-        <div className="mx-auto max-w-5xl px-6">
-          <FadeIn>
-            <p className="text-center font-mono text-xs font-semibold uppercase tracking-[0.4em] text-charcoal/40">
-              Featured On
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-12">
+          <div className="mt-20 flex flex-col gap-8 border-t border-line pt-12 md:flex-row md:items-center md:justify-between">
+            <h2 className="label text-ink-2">As featured in</h2>
+            <ul className="flex flex-wrap items-center gap-x-12 gap-y-6">
               {PRESS.map((outlet) => (
-                <a
-                  key={outlet.name}
-                  href={outlet.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-opacity hover:opacity-70"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={outlet.logo}
-                    alt={outlet.name}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-14 w-auto object-contain sm:h-16"
-                  />
-                </a>
+                <li key={outlet.name}>
+                  <a
+                    href={outlet.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block opacity-80 grayscale transition-[opacity,filter] hover:opacity-100 hover:grayscale-0"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={outlet.logo}
+                      alt={`Featured in ${outlet.name}`}
+                      loading="lazy"
+                      decoding="async"
+                      className={`w-auto object-contain ${outlet.name === "SD Voyager" ? "h-8 sm:h-9" : "h-12 sm:h-14"}`}
+                    />
+                  </a>
+                </li>
               ))}
-            </div>
-          </FadeIn>
+            </ul>
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-white py-16 sm:py-24">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <FadeIn>
-            <p className="font-display text-2xl text-navy sm:text-3xl">
-              Want to work <span className="italic">together</span>?
-            </p>
-            <p className="mt-3 text-charcoal/50">
-              I run{" "}
-              <a
-                href={FIGMENT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-teal underline-offset-4 hover:underline"
-              >
-                Figment Analytics
-              </a>{" "}
-              for data work. For everything else, just say hello.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Link
-                href="/booking"
-                className="rounded-full bg-navy px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-navy/90"
-              >
-                Say Hello
-              </Link>
-              <a
-                href={FIGMENT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full border-2 border-navy px-8 py-3 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
-              >
-                Visit Figment Analytics
-              </a>
-            </div>
-          </FadeIn>
+      {/* One closing line and two ways forward */}
+      <section className="border-t border-line bg-paper-2 py-20 sm:py-28">
+        <div className="mx-auto max-w-3xl px-5 text-center sm:px-8">
+          <h2 className="font-display text-[34px] leading-tight sm:text-[44px]">
+            Want to work <span className="italic text-brass-ink">together?</span>
+          </h2>
+          <p className="mt-4 text-[15px] text-ink-2">
+            I run Figment Analytics for data work. For everything else, just say hello.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/booking" className="btn btn-ink">
+              Say hello
+            </Link>
+            <a href={FIGMENT_URL} target="_blank" rel="noopener noreferrer" className="btn btn-line text-ink">
+              Visit Figment Analytics
+            </a>
+          </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

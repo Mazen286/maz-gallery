@@ -6,9 +6,33 @@ html {
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #111111;
+  /* The museum: near-black walls for the dark rooms, warm paper for the
+     reading rooms, one brass accent. Every text colour here clears 4.5:1 on
+     the surface it is meant for (checked 26 Nov 2026):
+       on wall:  ivory 17.0, mist 8.7, mist-2 5.6, brass 7.0, teal 10.1
+       on paper: ink 16.6, ink-2 7.6, ink-3 5.3, brass-ink 5.3
+     Brass (#b8975a) is 2.6:1 on paper, so paper uses brass-ink instead. */
+  --wall: #0d0e11;
+  --wall-2: #15171c;
+  --wall-3: #1c1f26;
+  --wall-line: rgba(244, 240, 232, 0.12);
+  --ivory: #f4f0e8;
+  --mist: #b3ada2;
+  --mist-2: #8f8a80;
+  --paper: #f8f6f1;
+  --paper-2: #efebe3;
+  --ink: #16171b;
+  --ink-2: #4f4f53;
+  --ink-3: #66666a;
+  --line: rgba(22, 23, 27, 0.12);
+  --brass: #b8975a;
+  --brass-2: #d8bd86;
+  --brass-ink: #7f6129;
 
+  --background: var(--paper);
+  --foreground: var(--ink);
+
+  /* Older names, kept for Figment Forever and the games until each room moves over */
   --navy: #243048;
   --cream: #ddddd2;
   --charcoal: #2a2829;
@@ -17,9 +41,9 @@ html {
   --black: #000000;
   --slate-50: #f8fafc;
 
-  --primary: var(--navy);
-  --primary-foreground: #ffffff;
-  --border: #e2e8f0;
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --border: var(--line);
   --radius: 0.5rem;
 }
 
@@ -34,14 +58,145 @@ html {
   --color-charcoal: var(--charcoal);
   --color-teal: var(--teal);
   --color-slate-50: var(--slate-50);
+  --color-wall: var(--wall);
+  --color-wall-2: var(--wall-2);
+  --color-wall-3: var(--wall-3);
+  --color-wall-line: var(--wall-line);
+  --color-ivory: var(--ivory);
+  --color-mist: var(--mist);
+  --color-mist-2: var(--mist-2);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-brass: var(--brass);
+  --color-brass-2: var(--brass-2);
+  --color-brass-ink: var(--brass-ink);
   --font-sans: var(--font-inter-tight);
   --font-display: var(--font-fraunces);
+  /* Two faces only. No mono face is loaded, so anything still asking for
+     one gets Inter Tight instead of whatever mono the device has. Café Maz
+     sets its own mono through --font-jetbrains-mono. */
+  --font-mono: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* A dark room marks its outermost element data-tone="dark". The page behind
+   it (overscroll, short pages) and the header follow, in CSS, so the first
+   paint is already right and no route list has to know about it. */
+body:has([data-tone="dark"]) {
+  background: var(--wall);
+}
+
+/* ─── Header (navbar.tsx) ─── */
+.site-nav {
+  --nav-fg: var(--ink);
+  --nav-fg-2: var(--ink-2);
+  --nav-solid: rgba(248, 246, 241, 0.92);
+  --nav-line: var(--line);
+  transition: background-color 300ms, box-shadow 300ms;
+}
+body:has([data-tone="dark"]) .site-nav {
+  --nav-fg: var(--ivory);
+  --nav-fg-2: var(--mist);
+  --nav-solid: rgba(13, 14, 17, 0.9);
+  --nav-line: var(--wall-line);
+}
+.site-nav[data-solid] {
+  background: var(--nav-solid);
+  box-shadow: 0 1px 0 var(--nav-line);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.site-nav .nav-fg { color: var(--nav-fg); }
+.site-nav .nav-link {
+  color: var(--nav-fg-2);
+  padding: 6px 0;
+  transition: color 200ms, box-shadow 200ms;
+}
+.site-nav .nav-link:hover { color: var(--nav-fg); }
+.site-nav .nav-link[aria-current="page"] {
+  color: var(--nav-fg);
+  box-shadow: inset 0 -1px 0 currentColor;
+}
+.site-nav .nav-cta { color: var(--nav-fg); min-height: 40px; padding: 0 1.15rem; }
+
+/* ─── The system: labels, buttons, frames ─── */
+@layer components {
+  /* Small caps label. 11px is the floor anywhere on the site. */
+  .label {
+    font-family: var(--font-inter-tight), system-ui, sans-serif;
+    font-size: 11px;
+    line-height: 1.45;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .label-lg {
+    font-family: var(--font-inter-tight), system-ui, sans-serif;
+    font-size: 12px;
+    line-height: 1.45;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* Buttons: one solid, one outline, one text link with an arrow. Sentence case. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    padding: 0 1.4rem;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background-color 200ms, color 200ms, border-color 200ms, transform 200ms;
+    white-space: nowrap;
+  }
+  .btn-ivory { background: var(--ivory); color: var(--wall); }
+  .btn-ivory:hover { background: #ffffff; }
+  .btn-ink { background: var(--ink); color: var(--paper); }
+  .btn-ink:hover { background: #2a2b31; }
+  .btn-line { border: 1px solid currentColor; }
+  .btn-line:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 2px;
+    box-shadow: inset 0 -1px 0 color-mix(in srgb, currentColor 35%, transparent);
+    transition: box-shadow 200ms, gap 200ms;
+  }
+  .link-arrow::after { content: "\2192"; font-weight: 400; }
+  .link-arrow:hover { gap: 0.7rem; box-shadow: inset 0 -1px 0 currentColor; }
+  .link-out::after { content: "\2197"; }
+
+  /* Museum frame: ivory mat, a brass hairline, a gallery shadow */
+  .frame {
+    background: var(--ivory);
+    padding: 10px;
+    box-shadow: 0 1px 0 rgba(184, 151, 90, 0.5) inset, 0 30px 60px -20px rgba(0, 0, 0, 0.65);
+  }
+  @media (min-width: 640px) {
+    .frame { padding: 14px; }
+  }
+  .frame-light {
+    background: #ffffff;
+    padding: 8px;
+    box-shadow: 0 0 0 1px var(--line), 0 24px 48px -28px rgba(22, 23, 27, 0.45);
+  }
 }
 
 :focus-visible {
@@ -57,7 +212,7 @@ body {
   line-height: 0.85;
   padding-right: 0.09em;
   padding-top: 0.04em;
-  color: var(--navy);
+  color: var(--brass-ink);
 }
 
 /* ─── Reduced motion ─── */

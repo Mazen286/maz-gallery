@@ -570,25 +570,25 @@ export function JigsawPuzzle({
       `}</style>
 
       {/* Full-screen overlay */}
-      <div className="fixed inset-0 z-50 flex flex-col bg-black/95">
+      <div className="fixed inset-0 z-50 flex flex-col bg-wall/[0.97] text-ivory">
         {/* Header bar */}
         <div className="relative flex items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-center gap-4">
-            <span className="font-mono text-sm" style={{ color: "#78c8d6" }}>
+            <span className="text-sm tabular-nums text-ivory">
               {formatTime(elapsed)}
             </span>
-            <span className="text-sm text-white/50">
+            <span className="text-sm tabular-nums text-mist">
               {moves} move{moves !== 1 ? "s" : ""}
             </span>
           </div>
           {image.location && (
-            <p className="absolute left-1/2 hidden -translate-x-1/2 font-display text-sm italic text-white/50 sm:block">
+            <p className="absolute left-1/2 hidden -translate-x-1/2 font-display text-[15px] italic text-mist sm:block">
               {image.location}
             </p>
           )}
           <button
             onClick={onClose}
-            className="rounded-full p-2 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+            className="flex size-11 items-center justify-center rounded-full text-mist transition-colors hover:bg-wall-3 hover:text-ivory"
             aria-label="Close puzzle"
           >
             <X className="size-5" />
@@ -740,9 +740,9 @@ export function JigsawPuzzle({
                   width: pieceW,
                   height: pieceH,
                   transform: `translate(${pieces[focusedIdx].x}px, ${pieces[focusedIdx].y}px)`,
-                  border: "2px solid #78c8d6",
+                  border: "2px solid #d8bd86",
                   borderRadius: 10,
-                  boxShadow: "0 0 0 4px rgba(120,200,214,0.25), 0 0 18px rgba(120,200,214,0.6)",
+                  boxShadow: "0 0 0 4px rgba(216,189,134,0.25), 0 0 18px rgba(216,189,134,0.55)",
                   pointerEvents: "none",
                   zIndex: 101,
                 }}
@@ -754,29 +754,24 @@ export function JigsawPuzzle({
               <div
                 className="absolute inset-0 z-50 flex flex-col items-center justify-center rounded-lg"
                 style={{
-                  backgroundColor: "rgba(0,0,0,0.7)",
+                  backgroundColor: "rgba(13,14,17,0.88)",
                   animation:
                     "jigsaw-celebration-in 0.5s cubic-bezier(0.33,1,0.68,1) forwards",
                 }}
               >
                 <ConfettiOverlay />
-                <h2
-                  className="text-3xl font-semibold sm:text-4xl"
-                  style={{ color: "#78c8d6" }}
-                >
-                  Puzzle Complete!
-                </h2>
-                <p className="mt-4 text-lg text-white/70">
+                <h2 className="font-display text-3xl italic text-ivory sm:text-4xl">Puzzle complete</h2>
+                <p className="mt-4 text-lg tabular-nums text-mist">
                   {formatTime(elapsed)} &middot; {moves} move
                   {moves !== 1 ? "s" : ""}
                 </p>
                 {newBest ? (
-                  <p className="mt-1 font-mono text-xs uppercase tracking-[0.3em] text-[#78c8d6]/80">
+                  <p className="label mt-2 text-teal">
                     New personal best
                   </p>
                 ) : (
                   best?.[difficulty] !== undefined && (
-                    <p className="mt-1 font-mono text-xs uppercase tracking-[0.3em] text-white/35">
+                    <p className="mt-2 text-[13px] tabular-nums text-mist">
                       Best: {formatTime(best[difficulty])}
                     </p>
                   )
@@ -784,22 +779,21 @@ export function JigsawPuzzle({
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <button
                     onClick={() => initPuzzle(difficulty)}
-                    className="rounded-full border px-5 py-2 text-sm transition-all hover:bg-white/10"
-                    style={{ borderColor: "#78c8d6", color: "#78c8d6" }}
+                    className="btn btn-ivory"
                   >
-                    Play Again
+                    Play again
                   </button>
                   {(onRandomPhoto || onNewImage) && (
                     <button
                       onClick={() => (onRandomPhoto ?? onNewImage)?.()}
-                      className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/60 transition-all hover:text-white"
+                      className="btn btn-line text-ivory"
                     >
-                      Another Photo
+                      Another photo
                     </button>
                   )}
                   <button
                     onClick={onClose}
-                    className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/50 transition-all hover:text-white"
+                    className="btn btn-line text-ivory"
                   >
                     Close
                   </button>
@@ -811,7 +805,7 @@ export function JigsawPuzzle({
 
         {/* Screen-reader status and the keyboard hint */}
         <p className="sr-only" role="status" aria-live="polite">{status}</p>
-        <p className="hidden text-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/30 sm:block">
+        <p className="hidden text-center text-[13px] text-mist-2 sm:block">
           Tab to a piece &middot; arrows move &middot; Enter drops
         </p>
 
@@ -819,45 +813,43 @@ export function JigsawPuzzle({
         <div className="flex flex-wrap items-center justify-center gap-3 px-4 pb-4 pt-2">
           <button
             onClick={() => setShowPreview((p) => !p)}
-            className={`rounded-full border px-4 py-1.5 text-xs font-medium transition-all ${
-              showPreview
-                ? "border-[#78c8d6]/50 bg-[#78c8d6]/10 text-[#78c8d6]"
-                : "border-white/15 text-white/50 hover:border-white/30 hover:text-white/70"
+            aria-pressed={showPreview}
+            className={`inline-flex min-h-11 items-center rounded-full border px-4 text-[13px] font-medium transition-colors ${
+              showPreview ? "border-ivory bg-ivory text-wall" : "border-wall-line text-mist hover:border-ivory/40 hover:text-ivory"
             }`}
           >
             Preview
           </button>
           <button
             onClick={shufflePieces}
-            className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/70"
+            className="inline-flex min-h-11 items-center rounded-full border border-wall-line px-4 text-[13px] font-medium text-mist transition-colors hover:border-ivory/40 hover:text-ivory"
           >
             Shuffle
           </button>
           {onChangePhoto && (
             <button
               onClick={onChangePhoto}
-              className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/70"
+              className="inline-flex min-h-11 items-center rounded-full border border-wall-line px-4 text-[13px] font-medium text-mist transition-colors hover:border-ivory/40 hover:text-ivory"
             >
-              New Photo
+              New photo
             </button>
           )}
           {onRandomPhoto && (
             <button
               onClick={onRandomPhoto}
-              className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/70"
+              className="inline-flex min-h-11 items-center rounded-full border border-wall-line px-4 text-[13px] font-medium text-mist transition-colors hover:border-ivory/40 hover:text-ivory"
             >
               Random
             </button>
           )}
-          <div className="flex rounded-full border border-white/15">
+          <div className="flex rounded-full border border-wall-line p-0.5" role="group" aria-label="Difficulty">
             {(["easy", "medium", "hard"] as const).map((d) => (
               <button
                 key={d}
                 onClick={() => changeDifficulty(d)}
-                className={`px-3 py-1.5 text-xs font-medium capitalize transition-all first:rounded-l-full last:rounded-r-full ${
-                  difficulty === d
-                    ? "bg-[#78c8d6]/20 text-[#78c8d6]"
-                    : "text-white/40 hover:text-white/70"
+                aria-pressed={difficulty === d}
+                className={`min-h-11 rounded-full px-4 text-[13px] font-medium capitalize transition-colors ${
+                  difficulty === d ? "bg-ivory text-wall" : "text-mist hover:text-ivory"
                 }`}
               >
                 {d}

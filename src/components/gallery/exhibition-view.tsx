@@ -90,31 +90,22 @@ export function ExhibitionView({ images, startIndex = 0, onIndexChange }: Exhibi
         className="mt-7 max-w-2xl px-6 text-center"
         style={{ animation: "placardIn 0.5s ease-out both" }}
       >
-        {img.location && (
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.3em] text-teal">
-            {img.location}
-          </p>
-        )}
-        <p className="mt-2 font-display text-lg italic text-white/80">{img.alt}</p>
-        {story && (
-          <p className="mt-3 text-sm leading-relaxed text-white/45">{story}</p>
-        )}
-        <Link
-          href={`/gallery/${photoSlug(img)}`}
-          className="mt-4 inline-block font-mono text-[10px] uppercase tracking-[0.25em] text-teal/70 transition-colors hover:text-teal"
-        >
-          Open this photograph &rarr;
+        {img.location && <p className="label text-brass">{img.location}</p>}
+        <p className="mt-3 font-display text-xl italic text-ivory">{img.alt}</p>
+        {story && <p className="mt-3 text-[15px] leading-relaxed text-mist">{story}</p>}
+        <Link href={`/gallery/${photoSlug(img)}`} className="link-arrow mt-5 text-ivory">
+          Open this photograph
         </Link>
       </div>
 
       {/* Counter + progress */}
       <div className="mt-6 flex flex-col items-center gap-3">
-        <span className="font-mono text-xs text-white/30">
-          {String(index + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
+        <span className="text-[13px] tabular-nums text-mist-2">
+          {index + 1} of {images.length}
         </span>
-        <div className="h-px w-48 bg-white/10">
+        <div className="h-px w-48 bg-wall-line">
           <div
-            className="h-full bg-teal/50 transition-all duration-300"
+            className="h-full bg-brass transition-all duration-300"
             style={{ width: `${((index + 1) / images.length) * 100}%` }}
           />
         </div>
@@ -123,10 +114,10 @@ export function ExhibitionView({ images, startIndex = 0, onIndexChange }: Exhibi
       {/* One-time mobile hint */}
       {hint && (
         <div
-          className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-white/15 bg-black/40 px-4 py-1.5 backdrop-blur-sm"
+          className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-wall-line bg-wall/80 px-4 py-2 backdrop-blur-sm"
           style={{ animation: "placardIn 0.4s ease-out both" }}
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
+          <p className="label text-mist">
             Swipe to explore
           </p>
         </div>

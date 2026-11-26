@@ -79,24 +79,24 @@ export function CinematicIntro() {
         style={{
           animation: "introLeak 1300ms linear both",
           background:
-            "radial-gradient(ellipse at 60% 40%, rgba(120,200,214,0.3) 0%, rgba(255,200,120,0.15) 30%, transparent 70%)",
+            "radial-gradient(ellipse at 60% 40%, rgba(184,151,90,0.28) 0%, rgba(255,200,120,0.14) 30%, transparent 70%)",
         }}
       />
 
       <div className="relative z-10 text-center" style={{ animation: "introTitle 1300ms linear both" }}>
-        <p className="font-mono text-xs uppercase tracking-[0.5em] text-teal/80">Now showing</p>
-        <p className="mt-4 font-display text-5xl font-semibold text-white sm:text-7xl">
-          Maz <span className="italic">Gallery</span>
+        <p className="label-lg text-brass">Now showing</p>
+        <p className="mt-4 font-display text-5xl font-semibold text-ivory sm:text-7xl">
+          Maz <span className="font-normal italic">Gallery</span>
         </p>
-        <p className="mt-3 text-sm tracking-wide text-white/40">Photographs by Mazen Abugharbieh</p>
-        <div className="mx-auto mt-4 h-px w-24 bg-teal/50" />
+        <p className="mt-3 text-sm tracking-wide text-mist">Photographs by Mazen Abugharbieh</p>
+        <div className="mx-auto mt-4 h-px w-24 bg-brass/60" />
       </div>
 
       <button
         type="button"
         onClick={finish}
         autoFocus
-        className="absolute bottom-8 rounded-full border border-white/20 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-white/60 transition-colors hover:border-white/50 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-teal"
+        className="label absolute bottom-8 min-h-11 rounded-full border border-wall-line px-5 text-mist transition-colors hover:border-ivory/50 hover:text-ivory focus:outline-none focus-visible:ring-2 focus-visible:ring-brass"
       >
         Skip
       </button>

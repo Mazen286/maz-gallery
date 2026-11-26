@@ -1,69 +1,73 @@
+import Image from "next/image"
 import Link from "next/link"
-import { CalendarDays, Gamepad2, ArrowRight } from "lucide-react"
 import { GAMES } from "@/lib/annex"
 import { FadeIn } from "@/components/shared/fade-in"
+import { SectionHead } from "@/components/shared/section-head"
 
 // The one thing most portfolios cannot offer: a reason to come back tomorrow.
 export function AnnexTeaser() {
   return (
-    <section id="annex" className="bg-[#0a0c11] py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <FadeIn>
-          <p className="max-w-md text-lg leading-relaxed text-white/50">
-            When the museum closes, the collection comes out to play.
-          </p>
-        </FadeIn>
+    <section id="annex" className="bg-wall py-24 text-ivory sm:py-32">
+      <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
+        <SectionHead number="No. 07" title="The Annex" tone="dark" />
+        <p className="mt-10 max-w-xl font-display text-[22px] leading-snug text-mist sm:text-[26px]">
+          When the museum closes, the collection comes out to play.
+        </p>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-[3fr_2fr]">
-          <FadeIn delay={100}>
+        <div className="mt-12 grid gap-5 lg:grid-cols-[1.45fr_1fr]">
+          <FadeIn>
             <Link
               href="/daily"
-              className="group flex h-full flex-col justify-between rounded-lg border border-teal/30 bg-teal/[0.05] p-6 transition-all hover:border-teal/60 hover:bg-teal/10 sm:p-8"
+              className="group relative flex h-full min-h-[300px] flex-col justify-between overflow-hidden border border-wall-line bg-wall-2 p-7 transition-colors hover:border-brass/50 sm:p-10"
             >
-              <div>
-                <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-teal/80">
-                  <CalendarDays className="size-3.5" />
-                  Every day
+              <div className="relative z-10 max-w-[19rem]">
+                <p className="label inline-flex items-center gap-2 text-teal">
+                  <span className="size-1.5 rounded-full bg-teal" aria-hidden="true" />
+                  No. 06 &middot; Every day
                 </p>
-                <h2 className="mt-4 font-display text-3xl italic text-white sm:text-4xl">The Daily Postcard</h2>
-                <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/55">
-                  One photograph from the collection, three guesses at where it was taken.
-                  Keep a streak, share the result, come back tomorrow.
+                <h3 className="mt-5 font-display text-[34px] italic leading-tight sm:text-[40px]">The Daily Postcard</h3>
+                <p className="mt-4 text-[15px] leading-relaxed text-mist">
+                  One photograph from the collection, three guesses at where it was taken. Keep a streak, share the
+                  result, come back tomorrow.
                 </p>
               </div>
-              <p className="mt-8 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-teal transition-all group-hover:gap-3">
-                Play today&apos;s
-                <ArrowRight className="size-3.5" />
-              </p>
+              <span className="link-arrow relative z-10 mt-8 self-start text-ivory">Play today&apos;s</span>
+              {/* A postcard on the table: decoration, not today's photograph */}
+              <div
+                aria-hidden="true"
+                className="frame pointer-events-none absolute -right-10 top-10 hidden w-[300px] rotate-[6deg] transition-transform duration-500 group-hover:rotate-[4deg] md:block"
+              >
+                <Image
+                  src="/images/gallery/Alanya-(16-of-20).jpg"
+                  alt=""
+                  width={1500}
+                  height={1000}
+                  className="h-auto w-full"
+                  sizes="300px"
+                />
+              </div>
             </Link>
           </FadeIn>
 
-          <FadeIn delay={200}>
+          <FadeIn delay={120}>
             <Link
               href="/annex"
-              className="group flex h-full flex-col justify-between rounded-lg border border-white/10 bg-white/[0.03] p-6 transition-all hover:border-teal/50 hover:bg-white/[0.05] sm:p-8"
+              className="group flex h-full flex-col justify-between border border-wall-line bg-wall-2 p-7 transition-colors hover:border-brass/50 sm:p-10"
             >
               <div>
-                <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/45">
-                  <Gamepad2 className="size-3.5" />
-                  The Annex
-                </p>
-                <h2 className="mt-4 font-display text-2xl italic text-white">Four games from the photographs</h2>
-                <ul className="mt-4 space-y-1.5 text-sm text-white/55">
+                <p className="label text-mist">After hours</p>
+                <h3 className="mt-5 font-display text-[30px] italic leading-tight sm:text-[34px]">
+                  Four games from the photographs
+                </h3>
+                <ul className="mt-5 space-y-2 text-[15px] text-mist">
                   {GAMES.map((g) => (
-                    <li key={g.slug} className="flex items-baseline gap-2">
-                      <span className="text-teal/60">&middot;</span>
-                      <span>
-                        <span className="text-white/80">{g.title}.</span> {g.blurb}
-                      </span>
+                    <li key={g.slug}>
+                      <span className="text-ivory">{g.title}.</span> {g.blurb}
                     </li>
                   ))}
                 </ul>
               </div>
-              <p className="mt-8 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 transition-all group-hover:gap-3 group-hover:text-teal">
-                Open the Annex
-                <ArrowRight className="size-3.5" />
-              </p>
+              <span className="link-arrow mt-8 self-start text-ivory">Open the Annex</span>
             </Link>
           </FadeIn>
         </div>

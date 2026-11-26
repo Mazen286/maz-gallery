@@ -30,7 +30,7 @@ export default async function GamePage({ params, searchParams }: { params: Param
   const { photo } = await searchParams
   return (
     // The hub stays underneath for the moment the stage unmounts on Back
-    <div className="min-h-[100svh] bg-[#0b0d13]">
+    <div data-tone="dark" className="min-h-[100svh] bg-wall">
       <GameStage game={g.slug} photo={photo} />
     </div>
   )

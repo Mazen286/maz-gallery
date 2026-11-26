@@ -5,7 +5,7 @@ import { Introduction } from "@/components/home/introduction"
 import { SelectedWorks } from "@/components/home/selected-works"
 import { AnnexTeaser } from "@/components/home/annex-teaser"
 import { FeaturedOn } from "@/components/home/featured-on"
-import { ChapterMarker } from "@/components/shared/chapter-marker"
+import { GALLERY, LOCATIONS } from "@/lib/gallery"
 
 export const metadata: Metadata = {
   title: "Mazen Abugharbieh | Data Analyst, Photographer, San Diego",
@@ -25,46 +25,19 @@ export const metadata: Metadata = {
   },
 }
 
-// Five short rooms. Each one says a different thing and leads somewhere.
+// The entrance is a directory of the rooms behind it. Each section carries
+// the number of the room it leads to, the same number the header, the
+// placards and the footer use. Dark walls and warm paper alternate, and each
+// section paints its own band, so no seam shows between them.
 export default function HomePage() {
   return (
-    <>
-      <Hero />
-
-      <div className="bg-[#0a0c11] px-6 pt-8">
-        <div className="mx-auto max-w-6xl">
-          <ChapterMarker number="I" title="The Collection" dark />
-        </div>
-      </div>
+    <div data-tone="dark">
+      <Hero works={GALLERY.length} places={LOCATIONS.length} />
       <FeaturedExhibits />
-
-      <div className="bg-white px-6">
-        <div className="mx-auto max-w-4xl">
-          <ChapterMarker number="II" title="The Artist" />
-        </div>
-      </div>
       <Introduction />
-
-      <div className="bg-slate-50 px-6">
-        <div className="mx-auto max-w-6xl">
-          <ChapterMarker number="III" title="The Builder" />
-        </div>
-      </div>
       <SelectedWorks />
-
-      <div className="bg-[#0a0c11] px-6">
-        <div className="mx-auto max-w-6xl">
-          <ChapterMarker number="IV" title="The Annex" dark />
-        </div>
-      </div>
       <AnnexTeaser />
-
-      <div className="bg-cream px-6">
-        <div className="mx-auto max-w-4xl">
-          <ChapterMarker number="V" title="Recognition" />
-        </div>
-      </div>
       <FeaturedOn />
-    </>
+    </div>
   )
 }

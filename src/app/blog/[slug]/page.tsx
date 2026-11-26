@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { BLOG_POSTS, getPost, formatDate, CATEGORY_COLORS } from "@/lib/blog"
+import { BLOG_POSTS, getPost, formatDate } from "@/lib/blog"
 import { POST_CONTENT } from "@/components/blog/posts"
 import { ReadingProgress } from "@/components/blog/reading-progress"
 
@@ -63,7 +63,7 @@ export default async function BlogPostPage({
     image: `https://maz.gallery${post.image}`,
     datePublished: post.date,
     dateModified: post.date,
-    author: { "@type": "Person", name: "Mazen Abugharbieh", url: "https://maz.gallery" },
+    author: { "@type": "Person", "@id": "https://maz.gallery/about#person", name: "Mazen Abugharbieh", url: "https://maz.gallery/about" },
     publisher: {
       "@type": "Organization",
       name: "Maz Gallery",
@@ -89,69 +89,47 @@ export default async function BlogPostPage({
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <ReadingProgress />
-      <article className="bg-[#fbfaf6] pb-16 pt-32 sm:pb-24 sm:pt-40">
-        <div className="mx-auto max-w-3xl px-6">
+      <article className="bg-paper pb-16 pt-28 text-ink sm:pb-24 sm:pt-36">
+        <div className="mx-auto max-w-3xl px-5 sm:px-8">
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-charcoal/40">
-              <li><Link href="/" className="hover:text-teal">Home</Link></li>
-              <li>/</li>
-              <li><Link href="/blog" className="hover:text-teal">Reading Room</Link></li>
-              <li>/</li>
-              <li className="truncate text-charcoal/60">{post.title}</li>
+          <nav aria-label="Breadcrumb" className="mb-10">
+            <ol className="label flex min-w-0 items-center gap-2 text-ink-3">
+              <li className="shrink-0"><Link href="/" className="py-2 transition-colors hover:text-ink">Home</Link></li>
+              <li aria-hidden="true" className="shrink-0">/</li>
+              <li className="shrink-0"><Link href="/blog" className="py-2 transition-colors hover:text-ink">Reading Room</Link></li>
             </ol>
           </nav>
 
-          {/* Placard meta */}
-          <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-charcoal/45">
-            <span
-              className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white"
-              style={{ backgroundColor: CATEGORY_COLORS[post.category] }}
-            >
-              {post.category}
-            </span>
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-            <span>&middot;</span>
-            <span>{post.readTime}</span>
-          </div>
+          {/* Placard */}
+          <p className="label text-brass-ink">
+            {post.category} &middot; <time dateTime={post.date}>{formatDate(post.date)}</time> &middot; {post.readTime}
+          </p>
 
-          {/* Title */}
           <h1
-            className="mt-5 font-display font-semibold leading-[1.08] text-navy"
-            style={{ fontSize: "clamp(2.1rem, 5vw, 3.4rem)" }}
+            className="mt-5 font-display font-normal leading-[1.05] tracking-[-0.01em]"
+            style={{ fontSize: "clamp(2.2rem, 5.4vw, 3.6rem)" }}
           >
             {post.title}
           </h1>
-          <p className="mt-4 font-display text-lg italic leading-relaxed text-charcoal/60 sm:text-xl">
-            {post.description}
-          </p>
-          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.3em] text-charcoal/40">
-            By Mazen Abugharbieh
-          </p>
+          <p className="mt-5 font-display text-lg italic leading-relaxed text-ink-2 sm:text-xl">{post.description}</p>
+          <p className="mt-5 text-[13px] text-ink-3">By Mazen Abugharbieh</p>
 
           {/* Hero image */}
-          <div className="relative mt-8 aspect-video overflow-hidden rounded-xl">
-            <Image
-              src={post.image}
-              alt={post.title}
-              fill
-              className="object-cover"
-              preload
-              sizes="(max-width: 768px) 100vw, 768px"
-            />
+          <div className="frame-light mt-10">
+            <div className="relative aspect-video overflow-hidden">
+              <Image src={post.image} alt={post.title} fill className="object-cover" preload sizes="(max-width: 768px) 92vw, 752px" />
+            </div>
           </div>
 
           {/* Article body */}
-          <div className="reading-room prose prose-lg mt-12 max-w-none font-display text-charcoal/85 prose-headings:font-display prose-headings:text-navy prose-h2:mt-14 prose-h2:text-2xl prose-h2:sm:text-3xl prose-h3:mt-8 prose-h3:text-lg prose-h3:italic prose-h3:text-charcoal/50 prose-h3:font-medium prose-p:leading-[1.85] prose-a:text-teal prose-blockquote:border-l-teal/50 prose-blockquote:font-display prose-blockquote:italic prose-hr:my-10">
+          <div className="reading-room prose prose-lg mt-14 max-w-none font-display text-ink/90 prose-headings:font-display prose-headings:font-normal prose-headings:text-ink prose-h2:mt-14 prose-h2:text-[28px] prose-h2:sm:text-[32px] prose-h3:mt-6 prose-h3:text-lg prose-h3:font-normal prose-h3:italic prose-h3:text-ink-2 prose-p:leading-[1.85] prose-a:text-brass-ink prose-a:decoration-brass-ink/40 prose-a:underline-offset-4 prose-strong:text-ink prose-blockquote:border-l-brass-ink/50 prose-blockquote:font-display prose-blockquote:italic prose-blockquote:text-ink-2 prose-hr:my-12 prose-hr:border-line prose-li:marker:text-ink-3">
             {POST_CONTENT[post.slug] ? (
               (() => {
                 const Content = POST_CONTENT[post.slug]
                 return <Content />
               })()
             ) : (
-              <p className="text-center text-charcoal/30 italic">
-                This post is coming soon. Check back later for the full story.
-              </p>
+              <p className="text-center italic text-ink-2">This post is coming soon. Check back later for the full story.</p>
             )}
           </div>
         </div>
@@ -159,35 +137,23 @@ export default async function BlogPostPage({
 
       {/* Related posts */}
       {related.length > 0 && (
-        <section className="border-t border-border bg-slate-50 py-16">
-          <div className="mx-auto max-w-6xl px-6">
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-teal">
-              Also in the Reading Room
-            </p>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="border-t border-line bg-paper-2 py-20 text-ink">
+          <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
+            <p className="label text-brass-ink">Also in the Reading Room</p>
+            <div className="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((p) => (
-                <Link
-                  key={p.slug}
-                  href={`/blog/${p.slug}`}
-                  className="group block overflow-hidden rounded-xl bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                <Link key={p.slug} href={`/blog/${p.slug}`} className="group block">
+                  <div className="relative aspect-[16/10] overflow-hidden shadow-[0_0_0_1px_var(--line)]">
                     <Image
                       src={p.image}
                       alt={p.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      sizes="(min-width: 1024px) 400px, (min-width: 640px) 45vw, 92vw"
                     />
                   </div>
-                  <div className="p-5">
-                    <p className="text-xs text-charcoal/40">
-                      {formatDate(p.date)}
-                    </p>
-                    <h3 className="mt-1 font-display text-base text-navy group-hover:text-teal transition-colors">
-                      {p.title}
-                    </h3>
-                  </div>
+                  <p className="mt-4 text-[13px] text-ink-3">{formatDate(p.date)}</p>
+                  <h3 className="mt-1 font-display text-[22px] leading-tight text-ink">{p.title}</h3>
                 </Link>
               ))}
             </div>

@@ -4,13 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { FadeIn } from "@/components/shared/fade-in"
-import {
-  BLOG_POSTS,
-  BLOG_CATEGORIES,
-  CATEGORY_COLORS,
-  formatDate,
-  type BlogCategory,
-} from "@/lib/blog"
+import { BLOG_POSTS, BLOG_CATEGORIES, formatDate, type BlogCategory } from "@/lib/blog"
 
 // Only offer filters that lead somewhere
 const CATEGORIES = BLOG_CATEGORIES.filter((cat) => BLOG_POSTS.some((p) => p.category === cat))
@@ -18,63 +12,45 @@ const CATEGORIES = BLOG_CATEGORIES.filter((cat) => BLOG_POSTS.some((p) => p.cate
 export function BlogPageClient() {
   const [activeCategory, setActiveCategory] = useState<BlogCategory | "All">("All")
 
-  const filtered =
-    activeCategory === "All"
-      ? BLOG_POSTS
-      : BLOG_POSTS.filter((p) => p.category === activeCategory)
+  const filtered = activeCategory === "All" ? BLOG_POSTS : BLOG_POSTS.filter((p) => p.category === activeCategory)
+
+  const chip = (active: boolean) =>
+    `inline-flex min-h-10 items-center rounded-full px-4 text-sm transition-colors ${
+      active ? "bg-ink text-paper" : "border border-line text-ink-2 hover:border-ink hover:text-ink"
+    }`
 
   return (
-    <>
-      {/* Hero */}
-      <section className="bg-white pb-6 pt-36 sm:pt-44">
-        <div className="mx-auto max-w-5xl px-6">
+    <div className="bg-paper text-ink">
+      {/* Title */}
+      <section className="pb-10 pt-32 sm:pt-40">
+        <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
           <FadeIn immediate>
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.4em] text-teal">
-              No. 05 &middot; Reading Room
-            </p>
-            <h1
-              className="mt-4 font-display font-semibold leading-[1] text-navy"
-              style={{ fontSize: "clamp(2.8rem, 8vw, 6rem)" }}
-            >
-              Thoughts &amp;
-              <br />
-              <span className="italic">stories</span>
-            </h1>
-            <p className="mt-5 max-w-lg font-display text-lg italic text-charcoal/50">
-              Travel, food, games, and whatever else is on my mind.
-            </p>
+            <p className="label text-brass-ink">No. 05 &middot; Reading Room</p>
+            <div className="mt-5 grid gap-8 lg:grid-cols-[1fr_24rem] lg:items-end lg:gap-16">
+              <h1
+                className="font-display font-normal leading-[0.95] tracking-[-0.02em]"
+                style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)" }}
+              >
+                Thoughts &amp; <span className="italic">stories</span>
+              </h1>
+              <p className="font-display text-lg leading-relaxed text-ink-2 sm:text-xl">
+                Travel, food, games, and whatever else is on my mind.
+              </p>
+            </div>
           </FadeIn>
-        </div>
-      </section>
 
-      {/* Category filter */}
-      <section className="bg-white pb-8 pt-2">
-        <div className="mx-auto max-w-5xl px-6">
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setActiveCategory("All")}
-              className={`rounded-full px-4 py-2 text-xs font-medium transition-all ${
-                activeCategory === "All"
-                  ? "bg-navy text-white"
-                  : "border border-navy/10 text-navy/50 hover:border-navy/25 hover:text-navy/80"
-              }`}
-            >
+          {/* Category filter */}
+          <div role="group" aria-label="Filter by category" className="mt-12 flex flex-wrap gap-2 border-t border-line pt-6">
+            <button type="button" onClick={() => setActiveCategory("All")} aria-pressed={activeCategory === "All"} className={chip(activeCategory === "All")}>
               All
             </button>
             {CATEGORIES.map((cat) => (
               <button
+                type="button"
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`rounded-full px-4 py-2 text-xs font-medium transition-all ${
-                  activeCategory === cat
-                    ? "text-white"
-                    : "border border-navy/10 text-navy/50 hover:border-navy/25 hover:text-navy/80"
-                }`}
-                style={
-                  activeCategory === cat
-                    ? { backgroundColor: CATEGORY_COLORS[cat] }
-                    : undefined
-                }
+                aria-pressed={activeCategory === cat}
+                className={chip(activeCategory === cat)}
               >
                 {cat}
               </button>
@@ -83,64 +59,34 @@ export function BlogPageClient() {
         </div>
       </section>
 
-      {/* Posts grid */}
-      <section className="bg-slate-50 py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-6">
+      {/* Posts */}
+      <section className="pb-28 pt-6 sm:pb-36">
+        <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
           {filtered.length === 0 ? (
             <div className="py-20 text-center">
-              <p className="text-lg font-medium text-charcoal/50">
-                I&apos;m working on writing these.
-              </p>
-              <p className="mt-2 text-sm text-charcoal/30">
-                Check back soon for stories about travel, food, games, and more.
-              </p>
+              <p className="font-display text-2xl text-ink">I&apos;m working on writing these.</p>
+              <p className="mt-2 text-[15px] text-ink-2">Check back soon for stories about travel, food, games, and more.</p>
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((post, i) => (
-                <FadeIn key={post.slug} delay={i * 80}>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg"
-                  >
-                    {/* Image */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
+                <FadeIn key={post.slug} delay={(i % 3) * 80}>
+                  <Link href={`/blog/${post.slug}`} className="group block">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-paper-2 shadow-[0_0_0_1px_var(--line)]">
                       <Image
                         src={post.image}
                         alt={post.title}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                        sizes="(min-width: 1024px) 400px, (min-width: 640px) 45vw, 92vw"
                       />
-                      {/* Category badge */}
-                      <span
-                        className="absolute left-4 top-4 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white"
-                        style={{ backgroundColor: CATEGORY_COLORS[post.category] }}
-                      >
-                        {post.category}
-                      </span>
                     </div>
-
-                    {/* Content */}
-                    <div className="p-5 sm:p-6">
-                      <div className="flex items-center gap-2 text-xs text-charcoal/40">
-                        <time dateTime={post.date}>{formatDate(post.date)}</time>
-                        <span>&middot;</span>
-                        <span>{post.readTime}</span>
-                      </div>
-                      <h2 className="mt-2 font-display text-lg text-navy group-hover:text-teal transition-colors duration-300">
-                        {post.title}
-                      </h2>
-                      <p className="mt-2 text-sm leading-relaxed text-charcoal/55">
-                        {post.description}
-                      </p>
-                    </div>
-
-                    {/* Accent line */}
-                    <div
-                      className="h-[2px] w-0 transition-all duration-500 group-hover:w-full"
-                      style={{ backgroundColor: CATEGORY_COLORS[post.category] }}
-                    />
+                    <p className="label mt-5 text-brass-ink">{post.category}</p>
+                    <h2 className="mt-2 font-display text-[24px] leading-tight text-ink">{post.title}</h2>
+                    <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{post.description}</p>
+                    <p className="mt-3 text-[13px] text-ink-3">
+                      <time dateTime={post.date}>{formatDate(post.date)}</time> &middot; {post.readTime}
+                    </p>
                   </Link>
                 </FadeIn>
               ))}
@@ -148,6 +94,6 @@ export function BlogPageClient() {
           )}
         </div>
       </section>
-    </>
+    </div>
   )
 }

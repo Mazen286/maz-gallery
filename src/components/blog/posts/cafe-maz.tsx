@@ -1,6 +1,17 @@
 import Link from "next/link"
 import { MoodPlayer } from "@/app/cafe-maz/cafe/MoodPlayer"
 
+// The Café Maz palette (src/app/cafe-maz/cafe-maz.css), for the one café piece shown outside the café
+const CAFE_COLOURS = {
+  background: "#14100b",
+  "--coffee": "#14100b",
+  "--brass": "#c9a667",
+  "--brass-bright": "#e0bd7c",
+  "--rule-strong": "rgba(201, 166, 103, 0.40)",
+  "--f-mono": "var(--font-inter-tight), system-ui, sans-serif",
+  "--f-arabic": "serif",
+} as React.CSSProperties
+
 export function CafeMaz() {
   return (
     <>
@@ -131,7 +142,12 @@ export function CafeMaz() {
 
       <p>Here&apos;s the picker from the cafe.</p>
 
-      <div className="not-prose my-8">
+      {/* The picker hangs here in the café's own colours (its styles expect them),
+          in the site's sans, with nothing under 11px */}
+      <div
+        className="not-prose my-8 px-5 py-8 sm:px-8 [&_button]:text-[11px]! [&_p]:text-[11px]!"
+        style={CAFE_COLOURS}
+      >
         <MoodPlayer />
       </div>
 

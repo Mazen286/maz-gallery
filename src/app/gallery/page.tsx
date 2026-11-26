@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { GALLERY, ORDERED_GALLERY, photoSlug } from "@/lib/gallery"
+import { GALLERY, LOCATIONS, ORDERED_GALLERY, photoSlug } from "@/lib/gallery"
 import { Suspense } from "react"
 import { GalleryPageClient } from "@/components/gallery/gallery-page-client"
 
@@ -56,13 +56,33 @@ export default function GalleryPage() {
   }
 
   return (
-    <>
+    <div data-tone="dark" className="bg-wall text-ivory">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gallerySchema) }} />
+
+      {/* The room's title is in the page's HTML, so it never waits for the
+          viewer's scripts (which need the URL to pick a view) */}
+      <section className="px-5 pb-10 pt-28 sm:px-8 sm:pt-36 lg:px-12">
+        <div className="mx-auto max-w-[1216px] animate-rise-in">
+          <p className="label text-brass">No. 03 &middot; The Gallery</p>
+          <h1
+            className="mt-5 font-display font-normal leading-[1.02] tracking-[-0.02em]"
+            style={{ fontSize: "clamp(2.4rem, 6vw, 4.75rem)" }}
+          >
+            Places I&apos;ve been.
+            <br />
+            <span className="italic text-brass-2">Moments I couldn&apos;t let go of.</span>
+          </h1>
+          <p className="mt-6 text-[15px] text-mist">
+            {GALLERY.length} photographs from {LOCATIONS.length} places
+          </p>
+        </div>
+      </section>
+
       {/* useSearchParams in the client needs a boundary for static rendering */}
-      <Suspense fallback={<div className="min-h-screen bg-[#0a0c11]" />}>
+      <Suspense fallback={<div className="min-h-screen bg-wall" />}>
         <GalleryPageClient />
       </Suspense>
-    </>
+    </div>
   )
 }

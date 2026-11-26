@@ -137,37 +137,37 @@ export function PostcardsGame({ images, onBack }: PostcardsGameProps) {
       <div className="flex items-center justify-between px-5 py-4 sm:px-8">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-white"
+          className="-ml-1 inline-flex min-h-11 items-center gap-2 px-1 text-[13px] font-medium text-mist transition-colors hover:text-ivory"
         >
-          <ArrowLeft className="size-4" />
-          Game Room
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          The Annex
         </button>
-        <span className="font-mono text-sm text-teal">
+        <span className="text-sm tabular-nums text-ivory" aria-label={`Score ${score} of ${ROUNDS}`}>
           {score} / {ROUNDS}
         </span>
       </div>
 
       <div className="px-5 sm:px-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
+        <p className="label text-brass">
           Postcard {current + 1} of {ROUNDS}
         </p>
-        <h2 className="mt-1 font-display text-2xl italic text-white/90 sm:text-3xl">
+        <h2 className="mt-2 font-display text-2xl italic text-ivory sm:text-3xl">
           Where was this taken?
         </h2>
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center gap-5 overflow-y-auto px-5 py-4 sm:px-8">
-        <div className="relative w-full max-w-2xl overflow-hidden rounded-lg border border-white/15 bg-black/40 p-2 shadow-2xl">
+        <div className="frame relative w-full max-w-2xl overflow-hidden p-2 sm:p-2.5">
           <Image
             src={round.image.src}
             alt="A photo from the collection. Guess the location."
             width={round.image.width}
             height={round.image.height}
-            className="mx-auto max-h-[42vh] w-auto rounded object-contain"
+            className="mx-auto max-h-[42vh] w-auto object-contain"
             sizes="(max-width: 768px) 100vw, 672px"
           />
           {picked && (
-            <p className="px-2 pb-1 pt-3 text-center text-xs italic text-white/50">
+            <p className="px-2 pb-1 pt-3 text-center font-display text-sm italic text-ink-2">
               {round.image.alt}
             </p>
           )}
@@ -182,14 +182,14 @@ export function PostcardsGame({ images, onBack }: PostcardsGameProps) {
                 key={option}
                 onClick={() => choose(option)}
                 disabled={!!picked}
-                className={`rounded-md border px-4 py-3 text-sm transition-all ${
+                className={`min-h-12 border px-4 py-3 text-[15px] transition-colors ${
                   isCorrect
-                    ? "border-teal bg-teal/20 text-teal"
+                    ? "border-teal bg-teal/15 text-teal"
                     : isWrongPick
-                      ? "border-red-400/60 bg-red-400/10 text-red-300"
+                      ? "border-[#e0786c]/60 bg-[#e0786c]/10 text-[#f2b1a8] line-through decoration-[#e0786c]/70"
                       : picked
-                        ? "border-white/10 text-white/30"
-                        : "border-white/15 text-white/70 hover:border-teal/50 hover:text-white"
+                        ? "border-wall-line text-mist-2"
+                        : "border-wall-line bg-wall-2 text-ivory hover:border-brass/60"
                 }`}
               >
                 {option}
@@ -201,48 +201,48 @@ export function PostcardsGame({ images, onBack }: PostcardsGameProps) {
         {picked && (
           <button
             onClick={next}
-            className="flex items-center gap-2 rounded-full border border-teal px-5 py-2 text-sm text-teal transition-all hover:bg-teal/10"
+            className="btn btn-ivory"
           >
             {current + 1 >= ROUNDS ? "See results" : "Next postcard"}
-            <ArrowRight className="size-4" />
+            <ArrowRight className="size-4" aria-hidden="true" />
           </button>
         )}
       </div>
 
       {/* Results overlay */}
       {finished && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80 px-6 text-center">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-wall/90 px-6 text-center backdrop-blur-sm">
           {score >= 7 && <ConfettiOverlay />}
-          <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
+          <p className="label text-brass">
             Final score
           </p>
-          <h2 className="mt-2 font-display text-5xl italic text-white">
+          <h2 className="mt-3 font-display text-5xl italic tabular-nums text-ivory">
             {score} / {ROUNDS}
           </h2>
-          <p className="mt-3 font-display text-xl italic text-teal">{rankFor(score)}</p>
+          <p className="mt-3 font-display text-xl italic text-brass-2">{rankFor(score)}</p>
           {newBest ? (
-            <p className="mt-2 font-mono text-xs uppercase tracking-[0.3em] text-teal/80">
+            <p className="label mt-3 text-teal">
               New personal best
             </p>
           ) : (
             best !== null && (
-              <p className="mt-2 font-mono text-xs uppercase tracking-[0.3em] text-white/35">
+              <p className="mt-3 text-[13px] tabular-nums text-mist">
                 Best: {best} / {ROUNDS}
               </p>
             )
           )}
-          <div className="mt-7 flex gap-3">
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
             <button
               onClick={reset}
-              className="rounded-full border border-teal px-5 py-2 text-sm text-teal transition-all hover:bg-white/10"
+              className="btn btn-ivory"
             >
-              Play Again
+              Play again
             </button>
             <button
               onClick={onBack}
-              className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/50 transition-all hover:text-white"
+              className="btn btn-line text-ivory"
             >
-              Game Room
+              The Annex
             </button>
           </div>
         </div>

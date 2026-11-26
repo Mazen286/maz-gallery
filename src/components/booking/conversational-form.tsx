@@ -114,7 +114,12 @@ export function ConversationalForm() {
     let cancelled = false
     const host = turnstileHost.current
     loadTurnstile().then((ts) => {
-      if (cancelled || !ts || turnstileId.current) return
+      if (cancelled || turnstileId.current) return
+      // The script was blocked or failed: say so (with the email fallback) instead of waiting forever
+      if (!ts) {
+        setTurnstileState("unavailable")
+        return
+      }
       try {
         turnstileId.current = ts.render(host, {
           sitekey: TURNSTILE_SITE_KEY,
@@ -228,12 +233,12 @@ export function ConversationalForm() {
 
   if (status === "sent") {
     return (
-      <div className="flex h-[500px] items-center justify-center rounded-lg border border-navy/15 bg-[#fffdf8] shadow-lg">
+      <div className="flex h-[500px] items-center justify-center border border-line bg-white shadow-[0_24px_48px_-28px_rgba(22,23,27,0.35)]">
         <div className="text-center">
           <div className="relative mx-auto h-32 w-48" style={{ animation: "envelopeFlyAway 2s ease-in 1.5s forwards" }}>
-            <div className="absolute inset-0 rounded-lg border-2 border-navy/20 bg-cream" />
+            <div className="absolute inset-0 rounded-lg border-2 border-ink/20 bg-paper-2" />
             <div
-              className="absolute left-0 right-0 top-0 h-16 origin-top rounded-t-lg border-2 border-navy/20 bg-cream"
+              className="absolute left-0 right-0 top-0 h-16 origin-top rounded-t-lg border-2 border-ink/20 bg-paper-2"
               style={{
                 clipPath: "polygon(0 0, 50% 100%, 100% 0)",
                 animation: "envelopeSeal 0.6s ease-out 0.3s forwards",
@@ -241,16 +246,16 @@ export function ConversationalForm() {
               }}
             />
             <div
-              className="absolute left-1/2 top-8 z-10 h-8 w-8 -translate-x-1/2 rounded-full bg-teal shadow-md"
+              className="absolute left-1/2 top-8 z-10 h-8 w-8 -translate-x-1/2 rounded-full bg-brass-ink shadow-md"
               style={{ animation: "fadeIn 0.3s ease-out 0.9s both" }}
             >
-              <span className="flex h-full items-center justify-center text-xs font-semibold text-white">M</span>
+              <span className="flex h-full items-center justify-center text-xs font-semibold text-paper">M</span>
             </div>
           </div>
-          <p className="mt-6 text-lg font-semibold text-navy" style={{ animation: "fadeIn 0.5s ease-out 1s both" }}>
+          <p className="mt-6 font-display text-2xl text-ink" style={{ animation: "fadeIn 0.5s ease-out 1s both" }}>
             Message sealed and sent
           </p>
-          <p className="mt-1 text-sm text-charcoal/60" style={{ animation: "fadeIn 0.5s ease-out 1.2s both" }}>
+          <p className="mt-2 px-6 text-[15px] text-ink-2" style={{ animation: "fadeIn 0.5s ease-out 1.2s both" }}>
             Thanks, {answers.name}. I&apos;ll reply to {answers.email} within a day.
           </p>
         </div>
@@ -259,7 +264,7 @@ export function ConversationalForm() {
   }
 
   return (
-    <div className="flex h-[500px] flex-col rounded-lg border border-navy/15 bg-[#fffdf8] shadow-lg">
+    <div className="flex h-[500px] flex-col border border-line bg-white shadow-[0_24px_48px_-28px_rgba(22,23,27,0.35)]">
       {/* Chat area */}
       <div ref={chatRef} className="flex-1 overflow-y-auto p-6" aria-live="polite">
         <div className="space-y-4">
@@ -270,10 +275,10 @@ export function ConversationalForm() {
               style={{ animation: "fadeSlideIn 0.3s ease-out forwards" }}
             >
               <div
-                className={`max-w-[80%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm ${
+                className={`max-w-[85%] whitespace-pre-wrap rounded-2xl [overflow-wrap:anywhere] px-4 py-3 text-[15px] leading-relaxed ${
                   msg.type === "question"
-                    ? "rounded-bl-sm bg-slate-50 text-charcoal"
-                    : "rounded-br-sm bg-navy text-white"
+                    ? "rounded-bl-sm bg-paper-2 text-ink"
+                    : "rounded-br-sm bg-ink text-paper"
                 }`}
               >
                 {msg.text}
@@ -283,27 +288,27 @@ export function ConversationalForm() {
 
           {isTyping && (
             <div className="flex justify-start" aria-hidden="true">
-              <div className="flex gap-1 rounded-2xl rounded-bl-sm bg-slate-50 px-4 py-3">
-                <span className="animate-typing-dot h-2 w-2 rounded-full bg-charcoal/30" style={{ animationDelay: "0ms" }} />
-                <span className="animate-typing-dot h-2 w-2 rounded-full bg-charcoal/30" style={{ animationDelay: "150ms" }} />
-                <span className="animate-typing-dot h-2 w-2 rounded-full bg-charcoal/30" style={{ animationDelay: "300ms" }} />
+              <div className="flex gap-1 rounded-2xl rounded-bl-sm bg-paper-2 px-4 py-3">
+                <span className="animate-typing-dot h-2 w-2 rounded-full bg-ink-3" style={{ animationDelay: "0ms" }} />
+                <span className="animate-typing-dot h-2 w-2 rounded-full bg-ink-3" style={{ animationDelay: "150ms" }} />
+                <span className="animate-typing-dot h-2 w-2 rounded-full bg-ink-3" style={{ animationDelay: "300ms" }} />
               </div>
             </div>
           )}
 
           {/* Summary card with editable rows */}
           {isComplete && !editing && (
-            <div className="mt-4 rounded-xl border border-navy/10 bg-slate-50 p-4">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-teal">Before it goes out</p>
-              <dl className="space-y-2 text-sm text-charcoal">
+            <div className="mt-4 rounded-xl border border-line bg-paper p-4">
+              <p className="label mb-3 text-brass-ink">Before it goes out</p>
+              <dl className="space-y-2 text-sm text-ink">
                 {STEPS.filter((s) => answers[s.id]).map((s) => (
                   <div key={s.id} className="flex items-start gap-3">
                     <dt className="w-16 shrink-0 font-medium">{s.label}</dt>
-                    <dd className="min-w-0 flex-1 whitespace-pre-wrap break-words">{answers[s.id]}</dd>
+                    <dd className="min-w-0 flex-1 whitespace-pre-wrap [overflow-wrap:anywhere]">{answers[s.id]}</dd>
                     <button
                       type="button"
                       onClick={() => handleEdit(s.id)}
-                      className="shrink-0 rounded-full p-1 text-charcoal/40 transition-colors hover:bg-navy/5 hover:text-navy"
+                      className="-my-2 flex size-9 shrink-0 items-center justify-center rounded-full text-ink-3 transition-colors hover:bg-ink/5 hover:text-ink"
                       aria-label={`Edit ${s.label.toLowerCase()}`}
                     >
                       <Pencil className="size-3.5" />
@@ -312,13 +317,13 @@ export function ConversationalForm() {
                 ))}
               </dl>
               {turnstileState === "unavailable" && (
-                <p className="mt-3 text-xs text-charcoal/50">
+                <p className="mt-3 text-[13px] text-ink-2">
                   The bot check couldn&apos;t load (an ad blocker, maybe). You can still{" "}
                   <a href={mailtoFallback} className="font-medium underline underline-offset-2">send it by email</a>.
                 </p>
               )}
               {status === "failed" && (
-                <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-800">
+                <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-[13px] text-red-800">
                   {errorText}{" "}
                   <a href={mailtoFallback} className="font-medium underline underline-offset-2">
                     Send it by email instead
@@ -329,7 +334,7 @@ export function ConversationalForm() {
               <button
                 onClick={handleSend}
                 disabled={status === "sending" || turnstileState === "pending"}
-                className="mt-4 w-full rounded-full bg-navy px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy/90 disabled:opacity-60"
+                className="btn btn-ink mt-4 w-full disabled:cursor-wait disabled:bg-ink-2"
               >
                 {status === "sending"
                   ? "Sending…"
@@ -337,7 +342,7 @@ export function ConversationalForm() {
                     ? "One moment…"
                     : status === "failed"
                       ? "Try again"
-                      : "Send Message"}
+                      : "Send message"}
               </button>
             </div>
           )}
@@ -349,14 +354,14 @@ export function ConversationalForm() {
 
       {/* Input area */}
       {showingInput && (
-        <div className="border-t border-navy/10 p-4">
+        <div className="border-t border-line p-4">
           {step.type === "select" ? (
             <div className="flex flex-wrap gap-2">
               {step.options?.map((opt) => (
                 <button
                   key={opt}
                   onClick={() => record(opt)}
-                  className="rounded-full border border-navy/20 px-4 py-2 text-sm text-navy transition-colors hover:border-navy hover:bg-navy hover:text-white"
+                  className="min-h-11 rounded-full border border-line px-5 text-sm text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
                 >
                   {opt}
                 </button>
@@ -394,7 +399,7 @@ export function ConversationalForm() {
                   rows={3}
                   required
                   aria-required="true"
-                  className="flex-1 resize-none rounded-2xl border border-navy/20 bg-transparent px-4 py-2.5 text-sm text-navy outline-none placeholder:text-charcoal/30 focus:border-teal"
+                  className="min-w-0 flex-1 resize-none rounded-2xl border border-ink/25 bg-transparent px-4 py-2.5 text-base text-ink outline-none placeholder:text-ink-3 focus:border-ink sm:text-[15px]"
                 />
               ) : (
                 <input
@@ -407,21 +412,21 @@ export function ConversationalForm() {
                   required={step.required}
                   aria-required={step.required}
                   autoComplete={step.id === "email" ? "email" : step.id === "phone" ? "tel" : step.id === "name" ? "name" : "off"}
-                  className="flex-1 rounded-full border border-navy/20 bg-transparent px-4 py-2.5 text-sm text-navy outline-none placeholder:text-charcoal/30 focus:border-teal"
+                  className="min-w-0 flex-1 rounded-full border border-ink/25 bg-transparent px-4 py-2.5 text-base text-ink outline-none placeholder:text-ink-3 focus:border-ink sm:text-[15px]"
                 />
               )}
               {!step.required && (
                 <button
                   type="button"
                   onClick={skipStep}
-                  className="h-11 shrink-0 rounded-full border border-navy/20 px-4 text-sm text-navy/70 transition-colors hover:border-navy/40 hover:text-navy"
+                  className="h-11 shrink-0 rounded-full border border-line px-4 text-sm text-ink-2 transition-colors hover:border-ink hover:text-ink"
                 >
                   Skip
                 </button>
               )}
               <button
                 type="submit"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-navy text-white transition-colors hover:bg-navy/90"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink text-paper transition-colors hover:bg-[#2a2b31]"
                 aria-label="Continue"
               >
                 <Send className="size-4" />
@@ -429,7 +434,7 @@ export function ConversationalForm() {
             </form>
           )}
           {/* What this step is, and which key moves it along */}
-          <div className="mt-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-charcoal/40">
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[12px] text-ink-3">
             <span>
               {editing ? "Fixing" : `Step ${currentStep + 1} of ${STEPS.length}`} &middot; {step.label}
             </span>

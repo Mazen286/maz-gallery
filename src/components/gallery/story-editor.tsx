@@ -68,17 +68,18 @@ export function StoryEditor() {
   const totalCount = GALLERY.length
 
   return (
-    <div className="min-h-screen bg-charcoal pt-24 pb-24">
-      <div className="mx-auto max-w-5xl px-6">
+    <div data-tone="dark" className="min-h-screen bg-wall pb-24 pt-28 text-ivory">
+      <div className="mx-auto max-w-5xl px-5 sm:px-6">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold text-white">Photo Story Editor</h1>
-          <p className="mt-2 text-sm text-white/50">
+          <p className="label text-brass">No. 03 &middot; The Gallery</p>
+          <h1 className="mt-4 font-display text-4xl font-normal text-ivory">Photo Story Editor</h1>
+          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-mist">
             Write a short story or note for each photo. These appear in the Exhibition view,
             3D Museum plaques, and lightbox. Write naturally, I&apos;ll embellish later.
           </p>
-          <p className="mt-2 font-mono text-xs text-teal">
-            {filledCount} / {totalCount} stories written
+          <p className="mt-3 text-[13px] tabular-nums text-brass-2">
+            {filledCount} of {totalCount} stories written
           </p>
         </div>
 
@@ -86,14 +87,14 @@ export function StoryEditor() {
         <div className="mb-8 flex flex-wrap gap-3">
           <button
             onClick={exportJSON}
-            className="flex items-center gap-2 rounded-full bg-teal/80 px-5 py-2.5 text-sm font-medium text-white hover:bg-teal"
+            className="btn btn-ivory"
           >
             <Download className="size-4" />
             Export JSON
           </button>
           <button
             onClick={copyForGalleryTs}
-            className="flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white/70 hover:border-teal hover:text-teal"
+            className="btn btn-line text-ivory"
           >
             {saved ? <Check className="size-4" /> : null}
             {saved ? "Copied!" : "Copy as gallery.ts entries"}
@@ -109,10 +110,8 @@ export function StoryEditor() {
             return (
               <div
                 key={img.src}
-                className={`rounded-xl border transition-colors ${
-                  hasStory
-                    ? "border-teal/20 bg-teal/5"
-                    : "border-white/10 bg-white/5"
+                className={`border transition-colors ${
+                  hasStory ? "border-brass/40 bg-wall-2" : "border-wall-line bg-wall-2"
                 }`}
               >
                 {/* Image row */}
@@ -120,10 +119,8 @@ export function StoryEditor() {
                   className="flex cursor-pointer items-center gap-4 p-4"
                   onClick={() => toggleCollapse(img.src)}
                 >
-                  <span className="font-mono text-xs text-white/30 w-6 text-right">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg">
+                  <span className="w-7 text-right text-[13px] tabular-nums text-mist-2">{i + 1}</span>
+                  <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden">
                     <Image
                       src={img.src}
                       alt={img.alt}
@@ -133,27 +130,27 @@ export function StoryEditor() {
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-white">
+                    <p className="text-sm font-medium text-ivory">
                       {img.alt}
                     </p>
-                    <p className="text-xs text-white/40">
+                    <p className="text-[13px] text-mist-2">
                       {img.location || "No location"} &middot;{" "}
                       {img.src.split("/").pop()}
                     </p>
                     {hasStory && isCollapsed && (
-                      <p className="mt-1 truncate text-xs italic text-teal/60">
+                      <p className="mt-1 text-[13px] italic leading-relaxed text-brass-2">
                         {stories[img.src]}
                       </p>
                     )}
                   </div>
                   <div className="flex items-center gap-2">
                     {hasStory && (
-                      <Check className="size-4 text-teal" />
+                      <Check className="size-4 text-brass" />
                     )}
                     {isCollapsed ? (
-                      <ChevronDown className="size-4 text-white/30" />
+                      <ChevronDown className="size-4 text-mist-2" />
                     ) : (
-                      <ChevronUp className="size-4 text-white/30" />
+                      <ChevronUp className="size-4 text-mist-2" />
                     )}
                   </div>
                 </div>
@@ -166,7 +163,7 @@ export function StoryEditor() {
                       onChange={(e) => updateStory(img.src, e.target.value)}
                       placeholder="Write your story here... Where were you? What caught your eye? What were you feeling?"
                       rows={3}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/20 focus:border-teal/50"
+                      className="w-full border border-wall-line bg-wall px-4 py-3 text-sm text-ivory outline-none placeholder:text-mist-2 focus:border-brass/60"
                     />
                   </div>
                 )}
@@ -176,11 +173,11 @@ export function StoryEditor() {
         </div>
 
         {/* Bottom export */}
-        <div className="mt-12 rounded-xl border border-white/10 bg-white/5 p-6">
-          <h2 className="text-lg font-semibold text-white">When you&apos;re done</h2>
-          <p className="mt-2 text-sm text-white/50">
+        <div className="mt-12 border border-wall-line bg-wall-2 p-6">
+          <h2 className="font-display text-xl text-ivory">When you&apos;re done</h2>
+          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-mist">
             Click &ldquo;Copy as gallery.ts entries&rdquo; above. Then paste the result into{" "}
-            <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs text-teal">
+            <code className="bg-wall-3 px-1.5 py-0.5 text-[13px] text-brass-2">
               src/lib/gallery.ts
             </code>{" "}
             replacing the GALLERY array contents. Or export as JSON and send it to me.

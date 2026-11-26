@@ -8,6 +8,8 @@ const TITLE = "Figment Forever"
 const DESCRIPTION = "Wedding invitations and websites that make the moment yours."
 const URL = "https://maz.gallery/projects/figment-forever"
 const ACCENT = "#c48a7d"
+// The same rose, deep enough to read as text on the page (4.9:1)
+const ACCENT_INK = "#9a5e51"
 const IMG = "/images/projects/figment-forever"
 // the live demo: each link is a guest's personal invitation, so it opens addressed to them
 const DEMO = "https://forever.figmentanalytics.com"
@@ -42,13 +44,13 @@ function Figure({ src, alt, caption, width = 1600, height = 1150 }: { src: strin
   return (
     <figure className="not-prose my-12">
       <Image src={src} alt={alt} width={width} height={height} className="h-auto w-full rounded-xl" sizes="(max-width: 768px) 100vw, 768px" />
-      <figcaption className="mt-3 text-center font-display text-sm italic text-charcoal/50">{caption}</figcaption>
+      <figcaption className="mt-3 text-center font-display text-[15px] italic text-ink-3">{caption}</figcaption>
     </figure>
   )
 }
 
 function Caption({ children }: { children: React.ReactNode }) {
-  return <figcaption className="mt-3 text-center font-display text-sm italic text-charcoal/50">{children}</figcaption>
+  return <figcaption className="mt-3 text-center font-display text-[15px] italic text-ink-3">{children}</figcaption>
 }
 
 /** The four live invitations, as cards. */
@@ -63,11 +65,11 @@ function Live({ compact = false }: { compact?: boolean }) {
           rel="noopener noreferrer"
           className="group rounded-xl border border-navy/10 bg-white px-4 py-3.5 transition-all hover:-translate-y-0.5 hover:shadow-md sm:px-5 sm:py-4"
         >
-          <span className="block font-mono text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: ACCENT }}>
+          <span className="label block" style={{ color: ACCENT_INK }}>
             {compact ? "Open" : "See it live"}
           </span>
           <span className="mt-1 block font-display text-base text-navy sm:text-lg">{d.name}</span>
-          <span className="block font-display text-sm italic text-charcoal/55">{d.couple}</span>
+          <span className="block font-display text-sm italic text-ink-3">{d.couple}</span>
         </a>
       ))}
     </div>
@@ -91,17 +93,17 @@ export default function FigmentForeverPage() {
       <article className="bg-[#fbfaf6] pb-16 pt-32 sm:pb-24 sm:pt-40">
         <div className="mx-auto max-w-3xl px-6">
           <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-charcoal/40">
-              <li><Link href="/" className="hover:text-teal">Home</Link></li>
-              <li>/</li>
-              <li><Link href="/projects" className="hover:text-teal">Projects Wing</Link></li>
-              <li>/</li>
-              <li className="truncate text-charcoal/60">{TITLE}</li>
+            <ol className="label flex flex-wrap items-center gap-x-2 gap-y-1 text-ink-3">
+              <li><Link href="/" className="py-2 transition-colors hover:text-ink">Home</Link></li>
+              <li aria-hidden="true">/</li>
+              <li><Link href="/projects" className="py-2 transition-colors hover:text-ink">Projects Wing</Link></li>
+              <li aria-hidden="true">/</li>
+              <li className="text-ink-2">{TITLE}</li>
             </ol>
           </nav>
 
-          <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-charcoal/45">
-            <span className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white" style={{ backgroundColor: ACCENT }}>
+          <div className="flex flex-wrap items-center gap-3 text-[13px] text-ink-3">
+            <span className="label rounded-full px-3 py-1 text-ink" style={{ backgroundColor: ACCENT }}>
               Project
             </span>
             <span>2026</span>
@@ -112,8 +114,8 @@ export default function FigmentForeverPage() {
           <h1 className="mt-5 font-display font-semibold leading-[1.08] text-navy" style={{ fontSize: "clamp(2.1rem, 5vw, 3.4rem)" }}>
             {TITLE}
           </h1>
-          <p className="mt-4 font-display text-lg italic leading-relaxed text-charcoal/60 sm:text-xl">{DESCRIPTION}</p>
-          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.3em] text-charcoal/40">By Mazen Abugharbieh</p>
+          <p className="mt-4 font-display text-lg italic leading-relaxed text-ink-2 sm:text-xl">{DESCRIPTION}</p>
+          <p className="mt-4 text-[13px] text-ink-3">By Mazen Abugharbieh</p>
 
           {/* the four openings, in motion: what a guest sees first */}
           <div className="relative mt-8 aspect-[16/10] overflow-hidden rounded-xl bg-[#f4f1eb]">
@@ -128,13 +130,13 @@ export default function FigmentForeverPage() {
           </div>
 
           <div className="mt-6">
-            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-charcoal/45">
+            <p className="label mb-3 text-ink-3">
               Open an invitation, the way a guest would
             </p>
             <Live compact />
           </div>
 
-          <div className="reading-room prose prose-lg mt-12 max-w-none font-display text-charcoal/85 prose-headings:font-display prose-headings:text-navy prose-h2:mt-14 prose-h2:text-2xl prose-h2:sm:text-3xl prose-p:leading-[1.85] prose-a:text-teal prose-hr:my-10 prose-li:leading-[1.8]">
+          <div className="reading-room prose prose-lg mt-12 max-w-none font-display text-charcoal/85 prose-headings:font-display prose-headings:text-navy prose-h2:mt-14 prose-h2:text-2xl prose-h2:sm:text-3xl prose-p:leading-[1.85] prose-a:text-[#9a5e51] prose-hr:my-10 prose-li:leading-[1.8]">
             <h2>Why I built it</h2>
             <p>
               A friend was planning her wedding and kept running into walls. She wanted to shape the website her own
@@ -249,7 +251,7 @@ export default function FigmentForeverPage() {
           <div className="mt-10 flex justify-center">
             <Link
               href="/booking"
-              className="rounded-full bg-navy px-7 py-3 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-navy/85"
+              className="btn bg-navy text-white hover:bg-navy/85"
             >
               Get in touch at the Front Desk
             </Link>

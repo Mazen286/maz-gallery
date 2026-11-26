@@ -62,10 +62,10 @@ export function LocationMap({ onSelectLocation, activeLocation }: LocationMapPro
           const u = region.w / 80 // one "unit" of type and pin size for this inset
           const fontSize = 2.4 * u
           return (
-            <figure key={region.name} className="m-0 rounded-lg border border-white/10 bg-white/[0.02] p-3">
-              <figcaption className="flex items-baseline justify-between px-1 pb-2">
-                <span className="font-display text-lg italic text-white/85">{region.name}</span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">
+            <figure key={region.name} className="m-0 border border-wall-line bg-wall-2 p-3 sm:p-4">
+              <figcaption className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-1 pb-3">
+                <span className="font-display text-xl italic text-ivory">{region.name}</span>
+                <span className="text-[13px] tabular-nums text-mist-2">
                   {inside.length} places &middot; {total} photos
                 </span>
               </figcaption>
@@ -75,11 +75,11 @@ export function LocationMap({ onSelectLocation, activeLocation }: LocationMapPro
                 role="group"
                 aria-label={`${region.name}: ${inside.map((p) => p.label).join(", ")}`}
               >
-                <rect x={region.x} y={region.y} width={region.w} height={region.h} fill="rgba(120,200,214,0.03)" />
+                <rect x={region.x} y={region.y} width={region.w} height={region.h} fill="rgba(244,240,232,0.02)" />
                 <path
                   d={WORLD_LAND_PATH}
-                  fill="rgba(120,200,214,0.08)"
-                  stroke="rgba(120,200,214,0.3)"
+                  fill="rgba(184,151,90,0.10)"
+                  stroke="rgba(184,151,90,0.35)"
                   strokeWidth={0.3 * u}
                 />
                 {inside.map((p) => {
@@ -87,7 +87,7 @@ export function LocationMap({ onSelectLocation, activeLocation }: LocationMapPro
                   const slot = slots.get(p.loc) ?? LABEL_SLOTS[0]
                   return (
                     <g key={p.loc}>
-                      <circle cx={p.cx} cy={p.cy} r={2.6 * u} fill="none" stroke="rgba(120,200,214,0.35)" strokeWidth={0.3 * u} />
+                      <circle cx={p.cx} cy={p.cy} r={2.6 * u} fill="none" stroke="rgba(216,189,134,0.45)" strokeWidth={0.3 * u} />
                       {/* Generous invisible hit target for touch and pointer */}
                       <circle
                         cx={p.cx}
@@ -110,17 +110,18 @@ export function LocationMap({ onSelectLocation, activeLocation }: LocationMapPro
                         cx={p.cx}
                         cy={p.cy}
                         r={(isActive ? 1.3 : 0.95) * u}
-                        fill={isActive ? "#78c8d6" : "rgba(120,200,214,0.85)"}
+                        fill={isActive ? "#f4f0e8" : "#d8bd86"}
                         className="pointer-events-none"
                       />
                       <text
                         x={p.cx + slot.dx * u}
                         y={p.cy + slot.dy * u}
                         textAnchor={slot.anchor}
-                        fill={isActive ? "#78c8d6" : "rgba(255,255,255,0.8)"}
+                        fill={isActive ? "#d8bd86" : "#f4f0e8"}
                         fontSize={fontSize}
-                        fontFamily="ui-monospace, monospace"
-                        letterSpacing={0.25 * u}
+                        fontFamily="var(--font-inter-tight), system-ui, sans-serif"
+                        fontWeight={600}
+                        letterSpacing={0.2 * u}
                         className="pointer-events-none select-none"
                       >
                         {p.label.toUpperCase()} {p.count}
@@ -137,7 +138,7 @@ export function LocationMap({ onSelectLocation, activeLocation }: LocationMapPro
       <div className="mt-6 flex justify-center">
         <button
           onClick={() => onSelectLocation(null)}
-          className="rounded-full border border-white/20 px-5 py-2 text-xs font-medium text-white/60 transition-all hover:border-teal hover:text-teal"
+          className="btn btn-line text-ivory"
         >
           Back to the wings
         </button>
