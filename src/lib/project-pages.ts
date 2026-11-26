@@ -135,13 +135,13 @@ export const PROJECT_PAGES: ProjectPage[] = [
     schemaType: "Organization",
     facts: [
       { label: "What", value: "SurfPod stations", note: "Scan, surf, shaka" },
-      { label: "Where", value: "Waikiki", note: "At the Hyatt Regency Waikiki" },
+      { label: "Where", value: "Waikiki", note: "Hyatt Regency Waikiki since October 2026" },
       { label: "My role", value: "CPO and co-founder", note: "Analytics and partner dashboards" },
       { label: "Built with", value: "React Native", note: "Square payments, live maps" },
     ],
     what: [
       "SurfUp makes SurfPods, self-service surfboard rental stations that run around the clock with no staff. You find a SurfPod in the app, scan to unlock a board, surf, and bring it back. No reservations.",
-      "The business started in Pacific Beach in San Diego and now runs at the Hyatt Regency Waikiki. I co-founded it and serve as its CPO.",
+      "The business started in Pacific Beach in San Diego and launched at the Hyatt Regency Waikiki in October 2026. I co-founded it and serve as its CPO.",
     ],
     built: [
       {
