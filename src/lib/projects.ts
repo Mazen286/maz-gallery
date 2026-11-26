@@ -84,7 +84,7 @@ export const ALL_PROJECTS = [
     description:
       "Original browser games plus free companion tools for card and tabletop games. Multiplayer drafting, duels, AI opponents, and deck building.",
     url: "https://figmentgaming.com",
-    image: "/images/projects/figment-gaming.png",
+    image: "/images/projects/figment-gaming.webp",
     cta: "Play Now",
     tags: ["React 19", "Supabase", "Cloudflare Workers"],
     accent: "#b464ff",
