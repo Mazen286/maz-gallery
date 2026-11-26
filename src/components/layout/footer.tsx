@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Instagram, Linkedin } from "lucide-react"
 import { SOCIAL, ROOMS, EMAIL, FIGMENT_URL, roomSubtitle } from "@/lib/constants"
 
 export function Footer() {
@@ -10,45 +9,29 @@ export function Footer() {
   if (pathname?.startsWith("/cafe-maz")) return null
 
   return (
-    <footer className="border-t border-white/[0.06] bg-[#0a0c11] text-white/60">
-      <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
+    <footer className="bg-wall text-mist">
+      <div className="mx-auto max-w-[1312px] border-t border-wall-line px-5 py-16 sm:px-8 lg:px-12">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[2fr_1.2fr_1fr]">
           <div>
-            <p className="font-display text-2xl font-semibold text-white">
-              Maz <span className="italic">Gallery</span>
+            <p className="font-display text-2xl font-semibold text-ivory">
+              Maz <span className="font-normal italic">Gallery</span>
             </p>
-            <p className="mt-3 font-display text-sm italic text-white/40">
-              Photographs by Mazen Abugharbieh
+            <p className="mt-3 max-w-xs text-sm leading-relaxed">
+              Photographs and projects by Mazen Abugharbieh.
             </p>
-            <address className="mt-2 text-sm not-italic text-white/35">
-              San Diego, CA
-            </address>
-            <div className="mt-5 flex gap-4">
-              <a href={SOCIAL.instagram} target="_blank" rel="me noopener noreferrer" aria-label="Instagram" className="text-white/40 transition-colors hover:text-teal">
-                <Instagram className="size-5" />
-              </a>
-              <a href={SOCIAL.linkedin} target="_blank" rel="me noopener noreferrer" aria-label="LinkedIn" className="text-white/40 transition-colors hover:text-teal">
-                <Linkedin className="size-5" />
-              </a>
-            </div>
+            <address className="mt-1 text-sm not-italic">San Diego, CA</address>
           </div>
 
           <nav aria-label="Footer directory">
-            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-teal/70">
-              Directory
-            </p>
-            <ul className="mt-4 space-y-2.5 text-sm">
+            <p className="label text-brass">Directory</p>
+            <ul className="mt-5 space-y-1">
               {ROOMS.map((room) => (
                 <li key={room.href}>
-                  <Link href={room.href} className="group flex items-baseline gap-3 transition-colors hover:text-white">
-                    <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-white/25 transition-colors group-hover:text-teal/70">
-                      {room.number}
-                    </span>
+                  <Link href={room.href} className="group flex items-baseline gap-3 py-1 text-sm transition-colors hover:text-ivory">
+                    <span className="w-12 shrink-0 font-display text-[13px] italic text-brass">{room.number}</span>
                     <span>
                       {room.label}
-                      {roomSubtitle(room) && (
-                        <span className="ml-2 font-display text-xs italic text-white/30">{roomSubtitle(room)}</span>
-                      )}
+                      {roomSubtitle(room) && <span className="ml-2 text-mist-2">{roomSubtitle(room)}</span>}
                     </span>
                   </Link>
                 </li>
@@ -57,27 +40,25 @@ export function Footer() {
           </nav>
 
           <div>
-            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-teal/70">
-              Elsewhere
-            </p>
-            <ul className="mt-4 space-y-2.5 text-sm">
+            <p className="label text-brass">Elsewhere</p>
+            <ul className="mt-5 space-y-1 text-sm">
               <li>
-                <a href={`mailto:${EMAIL}`} className="transition-colors hover:text-white">
+                <a href={`mailto:${EMAIL}`} className="inline-block py-1 transition-colors hover:text-ivory">
                   {EMAIL}
                 </a>
               </li>
               <li>
-                <a href={FIGMENT_URL} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">
+                <a href={FIGMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-block py-1 transition-colors hover:text-ivory">
                   Figment Analytics
                 </a>
               </li>
               <li>
-                <a href={SOCIAL.instagram} target="_blank" rel="me noopener noreferrer" className="transition-colors hover:text-white">
+                <a href={SOCIAL.instagram} target="_blank" rel="me noopener noreferrer" className="inline-block py-1 transition-colors hover:text-ivory">
                   Instagram
                 </a>
               </li>
               <li>
-                <a href={SOCIAL.linkedin} target="_blank" rel="me noopener noreferrer" className="transition-colors hover:text-white">
+                <a href={SOCIAL.linkedin} target="_blank" rel="me noopener noreferrer" className="inline-block py-1 transition-colors hover:text-ivory">
                   LinkedIn
                 </a>
               </li>
@@ -85,13 +66,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center gap-2 border-t border-white/[0.06] pt-8 text-center">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25">
-            Open whenever &middot; Free admission
-          </p>
-          <p className="text-xs text-white/30">
-            &copy; {new Date().getFullYear()} Maz Gallery. Touching the art is encouraged.
-          </p>
+        <div className="mt-14 flex flex-col gap-2 border-t border-wall-line pt-8 text-[13px] text-mist-2 sm:flex-row sm:items-center sm:justify-between">
+          <p>Open whenever &middot; Free admission</p>
+          <p>&copy; {new Date().getFullYear()} Maz Gallery. Touching the art is encouraged.</p>
         </div>
       </div>
     </footer>

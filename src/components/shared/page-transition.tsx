@@ -46,25 +46,25 @@ export function PageTransition({ children }: PageTransitionProps) {
         style={{
           opacity: dimmed ? 1 : 0,
           transitionDuration: dimmed ? "120ms" : "300ms",
-          background: "radial-gradient(ellipse at 50% 45%, #11141d 0%, #07080c 75%)",
+          background: "radial-gradient(ellipse at 50% 45%, #15171c 0%, #0d0e11 75%)",
         }}
       >
         {dimmed && room && (
           <div className="text-center">
             <p
-              className="font-mono text-[10px] uppercase tracking-[0.45em] text-teal/70"
+              className="font-display text-base italic text-brass"
               style={{ animation: "placardIn 0.4s ease-out 0.05s both" }}
             >
               {room.number}
             </p>
             <p
-              className="mt-3 font-display text-3xl italic text-white/90 sm:text-4xl"
+              className="mt-2 font-display text-3xl text-ivory sm:text-4xl"
               style={{ animation: "placardIn 0.45s ease-out 0.12s both" }}
             >
               {room.name}
             </p>
             <div
-              className="mx-auto mt-5 h-px w-16 bg-teal/40"
+              className="mx-auto mt-5 h-px w-16 bg-brass/60"
               style={{ animation: "lineGrow 0.5s ease-out 0.2s both", transformOrigin: "center" }}
             />
           </div>

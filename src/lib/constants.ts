@@ -65,25 +65,3 @@ export const PRESS = [
     url: "https://today.ucsd.edu/story/surfs-up-in-san-diego-thanks-to-alumni-led-startup",
   },
 ] as const
-
-// Selected works shown on the home page. The full list lives in lib/projects.ts.
-export const PROJECTS = [
-  {
-    title: "Figment Analytics",
-    description: "Data analytics & BI consulting for growing businesses.",
-    url: "https://figmentanalytics.com",
-    image: "/images/projects/figment-analytics.png",
-  },
-  {
-    title: "SurfUp",
-    description: "Self-service surfboard rentals with SurfPod stations, from San Diego to Waikiki.",
-    url: "https://surfupapp.com",
-    image: "/images/projects/surfup-beach.png",
-  },
-  {
-    title: "Runes & Reagents",
-    description: "A crafting and adventure RPG you play in the browser.",
-    url: "https://figmentgaming.com/runes",
-    image: "/images/projects/runes-reagents.jpg",
-  },
-] as const
