@@ -17,7 +17,7 @@ export function ProjectCard({
   return (
     <Link href={`/projects/${project.slug}`} className="group block">
       <div className="relative aspect-[1200/630] overflow-hidden bg-paper-2 shadow-[0_0_0_1px_var(--line)]">
-        <Image
+        <Image loading="eager" fetchPriority="low"
           src={project.image}
           alt={`${project.title}: ${project.line}`}
           fill

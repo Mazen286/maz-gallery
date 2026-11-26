@@ -105,7 +105,7 @@ export default function ProjectsPage() {
           <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
             <div className="grid overflow-hidden bg-[#121a10] text-ivory lg:grid-cols-[1.5fr_1fr]">
               <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[480px]">
-                <Image
+                <Image loading="eager" fetchPriority="low"
                   src="/images/projects/runes-brewstorm-wide.webp"
                   alt="Nestor the fox lifts a carved puzzle board in a sunlit forest while a ribbon of runes and potions arcs over him"
                   fill

@@ -37,7 +37,7 @@ export function AnnexTeaser() {
                 aria-hidden="true"
                 className="frame pointer-events-none absolute -right-10 top-10 hidden w-[300px] rotate-[6deg] transition-transform duration-500 group-hover:rotate-[4deg] md:block"
               >
-                <Image
+                <Image loading="eager" fetchPriority="low"
                   src="/images/gallery/Alanya-(16-of-20).jpg"
                   alt=""
                   width={1500}

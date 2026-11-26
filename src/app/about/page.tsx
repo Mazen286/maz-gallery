@@ -143,7 +143,7 @@ export default function AboutPage() {
           <FadeIn immediate delay={150}>
             <figure>
               <div className="frame-light">
-                <Image
+                <Image loading="eager" fetchPriority="low"
                   src="/images/about-1.jpg"
                   alt="Mazen Abugharbieh sitting on concrete steps in a checked shirt"
                   width={1500}
@@ -211,14 +211,14 @@ export default function AboutPage() {
                     <figure>
                       <div className="frame transition-transform duration-500 ease-out group-hover:-translate-y-1">
                         <div className="overflow-hidden">
-                          <Image
+                          <Image loading="eager" fetchPriority="low"
                             src={img.src}
                             alt={img.alt}
                             width={img.width}
                             height={img.height}
                             className="aspect-[3/2] h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                             sizes="(min-width: 1312px) 380px, (min-width: 640px) 30vw, 92vw"
-                            loading="lazy"
+                           
                           />
                         </div>
                       </div>
@@ -262,7 +262,7 @@ export default function AboutPage() {
                     <img
                       src={outlet.logo}
                       alt={`Featured in ${outlet.name}`}
-                      loading="lazy"
+                     
                       decoding="async"
                       className={`w-auto object-contain ${outlet.name === "SD Voyager" ? "h-8 sm:h-9" : "h-12 sm:h-14"}`}
                     />

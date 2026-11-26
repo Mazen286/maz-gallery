@@ -68,8 +68,7 @@ export function Hero({ works, places }: { works: number; places: number }) {
             style={entrance(play, 1100)}
           >
             <span>
-              <span className="block font-display text-[15px] italic text-ivory">Self Portrait</span>
-              <span className="mt-0.5 block text-[13px] text-mist-2">Mixed media: data and light</span>
+              <span className="block font-display text-[15px] italic text-ivory">Portrait</span>
             </span>
             <span className="text-right text-[13px] text-mist-2">Analyst, photographer, founder</span>
           </figcaption>

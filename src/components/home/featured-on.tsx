@@ -25,7 +25,7 @@ export function FeaturedOn() {
                 <img
                   src={outlet.logo}
                   alt={`Featured in ${outlet.name}`}
-                  loading="lazy"
+                 
                   decoding="async"
                   className={`w-auto object-contain ${HEIGHTS[outlet.name] ?? "h-12"}`}
                 />

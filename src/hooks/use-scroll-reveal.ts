@@ -15,6 +15,9 @@ interface ScrollRevealResult {
   progress: number
 }
 
+/** Sections fade in as they scroll into view: off (owner, 26 Nov 2026) */
+const REVEAL_ON_SCROLL = false as boolean
+
 export function useScrollReveal(options: ScrollRevealOptions = {}): ScrollRevealResult {
   const { threshold = 0.15, rootMargin = "0px", once = true } = options
   const ref = useRef<HTMLDivElement>(null)
@@ -23,8 +26,9 @@ export function useScrollReveal(options: ScrollRevealOptions = {}): ScrollReveal
   const reduced = useReducedMotion()
 
   useEffect(() => {
-    // Reduced motion shows everything immediately; no observer needed
-    if (reduced) return
+    // Everything shows at once, for everyone (owner, 26 Nov 2026: fading sections in as they scrolled into view felt
+    // like the page loading). The observer stays only for callers that read `progress`
+    if (reduced || REVEAL_ON_SCROLL === false) return
 
     const el = ref.current
     if (!el) return
@@ -47,5 +51,5 @@ export function useScrollReveal(options: ScrollRevealOptions = {}): ScrollReveal
     return () => observer.disconnect()
   }, [threshold, rootMargin, once, reduced])
 
-  return { ref, isVisible: reduced || seen, progress: reduced ? 1 : ratio }
+  return { ref, isVisible: reduced || !REVEAL_ON_SCROLL || seen, progress: reduced || !REVEAL_ON_SCROLL ? 1 : ratio }
 }
