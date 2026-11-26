@@ -9,7 +9,7 @@ import { GAMES } from "@/lib/annex"
 const LAST_MODIFIED = {
   "/": "2026-09-14",
   "/about": "2026-09-14",
-  "/projects": "2026-11-17",
+  "/projects": "2026-11-25",
   "/gallery": "2026-09-14",
   "/blog": "2026-09-14",
   "/booking": "2026-09-14",

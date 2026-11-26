@@ -100,6 +100,28 @@ export const ALL_PROJECTS = [
     tags: ["Game Design", "React", "Crafting"],
     accent: "#c678dd",
   },
+  {
+    title: "Runes: Brewstorm",
+    subtitle: "Match-3 Puzzle Game",
+    description:
+      "A free match-3 in the browser, set in the world of Runes and Reagents. Match elements into Runes, brew them into Steam and Lava, and rescue the locals from vines, floods and fire. In early access.",
+    url: "https://figmentgaming.com/brewstorm",
+    image: "/images/projects/runes-brewstorm.webp",
+    cta: "Play It",
+    tags: ["Game Design", "PixiJS", "React"],
+    accent: "#7cb342",
+  },
+  {
+    title: "Ink & Knuckles 2",
+    subtitle: "Arcade Fighter",
+    description:
+      "A free one on one fighting game in the browser, drawn frame by frame. Fighters from every Runes and Reagents chapter, with Arcade, Training and Combo Trials.",
+    url: "https://figmentgaming.com/ink-and-knuckles-2",
+    image: "/images/projects/ink-and-knuckles-2.webp",
+    cta: "Play It",
+    tags: ["Game Design", "Canvas", "React"],
+    accent: "#e5b62a",
+  },
 ]
 
 export type Project = (typeof ALL_PROJECTS)[number]

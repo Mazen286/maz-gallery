@@ -8,7 +8,7 @@ import { ALL_PROJECTS as PROJECTS } from "@/lib/projects"
 export const metadata: Metadata = {
   title: "Projects | Figment Analytics, SurfUp",
   description:
-    "Explore my projects: Figment Analytics, SurfUp, LA 311, FlightPulse, Figment Gaming, Runes & Reagents, and more, with live demos and the lessons each one taught me.",
+    "Explore my projects: Figment Analytics, SurfUp, LA 311, FlightPulse, Figment Gaming, Runes & Reagents, Runes: Brewstorm, Ink & Knuckles 2, and more, with live demos and the lessons each one taught me.",
   alternates: { canonical: "/projects" },
   openGraph: {
     title: "Projects by Mazen Abugharbieh",
