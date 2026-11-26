@@ -145,7 +145,7 @@ export function CafeMaz() {
       {/* The picker hangs here in the café's own colours (its styles expect them),
           in the site's sans, with nothing under 11px */}
       <div
-        className="not-prose my-8 px-5 py-8 sm:px-8 [&_button]:text-[11px] [&_p]:text-[11px]"
+        className="not-prose my-8 px-5 py-8 sm:px-8 [&_button]:text-[11px]! [&_p]:text-[11px]!"
         style={CAFE_COLOURS}
       >
         <MoodPlayer />
