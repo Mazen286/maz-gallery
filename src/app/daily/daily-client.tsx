@@ -117,22 +117,23 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
   const triesLeft = MAX_TRIES - guesses.length
 
   return (
-    <section className="relative min-h-[100svh] bg-[#0a0c11] px-6 pb-20 pt-28 sm:pt-32">
+    <section data-tone="dark" className="relative min-h-[100svh] bg-wall px-5 pb-24 pt-28 text-ivory sm:px-6 sm:pt-36">
       {won && <ConfettiOverlay />}
       <div className="mx-auto max-w-xl">
-        <p className="font-mono text-[11px] font-medium uppercase tracking-[0.4em] text-teal">
-          The Annex &middot; Daily
-        </p>
-        <h1 className="mt-3 font-display text-4xl font-semibold text-white sm:text-5xl">
-          The Daily <span className="italic">Postcard</span>
-        </h1>
-        <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.3em] text-white/40">
-          No. {puzzle.number} &middot; one photo, three tries
-        </p>
+        <div className="animate-rise-in">
+          <p className="label text-brass">No. 06 &middot; Daily Postcard</p>
+          <h1 className="mt-4 font-display text-[40px] font-normal leading-tight tracking-[-0.01em] sm:text-[52px]">
+            The Daily <span className="italic">Postcard</span>
+          </h1>
+          <p className="mt-3 inline-flex items-center gap-2 text-[15px] text-mist">
+            <span className="size-1.5 rounded-full bg-teal" aria-hidden="true" />
+            Postcard {puzzle.number}: one photo, three tries
+          </p>
+        </div>
 
         {/* The postcard */}
         <figure className="mt-8 -rotate-1">
-          <div className="border border-[#a08c5f]/35 bg-[#efece4] p-3 shadow-[0_18px_50px_rgba(0,0,0,0.55)] sm:p-4">
+          <div className="frame">
             <Image
               src={puzzle.image.src}
               alt="Today's postcard. Guess where it was taken."
@@ -147,7 +148,7 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
 
         {/* Tries */}
         <div className="mt-6 flex items-center justify-between">
-          <p className="font-display text-lg italic text-white/80">
+          <p className="font-display text-xl italic text-ivory">
             {done
               ? won
                 ? "You found it."
@@ -162,7 +163,7 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
                 <span
                   key={i}
                   className={`h-2.5 w-2.5 rounded-full ${
-                    winIdx ? "bg-teal" : wrong ? "bg-red-400/70" : "bg-white/15"
+                    winIdx ? "bg-teal" : wrong ? "bg-[#e0786c]" : "bg-wall-3 ring-1 ring-wall-line"
                   }`}
                 />
               )
@@ -180,14 +181,14 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
                 key={option}
                 onClick={() => choose(option)}
                 disabled={done || guessedWrong}
-                className={`rounded-md border px-4 py-3 text-sm transition-all ${
+                className={`min-h-12 border px-4 py-3 text-[15px] transition-colors ${
                   revealCorrect
-                    ? "border-teal bg-teal/20 text-teal"
+                    ? "border-teal bg-teal/15 text-teal"
                     : guessedWrong
-                      ? "border-red-400/50 bg-red-400/10 text-red-300/80"
+                      ? "border-[#e0786c]/60 bg-[#e0786c]/10 text-[#f2b1a8] line-through decoration-[#e0786c]/70"
                       : done
-                        ? "border-white/10 text-white/30"
-                        : "border-white/15 text-white/70 hover:border-teal/50 hover:text-white"
+                        ? "border-wall-line text-mist-2"
+                        : "border-wall-line bg-wall-2 text-ivory hover:border-brass/60"
                 }`}
               >
                 {option}
@@ -198,61 +199,58 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
 
         {/* Reveal */}
         {done && (
-          <div className="mt-8 border border-white/10 bg-white/[0.03] p-5" style={{ animation: "placardIn 0.4s ease-out both" }}>
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-teal/70">
-              {puzzle.image.location}
-            </p>
-            <p className="mt-2 font-display text-lg italic text-white/85">{puzzle.image.alt}</p>
+          <div className="mt-8 border border-wall-line bg-wall-2 p-5 sm:p-6" style={{ animation: "placardIn 0.4s ease-out both" }}>
+            <p className="label text-brass">{puzzle.image.location}</p>
+            <p className="mt-2 font-display text-xl italic text-ivory">{puzzle.image.alt}</p>
             {puzzle.image.story && (
-              <p className="mt-3 text-sm leading-relaxed text-white/50">{puzzle.image.story}</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-mist">{puzzle.image.story}</p>
             )}
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <button
                 onClick={share}
-                className="flex items-center gap-2 rounded-full border border-teal px-5 py-2 text-sm text-teal transition-all hover:bg-teal/10"
+                className="btn btn-ivory"
               >
                 {copied ? <Check className="size-4" /> : <Share2 className="size-4" />}
                 {copied ? "Copied" : "Share result"}
               </button>
               <Link
                 href={`/gallery/${photoSlug(puzzle.image)}`}
-                className="flex items-center gap-1.5 text-sm text-white/50 transition-colors hover:text-white"
+                className="link-arrow text-ivory"
               >
                 See it in the gallery
-                <ArrowRight className="size-4" />
               </Link>
             </div>
           </div>
         )}
 
         {/* Stats strip */}
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] pt-5 font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-wall-line pt-5 text-[13px] tabular-nums text-mist">
           <span>
-            Streak {stats.streak} &middot; Max {stats.maxStreak} &middot; Played {stats.played}
+            <span className={stats.streak > 0 ? "text-teal" : "text-ivory"}>Streak {stats.streak}</span> &middot; Best {stats.maxStreak} &middot; Played {stats.played}
             {stats.played > 0 && <> &middot; {Math.round((stats.wins / stats.played) * 100)}% won</>}
           </span>
-          <span className="text-white/30">Next postcard in {countdown}</span>
+          <span className="text-mist-2">Next postcard in {countdown}</span>
         </div>
 
         {/* Yesterday's answer, for the ones who missed it */}
         {yesterday && (
           <Link
             href={`/gallery/${photoSlug(yesterday.image)}`}
-            className="group mt-6 flex items-center gap-4 rounded-md border border-white/10 bg-white/[0.02] p-3 transition-all hover:border-teal/50"
+            className="group mt-6 flex items-center gap-4 border border-wall-line bg-wall-2 p-3 transition-colors hover:border-brass/50"
           >
-            <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded">
-              <Image src={yesterday.image.src} alt="" fill sizes="80px" className="object-cover opacity-70 transition-opacity group-hover:opacity-100" />
+            <div className="relative h-14 w-20 shrink-0 overflow-hidden">
+              <Image src={yesterday.image.src} alt="" fill sizes="80px" className="object-cover" />
             </div>
             <div className="min-w-0">
-              <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
-                <History className="size-3" />
-                Yesterday, No. {yesterday.number}
+              <p className="label flex items-center gap-1.5 text-mist-2">
+                <History className="size-3.5" aria-hidden="true" />
+                Yesterday&apos;s postcard
               </p>
-              <p className="truncate font-display italic text-white/85">
-                {yesterday.image.alt} <span className="not-italic text-white/40">&middot; {yesterday.image.location}</span>
+              <p className="mt-1 font-display italic leading-snug text-ivory">
+                {yesterday.image.alt} <span className="not-italic text-mist">&middot; {yesterday.image.location}</span>
               </p>
             </div>
-            <ArrowRight className="ml-auto size-4 shrink-0 text-white/30 group-hover:text-teal" />
+            <ArrowRight className="ml-auto size-4 shrink-0 text-mist-2 group-hover:text-brass" aria-hidden="true" />
           </Link>
         )}
       </div>
