@@ -6,6 +6,12 @@ import { BLOG_POSTS, getPost, formatDate, CATEGORY_COLORS } from "@/lib/blog"
 import { POST_CONTENT } from "@/components/blog/posts"
 import { ReadingProgress } from "@/components/blog/reading-progress"
 
+// Every published post is prerendered at build and served as a static file,
+// so reading one never renders in the Worker
+export function generateStaticParams() {
+  return BLOG_POSTS.map((post) => ({ slug: post.slug }))
+}
+
 export async function generateMetadata({
   params,
 }: {
