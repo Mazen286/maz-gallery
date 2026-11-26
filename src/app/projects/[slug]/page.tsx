@@ -136,7 +136,7 @@ export default async function ProjectPageRoute({ params }: { params: Promise<{ s
   const titleBlock = (
     <FadeIn immediate>
       <nav aria-label="Breadcrumb">
-        <ol className="label flex flex-wrap items-center gap-x-2 text-mist">
+        <ol className="label flex flex-wrap items-center gap-x-2 text-ivory">
           <li>
             <Link href="/projects" className="text-brass hover:text-brass-2">
               No. 04 &middot; Projects Wing
