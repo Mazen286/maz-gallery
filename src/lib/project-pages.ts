@@ -63,7 +63,7 @@ export const PROJECT_PAGES: ProjectPage[] = [
     ],
     what: [
       "Figment Analytics is my data consultancy. We build Power BI and Tableau dashboards for teams whose reports go unused, and the data pipelines, storytelling and forecasting behind them.",
-      "There are three of us: I lead business intelligence and data storytelling, Eyad Kurd Misto leads data science and engineering, and Basel Anani leads software and data engineering. Every project is led by the people who do the work.",
+      "I founded it and lead its business intelligence and data storytelling, in a team of three specialists. Every project is led by the people who do the work.",
     ],
     built: [
       {
@@ -76,7 +76,7 @@ export const PROJECT_PAGES: ProjectPage[] = [
       },
       {
         heading: "Software as well as reports",
-        body: "The same team builds production software around the data: SurfUp's analytics and partner dashboards, and the Figment Gaming platform, with its database, multiplayer and AI opponents.",
+        body: "Beyond reports, I build production software around the data: SurfUp's analytics and partner dashboards, and the Figment Gaming platform, with its database, multiplayer and AI opponents.",
       },
     ],
     hero: {
@@ -118,6 +118,7 @@ export const PROJECT_PAGES: ProjectPage[] = [
     related: ["figment-forge", "la-311", "flightpulse"],
     placeholders: [],
     sources: [
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
       "~/figment-analytics/src/app/page.tsx (home title and description)",
       "~/figment-analytics/src/app/about/page.tsx and src/lib/constants.ts (TEAM, PROJECTS)",
       "~/figment-analytics/src/app/services/page.tsx (Dashboard Sprint and rescue subtitle)",
@@ -134,13 +135,13 @@ export const PROJECT_PAGES: ProjectPage[] = [
     schemaType: "Organization",
     facts: [
       { label: "What", value: "SurfPod stations", note: "Scan, surf, shaka" },
-      { label: "Where", value: "Waikiki", note: "Hyatt Regency Waikiki since October 2026" },
+      { label: "Where", value: "Waikiki", note: "At the Hyatt Regency Waikiki" },
       { label: "My role", value: "CPO and co-founder", note: "Analytics and partner dashboards" },
       { label: "Built with", value: "React Native", note: "Square payments, live maps" },
     ],
     what: [
       "SurfUp makes SurfPods, self-service surfboard rental stations that run around the clock with no staff. You find a SurfPod in the app, scan to unlock a board, surf, and bring it back. No reservations.",
-      "The business started in Pacific Beach in San Diego and launched at the Hyatt Regency Waikiki in October 2026. I co-founded it and serve as its CPO.",
+      "The business started in Pacific Beach in San Diego and now runs at the Hyatt Regency Waikiki. I co-founded it and serve as its CPO.",
     ],
     built: [
       {
@@ -199,9 +200,10 @@ export const PROJECT_PAGES: ProjectPage[] = [
     ],
     related: ["figment-analytics", "figment-forge", "flightpulse"],
     placeholders: [
-      "The year SurfUp was founded: surfupapp.com's llms.txt says 2023, but the San Diego Union-Tribune covered it in December 2022, so the page leaves the year out until Maz confirms it.",
+      "The year SurfUp started: Maz thinks it was around 2018 but is not certain, so the page leaves the year out until he confirms it.",
     ],
     sources: [
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
       "~/SurfUp/Website-SurfUpApp/public/llms.txt and src/lib/constants.ts (team roles, app store links, Instagram)",
       "~/SurfUp/App-Aloha/package.json (React Native, react-native-square-in-app-payments, react-native-maps)",
       "~/figment-analytics/src/app/portfolio/surfup/page.tsx (CPO role, analytics platform, Pacific Beach, Hyatt Regency Waikiki in October 2026, press list)",
@@ -291,14 +293,14 @@ export const PROJECT_PAGES: ProjectPage[] = [
     slug: "la-311",
     title: "LA 311 Dashboard",
     summary:
-      "The LA 311 Dashboard is an interactive analysis of 369,000+ Los Angeles 311 service requests from early 2025, built by Figment Analytics from public data.",
+      "The LA 311 Dashboard is an interactive analysis of 369,000+ Los Angeles 311 service requests from early 2025, built end to end by Mazen Abugharbieh.",
     cardLine: "Interactive analytics from 369,000+ City of LA service requests.",
     schemaType: "WebApplication",
     facts: [
       { label: "Data", value: "369,000+ requests", note: "Q1 2025, public open data" },
       { label: "Source", value: "LA Open Data portal", note: "Pulled through the SODA API" },
       { label: "Built with", value: "Next.js and Recharts", note: "Maps in Mapbox GL JS" },
-      { label: "Made at", value: "Figment Analytics", note: "My data consultancy" },
+      { label: "Made by", value: "Me, end to end", note: "Data, analysis, design and code" },
     ],
     what: [
       "311 is the City of Los Angeles non-emergency service line. Residents use it to report illegal dumping, graffiti, potholes and more, and every request is logged as public data.",
@@ -307,15 +309,15 @@ export const PROJECT_PAGES: ProjectPage[] = [
     built: [
       {
         heading: "From raw records to small files",
-        body: "Records come from the City of LA's open data API and are aggregated on the server ahead of time into small static datasets. The page makes no live API calls, so it opens without spinners.",
+        body: "I pull the records from the City of LA's open data API and aggregate them on the server ahead of time into small static datasets. The page makes no live API calls, so it opens without spinners.",
       },
       {
         heading: "Charts and a map",
-        body: "Recharts draws the time series, categories, neighborhoods and resolution times. A Mapbox GL JS map clusters the most recent requests across the city and expands a cluster when you click it.",
+        body: "I drew the time series, categories, neighborhoods and resolution times in Recharts. A Mapbox GL JS map clusters the most recent requests across the city and expands a cluster when you click it.",
       },
       {
         heading: "Findings between the charts",
-        body: "Key findings sit between the charts, so the numbers read as a story instead of a wall of figures.",
+        body: "I wrote the key findings and set them between the charts, so the numbers read as a story instead of a wall of figures.",
       },
     ],
     hero: {
@@ -339,10 +341,9 @@ export const PROJECT_PAGES: ProjectPage[] = [
     link: { href: "https://figmentanalytics.com/portfolio/la-311", label: "View project" },
     sameAs: ["https://figmentanalytics.com/portfolio/la-311"],
     related: ["flightpulse", "figment-forge", "figment-analytics"],
-    placeholders: [
-      "My part in the LA 311 Dashboard: the Figment Analytics page says \"we\". [Maz to confirm what he built himself]",
-    ],
+    placeholders: [],
     sources: [
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
       "~/figment-analytics/src/app/portfolio/la-311/page.tsx (369,000+ requests, Q1 2025, SODA API, Recharts, Mapbox GL JS, static aggregations, findings between charts)",
       "~/figment-analytics/src/lib/constants.ts PROJECTS (technologies)",
       "src/lib/projects.ts (existing gallery card copy)",
@@ -352,23 +353,23 @@ export const PROJECT_PAGES: ProjectPage[] = [
     slug: "flightpulse",
     title: "FlightPulse",
     summary:
-      "FlightPulse is an interactive flight tracking map from Figment Analytics that shows aircraft positions, flight paths and altitude, free to explore in a browser.",
+      "FlightPulse is an interactive flight tracking map of aircraft positions, paths and altitude; Mazen Abugharbieh did its GIS work and built the app.",
     cardLine: "Interactive flight tracking that brings aircraft data to life on the map.",
     schemaType: "WebApplication",
     facts: [
       { label: "What", value: "Flight tracking map", note: "Positions, paths and altitude" },
       { label: "Data", value: "ADSBExchange", note: "A snapshot of public flight data" },
       { label: "Built with", value: "React and TypeScript", note: "Mapbox GL JS" },
-      { label: "Made at", value: "Figment Analytics", note: "My data consultancy" },
+      { label: "My part", value: "The GIS and the app", note: "Data with the Figment Analytics team" },
     ],
     what: [
       "FlightPulse turns raw aircraft coordinates into a map you can explore. It shows a snapshot of aircraft activity with each flight's identifier, position, direction and altitude.",
-      "The data was extracted from ADSBExchange, a community-run, publicly available flight tracking network. Pan, zoom, pick a plane and follow it.",
+      "The data, extracted with the Figment Analytics team, comes from ADSBExchange, a community-run, publicly available flight tracking network. I did the GIS work and built the app on top of it. Pan, zoom, pick a plane and follow it.",
     ],
     built: [
       {
         heading: "Many aircraft on one map",
-        body: "Mapbox GL JS with a custom map style draws every aircraft marker at once and keeps panning and zooming smooth.",
+        body: "I draw every aircraft marker at once with Mapbox GL JS and a custom map style, and keep panning and zooming smooth.",
       },
       {
         heading: "Paths colored by altitude",
@@ -391,10 +392,9 @@ export const PROJECT_PAGES: ProjectPage[] = [
     link: { href: "https://flightpulse.figmentanalytics.com", label: "Launch app" },
     sameAs: ["https://flightpulse.figmentanalytics.com", "https://figmentanalytics.com/portfolio/flightpulse"],
     related: ["la-311", "figment-forge", "figment-analytics"],
-    placeholders: [
-      "My part in FlightPulse: the Figment Analytics page says \"we\". [Maz to confirm what he built himself]",
-    ],
+    placeholders: [],
     sources: [
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
       "~/figment-analytics/src/app/portfolio/flightpulse/page.tsx (features, ADSBExchange, React, TypeScript, Mapbox GL JS)",
       "~/airplane-tracker (the FlightPulse repository: README, src/components/Header.tsx)",
       "src/lib/projects.ts (existing gallery card copy)",
@@ -404,7 +404,7 @@ export const PROJECT_PAGES: ProjectPage[] = [
     slug: "figment-forge",
     title: "Figment Forge",
     summary:
-      "Figment Forge is a Power BI retail dashboard built pro bono by Figment Analytics on a real business's anonymized data, with ML sales forecasts and segments.",
+      "Figment Forge is a Power BI retail dashboard Mazen Abugharbieh built pro bono on a real business's anonymized data, with sales forecasts and customer segments.",
     cardLine: "A Power BI retail dashboard with ML forecasts and customer segmentation.",
     schemaType: "CreativeWork",
     facts: [
@@ -414,21 +414,21 @@ export const PROJECT_PAGES: ProjectPage[] = [
       { label: "Basis", value: "Pro bono", note: "A real retailer agreed to it" },
     ],
     what: [
-      "Figment Forge is a portfolio piece built on real data, not a tidy sample set. A retail business agreed to let us build on its sales, inventory and customer records, to show what a small retailer can see when that data lives in one place.",
+      "Figment Forge is a portfolio piece built on real data, not a tidy sample set. A retail business agreed to let me build on its sales, inventory and customer records, to show what a small retailer can see when that data lives in one place.",
       "Before anything was published the data was anonymized: dollar amounts were randomized within realistic ranges and product names were replaced with invented ones. The patterns, scale and structure are true to the original.",
     ],
     built: [
       {
         heading: "One pipeline for three kinds of data",
-        body: "Sales, inventory and customer data were brought together in a single pipeline before any chart was drawn.",
+        body: "Sales, inventory and customer data were brought together in a single pipeline, with the Figment Analytics team, before any chart was drawn.",
       },
       {
         heading: "Forecasts in Python",
-        body: "Machine learning models written in Python project future sales to help with inventory and marketing plans.",
+        body: "Machine learning models in Python, built with the Figment Analytics team, project future sales to help with inventory and marketing plans.",
       },
       {
         heading: "Six pages in Power BI",
-        body: "Sales performance, brand analysis, customer segmentation, inventory health, trend forecasting and an executive summary, built on over $1M in revenue across 100K+ orders.",
+        body: "I made the dashboard and every analysis in it: sales performance, brand analysis, customer segmentation, inventory health, trend forecasting and an executive summary, built on over $1M in revenue across 100K+ orders.",
       },
     ],
     hero: {
@@ -443,11 +443,9 @@ export const PROJECT_PAGES: ProjectPage[] = [
     link: { href: "https://figmentanalytics.com/portfolio/figment-forge", label: "View project" },
     sameAs: ["https://figmentanalytics.com/portfolio/figment-forge"],
     related: ["la-311", "figment-analytics", "surfup"],
-    placeholders: [
-      "The gallery's card used to say $1.18M+ in revenue and 109K+ orders; figmentanalytics.com now says over $1M and 100K+ orders, with amounts randomized. The page follows figmentanalytics.com. [Maz to confirm]",
-      "My part in Figment Forge: the Figment Analytics page says \"we\". [Maz to confirm what he built himself]",
-    ],
+    placeholders: [],
     sources: [
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
       "~/figment-analytics/src/app/portfolio/figment-forge/page.tsx (pro bono, anonymized, over $1M, 100K+ orders, six pages, Python ML forecasts, Power BI)",
       "~/figment-analytics/src/lib/constants.ts PROJECTS (Power BI, Python, Machine Learning, DAX, SQL)",
       "src/lib/projects.ts (existing gallery card copy)",
@@ -457,18 +455,18 @@ export const PROJECT_PAGES: ProjectPage[] = [
     slug: "figment-gaming",
     title: "Figment Gaming",
     summary:
-      "Figment Gaming is a free site of original browser games and companion tools for card and tabletop games, built by Mazen Abugharbieh's Figment Analytics.",
+      "Figment Gaming is a free site of original browser games and companion tools for card and tabletop games, made by Mazen Abugharbieh.",
     cardLine: "Original browser games plus free companion tools for card and tabletop games.",
     schemaType: "WebApplication",
     facts: [
       { label: "What", value: "Games and tools", note: "Everything on it is free" },
       { label: "Began as", value: "A cube drafting tool", note: "And grew one game at a time" },
       { label: "Built with", value: "React 19 and Supabase", note: "On Cloudflare Workers" },
-      { label: "Made by", value: "Figment Analytics", note: "My data consultancy" },
+      { label: "Made by", value: "Me", note: "Every game and tool on it" },
     ],
     what: [
       "Figment Gaming is two things under one roof: original games made for the browser, and free companion tools for card and tabletop games people already play. It began as a cube drafting tool and kept growing, one game at a time.",
-      "Its own games include Runes and Reagents, Runes: Brewstorm, Ink & Knuckles 2 and CubeCraft. They are written, drawn and run by the team.",
+      "Its own games include Runes and Reagents, Runes: Brewstorm, Ink & Knuckles 2 and CubeCraft. I made every one of them, and I run the site.",
     ],
     built: [
       {
@@ -521,10 +519,9 @@ export const PROJECT_PAGES: ProjectPage[] = [
     link: { href: "https://figmentgaming.com", label: "Play now" },
     sameAs: ["https://figmentgaming.com", "https://figmentanalytics.com/portfolio/figment-gaming"],
     related: ["runes-brewstorm", "ink-and-knuckles-2", "runes-and-reagents"],
-    placeholders: [
-      "My part in Figment Gaming beyond founding Figment Analytics, which builds it. [Maz to confirm]",
-    ],
+    placeholders: [],
     sources: [
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
       "~/figment-gaming/src/pages/About.tsx (two things under one roof, built by Figment Analytics, began as a cube drafting tool, our games)",
       "~/figment-analytics/src/app/portfolio/figment-gaming/page.tsx (React 19, Cloudflare Workers, Supabase, 300+ raw SQL migrations, Realtime rooms, purpose-built AI)",
       "~/figment-gaming/src/pages/aboutData.ts (own games list)",
@@ -543,11 +540,11 @@ export const PROJECT_PAGES: ProjectPage[] = [
       { label: "Genre", value: "Alchemy crafting RPG", note: "Turn based battles" },
       { label: "Where", value: "In the browser", note: "Free, with cloud saves" },
       { label: "Worlds", value: "Areena, Verdigris, Aurum", note: "Across the Rift and beyond" },
-      { label: "Made by", value: "Figment Gaming", note: "Part of the platform" },
+      { label: "Made by", value: "Me", note: "On Figment Gaming" },
     ],
     what: [
       "You play an apprentice alchemist who combines elements into new reagents, discovers recipes, explores the land, battles creatures and recruits companions. It runs in the browser with no download and is free to play.",
-      "The story begins in Areena, a world of magic and dragons. Cross the Rift and you reach Verdigris, a world run on a grid of wild elements. Go further and you reach Aurum and its city Lustre, where the elements live in people as powers.",
+      "The story begins in Areena, a world of magic and dragons. Cross the Rift and you reach Verdigris, a world run on a grid of wild elements. Go further and you reach Aurum and its city Lustre, where the elements live in people as powers. I made it myself, from the story to the code.",
     ],
     built: [
       {
@@ -600,10 +597,9 @@ export const PROJECT_PAGES: ProjectPage[] = [
     link: { href: "https://figmentgaming.com/runes", label: "Play it" },
     sameAs: ["https://figmentgaming.com/runes"],
     related: ["runes-brewstorm", "ink-and-knuckles-2", "figment-gaming"],
-    placeholders: [
-      "My part in Runes and Reagents (for example design, story, code). [Maz to confirm]",
-    ],
+    placeholders: [],
     sources: [
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
       "~/figment-gaming/src/config/runesSeo.ts (pitch, crawler body, worlds, screenshots and their alt text)",
       "~/figment-gaming/src/games/runes/data/aurumNames.ts (Aurum, Lustre)",
       "~/figment-gaming/public/images/guides/runes-and-reagents-* (bench and map screenshots)",
@@ -622,11 +618,11 @@ export const PROJECT_PAGES: ProjectPage[] = [
       { label: "Genre", value: "Match-3 puzzle", note: "Levels with goals, rescues and bosses" },
       { label: "Where", value: "In the browser", note: "Free, no account, no download" },
       { label: "Status", value: "Early access", note: "The first regions are open" },
-      { label: "Built with", value: "PixiJS and React", note: "From Figment Gaming" },
+      { label: "Built with", value: "PixiJS and React", note: "Made by me, on Figment Gaming" },
     ],
     what: [
       "Nestor the fox carves puzzle boards, and this season he takes them out across the valley as the hard winter lets go. The runes on his boards are real, so a brew made on the board goes off for real a few paces away.",
-      "Each level is a board with a goal: collect pieces, make a brew, clear the moss and the thorny vines, or drive off a boss. Finish with moves to spare and you earn more stars.",
+      "Each level is a board with a goal: collect pieces, make a brew, clear the moss and the thorny vines, or drive off a boss. Finish with moves to spare and you earn more stars. I made it myself, from the design to the code.",
     ],
     built: [
       {
@@ -692,10 +688,9 @@ export const PROJECT_PAGES: ProjectPage[] = [
     sameAs: ["https://figmentgaming.com/brewstorm"],
     dateCreated: "2026-10-28",
     related: ["runes-and-reagents", "ink-and-knuckles-2", "figment-gaming"],
-    placeholders: [
-      "My part in Brewstorm (for example design, levels, code). [Maz to confirm]",
-    ],
+    placeholders: [],
     sources: [
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
       "~/figment-gaming/src/config/brewstorm.ts (title, route, pitch, early access line, wide card art)",
       "~/figment-gaming/src/config/brewstormSeo.ts (story, how brewing works, rescues, bosses, play on any screen)",
       "~/figment-gaming/docs/match3/DESIGN.md (started 28 Oct 2026; brews read Runes' one-result table)",
@@ -717,16 +712,16 @@ export const PROJECT_PAGES: ProjectPage[] = [
       { label: "Genre", value: "One on one fighter", note: "Single player against the CPU" },
       { label: "Where", value: "In the browser", note: "Keyboard, game pad or touch" },
       { label: "Modes", value: "Arcade, Training, Combo Trials", note: "No account needed" },
-      { label: "Built with", value: "Canvas and React", note: "Drawn frame by frame" },
+      { label: "Built with", value: "Canvas and React", note: "Made by me, on Figment Gaming" },
     ],
     what: [
       "A free fighting game you play in the browser against the CPU. Pick a fighter, pick a stage and climb a ladder of opponents that gets tougher as you go.",
-      "The roster comes from every chapter of Runes and Reagents: alchemists, townsfolk, machines and monsters, each with their own moves, specials and finishers.",
+      "The roster comes from every chapter of Runes and Reagents: alchemists, townsfolk, machines and monsters, each with their own moves, specials and finishers. I made it myself, from the fighters to the code.",
     ],
     built: [
       {
         heading: "Drawn frame by frame",
-        body: "Every fighter and every painted stage is drawn by the team and animated frame by frame, with super moves that cut in across the screen.",
+        body: "I made every fighter and every painted stage, animated frame by frame, with super moves that cut in across the screen.",
       },
       {
         heading: "A fair CPU",
@@ -774,10 +769,9 @@ export const PROJECT_PAGES: ProjectPage[] = [
     link: { href: "https://figmentgaming.com/ink-and-knuckles-2", label: "Play it" },
     sameAs: ["https://figmentgaming.com/ink-and-knuckles-2"],
     related: ["runes-and-reagents", "runes-brewstorm", "figment-gaming"],
-    placeholders: [
-      "My part in Ink & Knuckles 2 (for example design, art direction, code). [Maz to confirm]",
-    ],
+    placeholders: [],
     sources: [
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
       "~/figment-gaming/src/config/ink2.ts (title, route, pitch)",
       "~/figment-gaming/src/config/gamesSeo.ts (crawler body: single player against the CPU, crossover roster, arcade ladder; genre Fighting)",
       "~/figment-gaming/src/pages/About.tsx (fighters and painted stages drawn by us, keyboard, game pad or touch, no account)",
