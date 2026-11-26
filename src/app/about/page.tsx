@@ -213,7 +213,7 @@ export default function AboutPage() {
                     <figure>
                       <div className="frame transition-transform duration-500 ease-out group-hover:-translate-y-1">
                         <div className="overflow-hidden">
-                          <Image loading="eager" fetchPriority="low"
+                          <Image
                             src={img.src}
                             alt={img.alt}
                             width={img.width}

@@ -92,7 +92,7 @@ function ShotFigure({ shot, sizes }: { shot: Shot; sizes: string }) {
   return (
     <figure className={phone ? "w-full" : ""}>
       <div className={phone ? "overflow-hidden rounded-[22px] border-[6px] border-ink bg-ink shadow-[0_30px_50px_-28px_rgba(22,23,27,0.55)]" : "frame-light"}>
-        <Image loading="eager" fetchPriority="low" src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} className="h-auto w-full" sizes={sizes} />
+        <Image src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} className="h-auto w-full" sizes={sizes} />
       </div>
       {shot.caption && <figcaption className="mt-3 font-display text-[15px] italic text-ink-2">{shot.caption}</figcaption>}
     </figure>
