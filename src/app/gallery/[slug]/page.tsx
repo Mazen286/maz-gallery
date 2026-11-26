@@ -57,23 +57,21 @@ function NeighborCard({ img, dir }: { img: import("@/lib/gallery").GalleryImage;
   return (
     <Link
       href={`/gallery/${photoSlug(img)}`}
-      className={`group flex items-center gap-4 rounded-lg border border-white/10 bg-white/[0.03] p-3 transition-all hover:border-teal/50 hover:bg-white/[0.05] ${
+      className={`group flex items-center gap-4 border border-wall-line bg-wall-2 p-3 transition-colors hover:border-brass/50 ${
         dir === "next" ? "flex-row-reverse text-right" : ""
       }`}
     >
-      <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded">
-        <Image src={img.src} alt="" fill sizes="96px" className="object-cover opacity-80 transition-opacity group-hover:opacity-100" />
+      <div className="relative h-16 w-24 shrink-0 overflow-hidden">
+        <Image src={img.src} alt="" fill sizes="96px" className="object-cover" />
       </div>
       <div className="min-w-0">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
-          {dir === "prev" ? "Previous" : "Next"}
-        </p>
-        <p className="truncate font-display italic text-white/85">{img.alt}</p>
+        <p className="label text-mist-2">{dir === "prev" ? "Previous" : "Next"}</p>
+        <p className="mt-1 font-display text-[17px] italic leading-snug text-ivory">{img.alt}</p>
       </div>
       {dir === "prev" ? (
-        <ArrowLeft className="ml-auto size-4 shrink-0 text-white/30 group-hover:text-teal" />
+        <ArrowLeft className="ml-auto size-4 shrink-0 text-mist-2 group-hover:text-brass" aria-hidden="true" />
       ) : (
-        <ArrowRight className="mr-auto size-4 shrink-0 text-white/30 group-hover:text-teal" />
+        <ArrowRight className="mr-auto size-4 shrink-0 text-mist-2 group-hover:text-brass" aria-hidden="true" />
       )}
     </Link>
   )
@@ -121,36 +119,39 @@ export default async function PhotoPage({ params }: { params: Params }) {
   }
 
   const actionClass =
-    "flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-medium text-white/70 transition-all hover:border-white/40 hover:text-white"
+    "inline-flex min-h-11 items-center gap-2 rounded-full border border-wall-line px-4 text-[13px] font-medium text-ivory transition-colors hover:border-ivory/50"
 
   return (
-    <article className="bg-[#0a0c11] pb-24 pt-24 text-white sm:pt-28">
+    <article data-tone="dark" className="bg-wall pb-24 pt-24 text-ivory sm:pt-28">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(imageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="mx-auto max-w-6xl px-6">
-        <ol className="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
-          <li><Link href="/gallery" className="transition-colors hover:text-teal">The Gallery</Link></li>
+      <nav aria-label="Breadcrumb" className="mx-auto max-w-6xl px-5 sm:px-6">
+        <ol className="label flex flex-wrap items-center gap-x-2 gap-y-1 text-mist">
+          <li><Link href="/gallery" className="inline-block py-2 text-brass transition-colors hover:text-ivory">No. 03 &middot; The Gallery</Link></li>
           {img.location && (
             <>
               <li aria-hidden="true">/</li>
               <li>
-                <Link href={`/gallery?view=exhibition&wing=${wingSlug(img.location)}`} className="transition-colors hover:text-teal">
+                <Link href={`/gallery?view=exhibition&wing=${wingSlug(img.location)}`} className="inline-block py-2 transition-colors hover:text-ivory">
                   {wing}
                 </Link>
               </li>
             </>
           )}
           <li aria-hidden="true">/</li>
-          <li className="text-white/70">No. {String(index + 1).padStart(2, "0")}</li>
+          <li className="text-ivory">
+            Photograph {index + 1} of {ORDERED_GALLERY.length}
+          </li>
         </ol>
       </nav>
 
       {/* The photograph */}
-      <div className="mx-auto mt-6 max-w-6xl px-6">
+      <div className="mx-auto mt-6 max-w-6xl px-5 sm:px-6">
+        <div className={`frame mx-auto ${portrait ? "max-w-2xl" : ""}`}>
         <div
-          className={`relative mx-auto overflow-hidden rounded-lg bg-black/40 ${portrait ? "max-w-2xl" : ""}`}
+          className="relative overflow-hidden bg-wall-2"
           style={{ aspectRatio: `${img.width} / ${img.height}` }}
         >
           <Image
@@ -162,23 +163,22 @@ export default async function PhotoPage({ params }: { params: Params }) {
             className="object-contain"
           />
         </div>
+        </div>
       </div>
 
       {/* Placard */}
-      <div className="mx-auto mt-10 grid max-w-6xl gap-10 px-6 lg:grid-cols-[1fr_320px]">
+      <div className="mx-auto mt-12 grid max-w-6xl gap-10 px-5 sm:px-6 lg:grid-cols-[1fr_320px]">
         <div>
           {img.location && (
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.4em] text-teal">{img.location}</p>
+            <p className="label text-brass">{img.location}</p>
           )}
-          <h1 className="mt-3 font-display text-3xl font-semibold leading-tight sm:text-5xl">
-            <span className="italic">{img.alt}</span>
+          <h1 className="mt-4 font-display text-[34px] font-normal italic leading-tight tracking-[-0.01em] sm:text-5xl">
+            {img.alt}
           </h1>
           {img.story && (
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/65 sm:text-lg">{img.story}</p>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-mist sm:text-lg">{img.story}</p>
           )}
-          <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.25em] text-white/35">
-            Photograph {index + 1} of {ORDERED_GALLERY.length} &middot; {AUTHOR_NAME}
-          </p>
+          <p className="mt-6 text-[13px] text-mist-2">Photograph by {AUTHOR_NAME}</p>
 
           <div className="mt-8 flex flex-wrap gap-2">
             <Link href={`/gallery?view=exhibition&i=${index}`} className={actionClass}>
@@ -198,16 +198,16 @@ export default async function PhotoPage({ params }: { params: Params }) {
         </div>
 
         {img.location && (
-          <aside className="self-start rounded-lg border border-white/10 bg-white/[0.02] p-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">Where</p>
-            <PhotoMap location={img.location} className="mt-3 w-full rounded" />
+          <aside className="self-start border border-wall-line bg-wall-2 p-4">
+            <p className="label text-mist">Where</p>
+            <PhotoMap location={img.location} className="mt-3 w-full" />
             <Link
               href={`/gallery?view=exhibition&wing=${wingSlug(img.location)}`}
-              className="mt-3 block font-display text-lg italic text-white/85 transition-colors hover:text-teal"
+              className="mt-3 block font-display text-lg italic text-ivory transition-colors hover:text-brass-2"
             >
               The {wing} wing &rarr;
             </Link>
-            <p className="mt-1 text-xs text-white/40">
+            <p className="mt-1 text-[13px] text-mist-2">
               {ORDERED_GALLERY.filter((i) => i.location === img.location).length} photographs from {img.location}
             </p>
           </aside>
@@ -215,7 +215,7 @@ export default async function PhotoPage({ params }: { params: Params }) {
       </div>
 
       {/* Neighbors */}
-      <div className="mx-auto mt-14 grid max-w-6xl gap-3 px-6 sm:grid-cols-2">
+      <div className="mx-auto mt-16 grid max-w-6xl gap-3 px-5 sm:grid-cols-2 sm:px-6">
         <NeighborCard img={prev} dir="prev" />
         <NeighborCard img={next} dir="next" />
       </div>

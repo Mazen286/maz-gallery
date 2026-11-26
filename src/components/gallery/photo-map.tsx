@@ -20,18 +20,19 @@ export function PhotoMap({ location, className = "" }: { location: string; class
       role="img"
       aria-label={`Map showing ${location}`}
     >
-      <rect x={x} y={y} width={W} height={H} fill="rgba(120,200,214,0.03)" />
-      <path d={WORLD_LAND_PATH} fill="rgba(120,200,214,0.10)" stroke="rgba(120,200,214,0.35)" strokeWidth="0.5" />
-      <circle cx={pin.cx} cy={pin.cy} r="9" fill="none" stroke="rgba(120,200,214,0.35)" strokeWidth="1" />
-      <circle cx={pin.cx} cy={pin.cy} r="3.5" fill="#78c8d6" />
+      <rect x={x} y={y} width={W} height={H} fill="rgba(244,240,232,0.02)" />
+      <path d={WORLD_LAND_PATH} fill="rgba(184,151,90,0.10)" stroke="rgba(184,151,90,0.35)" strokeWidth="0.5" />
+      <circle cx={pin.cx} cy={pin.cy} r="9" fill="none" stroke="rgba(216,189,134,0.5)" strokeWidth="1" />
+      <circle cx={pin.cx} cy={pin.cy} r="3.5" fill="#d8bd86" />
       <text
         x={pin.cx}
         y={pin.cy - 14}
         textAnchor="middle"
-        fill="rgba(255,255,255,0.85)"
-        fontSize="11"
-        fontFamily="ui-monospace, monospace"
-        letterSpacing="1"
+        fill="#f4f0e8"
+        fontSize="12"
+        fontFamily="var(--font-inter-tight), system-ui, sans-serif"
+        fontWeight="600"
+        letterSpacing="1.5"
       >
         {pin.label.toUpperCase()}
       </text>
