@@ -18,25 +18,25 @@ export function PhotoPicker({ images, onPick, onBack }: PhotoPickerProps) {
       <div className="flex items-center justify-between px-5 py-4 sm:px-8">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-white"
+          className="-ml-1 inline-flex min-h-11 items-center gap-2 px-1 text-[13px] font-medium text-mist transition-colors hover:text-ivory"
         >
-          <ArrowLeft className="size-4" />
-          Game Room
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          The Annex
         </button>
         <button
           onClick={surprise}
-          className="flex items-center gap-2 rounded-full border border-teal/40 px-4 py-2 text-xs font-medium text-teal transition-all hover:bg-teal/10"
+          className="btn btn-line text-ivory"
         >
-          <Shuffle className="size-3.5" />
-          Surprise Me
+          <Shuffle className="size-4" aria-hidden="true" />
+          Surprise me
         </button>
       </div>
 
       <div className="px-5 sm:px-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
+        <p className="label text-brass">
           Choose a piece
         </p>
-        <h2 className="mt-1 font-display text-2xl italic text-white/90 sm:text-3xl">
+        <h2 className="mt-2 font-display text-2xl italic text-ivory sm:text-3xl">
           Pick from the collection
         </h2>
       </div>
@@ -47,7 +47,7 @@ export function PhotoPicker({ images, onPick, onBack }: PhotoPickerProps) {
             <button
               key={img.src}
               onClick={() => onPick(img)}
-              className="group relative aspect-square overflow-hidden rounded-md border border-white/10 transition-all hover:border-teal/60 focus-visible:border-teal"
+              className="group relative aspect-square overflow-hidden border border-wall-line transition-colors hover:border-brass focus-visible:border-brass"
             >
               <Image
                 src={img.src}
@@ -57,7 +57,7 @@ export function PhotoPicker({ images, onPick, onBack }: PhotoPickerProps) {
                 sizes="(max-width: 640px) calc((100vw - 56px) / 3), (max-width: 1024px) calc((100vw - 112px) / 5), calc((100vw - 136px) / 7)"
               />
               {img.location && (
-                <span className="absolute inset-x-0 bottom-0 truncate bg-gradient-to-t from-black/80 to-transparent px-1.5 pb-1 pt-4 text-left text-[9px] text-white/0 transition-colors group-hover:text-white/80">
+                <span className="absolute inset-x-0 bottom-0 truncate bg-gradient-to-t from-black/85 to-transparent px-1.5 pb-1 pt-5 text-left text-[11px] text-ivory opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                   {img.location}
                 </span>
               )}

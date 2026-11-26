@@ -154,33 +154,33 @@ export function PairsGame({ images, onBack }: PairsGameProps) {
       <div className="flex items-center justify-between px-5 py-4 sm:px-8">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-white"
+          className="-ml-1 inline-flex min-h-11 items-center gap-2 px-1 text-[13px] font-medium text-mist transition-colors hover:text-ivory"
         >
-          <ArrowLeft className="size-4" />
-          Game Room
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          The Annex
         </button>
         <div className="flex items-center gap-4">
           {streak >= 2 && (
             <span
               key={streak}
-              className="font-mono text-xs uppercase tracking-[0.2em] text-teal"
+              className="label text-teal"
               style={{ animation: "placardIn 0.3s ease-out both" }}
             >
               streak x{streak}
             </span>
           )}
-          <span className="font-mono text-sm text-teal">{formatTime(elapsed)}</span>
-          <span className="text-sm text-white/50">
+          <span className="text-sm tabular-nums text-ivory">{formatTime(elapsed)}</span>
+          <span className="text-sm tabular-nums text-mist">
             {moves} move{moves !== 1 ? "s" : ""}
           </span>
         </div>
       </div>
 
       <div className="px-5 sm:px-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
+        <p className="label text-brass">
           Pairs
         </p>
-        <h2 className="mt-1 font-display text-2xl italic text-white/90 sm:text-3xl">
+        <h2 className="mt-2 font-display text-2xl italic text-ivory sm:text-3xl">
           The Curator&apos;s Memory
         </h2>
       </div>
@@ -207,15 +207,15 @@ export function PairsGame({ images, onBack }: PairsGameProps) {
                 >
                   {/* Back of card */}
                   <div
-                    className="absolute inset-0 flex items-center justify-center rounded-md border border-white/15 bg-gradient-to-br from-[#1a2030] to-[#0d1018] transition-colors hover:border-teal/50"
+                    className="absolute inset-0 flex items-center justify-center border border-wall-line bg-gradient-to-br from-wall-3 to-wall-2 transition-colors hover:border-brass/60"
                     style={{ backfaceVisibility: "hidden" }}
                   >
-                    <span className="font-display text-xl italic text-teal/50">M</span>
+                    <span className="font-display text-xl italic text-brass" aria-hidden="true">M</span>
                   </div>
                   {/* Face of card */}
                   <div
-                    className={`absolute inset-0 overflow-hidden rounded-md border ${
-                      isMatched ? "border-teal/70" : "border-white/20"
+                    className={`absolute inset-0 overflow-hidden border ${
+                      isMatched ? "border-teal" : "border-ivory/40"
                     }`}
                     style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                   >
@@ -237,13 +237,14 @@ export function PairsGame({ images, onBack }: PairsGameProps) {
 
       {/* Difficulty */}
       <div className="flex items-center justify-center gap-3 px-4 pb-5">
-        <div className="flex rounded-full border border-white/15">
+        <div className="flex rounded-full border border-wall-line p-1" role="group" aria-label="Difficulty">
           {(["easy", "medium", "hard"] as const).map((d) => (
             <button
               key={d}
               onClick={() => setDifficulty(d)}
-              className={`px-3 py-1.5 text-xs font-medium capitalize transition-all first:rounded-l-full last:rounded-r-full ${
-                difficulty === d ? "bg-teal/20 text-teal" : "text-white/40 hover:text-white/70"
+              aria-pressed={difficulty === d}
+              className={`min-h-11 rounded-full px-4 text-[13px] font-medium capitalize transition-colors ${
+                difficulty === d ? "bg-ivory text-wall" : "text-mist hover:text-ivory"
               }`}
             >
               {d}
@@ -252,7 +253,7 @@ export function PairsGame({ images, onBack }: PairsGameProps) {
         </div>
         <button
           onClick={() => reset(difficulty)}
-          className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-white/50 transition-all hover:border-white/30 hover:text-white/70"
+          className="btn btn-line text-ivory"
         >
           Redeal
         </button>
@@ -260,37 +261,37 @@ export function PairsGame({ images, onBack }: PairsGameProps) {
 
       {/* Win overlay */}
       {won && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/75">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-wall/90 px-6 text-center backdrop-blur-sm">
           <ConfettiOverlay />
-          <h2 className="font-display text-3xl italic text-teal sm:text-4xl">
+          <h2 className="font-display text-3xl italic text-ivory sm:text-4xl">
             All pairs matched
           </h2>
-          <p className="mt-3 text-lg text-white/70">
+          <p className="mt-3 text-lg tabular-nums text-mist">
             {formatTime(elapsed)} &middot; {moves} moves
           </p>
           {newBest ? (
-            <p className="mt-1 font-mono text-xs uppercase tracking-[0.3em] text-teal/80">
+            <p className="label mt-2 text-teal">
               New personal best
             </p>
           ) : (
             best?.[difficulty] !== undefined && (
-              <p className="mt-1 font-mono text-xs uppercase tracking-[0.3em] text-white/35">
+              <p className="mt-2 text-[13px] tabular-nums text-mist">
                 Best: {best[difficulty]} moves
               </p>
             )
           )}
-          <div className="mt-6 flex gap-3">
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
             <button
               onClick={() => reset(difficulty)}
-              className="rounded-full border border-teal px-5 py-2 text-sm text-teal transition-all hover:bg-white/10"
+              className="btn btn-ivory"
             >
-              Play Again
+              Play again
             </button>
             <button
               onClick={onBack}
-              className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/50 transition-all hover:text-white"
+              className="btn btn-line text-ivory"
             >
-              Game Room
+              The Annex
             </button>
           </div>
         </div>

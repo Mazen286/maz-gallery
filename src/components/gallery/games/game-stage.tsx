@@ -34,8 +34,8 @@ export function GameStage({ game, photo }: { game: GameSlug; photo?: string }) {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex flex-col"
-      style={{ background: "radial-gradient(ellipse at 50% 0%, #161a26 0%, #0b0d13 55%, #08090d 100%)" }}
+      className="fixed inset-0 z-[60] flex flex-col text-ivory"
+      style={{ background: "radial-gradient(ellipse at 50% 0%, #1c1f26 0%, #0d0e11 60%)" }}
     >
       {game === "jigsaw" && (picking || !jigsawImage) && (
         <PhotoPicker

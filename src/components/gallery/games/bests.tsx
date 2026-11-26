@@ -32,5 +32,5 @@ const subscribe = () => () => {}
 export function Best({ gameKey }: { gameKey: string }) {
   const best = useSyncExternalStore(subscribe, () => readBest(gameKey), () => "")
   if (!best) return null
-  return <p className="font-mono text-[9px] text-white/35">{best}</p>
+  return <p className="text-[13px] tabular-nums text-brass-2">{best}</p>
 }

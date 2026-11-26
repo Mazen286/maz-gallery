@@ -194,32 +194,32 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
       <div className="flex items-center justify-between px-5 py-4 sm:px-8">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-white"
+          className="-ml-1 inline-flex min-h-11 items-center gap-2 px-1 text-[13px] font-medium text-mist transition-colors hover:text-ivory"
         >
-          <ArrowLeft className="size-4" />
-          Game Room
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          The Annex
         </button>
-        <div className="flex items-center gap-4 font-mono text-xs">
-          <span className="text-white/40">
-            Round {current + 1} / {ROUNDS}
+        <div className="flex items-center gap-4 text-sm tabular-nums">
+          <span className="text-mist">
+            Round {current + 1} of {ROUNDS}
           </span>
-          <span className="text-sm text-teal">{total} pts</span>
+          <span className="text-ivory">{total} pts</span>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto px-5 pb-8 sm:px-8">
         <div className="mx-auto w-full max-w-6xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
+          <p className="label text-brass">
             Pin the Map
           </p>
-          <h2 className="mt-1 font-display text-2xl italic text-white/90 sm:text-3xl">
+          <h2 className="mt-2 font-display text-2xl italic text-ivory sm:text-3xl">
             Where in the world was this shot?
           </h2>
 
           <div className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-start">
             {/* The postcard */}
             <figure className="mx-auto w-full max-w-sm shrink-0 lg:mx-0 lg:w-[330px] lg:-rotate-1">
-              <div className="border border-[#a08c5f]/35 bg-[#efece4] p-3 shadow-[0_14px_40px_rgba(0,0,0,0.5)]">
+              <div className="frame">
                 <Image
                   src={round.image.src}
                   alt="Mystery photo. Pin where you think it was taken."
@@ -229,7 +229,7 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                   sizes="(max-width: 1024px) 90vw, 330px"
                 />
               </div>
-              <figcaption className="mt-3 min-h-5 text-center font-display text-sm italic text-white/60">
+              <figcaption className="mt-3 min-h-5 text-center font-display text-[15px] italic text-mist">
                 {guess
                   ? `${round.image.alt} · ${round.target.label}`
                   : "Unlabeled. That is the point."}
@@ -238,7 +238,7 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
 
             {/* The map */}
             <div className="min-w-0 flex-1">
-              <div className="relative overflow-hidden rounded-xl border border-[#a08c5f]/30 shadow-[0_24px_60px_rgba(0,0,0,0.6)]">
+              <div className="relative overflow-hidden border border-brass/30 shadow-[0_24px_60px_rgba(0,0,0,0.6)]">
                 <svg
                   viewBox={`${VIEW_X} ${VIEW_Y} ${VIEW_W} ${VIEW_H}`}
                   onClick={dropPin}
@@ -246,19 +246,19 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                   onFocus={() => setMapFocused(true)}
                   onBlur={() => setMapFocused(false)}
                   tabIndex={guess ? -1 : 0}
-                  className={`block w-full outline-none focus-visible:ring-2 focus-visible:ring-teal ${guess ? "" : "cursor-crosshair"}`}
+                  className={`block w-full outline-none focus-visible:ring-2 focus-visible:ring-brass ${guess ? "" : "cursor-crosshair"}`}
                   role="application"
                   aria-label="World map. Click to drop your pin, or use the arrow keys to move the crosshair and Enter to drop it."
                 >
                   <defs>
                     <radialGradient id="pinmap-ocean" cx="50%" cy="42%" r="75%">
-                      <stop offset="0%" stopColor="#0e1726" />
-                      <stop offset="70%" stopColor="#0a111c" />
-                      <stop offset="100%" stopColor="#070b12" />
+                      <stop offset="0%" stopColor="#1c1f26" />
+                      <stop offset="70%" stopColor="#15171c" />
+                      <stop offset="100%" stopColor="#0d0e11" />
                     </radialGradient>
                     <linearGradient id="pinmap-land" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="rgba(126,205,219,0.17)" />
-                      <stop offset="100%" stopColor="rgba(120,200,214,0.09)" />
+                      <stop offset="0%" stopColor="rgba(216,189,134,0.20)" />
+                      <stop offset="100%" stopColor="rgba(184,151,90,0.11)" />
                     </linearGradient>
                     <radialGradient id="pinmap-vignette" cx="50%" cy="48%" r="72%">
                       <stop offset="0%" stopColor="rgba(0,0,0,0)" />
@@ -277,7 +277,7 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                   <path
                     d={WORLD_LAND_PATH}
                     fill="none"
-                    stroke="rgba(120,200,214,0.35)"
+                    stroke="rgba(184,151,90,0.35)"
                     strokeWidth="2.4"
                     filter="url(#pinmap-glow)"
                   />
@@ -285,7 +285,7 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                   <path
                     d={WORLD_LAND_PATH}
                     fill="url(#pinmap-land)"
-                    stroke="rgba(150,215,226,0.55)"
+                    stroke="rgba(216,189,134,0.55)"
                     strokeWidth="0.5"
                   />
 
@@ -293,7 +293,7 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                     <g pointerEvents="none" aria-hidden="true">
                       <line x1={cursor.x - 14} y1={cursor.y} x2={cursor.x + 14} y2={cursor.y} stroke="rgba(255,255,255,0.7)" strokeWidth="1.2" />
                       <line x1={cursor.x} y1={cursor.y - 14} x2={cursor.x} y2={cursor.y + 14} stroke="rgba(255,255,255,0.7)" strokeWidth="1.2" />
-                      <circle cx={cursor.x} cy={cursor.y} r="7" fill="none" stroke="#78c8d6" strokeWidth="1.5" />
+                      <circle cx={cursor.x} cy={cursor.y} r="7" fill="none" stroke="#d8bd86" strokeWidth="1.5" />
                     </g>
                   )}
 
@@ -352,7 +352,7 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
 
                 {/* Brass corner accents */}
                 {["left-2 top-2 border-l border-t", "right-2 top-2 border-r border-t", "left-2 bottom-2 border-l border-b", "right-2 bottom-2 border-r border-b"].map((cls) => (
-                  <span key={cls} className={`pointer-events-none absolute h-4 w-4 border-[#a08c5f]/50 ${cls}`} />
+                  <span key={cls} className={`pointer-events-none absolute h-4 w-4 border-brass/50 ${cls}`} />
                 ))}
 
                 {/* Verdict chip */}
@@ -360,31 +360,31 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
                   <div
                     role="status"
                     aria-live="polite"
-                    className="absolute left-1/2 top-3 -translate-x-1/2 rounded-full border border-teal/40 bg-[#0a111c]/90 px-4 py-1.5 backdrop-blur-sm"
+                    className="absolute left-1/2 top-3 max-w-[calc(100%-1.5rem)] -translate-x-1/2 rounded-full border border-teal/40 bg-wall/90 px-4 py-1.5 text-center backdrop-blur-sm"
                     style={{ animation: "placardIn 0.35s ease-out both" }}
                   >
-                    <p className="font-mono text-xs text-teal">
+                    <p className="text-[13px] font-medium tabular-nums text-teal">
                       {guess.verdict} &middot; +{guess.points}
                       {guess.points < 100 && (
-                        <span className="text-white/45"> &middot; {guess.km.toLocaleString()} km off</span>
+                        <span className="text-mist"> &middot; {guess.km.toLocaleString()} km off</span>
                       )}
                     </p>
                   </div>
                 )}
               </div>
 
-              <div className="mt-3 flex min-h-10 items-center justify-between">
-                <p className="text-xs text-white/40">
+              <div className="mt-3 flex min-h-11 flex-wrap items-center justify-between gap-3">
+                <p className="text-[13px] text-mist">
                   {guess ? "" : mapFocused ? "Arrow keys move the crosshair, Enter drops the pin" : "Tap the map to drop your pin"}
                 </p>
                 {guess && (
                   <button
                     ref={nextRef}
                     onClick={next}
-                    className="flex items-center gap-2 rounded-full border border-teal px-5 py-2 text-sm text-teal transition-all hover:bg-teal/10"
+                    className="btn btn-ivory"
                   >
                     {current + 1 >= ROUNDS ? "Final score" : "Next photo"}
-                    <ArrowRight className="size-4" />
+                    <ArrowRight className="size-4" aria-hidden="true" />
                   </button>
                 )}
               </div>
@@ -395,38 +395,38 @@ export function PinMapGame({ onBack }: PinMapGameProps) {
 
       {/* Results overlay */}
       {finished && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/85 px-6 text-center">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-wall/90 px-6 text-center backdrop-blur-sm">
           {total >= 400 && <ConfettiOverlay />}
-          <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-teal/70">
+          <p className="label text-brass">
             Final score
           </p>
-          <h2 className="mt-2 font-display text-5xl italic text-white">
+          <h2 className="mt-3 font-display text-5xl italic tabular-nums text-ivory">
             {total} / {ROUNDS * 100}
           </h2>
-          <p className="mt-3 font-display text-xl italic text-teal">{rankFor(total)}</p>
+          <p className="mt-3 font-display text-xl italic text-brass-2">{rankFor(total)}</p>
           {newBest ? (
-            <p className="mt-2 font-mono text-xs uppercase tracking-[0.3em] text-teal/80">
+            <p className="label mt-3 text-teal">
               New personal best
             </p>
           ) : (
             best !== null && (
-              <p className="mt-2 font-mono text-xs uppercase tracking-[0.3em] text-white/35">
+              <p className="mt-3 text-[13px] tabular-nums text-mist">
                 Best: {best}
               </p>
             )
           )}
-          <div className="mt-7 flex gap-3">
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
             <button
               onClick={reset}
-              className="rounded-full border border-teal px-5 py-2 text-sm text-teal transition-all hover:bg-white/10"
+              className="btn btn-ivory"
             >
-              Play Again
+              Play again
             </button>
             <button
               onClick={onBack}
-              className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/50 transition-all hover:text-white"
+              className="btn btn-line text-ivory"
             >
-              Game Room
+              The Annex
             </button>
           </div>
         </div>
