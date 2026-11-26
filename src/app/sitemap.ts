@@ -3,13 +3,14 @@ import { BLOG_POSTS } from "@/lib/blog"
 import { GALLERY, ORDERED_GALLERY, photoSlug } from "@/lib/gallery"
 import { SITE_URL } from "@/lib/constants"
 import { GAMES } from "@/lib/annex"
+import { PROJECT_PAGES } from "@/lib/project-pages"
 
 // Bump a route's date when its content meaningfully changes. The Daily
 // Postcard changes every day by definition, so it always reports today.
 const LAST_MODIFIED = {
   "/": "2026-09-14",
   "/about": "2026-09-14",
-  "/projects": "2026-11-25",
+  "/projects": "2026-11-26",
   "/gallery": "2026-09-14",
   "/blog": "2026-09-14",
   "/booking": "2026-09-14",
@@ -58,5 +59,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [`${SITE_URL}${img.src}`],
   }))
 
-  return [...staticPages, ...blogPages, ...photoPages]
+  const projectPages: MetadataRoute.Sitemap = PROJECT_PAGES.map((p) => ({
+    url: `${SITE_URL}/projects/${p.slug}`,
+    lastModified: LAST_MODIFIED["/projects"],
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+    images: [`${SITE_URL}${p.hero.src}`, ...p.shots.map((s) => `${SITE_URL}${s.src}`)],
+  }))
+
+  return [...staticPages, ...projectPages, ...blogPages, ...photoPages]
 }
