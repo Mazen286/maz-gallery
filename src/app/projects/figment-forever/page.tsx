@@ -68,7 +68,7 @@ function Live({ compact = false }: { compact?: boolean }) {
           <span className="label block" style={{ color: ACCENT_INK }}>
             {compact ? "Open" : "See it live"}
           </span>
-          <span className="mt-1 block font-display text-base text-navy sm:text-lg">{d.name}</span>
+          <span className="mt-1 block font-display text-base text-ink sm:text-lg">{d.name}</span>
           <span className="block font-display text-sm italic text-ink-3">{d.couple}</span>
         </a>
       ))}
@@ -111,7 +111,7 @@ export default function FigmentForeverPage() {
             <span>Wedding studio</span>
           </div>
 
-          <h1 className="mt-5 font-display font-semibold leading-[1.08] text-navy" style={{ fontSize: "clamp(2.1rem, 5vw, 3.4rem)" }}>
+          <h1 className="mt-5 font-display font-semibold leading-[1.08] text-ink" style={{ fontSize: "clamp(2.1rem, 5vw, 3.4rem)" }}>
             {TITLE}
           </h1>
           <p className="mt-4 font-display text-lg italic leading-relaxed text-ink-2 sm:text-xl">{DESCRIPTION}</p>
@@ -136,7 +136,7 @@ export default function FigmentForeverPage() {
             <Live compact />
           </div>
 
-          <div className="reading-room prose prose-lg mt-12 max-w-none font-display text-charcoal/85 prose-headings:font-display prose-headings:text-navy prose-h2:mt-14 prose-h2:text-2xl prose-h2:sm:text-3xl prose-p:leading-[1.85] prose-a:text-[#9a5e51] prose-hr:my-10 prose-li:leading-[1.8]">
+          <div className="reading-room prose prose-lg mt-12 max-w-none font-display text-charcoal/85 prose-headings:font-display prose-headings:text-ink prose-h2:mt-14 prose-h2:text-2xl prose-h2:sm:text-3xl prose-p:leading-[1.85] prose-a:text-[#9a5e51] prose-hr:my-10 prose-li:leading-[1.8]">
             <h2>Why I built it</h2>
             <p>
               A friend was planning her wedding and kept running into walls. She wanted to shape the website her own
@@ -251,7 +251,7 @@ export default function FigmentForeverPage() {
           <div className="mt-10 flex justify-center">
             <Link
               href="/booking"
-              className="btn bg-navy text-white hover:bg-navy/85"
+              className="btn btn-ink"
             >
               Get in touch at the Front Desk
             </Link>
