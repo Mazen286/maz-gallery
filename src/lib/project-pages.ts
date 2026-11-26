@@ -159,7 +159,7 @@ export const PROJECT_PAGES: ProjectPage[] = [
     ],
     hero: {
       src: `${IMG}/surfup/surfpod-waikiki.webp`,
-      alt: "A SurfPod rental station behind a Moniz Family Surf window, with three surfboards racked on top of its lockers",
+      alt: "A SurfPod rental station behind a shop window, with three surfboards racked on top of its lockers",
       width: 1600,
       height: 1067,
       frame: "wide",
@@ -265,14 +265,6 @@ export const PROJECT_PAGES: ProjectPage[] = [
         width: 1440,
         height: 836,
         caption: "The welcome, with the playlist picker",
-        frame: "wide",
-      },
-      {
-        src: `${IMG}/cafe-maz/index.webp`,
-        alt: "The Café Maz index page, with doors to the café, the print menu, the recipe book and the flavor lab",
-        width: 1440,
-        height: 836,
-        caption: "The index: pick a door",
         frame: "wide",
       },
     ],
