@@ -612,7 +612,7 @@ export function JigsawPuzzle({
             <div
               className="pointer-events-none absolute inset-0 rounded-lg"
               style={{
-                backgroundImage: `url(${image.src})`,
+                backgroundImage: `url("${image.src}")`,
                 backgroundSize: "100% 100%",
                 opacity: showPreview ? 0.3 : 0,
                 transition: "opacity 0.3s",
@@ -708,7 +708,7 @@ export function JigsawPuzzle({
                         : 10,
                     cursor: piece.placed ? "default" : "grab",
                     clipPath: `url(#piece-${piece.row}-${piece.col})`,
-                    backgroundImage: `url(${image.src})`,
+                    backgroundImage: `url("${image.src}")`,
                     backgroundSize: `${boardSize.w}px ${boardSize.h}px`,
                     backgroundPosition: `${bgPosX}px ${bgPosY}px`,
                     backgroundRepeat: "no-repeat",
