@@ -138,7 +138,7 @@ export default function ProjectsPage() {
 
       {/* The rooms of the wing */}
       {PROJECT_ROOMS.map((room) => {
-        const items = PROJECTS.filter((p) => p.room === room.id && p.slug !== FEATURED)
+        const items = PROJECTS.filter((p) => p.room === room.id)
         return (
           <section key={room.id} id={room.id} aria-labelledby={`${room.id}-title`} className="scroll-mt-24 pt-20 sm:pt-24">
             <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
