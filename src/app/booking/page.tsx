@@ -34,7 +34,7 @@ export default function BookingPage() {
         </h1>
 
         <div className="mt-12 grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <div>
+          <div className="min-w-0">
             <p className="max-w-xl font-display text-[22px] leading-[1.5] sm:text-[26px]">
               Want to collaborate on something? Have questions about my work? Or just wandered in from the gallery?
               I&apos;d love to hear from you.
@@ -88,7 +88,7 @@ export default function BookingPage() {
             </div>
           </div>
 
-          <div>
+          <div className="min-w-0">
             <p className="label mb-3 text-ink-2">The guest book</p>
             <Suspense fallback={<div className="h-[500px] border border-line bg-white" />}>
               <ConversationalForm />

@@ -275,7 +275,7 @@ export function ConversationalForm() {
               style={{ animation: "fadeSlideIn 0.3s ease-out forwards" }}
             >
               <div
-                className={`max-w-[85%] whitespace-pre-wrap break-words rounded-2xl px-4 py-3 text-[15px] leading-relaxed ${
+                className={`max-w-[85%] whitespace-pre-wrap rounded-2xl [overflow-wrap:anywhere] px-4 py-3 text-[15px] leading-relaxed ${
                   msg.type === "question"
                     ? "rounded-bl-sm bg-paper-2 text-ink"
                     : "rounded-br-sm bg-ink text-paper"
@@ -304,7 +304,7 @@ export function ConversationalForm() {
                 {STEPS.filter((s) => answers[s.id]).map((s) => (
                   <div key={s.id} className="flex items-start gap-3">
                     <dt className="w-16 shrink-0 font-medium">{s.label}</dt>
-                    <dd className="min-w-0 flex-1 whitespace-pre-wrap break-words">{answers[s.id]}</dd>
+                    <dd className="min-w-0 flex-1 whitespace-pre-wrap [overflow-wrap:anywhere]">{answers[s.id]}</dd>
                     <button
                       type="button"
                       onClick={() => handleEdit(s.id)}
