@@ -39,6 +39,8 @@ export type ProjectPage = {
   link: { href: string; label: string }
   sameAs: string[]
   dateCreated?: string
+  /** An Organization's founding year (schema.org foundingDate) */
+  foundingDate?: string
   related: string[]
   placeholders: string[]
   /** Where the facts came from. Not shown on the page */
@@ -141,7 +143,7 @@ export const PROJECT_PAGES: ProjectPage[] = [
     ],
     what: [
       "SurfUp makes SurfPods, self-service surfboard rental stations that run around the clock with no staff. You find a SurfPod in the app, scan to unlock a board, surf, and bring it back. No reservations.",
-      "The business started in Pacific Beach in San Diego and launched at the Hyatt Regency Waikiki in October 2026. I co-founded it and serve as its CPO.",
+      "The business started in Pacific Beach in San Diego in 2018 and launched at the Hyatt Regency Waikiki in October 2026. I co-founded it and serve as its CPO.",
     ],
     built: [
       {
@@ -198,12 +200,11 @@ export const PROJECT_PAGES: ProjectPage[] = [
       "https://play.google.com/store/apps/details?id=com.surfupapp.aloha",
       "https://www.instagram.com/surfupapp",
     ],
+    foundingDate: "2018",
     related: ["figment-analytics", "figment-forge", "flightpulse"],
-    placeholders: [
-      "The year SurfUp started: Maz thinks it was around 2018 but is not certain, so the page leaves the year out until he confirms it.",
-    ],
+    placeholders: [],
     sources: [
-      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery)",
+      "Maz's answers, 26 Nov 2026 (his part in the work, in his own words; no other names on the gallery; SurfUp started in 2018)",
       "~/SurfUp/Website-SurfUpApp/public/llms.txt and src/lib/constants.ts (team roles, app store links, Instagram)",
       "~/SurfUp/App-Aloha/package.json (React Native, react-native-square-in-app-payments, react-native-maps)",
       "~/figment-analytics/src/app/portfolio/surfup/page.tsx (CPO role, analytics platform, Pacific Beach, Hyatt Regency Waikiki in October 2026, press list)",

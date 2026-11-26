@@ -67,7 +67,7 @@ function schemaFor(page: ProjectPage, image: string) {
   }
   const entity =
     page.schemaType === "Organization"
-      ? { ...base, founder: author }
+      ? { ...base, founder: author, ...(page.foundingDate ? { foundingDate: page.foundingDate } : {}) }
       : page.schemaType === "VideoGame"
         ? { ...base, author, genre: page.genre, gamePlatform: "Web browser", applicationCategory: "Game", operatingSystem: "Any" }
         : page.schemaType === "WebApplication" || page.schemaType === "SoftwareApplication"
