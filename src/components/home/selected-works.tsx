@@ -14,7 +14,7 @@ export function SelectedWorks() {
   return (
     <section id="works" className="bg-paper pb-24 pt-16 text-ink sm:pb-32 sm:pt-24">
       <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
-        <SectionHead number="No. 04" title="Projects Wing" />
+        <SectionHead title="Projects Wing" />
 
         <div className="mt-10 flex flex-col gap-8 sm:mt-12 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="max-w-3xl font-display text-[32px] leading-[1.15] tracking-[-0.01em] sm:text-[44px]">

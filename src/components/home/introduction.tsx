@@ -8,7 +8,7 @@ export function Introduction() {
   return (
     <section id="about" className="bg-paper pb-8 pt-20 text-ink sm:pt-28">
       <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
-        <SectionHead number="No. 02" title="The Artist" />
+        <SectionHead title="The Artist" />
         <div className="mt-10 grid gap-10 lg:mt-12 lg:grid-cols-[1fr_20rem] lg:gap-20">
           <FadeIn>
             <p className="max-w-[46rem] font-display text-[22px] leading-[1.55] text-ink sm:text-[26px]">

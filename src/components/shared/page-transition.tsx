@@ -52,12 +52,6 @@ export function PageTransition({ children }: PageTransitionProps) {
         {dimmed && room && (
           <div className="text-center">
             <p
-              className="font-display text-base italic text-brass"
-              style={{ animation: "placardIn 0.4s ease-out 0.05s both" }}
-            >
-              {room.number}
-            </p>
-            <p
               className="mt-2 font-display text-3xl text-ivory sm:text-4xl"
               style={{ animation: "placardIn 0.45s ease-out 0.12s both" }}
             >

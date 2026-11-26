@@ -129,7 +129,7 @@ export default async function PhotoPage({ params }: { params: Params }) {
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="mx-auto max-w-6xl px-5 sm:px-6">
         <ol className="label flex flex-wrap items-center gap-x-2 gap-y-1 text-mist">
-          <li><Link href="/gallery" className="inline-block py-2 text-brass transition-colors hover:text-ivory">No. 03 &middot; The Gallery</Link></li>
+          <li><Link href="/gallery" className="inline-block py-2 text-brass transition-colors hover:text-ivory">The Gallery</Link></li>
           {img.location && (
             <>
               <li aria-hidden="true">/</li>

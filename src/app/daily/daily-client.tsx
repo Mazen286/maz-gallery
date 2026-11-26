@@ -121,7 +121,7 @@ export function DailyPostcard({ puzzle, yesterday }: { puzzle: DailyPuzzle; yest
       {won && <ConfettiOverlay />}
       <div className="mx-auto max-w-xl">
         <div>
-          <p className="label text-brass">No. 06 &middot; Daily Postcard</p>
+          <p className="label text-brass">Daily Postcard</p>
           <h1 className="mt-4 font-display text-[40px] font-normal leading-tight tracking-[-0.01em] sm:text-[52px]">
             The Daily <span className="italic">Postcard</span>
           </h1>

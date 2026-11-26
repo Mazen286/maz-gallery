@@ -28,7 +28,6 @@ export function Footer() {
               {ROOMS.map((room) => (
                 <li key={room.href}>
                   <Link href={room.href} className="group flex items-baseline gap-3 py-1 text-sm transition-colors hover:text-ivory">
-                    <span className="w-12 shrink-0 font-display text-[13px] italic text-brass">{room.number}</span>
                     <span>
                       {room.label}
                       {roomSubtitle(room) && <span className="ml-2 text-mist-2">{roomSubtitle(room)}</span>}

@@ -20,7 +20,7 @@ export function FeaturedExhibits() {
   return (
     <section id="collection" className="bg-wall pb-24 pt-20 text-ivory sm:pb-32 sm:pt-28">
       <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
-        <SectionHead number="No. 03" title="The Gallery" tone="dark" />
+        <SectionHead title="The Gallery" tone="dark" />
 
         <div className="mt-10 flex flex-col gap-8 sm:mt-12 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="max-w-3xl font-display text-[32px] leading-[1.15] tracking-[-0.01em] sm:text-[44px]">

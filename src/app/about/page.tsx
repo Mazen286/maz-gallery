@@ -122,7 +122,7 @@ export default function AboutPage() {
       <section className="pb-20 pt-28 sm:pb-28 sm:pt-36">
         <div className="mx-auto grid max-w-[1312px] items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1.1fr] lg:gap-20 lg:px-12">
           <div>
-            <p className="label text-brass-ink">No. 02 &middot; The Artist</p>
+            <p className="label text-brass-ink">The Artist</p>
             <h1
               className="mt-5 font-display font-normal leading-[0.95] tracking-[-0.02em]"
               style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)" }}

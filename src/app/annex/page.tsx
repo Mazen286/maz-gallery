@@ -34,7 +34,7 @@ export default function AnnexPage() {
     <section data-tone="dark" className="min-h-[100svh] bg-wall px-5 pb-28 pt-28 text-ivory sm:px-8 sm:pt-36 lg:px-12">
       <div className="mx-auto max-w-[1216px]">
         <div>
-          <p className="label text-brass">No. 07 &middot; The Annex</p>
+          <p className="label text-brass">The Annex</p>
           <h1 className="mt-4 font-display text-[40px] font-normal leading-tight tracking-[-0.01em] sm:text-[56px]">
             After <span className="italic">hours</span>
           </h1>
@@ -50,7 +50,7 @@ export default function AnnexPage() {
           <div className="flex items-center gap-4">
             <CalendarDays className="size-5 shrink-0 text-teal" aria-hidden="true" />
             <div>
-              <p className="label text-mist-2">No. 06 &middot; Every day</p>
+              <p className="label text-mist-2">Every day</p>
               <p className="mt-1 font-display text-xl italic text-ivory">The Daily Postcard</p>
               <p className="mt-1 text-[13px] text-mist">
                 Postcard {daily.number}: one photo, three tries, a new one every day

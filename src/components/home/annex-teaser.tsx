@@ -9,7 +9,7 @@ export function AnnexTeaser() {
   return (
     <section id="annex" className="bg-wall py-24 text-ivory sm:py-32">
       <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
-        <SectionHead number="No. 07" title="The Annex" tone="dark" />
+        <SectionHead title="The Annex" tone="dark" />
         <p className="mt-10 max-w-xl font-display text-[22px] leading-snug text-mist sm:text-[26px]">
           When the museum closes, the collection comes out to play.
         </p>
@@ -23,7 +23,7 @@ export function AnnexTeaser() {
               <div className="relative z-10 max-w-[19rem]">
                 <p className="label inline-flex items-center gap-2 text-teal">
                   <span className="size-1.5 rounded-full bg-teal" aria-hidden="true" />
-                  No. 06 &middot; Every day
+                  Every day
                 </p>
                 <h3 className="mt-5 font-display text-[34px] italic leading-tight sm:text-[40px]">The Daily Postcard</h3>
                 <p className="mt-4 text-[15px] leading-relaxed text-mist">

@@ -110,7 +110,6 @@ export function Navbar() {
                   className="group flex items-baseline gap-4 border-b border-wall-line py-3"
                   style={{ animation: `menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${0.16 + i * 0.06}s both` }}
                 >
-                  <span className="w-14 shrink-0 font-display text-sm italic text-brass">{room.number}</span>
                   <span className="flex min-w-0 flex-col">
                     <span className={`font-display text-[26px] leading-tight ${active ? "italic text-brass-2" : "text-ivory"}`}>
                       {room.label}

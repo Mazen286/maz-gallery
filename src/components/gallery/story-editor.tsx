@@ -72,7 +72,7 @@ export function StoryEditor() {
       <div className="mx-auto max-w-5xl px-5 sm:px-6">
         {/* Header */}
         <div className="mb-8">
-          <p className="label text-brass">No. 03 &middot; The Gallery</p>
+          <p className="label text-brass">The Gallery</p>
           <h1 className="mt-4 font-display text-4xl font-normal text-ivory">Photo Story Editor</h1>
           <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-mist">
             Write a short story or note for each photo. These appear in the Exhibition view,

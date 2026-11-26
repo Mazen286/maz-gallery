@@ -64,7 +64,7 @@ export default function GalleryPage() {
           viewer's scripts (which need the URL to pick a view) */}
       <section className="px-5 pb-10 pt-28 sm:px-8 sm:pt-36 lg:px-12">
         <div className="mx-auto max-w-[1216px] animate-rise-in">
-          <p className="label text-brass">No. 03 &middot; The Gallery</p>
+          <p className="label text-brass">The Gallery</p>
           <h1
             className="mt-5 font-display font-normal leading-[1.02] tracking-[-0.02em]"
             style={{ fontSize: "clamp(2.4rem, 6vw, 4.75rem)" }}

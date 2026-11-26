@@ -91,7 +91,7 @@ export function Hero({ works, places }: { works: number; places: number }) {
             {arabicName}
           </div>
           <p className="label text-brass" style={entrance(play, 150)}>
-            No. 01 &middot; The Entrance
+            The Entrance
           </p>
 
           <h1

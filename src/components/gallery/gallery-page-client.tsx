@@ -151,7 +151,7 @@ export function GalleryPageClient() {
 
             {/* The Annex: games and the daily puzzle get their own shelf */}
             <div className="mt-20">
-              <SectionHead number="No. 07" title="The Annex" tone="dark" />
+              <SectionHead title="The Annex" tone="dark" />
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 <Link
                   href="/annex"

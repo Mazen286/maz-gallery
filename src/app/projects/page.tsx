@@ -70,7 +70,7 @@ export default function ProjectsPage() {
       <section className="pb-12 pt-32 sm:pt-40">
         <div className="mx-auto max-w-[1312px] px-5 sm:px-8 lg:px-12">
           <FadeIn immediate>
-            <p className="label text-brass-ink">No. 04 &middot; Projects Wing</p>
+            <p className="label text-brass-ink">Projects Wing</p>
             <div className="mt-5 grid gap-8 lg:grid-cols-[1fr_24rem] lg:items-end lg:gap-16">
               <h1
                 className="font-display font-normal leading-[0.95] tracking-[-0.02em]"

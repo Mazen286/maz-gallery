@@ -139,7 +139,7 @@ export default async function ProjectPageRoute({ params }: { params: Promise<{ s
         <ol className="label flex flex-wrap items-center gap-x-2 text-ivory">
           <li>
             <Link href="/projects" className="text-brass hover:text-brass-2">
-              No. 04 &middot; Projects Wing
+              Projects Wing
             </Link>
           </li>
           <li aria-hidden="true">/</li>
